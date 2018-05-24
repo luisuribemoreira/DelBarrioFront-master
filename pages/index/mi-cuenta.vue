@@ -14,7 +14,11 @@
           <p><span class="label label-default">0</span> <span style="vertical-align: sub"> Que aún no respondiste</span></p>
         </div>
         <!-- CLIENTE - RESPUESTAS -->
+<<<<<<< HEAD
         <div class="col-xs-12" v-if="isAuthenticated && loggedUser.rol === 101">
+=======
+        <div class="col-xs-12"v-if="isAuthenticated && loggedUser.rol === 101">
+>>>>>>> First commit
           <h3><icon name="comments-o" :aria-hidden="true" :scale="2"></icon><span style="vertical-align: super"> Respuestas</span></h3>
           <hr>
           <p><span class="label label-default">0</span> <span style="vertical-align: sub"> Te han respondido</span></p>
