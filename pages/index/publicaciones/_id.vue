@@ -10,7 +10,11 @@
                 <img :src="post.imagenes.length > 0 ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-responsive" alt="">
               </div>
               <div class="item" :key="img.IDEN_IMAGEN" v-for="img in post.imagenes">
+<<<<<<< HEAD
                 <img :src="'https://delbarrio.barrenechea.cl/' + img.URL_IMAGEN" class="img-responsive" alt="">
+=======
+                <img :src="imageUrl + img.URL_IMAGEN" class="img-responsive" alt="">
+>>>>>>> Add respuesta comentarios
               </div>
             </div>
           </div><!--- Carrousel Grande -->
@@ -165,7 +169,11 @@
             <p><button type="submit" class="btn btn-default">Comentar</button></p>
           </form>
           <!--FIN FORM DE COMENTAR-->
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> Add respuesta comentarios
         </div>
         <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
           <div v-if="c.FLAG_BAN" class="col-xs-12 contorno ban">
@@ -185,6 +193,32 @@
               <small> {{c.respuesta.FECH_CREACION | dateFormat}}</small>
               {{c.respuesta.DESC_RESPUESTA}}
             </p>
+<<<<<<< HEAD
+=======
+
+            <!-- FORM RESPUESTA -->
+            <div v-if="c.respuesta.DESC_RESPUESTA === undefined && post.emprendedor.IDEN_USUARIO === loggedUser.id">
+              <p>
+                <a href="#" @click.prevent @click="selected = c.IDEN_COMENTARIO" class="margin-top">Responder</a>
+              </p>
+              <form @submit.prevent="validateAnswer" v-if="selected === c.IDEN_COMENTARIO">
+                <div class="form-group margin-top-20">
+                  <textarea 
+                    class="form-control"
+                    :rows="3"
+                    v-validate data-vv-rules="min:2|max:250"
+                    data-vv-as="respuesta"
+                    name="resp"
+                    v-model="answer.DESC_RESPUESTA">
+                  </textarea>
+                </div>
+                <small class="text-danger" v-show="errors.has('resp')">{{ errors.first('resp') }}</small>
+                <p><button type="submit" class="btn btn-default">Comentar</button></p>
+              </form>
+            </div>
+            <!-- FIN FORM RESPUESTA -->
+
+>>>>>>> Add respuesta comentarios
             <p>
               <a href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
             </p>
@@ -295,6 +329,10 @@
 <script>
 import controller from '~/controllers/posts'
 import commentscontroller from '~/controllers/comments'
+<<<<<<< HEAD
+=======
+import answerscontroller from '~/controllers/answers'
+>>>>>>> Add respuesta comentarios
 import ratingscontroller from '~/controllers/ratings'
 import denouncereasonscontroller from '~/controllers/admin/denouncereasons'
 import denouncecontroller from '~/controllers/admin/denounces'
@@ -318,6 +356,11 @@ export default {
   data () {
     return {
       comment: {},
+<<<<<<< HEAD
+=======
+      answer: {},
+      selected: '',
+>>>>>>> Add respuesta comentarios
       rating: {},
       type: '',
       denounce: { DESC_DENUNCIA: '' },
@@ -336,6 +379,14 @@ export default {
         if (result) commentscontroller.POST(this)
       })
     },
+<<<<<<< HEAD
+=======
+    validateAnswer () {
+      this.$validator.validate('resp').then((result) => {
+        if (result) answerscontroller.POST(this)
+      })
+    },
+>>>>>>> Add respuesta comentarios
     validateRating () {
       if (this.rating.NUMR_VALOR != null) {
         ratingscontroller.POST(this)

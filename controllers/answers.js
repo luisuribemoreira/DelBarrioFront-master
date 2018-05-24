@@ -30,18 +30,43 @@ function POST (context) {
     context.message.answer = 'Ingrese respuesta'
     context.message.error = true
   } else {
+<<<<<<< HEAD
+=======
+    // Creacion de objeto dummy para simular respuesta instantánea del server
+    let dummyEntity = {
+      DESC_RESPUESTA: context.answer.DESC_RESPUESTA,
+      FECH_CREACION: new Date().toJSON()
+    }
+    // Vacia campo respuesta
+    context.answer = {}
+    // Agrega objeto respuesta a la propiedad respuesta del comentario correspondiente
+    context.post.comentarios.find((comment) => comment.IDEN_COMENTARIO === parseInt(context.selected)).respuesta = dummyEntity
+>>>>>>> Add respuesta comentarios
     context.$axios.$post(
       'private/respuesta',
       {
         IDEN_COMENTARIO: parseInt(context.selected),
+<<<<<<< HEAD
         DESC_RESPUESTA: context.answer.DESC_RESPUESTA
       }).then(response => {
       console.log(response)
+=======
+        DESC_RESPUESTA: dummyEntity.DESC_RESPUESTA
+      }).then(response => {
+>>>>>>> Add respuesta comentarios
       context.answer = { }
       // context.$router.push({ path: '/administracion/respuestas' }) toDo
       context.$notify.success('Se ha enviado tu respuesta.')
     }).catch(errors => {
+<<<<<<< HEAD
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo zmás tarde.')
+=======
+      // Eliminar objecto en caso de error
+      context.post.comentarios.find((comment) => comment.IDEN_COMENTARIO === parseInt(context.selected)).respuesta = {}
+      // Devolver texto en el campo de respuesta
+      context.answer = { DESC_RESPUESTA: dummyEntity.DESC_RESPUESTA }
+      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+>>>>>>> Add respuesta comentarios
     })
   }
 }
