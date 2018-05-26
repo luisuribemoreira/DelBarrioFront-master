@@ -126,7 +126,7 @@
             <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION">
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
-                <img v-else v-lazy="'https://delbarrio.barrenechea.cl/'+post.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
+                <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
               <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}</p>
@@ -168,7 +168,8 @@ export default {
         product: true,
         service: false,
         sale: false
-      }
+      },
+      imageUrl: process.env.imagesUrl
     }
   },
   head () {
