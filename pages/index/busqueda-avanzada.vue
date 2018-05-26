@@ -13,11 +13,7 @@
             </div>
             <div class="col-sm-6">
               <div class="form-group pricerange">
-<<<<<<< HEAD
                 <label for="rangodeprecio" class="col-sm-12">Rango de precio {{search.minPrice}} </label>
-=======
-                <label for="rangodeprecio"class="col-sm-12">Rango de precio {{search.minPrice}} </label>
->>>>>>> First commit
                 <div class="col-sm-6">
                   <div class="input-group mb-2 mb-sm-0">
                     <div class="input-group-addon">$</div>
