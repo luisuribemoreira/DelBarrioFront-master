@@ -7,11 +7,11 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label>Correo electrónico</label>
-              <input type="text" v-model="auth.email" class="form-control"/>
+              <input type="text" v-validate data-vv-rules="required" v-model="auth.email" class="form-control"/>
             </div>
             <div class="form-group margin-top">
               <label>Contraseña</label>
-              <input type="password" v-model="auth.password" class="form-control"/>
+              <input type="password" v-validate data-vv-rules="required" v-model="auth.password" class="form-control"/>
             </div>
             <div v-if='message'>
               <small class="text-danger">{{ message }}</small>
@@ -37,17 +37,21 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      // this.$validator.validateAll().then((result) => {
-      //   if (result) {
-      //     controller.authenticate(this)
-      //   }
-      // }
-      controller.login(this)
-        .then(() => {
-          if (!this.error) {
-            this.$router.push({ path: '/' })
-          }
-        })
+      /* this.$validator.validateAll().then((result) => {
+        if (result) {
+          controller.authenticate(this)
+        }
+      } */
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          controller.login(this)
+            .then(() => {
+              if (!this.error) {
+                this.$router.push({ path: '/' })
+              }
+            })
+        }
+      })
     }
   },
   head () {
