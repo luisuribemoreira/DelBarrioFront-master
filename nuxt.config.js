@@ -2,6 +2,12 @@ const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
   /*
+  ** Middleware application mode
+  ** 'spa': No server-side rendering (only client-side navigation)
+  ** 'universal': Isomorphic application (server-side rendering + client-side navigation)
+  */
+  mode: 'spa',
+  /*
   ** Router config
   */
   router: {

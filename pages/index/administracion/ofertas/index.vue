@@ -35,7 +35,6 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
       .then(ofertas => {
-        console.log(ofertas.images)
         return {
           oferta: ofertas,
           imagen: ofertas.images
