@@ -8,7 +8,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas?</label>
-                <input type="text" class="form-control" placeholder="Buscar..." v-model="search.find">
+                <input type="text" class="form-control" placeholder="Buscar..." v-model="search.find" required>
               </div>
             </div>
             <div class="col-sm-6">
@@ -17,13 +17,13 @@
                 <div class="col-sm-6">
                   <div class="input-group mb-2 mb-sm-0">
                     <div class="input-group-addon">$</div>
-                    <input type="text" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice">
+                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice">
                   </div>
                 </div>
                 <div class="col-sm-6 margin-top-responsive-20">
                   <div class="input-group mb-2 mb-sm-0">
                     <div class="input-group-addon">$</div>
-                    <input type="text" class="form-control" placeholder="Hasta">
+                    <input type="number" class="form-control" placeholder="Hasta">
                   </div>                      
                 </div>
               </div>
