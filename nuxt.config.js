@@ -6,7 +6,7 @@ module.exports = {
   ** 'spa': No server-side rendering (only client-side navigation)
   ** 'universal': Isomorphic application (server-side rendering + client-side navigation)
   */
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Router config
   */
