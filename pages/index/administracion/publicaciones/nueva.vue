@@ -119,6 +119,7 @@
   
 
 <script>
+import { mapGetters } from 'vuex'
 import controller from '~/controllers/posts'
 import categoriescontroller from '~/controllers/admin/categories'
 import customvalidations from '~/controllers/customvalidations'
@@ -186,6 +187,7 @@ export default {
         }
 
         if (result) {
+          console.log(this)
           let blobs = []
           // Recorrer directamente los componentes, en vez de los modelos
           for (var key in this.$children) {
@@ -210,6 +212,9 @@ export default {
       console.log(i)
     }
   },
+  computed: mapGetters([
+    'loggedUser'
+  ]),
   head () {
     return {
       title: 'Nueva publicación'
