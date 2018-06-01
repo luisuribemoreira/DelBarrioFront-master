@@ -1,5 +1,6 @@
 import moment from 'moment'
 import imagecontroller from '~/controllers/images'
+import entrepeneurController from '~/controllers/admin/entrepreneurs'
 // Obtener categoria especifica según id.
 // Param.: context -> Contexto de la vista .vue, contiene los objetos instanciados en "data".
 // Return: Obtiene objeto de la categoría específica seleccionada en la vista "ListPosts"
@@ -57,39 +58,39 @@ function GETAll (app, pageNumber = 1) {
 //                    }
 // =======================================================================================
 function POST (context, blobs = undefined) {
-  context.$axios.$post(
-    'private/publicacion',
-    {
-      CODI_TIPO_PUBLICACION: context.post.CODI_TIPO_PUBLICACION,
-      IDEN_CATEGORIA: context.post.IDEN_SUBCATEGORIA == null ? context.post.IDEN_CATEGORIA : context.post.IDEN_SUBCATEGORIA,
-      NOMB_PUBLICACION: context.post.NOMB_PUBLICACION,
-      DESC_PUBLICACION: context.post.DESC_PUBLICACION,
-      NUMR_PRECIO: parseInt(context.post.NUMR_PRECIO),
-      FLAG_CONTENIDO_ADULTO: context.post.FLAG_CONTENIDO_ADULTO,
-      IDEN_EMPRENDEDOR: 1,
-      ETIQUETAS: context.post.ETIQUETAS
-    }).then(response => {
-    console.log(blobs)
-    if (blobs !== undefined) {
-      imagecontroller.POST(context, response.data.IDEN_PUBLICACION, blobs)
-    }
-    if (context.isSale) {
-      this.addSale(context, response.data.IDEN_PUBLICACION)
-        .then(response => {
-          context.post = { FLAG_CONTENIDO_ADULTO: false, ETIQUETAS: [] }
-        }).catch(errors => {
-          context.error = 'Error inesperado al ingresar oferta'
-        })
-    }
-    context.post = { FLAG_CONTENIDO_ADULTO: false }
-    context.images = {
-      image1: {},
-      image2: {},
-      image3: {},
-      image4: {}
-    }
-    context.$router.push({ path: '/administracion/publicaciones' })
-    context.$notify.success('Se ha agregado exitosamente.')
+  entrepeneurController.GETUser(
+    context,
+    context.loggedUser.id
+  ).then(entrepeneur => {
+    console.log(entrepeneur.entrepeneur)
+    context.$axios.$post(
+      'private/publicacion',
+      {
+        CODI_TIPO_PUBLICACION: context.post.CODI_TIPO_PUBLICACION,
+        IDEN_CATEGORIA: context.post.IDEN_SUBCATEGORIA == null ? context.post.IDEN_CATEGORIA : context.post.IDEN_SUBCATEGORIA,
+        NOMB_PUBLICACION: context.post.NOMB_PUBLICACION,
+        DESC_PUBLICACION: context.post.DESC_PUBLICACION,
+        NUMR_PRECIO: parseInt(context.post.NUMR_PRECIO),
+        FLAG_CONTENIDO_ADULTO: context.post.FLAG_CONTENIDO_ADULTO,
+        IDEN_EMPRENDEDOR: entrepeneur.entrepeneur.IDEN_EMPRENDEDOR,
+        ETIQUETAS: context.post.ETIQUETAS
+      }).then(response => {
+      console.log(blobs)
+      if (blobs !== undefined) {
+        imagecontroller.POST(context, response.data.IDEN_PUBLICACION, blobs)
+      }
+      if (context.isSale) {
+        this.addSale(context, response.data.IDEN_PUBLICACION)
+          .then(response => {
+            context.post = { FLAG_CONTENIDO_ADULTO: false, ETIQUETAS: [] }
+          }).catch(errors => {
+            context.error = 'Error inesperado al ingresar oferta'
+          })
+      }
+      context.post = { FLAG_CONTENIDO_ADULTO: false }
+      context.$router.push({ path: '/administracion/publicaciones' })
+      context.$notify.success('Se ha agregado exitosamente.')
+    })
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado.')
   })

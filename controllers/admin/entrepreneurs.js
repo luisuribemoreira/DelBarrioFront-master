@@ -25,6 +25,21 @@ function GETAll (app) {
     })
 }
 
+// Retorna el emprendedor con la ID de usuario
+// Param.: userId -> ID del usuario actual
+function GETUser (app, userId) {
+  return app.$axios.$get(
+    'emprendedor'
+  ).then(response => {
+    let entrepeneur = response.data.find(ent => ent.IDEN_USUARIO === userId)
+    return {
+      entrepeneur: entrepeneur
+    }
+  }).catch(errors => {
+    console.log(errors)
+  })
+}
+
 // Enviar POST request a la fuente.
 // Param.:       context -> Contiene los objetos instanciados en "data".
 // Return:       Retorna los datos del POST response por consola js.
@@ -171,6 +186,7 @@ function RutValidation (Objeto) {
 export default {
   GET,
   GETAll,
+  GETUser,
   POST,
   PUT,
   setState,
