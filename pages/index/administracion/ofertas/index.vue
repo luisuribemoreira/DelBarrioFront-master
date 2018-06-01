@@ -9,7 +9,7 @@
         </div>
         <div class="row margin-top">
           <div class="row">
-            <transition-group name="list" tag="div">
+            <transition-group name="list" tag="div" v-if="oferta">
               <div class="col-md-3 col-sm-3 col-xs-6 post-item" v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA">
                 <nuxt-link :to="{ path: '/publicaciones/'+oferta.IDEN_PUBLICACION }">
                   <img v-if="!imagen[oferta.IDEN_PUBLICACION]" v-lazy="'/img/no-image.svg'" class="img-responsive" alt=""> 
@@ -37,7 +37,7 @@ export default {
       .then(ofertas => {
         return {
           oferta: ofertas,
-          imagen: ofertas.images
+          imagen: ofertas ? ofertas.images : undefined
         }
       })
   },
