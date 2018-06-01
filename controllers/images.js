@@ -1,3 +1,13 @@
+function GETAll (context) {
+  return context.$axios.get(
+    'imagen'
+  ).then(response => {
+    return {
+      imagen: response.data
+    }
+  })
+}
+
 function POST (context, id, blobs) {
   context.error = false
   const formData = new FormData()
@@ -36,5 +46,6 @@ function DELETE (context, id) {
 
 export default {
   POST,
-  DELETE
+  DELETE,
+  GETAll
 }
