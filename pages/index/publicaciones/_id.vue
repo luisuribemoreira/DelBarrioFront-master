@@ -392,7 +392,7 @@ export default {
         { hid: 'description', name: 'description', content: this.post.DESC_PUBLICACION },
         { property: 'og:title', content: this.post.NOMB_PUBLICACION },
         { property: 'og:description', content: this.post.DESC_PUBLICACION },
-        { property: 'og:image', content: this.imageUrl + this.post.imagenes[0].URL_IMAGEN }
+        { property: 'og:image', content: this.imageUrl + this.post.imagenes.length > 0 ? this.post.imagenes[0].URL_IMAGEN : '/img/no-image.svg' }
       ]
     }
   }
