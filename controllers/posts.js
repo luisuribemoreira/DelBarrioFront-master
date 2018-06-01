@@ -62,7 +62,6 @@ function POST (context, blobs = undefined) {
     context,
     context.loggedUser.id
   ).then(entrepeneur => {
-    console.log(entrepeneur.entrepeneur)
     context.$axios.$post(
       'private/publicacion',
       {
@@ -75,7 +74,6 @@ function POST (context, blobs = undefined) {
         IDEN_EMPRENDEDOR: entrepeneur.entrepeneur.IDEN_EMPRENDEDOR,
         ETIQUETAS: context.post.ETIQUETAS
       }).then(response => {
-      console.log(blobs)
       if (blobs !== undefined) {
         imagecontroller.POST(context, response.data.IDEN_PUBLICACION, blobs)
       }
