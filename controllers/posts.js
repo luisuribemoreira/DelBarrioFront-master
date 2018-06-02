@@ -145,10 +145,10 @@ function addSale (context, id) {
     })
     .then(response => {
       console.log(response)
-      context.messageOferta = 'Oferta agregada con éxito'
+      context.$notify.success('Oferta agregada con éxito.')
     })
     .catch(errors => {
-      context.error = 'Error al agregar oferta'
+      context.$notify.danger('Ha ocurrido un error inesperado.')
     })
 }
 
@@ -163,11 +163,22 @@ function updateSale (context, id) {
     })
     .then(response => {
       console.log(response)
-      context.messageOferta = 'Oferta modificada con éxito'
+      context.$notify.success('Oferta modificada con éxito.')
     })
     .catch(errors => {
-      context.error = 'Error al agregar oferta'
+      context.$notify.danger('Ha ocurrido un error inesperado.')
     })
+}
+
+function removeSale (context, id) {
+  context.$axios.$delete(
+    'private/oferta/' + id
+  ).then(response => {
+    console.log(response)
+    context.$notify.success('Se ha eliminado exitosamente.')
+  }).catch(errors => {
+    context.$notify.danger('Ha ocurrido un error inesperado.')
+  })
 }
 // comentarios
 function setState (context, post) {
@@ -192,5 +203,6 @@ export default {
   PUT,
   addSale,
   updateSale,
+  removeSale,
   setState
 }

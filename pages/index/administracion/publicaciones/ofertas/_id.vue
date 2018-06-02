@@ -7,7 +7,7 @@
             <form class="margin-top" @submit.prevent="validateBeforeSubmit">
               <h3>Publicación</h3>
               <div class="row margin-top" v-if="post.imagenes.length > 0" style="text-align:center"> <!-- Corregir estilos -->
-                <div class="col-sm-3" v-for="img in post.imagenes">
+                <div class="col-sm-3" v-for="img in post.imagenes" :key="img.IDEN_IMAGEN">
                   <img :src="imageUrl+img.URL_IMAGEN" style="width: 200px" />
                 </div>
               </div>
@@ -46,7 +46,7 @@
               <div class="row" v-if="post.etiquetas.length > 0">
                 <div class="col-sm-12">
                   <label for="tags">Tags</label>
-                  <div id="tags">|<span v-for="eti in post.etiquetas"> {{ eti.NOMB_ETIQUETA }} |</span></div>
+                  <div id="tags">|<span v-for="eti in post.etiquetas" :key="eti.IDEN_ETIQUETA"> {{ eti.NOMB_ETIQUETA }} |</span></div>
                 </div>
               </div>
               <hr/>
@@ -109,7 +109,6 @@ export default {
       sale: {},
       errorMsgs: {},
       format: 'dd MMM, yyyy',
-      error: {},
       imageUrl: process.env.imagesUrl
     }
   },
@@ -164,10 +163,14 @@ export default {
         }
 
         if (result) {
-          if (this.post.oferta.IDEN_OFERTA !== undefined) {
+          if (!this.isSale && this.post.oferta.IDEN_OFERTA !== undefined) {
+            controller.removeSale(this, this.post.oferta.IDEN_OFERTA)
+            this.$router.push('/administracion/publicaciones')
+          } else if (this.post.oferta.IDEN_OFERTA !== undefined) {
             controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
           } else {
             controller.addSale(this, this.post.IDEN_PUBLICACION)
+            this.$router.push('/administracion/publicaciones')
           }
         }
       })
