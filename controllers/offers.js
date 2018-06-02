@@ -7,10 +7,10 @@ function GETAll (app) {
   return app.$axios.$get(
     'oferta'
   ).then(oferta => {
-    return imagecontroller.getAll().then(imagen => {
+    return imagecontroller.GETAll(app).then(imagen => {
       let imagenes = {}
       oferta.data.forEach(offer => {
-        imagenes[offer.IDEN_PUBLICACION] = imagen.data.find(img => img.IDEN_PUBLICACION === offer.IDEN_PUBLICACION)
+        imagenes[offer.IDEN_PUBLICACION] = imagen.imagen.data.find(img => img.IDEN_PUBLICACION === offer.IDEN_PUBLICACION)
       })
       return {
         offers: oferta.data,
