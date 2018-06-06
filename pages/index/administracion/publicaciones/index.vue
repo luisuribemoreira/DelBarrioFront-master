@@ -77,17 +77,35 @@
 </template>
 
 <script>
-import controller from '~/controllers/posts'
+import { mapGetters } from 'vuex'
+import controller from '~/controllers/admin/myaccount'
+import controllerPosts from '~/controllers/posts'
 
 export default {
-  asyncData ({ app }) {
-    return controller.GETAll(app)
+  asyncData ({ app, store }) {
+    return controller.GET(app, store._vm.loggedUser.id)
+      .then(({ user }) => {
+        return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
+          .then(({ posts }) => {
+            return {
+              posts: posts
+            }
+          })
+      })
+  },
+  data () {
+    return {
+      posts: []
+    }
   },
   methods: {
     setState (post) {
       controller.setState(this, post)
     }
   },
+  computed: mapGetters([
+    'loggedUser'
+  ]),
   head () {
     return {
       title: 'Publicaciones'

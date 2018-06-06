@@ -58,8 +58,10 @@ function GETPostEmprendedor (app, idEmprendedor, pageNumber = 1) {
       }
     }
   ).then(response => {
-    let postAux = response.data.find(ent => ent.IDEN_EMPRENDEDOR === idEmprendedor)//eslint-disable-line
-    console.log(postAux)
+    let postAux = []
+    response.data.forEach(ent => {
+      if (ent.IDEN_EMPRENDEDOR === idEmprendedor) postAux.push(ent)
+    })
     return {
       posts: postAux,
       pagination: response.pagination
