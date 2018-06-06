@@ -28,26 +28,19 @@
             <small class="text-muted"><nuxt-link to="/administracion/publicaciones">Ver todos</nuxt-link></small>
           </div>
         </div>
-        <div class="container">
-        <div class="row">
-          </div>
-      <div class="row margin-top">
         <div class="row">
           <transition-group name="ListPosts" tag="div">
-            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="e in posts" :key="e.IDEN_EMPRENDEDOR" >
-              <nuxt-link :to="'/publicaciones/'+e.IDEN_PUBLICACION ">
-                <img v-if="e.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
-                <img v-else v-lazy="imageUrl + e.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
+            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION">
+              <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">
+                <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
+                <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
               </nuxt-link>
-              <h4 class="text-center">{{ e.NOMB_PUBLICACION }}</h4> 
-              <p class="text-center">{{ e.DESC_PUBLICACION.substring(0,20) }}</p>
-              <h5 class="text-center">$ {{ e.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
-        </div>
+              <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
+              <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}</p>
+              <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+            </div>
           </transition-group>
-        <!-- Productos -->
-        </div><!-- /row -->
-      </div><!-- /row -->
-    </div><!-- /container -->
+        </div>
         <hr class="margin-top">
       </div>
       <a class="btn btn-default" @click="selected = !selected">
@@ -64,17 +57,17 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Nombres</label>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="user.persona" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="user.persona.NOMBRES" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="name">Apellido Paterno</label>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model="user.persona" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model="user.persona.APELLIDO_PATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="name">Apellido Materno</label>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model="user.persona" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model="user.persona.APELLIDO_MATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname2')">{{ errors.first('lastname2') }}</small>
             </div>
             <div class="form-group margin-top">
@@ -82,14 +75,14 @@
               <datepicker 
                 language="es"
                 :format='format'
-                v-model="user.persona"
+                v-model="user.persona.FECH_FECHA_NACIMIENTO"
                 :bootstrapStyling = "true"
                 name="date"
               ></datepicker>
             </div>
             <div class="form-group margin-top">
               <label for="name">Contraseña</label>
-              <input v-validate data-vv-rules="required" data-vv-as="contraseña" name="pass" type="password" v-model="user.pass" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="contraseña" name="pass" type="text" v-model="user.pass" class="form-control"/>
             </div>
             <button type="submit" class="btn btn-default" @click="PUT()">Cambiar</button>
           </form>
@@ -104,8 +97,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
-import Datepicker from 'vuejs-datepicker'
 import controllerEmprendedor from '~/controllers/admin/entrepreneurs'
+import Datepicker from 'vuejs-datepicker'
+
 export default {
   asyncData ({ app, store }) {
     return controller.GET(app, store._vm.loggedUser.id)
@@ -128,10 +122,9 @@ export default {
   data () {
     return {
       selected: false,
-      persona: {},
       format: 'dd MMM, yyyy',
       posts: [],
-      imageUrl: process.env.imageUrl
+      imageUrl: process.env.imagesUrl
     }
   },
   components: {
