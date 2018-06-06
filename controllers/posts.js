@@ -45,6 +45,30 @@ function GETAll (app, pageNumber = 1) {
   })
 }
 
+// Obtener todas las categorías de la api.
+// Param.: context -> Contexto de la vista .vue, contiene los objetos instanciados en "data".
+// Return: lista todas las publicaciones de un emprendedor.
+// =======================================================================================
+function GETPostEmprendedor (app, idEmprendedor, pageNumber = 1) {
+  return app.$axios.$get(
+    'publicacion',
+    {
+      params: {
+        page: pageNumber
+      }
+    }
+  ).then(response => {
+    let postAux = response.data.find(ent => ent.IDEN_EMPRENDEDOR === idEmprendedor)//eslint-disable-line
+    console.log(postAux)
+    return {
+      posts: postAux,
+      pagination: response.pagination
+    }
+  }).catch(errors => {
+    console.log(errors)
+  })
+}
+
 // Enviar POST request a la fuente.
 // Param.:       context -> Contiene los objetos instanciados en "data".
 // Return:       Retorna los datos del POST response por consola js.
@@ -198,6 +222,7 @@ function setState (context, post) {
 
 export default {
   GET,
+  GETPostEmprendedor,
   GETAll,
   POST,
   PUT,

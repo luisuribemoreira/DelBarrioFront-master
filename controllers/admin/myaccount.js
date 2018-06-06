@@ -1,7 +1,7 @@
-function GET (app, context) {
-  // console.log(sessionStorage)
-  // let token = sessionStorage.getItem('id_token')
-  return app.$axios.$get('/private/usuario')
+function GET (app, id) {
+// console.log(sessionStorage)
+// let token = sessionStorage.getItem('id_token')
+  return app.$axios.$get('/private/usuario/' + id)
     .then(res => {
       return {
         user: res.data
