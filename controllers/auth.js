@@ -41,6 +41,7 @@ function getTokenFromCookie (req) {
 
 function getTokenFromLocalStorage () {
   const token = window.localStorage.token
+  if (!token) return
   Cookie.set('jwt', token)
   return token
 }
