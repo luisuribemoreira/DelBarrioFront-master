@@ -59,7 +59,7 @@
                   <option value="P">Producto</option>
                   <option value="S">Servicio</option>
                 </select>
-                <small class="text-danger" v-show="errors.has('type')">{{ errors.first('type') }}</small>
+                <small class="text-danger" v-if="message">{{ message }}</small>
               </div>
               <div class="form-group">
                 <label for="name">Título</label>
@@ -152,7 +152,9 @@ export default {
       controller.POST(this)
     },
     validateBeforeSubmit () {
+      if (this.post.CODI_TIPO_PUBLICACION === 'undefined') this.post.CODI_TIPO_PUBLICACION = undefined
       this.$validator.validateAll().then(async (result) => {
+        this.message = false
         // Validar fechas de forma manual [Incompatibilidad con VV]
         if (this.isSale) {
           let errorMessages = {}
@@ -184,6 +186,10 @@ export default {
             this.errorMsgs.start_date = errorMessages.start_date
             this.errorMsgs.end_date = errorMessages.end_date
           }
+        }
+        if (this.post.CODI_TIPO_PUBLICACION === undefined) {
+          result = false
+          this.message = 'El campo Tipo es requerido.'
         }
 
         if (result) {
