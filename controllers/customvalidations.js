@@ -26,8 +26,21 @@ function isDateAfter (before, after) {
   }
 }
 
+function isUnderAge (date) {
+  if (isDate(date)) {
+    if (Number(new Date().getFullYear()) - Number(new Date(date).getFullYear()) < 18) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+}
+
 export default {
   isDate,
   isDefined,
-  isDateAfter
+  isDateAfter,
+  isUnderAge
 }
