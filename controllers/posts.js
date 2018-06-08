@@ -147,11 +147,11 @@ function PUT (context, blobs = undefined) {
   ).then(async response => {
     if (context.deletedImages.length > 0) {
       for (let i = 0; i < context.deletedImages.length; i++) {
-        await imagecontroller.DELETE(context, response.data.imagenes[i].IDEN_IMAGEN)
+        await imagecontroller.DELETE(context, context.post.imagenes[context.deletedImages[i]].IDEN_IMAGEN)
       }
     }
     if (blobs !== undefined) {
-      imagecontroller.POST(context, response.data.IDEN_PUBLICACION, blobs)
+      imagecontroller.POST(context, context.post.IDEN_PUBLICACION, blobs)
     }
     context.$router.push({ path: '/administracion/publicaciones' })
     context.$notify.success('Se ha editado exitosamente.')

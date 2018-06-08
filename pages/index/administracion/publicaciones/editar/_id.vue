@@ -14,47 +14,53 @@
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
-                          v-bind:initial-image="post.imagenes.length > 0 ? imageUrl+post.imagenes[0].URL_IMAGEN : ''"
+                          v-bind:initial-image="post.imagenes && post.imagenes.length > 0 ? imageUrl+post.imagenes[0].URL_IMAGEN : ''"
                           @image-remove="imageRemoveCheck(0)"
                           @file-choose="imageChangeCheck(0)"
                           ></croppa>
                 </no-ssr>
                 </div>
                 <div class="col-sm-3">
+                  <no-ssr>
                   <croppa v-model="images.image2"
                           :width="200"
                           :height="200"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
-                          :initial-image="post.imagenes.length > 1 ? imageUrl+post.imagenes[1].URL_IMAGEN : ''"
+                          :initial-image="post.imagenes && post.imagenes.length > 1 ? imageUrl+post.imagenes[1].URL_IMAGEN : ''"
                           @image-remove="imageRemoveCheck(1)"
                           @file-choose="imageChangeCheck(1)"
                           ></croppa>
+                  </no-ssr>
                 </div>
                 <div class="col-sm-3">
+                  <no-ssr>
                   <croppa v-model="images.image3"
                           :width="200"
                           :height="200"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
-                          :initial-image="post.imagenes.length > 2 ? imageUrl+post.imagenes[2].URL_IMAGEN : ''"
+                          :initial-image="post.imagenes && post.imagenes.length > 2 ? imageUrl+post.imagenes[2].URL_IMAGEN : ''"
                           @image-remove="imageRemoveCheck(2)"
                           @file-choose="imageChangeCheck(2)"
                           ></croppa>
+                  </no-ssr>
                 </div>
                 <div class="col-sm-3">
+                  <no-ssr>
                   <croppa v-model="images.image4"
                           :width="200"
                           :height="200"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
-                          :initial-image="post.imagenes.length > 3 ? imageUrl+post.imagenes[3].URL_IMAGEN : ''"
+                          :initial-image="post.imagenes && post.imagenes.length > 3 ? imageUrl+post.imagenes[3].URL_IMAGEN : ''"
                           @image-remove="imageRemoveCheck(3)"
                           @file-choose="imageChangeCheck(3)"
                           ></croppa>
+                  </no-ssr>
                 </div>
               </div>
               <div class="form-group margin-top">
@@ -152,6 +158,7 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.post.CODI_TIPO_PUBLICACION === 'undefined') this.post.CODI_TIPO_PUBLICACION = undefined
       this.$validator.validateAll().then(async (result) => {
         if (result) {
           let blobs = []
@@ -175,7 +182,7 @@ export default {
       this.subcategorias = i
     },
     imageRemoveCheck (index) {
-      // Si se encuentra en miágenes con cambios pendientes, eliminar, sino
+      // Si se encuentran imágenes con cambios pendientes, eliminar, sino
       // verificar que se encuentre en la cola para eliminar
       if (this.changedImages.indexOf(index) !== -1) {
         this.changedImages.splice(this.changedImages.indexOf(index), 1)
