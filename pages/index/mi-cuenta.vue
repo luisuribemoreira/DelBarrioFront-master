@@ -80,11 +80,15 @@
                 name="date"
               ></datepicker>
             </div>
+            <div v-if='dateErrorMsg'>
+              <small class="text-danger">{{ dateErrorMsg }}</small>
+            </div>
             <div class="form-group margin-top">
               <label for="name">Contraseña</label>
-              <input v-validate data-vv-rules="required" data-vv-as="contraseña" name="pass" type="text" v-model="user.pass" class="form-control"/>
+              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="text" v-model="user.pass" class="form-control"/>
+              <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
-            <button type="submit" class="btn btn-default" @click="PUT()">Cambiar</button>
+            <button type="submit" class="btn btn-default">Cambiar</button>
           </form>
         </div>
       </div>
@@ -98,6 +102,7 @@
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
 import controllerEmprendedor from '~/controllers/admin/entrepreneurs'
+import customValidations from '~/controllers/customvalidations'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
@@ -124,6 +129,7 @@ export default {
       selected: false,
       format: 'dd MMM, yyyy',
       posts: [],
+      dateErrorMsg: false,
       imageUrl: process.env.imagesUrl
     }
   },
@@ -131,8 +137,16 @@ export default {
     Datepicker
   },
   methods: {
-    PUT (category) {
-      controller.PUT(this)
+    validateBeforeSubmit () {
+      this.$validator.validateAll().then(async (result) => {
+        if (result) {
+          if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
+            this.dateErrorMsg = 'Debe ser mayor de edad'
+          } else {
+            controller.PUT(this, this.user)
+          }
+        }
+      })
     }
   },
   computed: mapGetters([
