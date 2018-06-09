@@ -104,9 +104,6 @@
                   <input type="checkbox" v-model="post.FLAG_CONTENIDO_ADULTO">Producto para mayores de 18
                 </label>
               </div>
-              <div v-if='message'>
-                <span>{{message}}</span>
-              </div>
               <button type="submit" class="btn btn-default">Publicar</button>
             </form>
           </div>
@@ -189,7 +186,7 @@ export default {
         }
         if (this.post.CODI_TIPO_PUBLICACION === undefined) {
           result = false
-          this.message = 'El campo Tipo es requerido.'
+          this.message = 'The tipo field is required.'
         }
 
         if (result) {
