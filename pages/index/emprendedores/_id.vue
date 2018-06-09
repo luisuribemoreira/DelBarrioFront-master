@@ -120,7 +120,8 @@ export default {
   },
   data () {
     return {
-      geocode: undefined
+      geocode: undefined,
+      imageUrl: process.env.imagesUrl
     }
   },
   computed: mapGetters([
