@@ -85,7 +85,7 @@
             </div>
             <div class="form-group margin-top">
               <label for="name">Contraseña</label>
-              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="text" v-model="user.pass" class="form-control"/>
+              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model="user.pass" class="form-control"/>
               <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
             <button type="submit" class="btn btn-default">Cambiar</button>
