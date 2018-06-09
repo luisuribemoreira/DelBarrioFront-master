@@ -17,7 +17,7 @@
                 </nuxt-link>
                 <h4 class="text-center">{{ oferta.publicacion.NOMB_PUBLICACION }}</h4>
                 <p class="text-center">{{ oferta.publicacion.DESC_PUBLICACION.substring(0,20) }}</p>
-                <p class="text-center">Duracion: {{ oferta.FECH_INICIO.substring(5,10) }} {{ oferta.FECH_INICIO.substring(11,16) }} - {{ oferta.FECH_TERMINO.substring(5,10) }} {{ oferta.FECH_INICIO.substring(11,16) }}</p>
+                <p class="text-center">Desde {{ oferta.FECH_INICIO }} Hasta {{ oferta.FECH_TERMINO }}</p>
                 <h5 class="text-center">$ {{ oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
               </div>
             </transition-group>
@@ -32,9 +32,13 @@
 import controller from '~/controllers/offers'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
     return controller.GETAll(app)
       .then(ofertas => {
+        ofertas.offers.forEach((oferta, key) => {
+          ofertas.offers[key].FECH_INICIO = store._vm.$moment(oferta.FECH_INICIO).format('DD-MM-YYYY')
+          ofertas.offers[key].FECH_TERMINO = store._vm.$moment(oferta.FECH_TERMINO).format('DD-MM-YYYY')
+        })
         return {
           oferta: ofertas,
           imagen: ofertas ? ofertas.images : {}
