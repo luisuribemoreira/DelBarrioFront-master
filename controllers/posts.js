@@ -45,6 +45,32 @@ function GETAll (app, pageNumber = 1) {
   })
 }
 
+// Obtener todas las categorías de la api.
+// Param.: context -> Contexto de la vista .vue, contiene los objetos instanciados en "data".
+// Return: lista todas las publicaciones de un emprendedor.
+// =======================================================================================
+function GETPostEmprendedor (app, idEmprendedor, pageNumber = 1) {
+  return app.$axios.$get(
+    'publicacion',
+    {
+      params: {
+        page: pageNumber
+      }
+    }
+  ).then(response => {
+    let postAux = []
+    response.data.forEach(ent => {
+      if (ent.IDEN_EMPRENDEDOR === idEmprendedor) postAux.push(ent)
+    })
+    return {
+      posts: postAux,
+      pagination: response.pagination
+    }
+  }).catch(errors => {
+    console.log(errors)
+  })
+}
+
 // Enviar POST request a la fuente.
 // Param.:       context -> Contiene los objetos instanciados en "data".
 // Return:       Retorna los datos del POST response por consola js.
@@ -121,11 +147,11 @@ function PUT (context, blobs = undefined) {
   ).then(async response => {
     if (context.deletedImages.length > 0) {
       for (let i = 0; i < context.deletedImages.length; i++) {
-        await imagecontroller.DELETE(context, response.data.imagenes[i].IDEN_IMAGEN)
+        await imagecontroller.DELETE(context, context.post.imagenes[context.deletedImages[i]].IDEN_IMAGEN)
       }
     }
     if (blobs !== undefined) {
-      imagecontroller.POST(context, response.data.IDEN_PUBLICACION, blobs)
+      imagecontroller.POST(context, context.post.IDEN_PUBLICACION, blobs)
     }
     context.$router.push({ path: '/administracion/publicaciones' })
     context.$notify.success('Se ha editado exitosamente.')
@@ -198,6 +224,7 @@ function setState (context, post) {
 
 export default {
   GET,
+  GETPostEmprendedor,
   GETAll,
   POST,
   PUT,

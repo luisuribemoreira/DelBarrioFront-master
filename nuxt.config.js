@@ -63,7 +63,8 @@ module.exports = {
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/vue-input-tag', ssr: true },
     { src: '~/plugins/vue-google-maps', ssr: true },
-    { src: '~/plugins/vue-carousel', ssr: false }
+    { src: '~/plugins/vue-carousel', ssr: false },
+    { src: '~/plugins/vue-moment', ssr: true }
   ],
   /*
   ** Modules initialization
