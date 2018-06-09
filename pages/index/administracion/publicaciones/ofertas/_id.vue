@@ -131,6 +131,7 @@ export default {
       this.$validator.validateAll().then((result) => {
         // Validar fechas de forma manual [Incompatibilidad con VV]
         let errorMessages = {}
+        this.errorMsgs = {}
         if (customvalidations.isDefined(this.sale.FECH_INICIO)) {
           if (!customvalidations.isDate(this.sale.FECH_INICIO)) {
             errorMessages.start_date = 'Este campo no corresponde a una fecha'
@@ -145,7 +146,7 @@ export default {
           } else {
             // Si la fecha de inicio existe y es válida, comparar que el inicio sea posterior a ayer y término sea posterior al inicio
             if (!errorMessages.start_date) {
-              if (!customvalidations.isDateAfter((new Date()).getDate() - 1, this.sale.FECH_INICIO)) {
+              if (!customvalidations.isDateAfter(new Date(), this.sale.FECH_INICIO)) {
                 errorMessages.start_date = 'La fecha de inicio debe ser igual o posterior a la de hoy'
               } else if (!customvalidations.isDateAfter(this.sale.FECH_INICIO, this.sale.FECH_TERMINO)) {
                 errorMessages.end_date = 'La fecha de término debe ser posterior a la de inicio'
