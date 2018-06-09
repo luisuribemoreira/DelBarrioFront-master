@@ -61,12 +61,12 @@
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group margin-top">
-              <label for="name">Apellido Paterno</label>
+              <label for="lastname">Apellido Paterno</label>
               <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model="user.persona.APELLIDO_PATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
             </div>
             <div class="form-group margin-top">
-              <label for="name">Apellido Materno</label>
+              <label for="lastname2">Apellido Materno</label>
               <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model="user.persona.APELLIDO_MATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname2')">{{ errors.first('lastname2') }}</small>
             </div>
@@ -80,13 +80,18 @@
                 name="date"
               ></datepicker>
             </div>
-            <div v-if='dateErrorMsg'>
-              <small class="text-danger">{{ dateErrorMsg }}</small>
+            <div v-if="dataErrorMsg.error_edad">
+              <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
             </div>
             <div class="form-group margin-top">
-              <label for="name">Contraseña</label>
-              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="text" v-model="user.pass" class="form-control"/>
+              <label for="pass">Contraseña</label>
+              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model="user.pass" class="form-control"/>
               <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
+            </div>
+            <div class="form-group margin-top">
+              <label for="pass2">Confirmar Contraseña</label>
+              <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
+              <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
             <button type="submit" class="btn btn-default">Cambiar</button>
           </form>
@@ -129,7 +134,7 @@ export default {
       selected: false,
       format: 'dd MMM, yyyy',
       posts: [],
-      dateErrorMsg: false,
+      dataErrorMsg: { error_edad: undefined, error_pw: undefined },
       imageUrl: process.env.imagesUrl
     }
   },
@@ -139,12 +144,25 @@ export default {
   methods: {
     validateBeforeSubmit () {
       this.$validator.validateAll().then(async (result) => {
+        // Se limpian los mensajes
+        this.dataErrorMsg = { error_edad: undefined, error_pw: undefined }
+
+        // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
+        if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
+          this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
+        }
+
+        // Se valida que las contraseñas coincidan
+        if (!this.user.pass2 || this.user.pass !== this.user.pass2) {
+          this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
+        }
+
+        if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw) {
+          result = undefined
+        }
+
         if (result) {
-          if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
-            this.dateErrorMsg = 'Debe ser mayor de edad'
-          } else {
-            controller.PUT(this, this.user)
-          }
+          controller.PUT(this, this.user)
         }
       })
     }
