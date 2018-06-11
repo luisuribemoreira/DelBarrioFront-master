@@ -9,11 +9,10 @@
             </div>
           </form>
           <center>
-          <img class="margin-top" style="text-align: center" :src="'https://i.ytimg.com/vi/vUQUDS-TL6Q/hqdefault.jpg'"></img>
+          <img class="margin-top" style="text-align: center" :src="'https://i.ytimg.com/vi/vUQUDS-TL6Q/hqdefault.jpg'">
           <h2><nuxt-link to="/busqueda-avanzada">Manual de usuario</nuxt-link></h2>
           <h2><nuxt-link to="/busqueda-avanzada">Búsqueda avanzada</nuxt-link></h2>
           </center>
-          
         </div>
       </div>
     </div>

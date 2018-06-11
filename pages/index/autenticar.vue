@@ -7,13 +7,15 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label>Correo electrónico</label>
-              <input type="text" v-validate data-vv-rules="required" v-model="auth.email" class="form-control"/>
+              <input type="text" v-validate data-vv-rules="required|email" v-model="auth.email" class="form-control" name="email"/>
+              <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <div class="form-group margin-top">
               <label>Contraseña</label>
-              <input type="password" v-validate data-vv-rules="required" v-model="auth.password" class="form-control"/>
+              <input type="password" v-validate data-vv-rules="required" v-model="auth.password" class="form-control" name="pass"/>
+              <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
-            <div v-if='message'>
+            <div v-if="message">
               <small class="text-danger">{{ message }}</small>
             </div>
             <button class="btn btn-default" type="submit">Ingresar</button>
