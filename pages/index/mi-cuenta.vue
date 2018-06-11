@@ -146,14 +146,13 @@ export default {
       this.$validator.validateAll().then(async (result) => {
         // Se limpian los mensajes
         this.dataErrorMsg = { error_edad: undefined, error_pw: undefined }
-
         // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
         if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
           this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
         }
 
         // Se valida que las contraseñas coincidan
-        if (!this.user.pass2 || this.user.pass !== this.user.pass2) {
+        if (this.user.pass && (!this.user.pass2 || this.user.pass !== this.user.pass2)) {
           this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
         }
 
