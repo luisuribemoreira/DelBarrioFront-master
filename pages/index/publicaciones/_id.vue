@@ -90,39 +90,39 @@
   <div id="interacciones" v-if="isAuthenticated">
     <!-- CALIFICACIONES -->
     <section id="calificaciones" class="container-fluid">
-    <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <hr>
-            <h2 class="margin-top">Calificaciones</h2>
-            <p>Ingresa tu calificación</p>
-            <no-ssr>
-              <star-rating
-                v-model="rating.NUMR_VALOR"
-                :increment="1"
-                :star-size="35"
-                data-vv-name="value"
-                name="value"
-                v-validate data-vv-rules="required">
-              </star-rating>
-            </no-ssr>
-            <form @submit.prevent="validateRating">
-              <div class="form-group margin-top-20">
-                <textarea class="form-control" 
-                  :rows="3"
-                  v-model="rating.DESC_CALIFICACION"
-                  v-validate data-vv-rules="min:10|max:250"
-                ></textarea>
-              </div>
-              <small class="text-danger" v-show="errors.has('value')">{{ errors.first('value') }}</small>
+      <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <hr>
+              <h2 class="margin-top">Calificaciones</h2>
+              <p>Ingresa tu calificación</p>
+              <no-ssr>
+                <star-rating
+                  v-model="rating.NUMR_VALOR"
+                  :increment="1"
+                  :star-size="35"
+                  data-vv-name="value"
+                  name="value"
+                  v-validate data-vv-rules="required">
+                </star-rating>
+              </no-ssr>
+              <form @submit.prevent="validateRating">
+                <div class="form-group margin-top-20">
+                  <textarea class="form-control" 
+                    :rows="3"
+                    v-model="rating.DESC_CALIFICACION"
+                    v-validate data-vv-rules="min:10|max:250"
+                  ></textarea>
+                </div>
+                <small class="text-danger" v-show="errors.has('value')">{{ errors.first('value') }}</small>
 
-              <button type="submit" class="btn btn-default">Calificar</button>
-            </form>
-           </div>
+                <button type="submit" class="btn btn-default">Calificar</button>
+              </form>
+            </div>
           </div>
         </div>
-        </div>
+        </div>      
         <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
           <div class="col-xs-12 contorno">
             <h3>Última calificación</h3>
@@ -141,14 +141,14 @@
             <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
             <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
           </div>
-        </div>
       </div><!-- /container -->
+      
     </section><!-- /Calificaciones -->
 
     <!-- COMENTARIOS -->
     <section id="comentarios" name="comentarios" class="container-fluid">
-      <div class="container">
-      <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
+        <div class="container">
+        <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">  
         <div class="row">
           <hr>
           <h2 class="margin-top">Comentarios</h2>
@@ -169,8 +169,8 @@
             <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}</small>
             <p><button type="submit" class="btn btn-default">Comentar</button></p>
           </form>
-          <!--FIN FORM DE COMENTAR-->
           
+          <!--FIN FORM DE COMENTAR-->
         </div>
         </div>
         <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
@@ -213,7 +213,6 @@
               </form>
             </div>
             <!-- FIN FORM RESPUESTA -->
-
             <p>
               <a href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
             </p>
