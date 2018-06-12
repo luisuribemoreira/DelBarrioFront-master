@@ -78,7 +78,9 @@
                 <network network="twitter"><a style="cursor:pointer;"><icon :scale="2" name="twitter-square" :aria-hidden="true"></icon></a></network>
             </div>
           </social-sharing>
+          <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
           <a href="#" @click="type = 'pub'" class="margin-top label label-danger" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><icon name="exclamation-circle"></icon><span style="vertical-align: super"> Denunciar</span></a>
+          </div>
           <p v-if="!post.FLAG_VALIDADO" class="margin-top">Esta publicación ha sido aceptada automáticamente y no ha pasado por moderación</p>
         </div>
       </div>
@@ -88,6 +90,7 @@
   <div id="interacciones" v-if="isAuthenticated">
     <!-- CALIFICACIONES -->
     <section id="calificaciones" class="container-fluid">
+    <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
@@ -116,9 +119,10 @@
 
               <button type="submit" class="btn btn-default">Calificar</button>
             </form>
+           </div>
           </div>
         </div>
-              
+        </div>
         <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
           <div class="col-xs-12 contorno">
             <h3>Última calificación</h3>
@@ -144,6 +148,7 @@
     <!-- COMENTARIOS -->
     <section id="comentarios" name="comentarios" class="container-fluid">
       <div class="container">
+      <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
         <div class="row">
           <hr>
           <h2 class="margin-top">Comentarios</h2>
@@ -166,6 +171,7 @@
           </form>
           <!--FIN FORM DE COMENTAR-->
           
+        </div>
         </div>
         <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
           <div v-if="c.FLAG_BAN" class="col-xs-12 contorno ban">
