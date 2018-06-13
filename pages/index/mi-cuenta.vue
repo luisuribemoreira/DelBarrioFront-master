@@ -11,13 +11,13 @@
         <div class="col-xs-12" v-if="isAuthenticated && loggedUser.rol === 102">
           <h3><icon name="comments-o" :aria-hidden="true" :scale="2"></icon><span style="vertical-align: super"> Preguntas</span></h3>
           <hr>
-          <p><span class="label label-default">0</span> <span style="vertical-align: sub"> Que aún no respondiste</span></p>
+          <p><span class="label label-default">{{ preguntas }}</span> <span style="vertical-align: sub"> Que aún no respondiste</span></p>
         </div>
         <!-- CLIENTE - RESPUESTAS -->
         <div class="col-xs-12" v-if="isAuthenticated && loggedUser.rol === 101">
           <h3><icon name="comments-o" :aria-hidden="true" :scale="2"></icon><span style="vertical-align: super"> Respuestas</span></h3>
           <hr>
-          <p><span class="label label-default">0</span> <span style="vertical-align: sub"> Te han respondido</span></p>
+          <p><span class="label label-default">{{ respuestas }}</span> <span style="vertical-align: sub"> Te han respondido</span></p>
         </div>
       </div>
       <hr>
@@ -106,8 +106,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
-import controllerEmprendedor from '~/controllers/admin/entrepreneurs'
+import controllerPosts from '~/controllers/posts'
 import customValidations from '~/controllers/customvalidations'
+import commentsController from '~/controllers/comments'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
@@ -115,17 +116,34 @@ export default {
     return controller.GET(app, store._vm.loggedUser.id)
       .then(({ user }) => {
         if (store._vm.loggedUser.rol === 102) {
-          return controllerEmprendedor.GET(app, user.emprendedor.IDEN_EMPRENDEDOR)
-            .then(({ entrepreneur }) => {
+          return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
+            .then(({ posts }) => {
+              let preguntas = 0
+              posts.forEach(post => {
+                if (post.comentarios.length > 0) {
+                  post.comentarios.forEach(comentario => {
+                    if (!comentario.respuesta.IDEN_RESPUESTA) preguntas++
+                  })
+                }
+              })
               return {
                 user: user,
-                posts: entrepreneur.publicaciones
+                posts: posts,
+                preguntas
               }
             })
         } else {
-          return {
-            user: user
-          }
+          return commentsController.GETByUser(app, store._vm.loggedUser.id)
+            .then(({ comentarios }) => {
+              let respuestas = 0
+              comentarios.forEach(comentario => {
+                if (comentario.respuesta.IDEN_RESPUESTA) respuestas++
+              })
+              return {
+                user: user,
+                respuestas
+              }
+            })
         }
       })
   },
