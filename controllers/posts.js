@@ -49,22 +49,16 @@ function GETAll (app, pageNumber = 1) {
 // Param.: context -> Contexto de la vista .vue, contiene los objetos instanciados en "data".
 // Return: lista todas las publicaciones de un emprendedor.
 // =======================================================================================
-function GETPostEmprendedor (app, idEmprendedor, pageNumber = 1) {
+function GETPostEmprendedor (app, idEmprendedor) {
   return app.$axios.$get(
-    'publicacion',
-    {
-      params: {
-        page: pageNumber
-      }
-    }
+    'publicacion'
   ).then(response => {
     let postAux = []
     response.data.forEach(ent => {
       if (ent.IDEN_EMPRENDEDOR === idEmprendedor) postAux.push(ent)
     })
     return {
-      posts: postAux,
-      pagination: response.pagination
+      posts: postAux
     }
   }).catch(errors => {
     console.log(errors)
