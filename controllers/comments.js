@@ -42,6 +42,19 @@ function POST (context) {
   })
 }
 
+function GETByUser (context, IDEN_USUARIO) {
+  return context.$axios.$get('private/comentario')
+    .then(response => {
+      let commentsAux = response.data.map(comment => { if (comment.IDEN_USUARIO === IDEN_USUARIO) return comment })
+      return {
+        comentarios: commentsAux
+      }
+    }).catch(errors => {
+      context.$notify.danger('Ha ocurrido un error inesperado.')
+    })
+}
+
 export default {
+  GETByUser,
   POST
 }
