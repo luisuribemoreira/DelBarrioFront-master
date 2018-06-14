@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     setState (post) {
-      controller.setState(this, post)
+      controllerPosts.setState(this, post)
     }
   },
   computed: mapGetters([
