@@ -11,12 +11,7 @@
           <nuxt-link :to="{ path: '/administracion/publicaciones/nueva' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
-            <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
-            </div>
-          </form>
+          <input class="form-control" name="search" v-model="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPublicaciones()">
         </div>
       </div>
       <div class="row margin-top">
@@ -95,12 +90,44 @@ export default {
   },
   data () {
     return {
-      posts: []
+      posts: [],
+      search: '',
+      postsAux: []
     }
   },
   methods: {
     setState (post) {
       controllerPosts.setState(this, post)
+    },
+    buscarPublicaciones () {
+      // Copiar todos los posts, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.posts
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todos los post en que el titulo o parte de el posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(post => {
+          if (post.NOMB_PUBLICACION.match(new RegExp(this.search, 'gi')) !== null) return post
+        })
+
+        // Limpia los posts actuales y lo llena con los posts que cumplan el criterio de busqueda
+        this.posts = []
+        postAux.forEach(post => {
+          if (post) this.posts.push(post)
+        })
+
+        // Ordena los posts en orden lexicografico.
+        this.posts.sort(function (a, b) {
+          return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.posts = this.postsAux
+      }
     }
   },
   computed: mapGetters([
