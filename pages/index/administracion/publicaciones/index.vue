@@ -75,6 +75,7 @@
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
 import controllerPosts from '~/controllers/posts'
+import moment from 'moment'
 
 export default {
   asyncData ({ app, store }) {
@@ -82,6 +83,12 @@ export default {
       .then(({ user }) => {
         return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
           .then(({ posts }) => {
+            // Ordena los posts segun la fecha, el mas reciente primero y el mas antiguo al final
+            posts.sort(function (a, b) {
+              if (moment(a.FECH_CREACION).isAfter(b.FECH_CREACION)) return -1
+              if (moment(a.FECH_CREACION).isBefore(b.FECH_CREACION)) return 1
+              return 0
+            })
             return {
               posts: posts
             }
