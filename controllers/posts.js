@@ -134,7 +134,7 @@ function PUT (context, blobs = undefined) {
       IDEN_CATEGORIA: context.post.IDEN_CATEGORIA,
       NOMB_PUBLICACION: context.post.NOMB_PUBLICACION,
       DESC_PUBLICACION: context.post.DESC_PUBLICACION,
-      NUMR_PRECIO: context.post.NUMR_PRECIO,
+      NUMR_PRECIO: parseInt(context.post.NUMR_PRECIO),
       FLAG_CONTENIDO_ADULTO: context.post.FLAG_CONTENIDO_ADULTO,
       ETIQUETAS: context.post.ETIQUETAS
     }
