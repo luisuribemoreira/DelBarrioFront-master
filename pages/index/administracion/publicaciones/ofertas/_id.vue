@@ -61,7 +61,7 @@
                 <div class="form-group">
                   <label for="precio-oferta">Precio Oferta</label>
                   <input type="text" v-model="sale.NUMR_PRECIO" name="price" class="form-control" v-validate :data-vv-rules="isSale ? 'required|numeric|between:0,1000000000': ''" />
-                  <small class="text-danger" v-show="errors.has('price')">{{ errors.first('price') }}</small>
+                  <small class="text-danger" v-if="errorMsgs.offer != undefined">{{ errorMsgs.offer }}</small>
                 </div>
                 <div class="form-group">
                   <label for="fecha-inicio">Fecha Inicio</label>
@@ -140,14 +140,18 @@ export default {
           errorMessages.start_date = 'Este campo es obligatorio'
         }
 
+        if (!customvalidations.isOffer(this.post.NUMR_PRECIO, this.sale.NUMR_PRECIO)) {
+          errorMessages.offer = 'El precio de oferta no puede ser mayor o igual al precio de venta'
+        }
+
         if (customvalidations.isDefined(this.sale.FECH_TERMINO)) {
           if (!customvalidations.isDate(this.sale.FECH_TERMINO)) {
             errorMessages.end_date = 'Este campo no corresponde a una fecha'
           } else {
             // Si la fecha de inicio existe y es válida, comparar que el inicio sea posterior a ayer y término sea posterior al inicio
             if (!errorMessages.start_date) {
-              if (!customvalidations.isDateAfter(new Date(), this.sale.FECH_INICIO)) {
-                errorMessages.start_date = 'La fecha de inicio debe ser igual o posterior a la de hoy'
+              if (!customvalidations.inicio(this.sale.FECH_INICIO)) {
+                errorMessages.start_date = 'La fecha de inicio debe ser mayor o igual a hoy'
               } else if (!customvalidations.isDateAfter(this.sale.FECH_INICIO, this.sale.FECH_TERMINO)) {
                 errorMessages.end_date = 'La fecha de término debe ser posterior a la de inicio'
               }
@@ -157,10 +161,11 @@ export default {
           errorMessages.end_date = 'Este campo es obligatorio'
         }
 
-        if (errorMessages.start_date || errorMessages.end_date) {
+        if (errorMessages.start_date || errorMessages.end_date || errorMessages.offer) {
           result = undefined
           this.errorMsgs.start_date = errorMessages.start_date
           this.errorMsgs.end_date = errorMessages.end_date
+          this.errorMsgs.offer = errorMessages.offer
         }
 
         if (result) {
