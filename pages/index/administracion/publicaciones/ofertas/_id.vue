@@ -128,58 +128,60 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      this.$validator.validateAll().then((result) => {
-        // Validar fechas de forma manual [Incompatibilidad con VV]
-        let errorMessages = {}
-        this.errorMsgs = {}
-        if (customvalidations.isDefined(this.sale.FECH_INICIO)) {
-          if (!customvalidations.isDate(this.sale.FECH_INICIO)) {
-            errorMessages.start_date = 'Este campo no corresponde a una fecha'
-          }
-        } else {
-          errorMessages.start_date = 'Este campo es obligatorio'
-        }
-
-        if (!customvalidations.isOffer(this.post.NUMR_PRECIO, this.sale.NUMR_PRECIO)) {
-          errorMessages.offer = 'El precio de oferta no puede ser mayor o igual al precio de venta'
-        }
-
-        if (customvalidations.isDefined(this.sale.FECH_TERMINO)) {
-          if (!customvalidations.isDate(this.sale.FECH_TERMINO)) {
-            errorMessages.end_date = 'Este campo no corresponde a una fecha'
+      if (this.isSale === true) {
+        this.$validator.validateAll().then((result) => {
+          // Validar fechas de forma manual [Incompatibilidad con VV]
+          let errorMessages = {}
+          this.errorMsgs = {}
+          if (customvalidations.isDefined(this.sale.FECH_INICIO)) {
+            if (!customvalidations.isDate(this.sale.FECH_INICIO)) {
+              errorMessages.start_date = 'Este campo no corresponde a una fecha'
+            }
           } else {
-            // Si la fecha de inicio existe y es válida, comparar que el inicio sea posterior a ayer y término sea posterior al inicio
-            if (!errorMessages.start_date) {
-              if (!customvalidations.inicio(this.sale.FECH_INICIO)) {
-                errorMessages.start_date = 'La fecha de inicio debe ser mayor o igual a hoy'
-              } else if (!customvalidations.isDateAfter(this.sale.FECH_INICIO, this.sale.FECH_TERMINO)) {
-                errorMessages.end_date = 'La fecha de término debe ser posterior a la de inicio'
+            errorMessages.start_date = 'Este campo es obligatorio'
+          }
+
+          if (!customvalidations.isOffer(this.post.NUMR_PRECIO, this.sale.NUMR_PRECIO)) {
+            errorMessages.offer = 'El precio de oferta no puede ser mayor o igual al precio de venta'
+          }
+
+          if (customvalidations.isDefined(this.sale.FECH_TERMINO)) {
+            if (!customvalidations.isDate(this.sale.FECH_TERMINO)) {
+              errorMessages.end_date = 'Este campo no corresponde a una fecha'
+            } else {
+              // Si la fecha de inicio existe y es válida, comparar que el inicio sea posterior a ayer y término sea posterior al inicio
+              if (!errorMessages.start_date) {
+                if (!customvalidations.inicio(this.sale.FECH_INICIO)) {
+                  errorMessages.start_date = 'La fecha de inicio debe ser mayor o igual a hoy'
+                } else if (!customvalidations.isDateAfter(this.sale.FECH_INICIO, this.sale.FECH_TERMINO)) {
+                  errorMessages.end_date = 'La fecha de término debe ser posterior a la de inicio'
+                }
               }
             }
-          }
-        } else {
-          errorMessages.end_date = 'Este campo es obligatorio'
-        }
-
-        if (errorMessages.start_date || errorMessages.end_date || errorMessages.offer) {
-          result = undefined
-          this.errorMsgs.start_date = errorMessages.start_date
-          this.errorMsgs.end_date = errorMessages.end_date
-          this.errorMsgs.offer = errorMessages.offer
-        }
-
-        if (result) {
-          if (!this.isSale && this.post.oferta.IDEN_OFERTA !== undefined) {
-            controller.removeSale(this, this.post.oferta.IDEN_OFERTA)
-            this.$router.push({ path: '/administracion/publicaciones' })
-          } else if (this.post.oferta.IDEN_OFERTA !== undefined) {
-            controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
           } else {
-            controller.addSale(this, this.post.IDEN_PUBLICACION)
-            this.$router.push({ path: '/administracion/publicaciones' })
+            errorMessages.end_date = 'Este campo es obligatorio'
           }
-        }
-      })
+
+          if (errorMessages.start_date || errorMessages.end_date || errorMessages.offer) {
+            result = undefined
+            this.errorMsgs.start_date = errorMessages.start_date
+            this.errorMsgs.end_date = errorMessages.end_date
+            this.errorMsgs.offer = errorMessages.offer
+          }
+
+          if (result) {
+            if (!this.isSale && this.post.oferta.IDEN_OFERTA !== undefined) {
+              controller.removeSale(this, this.post.oferta.IDEN_OFERTA)
+              this.$router.push({ path: '/administracion/publicaciones' })
+            } else if (this.post.oferta.IDEN_OFERTA !== undefined) {
+              controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
+            } else {
+              controller.addSale(this, this.post.IDEN_PUBLICACION)
+              this.$router.push({ path: '/administracion/publicaciones' })
+            }
+          }
+        })
+      }
     }
   },
   head () {
