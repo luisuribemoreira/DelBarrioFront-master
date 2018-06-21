@@ -185,7 +185,6 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <breadcrumb/>
     <nuxt/>
     <footer class="container-fluid">
         <div class="container">
