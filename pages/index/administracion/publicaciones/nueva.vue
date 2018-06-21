@@ -68,12 +68,12 @@
               </div>              
               <div class="form-group">
                 <label for="price">Precio</label>
-                <input type="text" class="form-control" v-model="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric" data-vv-as="precio" name="price">
+                <input type="text" class="form-control" v-model="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric|max:7" data-vv-as="precio" name="price">
                 <small class="text-danger" v-show="errors.has('price')">{{ errors.first('price') }}</small>
               </div>              
               <div class="form-group">
                 <label for="descripcion">Descripcion</label>
-                  <textarea v-model="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:5000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
+                  <textarea v-model="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:10000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
                 <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
               </div>
               <div class="row">
