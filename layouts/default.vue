@@ -142,7 +142,6 @@
                         <li><nuxt-link to="/administracion/rubros">Rubros</nuxt-link></li>
                         <li><nuxt-link to="/administracion/razon-denuncia">Razón de denuncia</nuxt-link></li>
                         <li><nuxt-link to="/administracion/razon-desactivacion">Razón de desactivación</nuxt-link></li>
-                        <li><nuxt-link to="/administracion/rubros">Rubros</nuxt-link></li>
                         <li><nuxt-link to="/administracion/terminos-condiciones">Términos y condiciones</nuxt-link></li>
                         <li><nuxt-link to="/administracion/preguntas-frecuentes">Preguntas Frecuentes</nuxt-link></li>
                       </ul>
