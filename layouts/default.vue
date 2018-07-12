@@ -44,7 +44,7 @@
                     <li><nuxt-link to="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i></nuxt-link></li>
                 </ul>
                 <form class="input-group text-truncate">
-                    <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text" v-model="search">
+                    <input class="form-control" name="search" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" type="text" v-model="search">
                     <div class="input-group-btn">
                         <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" :aria-hidden="true"></i></button>
                     </div>
@@ -88,7 +88,7 @@
                     <li><nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link></li>
                 </ul>
                 <form class="input-group text-truncate">
-                    <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text" v-model="search">
+                    <input class="form-control" name="search" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" type="text" v-model="search">
                     <div class="input-group-btn">
                         <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" :aria-hidden="true"></i></button>
                     </div>
@@ -176,7 +176,7 @@
                     <li><nuxt-link to="/preguntas-frecuentes" title="Preguntas frecuentes"><icon name="question-circle" :aria-hidden="true"></icon></nuxt-link></li>
                 </ul>
                 <form class="input-group text-truncate">
-                    <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text" v-model="search">
+                    <input class="form-control" name="search" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" type="text" v-model="search">
                     <div class="input-group-btn">
                         <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
                     </div>
