@@ -68,12 +68,6 @@
             </div>
           </transition-group>
         </div>
-            
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <button type="button" class="btn btn-default"><a href="resultado-todo-productos.html">Ver todos los productos</a></button>
-                </div>
-            </div>
         </div><!-- /container -->
     </section><!-- /Fila de Productos -->
     
