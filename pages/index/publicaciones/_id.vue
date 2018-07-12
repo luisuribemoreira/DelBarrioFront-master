@@ -126,7 +126,6 @@
         <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
           <div class="col-xs-12 contorno">
             <h3>Última calificación</h3>
-             <div v-if="post.calificaciones[0].FLAG_BAN === false">
             <div class="estrellas">
               <no-ssr>
                 <star-rating
@@ -141,7 +140,6 @@
             <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
             <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
             <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
-            </div>
           </div>
       </div><!-- /container -->
       
