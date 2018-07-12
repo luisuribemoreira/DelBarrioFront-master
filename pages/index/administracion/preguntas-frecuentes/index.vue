@@ -12,9 +12,9 @@
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
           <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Pregunta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPregunta()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+             <icon name="search" :aria-hidden="true"></icon>
             </div>
           </form>
         </div>
@@ -75,9 +75,46 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
   },
+  data () {
+    return {
+      faqs: [],
+      search: '',
+      postsAux: []
+    }
+  },
   methods: {
     deleteFaq: function (f) {
       controller.DELETE(f, this)
+    },
+    buscarPregunta () {
+      // Copiar todas las faqs, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.faqs
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todas las razones en que el nombre o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(f => {
+          if (f.NOMB_FAQ.match(new RegExp(this.search, 'gi')) !== null) return f
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.faqs = []
+        postAux.forEach(f => {
+          if (f) this.faqs.push(f)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.faqs.sort(function (a, b) {
+          return a.NOMB_FAQ.localeCompare(b.NOMB_FAQ)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.faqs = this.postsAux
+      }
     }
   },
   head () {

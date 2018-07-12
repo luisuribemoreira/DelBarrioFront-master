@@ -12,9 +12,9 @@
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
           <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de razón..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazon()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+              <icon name="search" :aria-hidden="true"></icon>
             </div>
           </form>
         </div>
@@ -74,9 +74,46 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
   },
+  data () {
+    return {
+      denouncereasons: [],
+      search: '',
+      postsAux: []
+    }
+  },
   methods: {
     setState (denouncereason) {
       controller.setState(this, denouncereason)
+    },
+    buscarRazon () {
+      // Copiar todas las razones, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.denouncereasons
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todas las razones en que el nombre o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(denouncereason => {
+          if (denouncereason.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denouncereason
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.denouncereasons = []
+        postAux.forEach(denouncereason => {
+          if (denouncereason) this.denouncereasons.push(denouncereason)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.denouncereasons.sort(function (a, b) {
+          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.denouncereasons = this.postsAux
+      }
     }
   },
   head () {

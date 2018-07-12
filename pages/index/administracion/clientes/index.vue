@@ -9,9 +9,9 @@
       <div class="row">
         <div class="col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-3 margin-top">
           <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Apellido de Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+              <icon name="search" :aria-hidden="true"></icon>
             </div>
           </form>
         </div>
@@ -75,9 +75,46 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
   },
+  data () {
+    return {
+      clients: [],
+      search: '',
+      postsAux: []
+    }
+  },
   methods: {
     setState (client) {
       controller.setState(this, client)
+    },
+    buscarCliente () {
+      // Copiar todos los clientes, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.clients
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todos los clientes en que el nombre, apellidos o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(client => {
+          if (client.APELLIDO_PATERNO.match(new RegExp(this.search, 'gi')) !== null) return client
+        })
+
+        // Limpia los clientes actuales y lo llena con los clientes que cumplan el criterio de busqueda
+        this.clients = []
+        postAux.forEach(client => {
+          if (client) this.clients.push(client)
+        })
+
+        // Ordena los Clientes en orden lexicografico.
+        this.clients.sort(function (a, b) {
+          return a.NOMBRES.localeCompare(b.NOMBRES)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.clients = this.postsAux
+      }
     }
   },
   filters: {

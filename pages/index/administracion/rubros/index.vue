@@ -12,9 +12,9 @@
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
           <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Rubro..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRubro()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+              <icon name="search" :aria-hidden="true"></icon>
             </div>
           </form>
         </div>
@@ -76,9 +76,46 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
   },
+  data () {
+    return {
+      workfields: [],
+      search: '',
+      postsAux: []
+    }
+  },
   methods: {
     setState (workfield) {
       controller.setState(this, workfield)
+    },
+    buscarRubro () {
+      // Copiar todos los rubros, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.workfields
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todos los rubros en que el nombre o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(workfield => {
+          if (workfield.NOMB_RUBRO.match(new RegExp(this.search, 'gi')) !== null) return workfield
+        })
+
+        // Limpia los rubros actuales y lo llena con los rubros que cumplan el criterio de busqueda
+        this.workfields = []
+        postAux.forEach(workfield => {
+          if (workfield) this.workfields.push(workfield)
+        })
+
+        // Ordena los Rubros en orden lexicografico.
+        this.workfields.sort(function (a, b) {
+          return a.NOMB_RUBRO.localeCompare(b.NOMB_RUBRO)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.workfields = this.postsAux
+      }
     }
   },
   head () {

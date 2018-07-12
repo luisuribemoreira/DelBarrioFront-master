@@ -78,7 +78,7 @@
                 <network network="twitter"><a style="cursor:pointer;"><icon :scale="2" name="twitter-square" :aria-hidden="true"></icon></a></network>
             </div>
           </social-sharing>
-          <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
+          <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
           <a href="#" @click="type = 'pub'" class="margin-top label label-danger" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><icon name="exclamation-circle"></icon><span style="vertical-align: super"> Denunciar</span></a>
           </div>
           <p v-if="!post.FLAG_VALIDADO" class="margin-top">Esta publicación ha sido aceptada automáticamente y no ha pasado por moderación</p>
@@ -126,7 +126,6 @@
         <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
           <div class="col-xs-12 contorno">
             <h3>Última calificación</h3>
-             <div v-if="post.calificaciones[0].FLAG_BAN === false">
             <div class="estrellas">
               <no-ssr>
                 <star-rating
@@ -141,7 +140,6 @@
             <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
             <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
             <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
-            </div>
           </div>
       </div><!-- /container -->
       
@@ -334,19 +332,37 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
-  asyncData ({ app, params }) {
+  asyncData ({ app, params, store }) {
     return controller.GET(app, params.id)
-      .then((post) => {
+      .then(({ post }) => {
         return denouncereasonscontroller.GETAll(app)
-          .then(denouncereasons => {
+          .then(({ denouncereasons }) => {
             let calificaciones = []
-            post.post.calificaciones.forEach(c => {
+            post.calificaciones.forEach(c => {
               if (!c.FLAG_BAN) calificaciones.push(c)
             })
-            post.post.calificaciones = calificaciones
-            return {
-              post: post.post,
-              denouncereasons: denouncereasons.denouncereasons
+            post.calificaciones = calificaciones
+            if (store._vm.isAuthenticated) {
+              if (post.emprendedor.usuario.IDEN_USUARIO === store._vm.loggedUser.id) {
+                return {
+                  post: post,
+                  denouncereasons: denouncereasons
+                }
+              }
+              return ratingscontroller.GET(app)
+                .then(({ calificaciones }) => {
+                  let calificacionAux = {}
+                  calificaciones.forEach(c => {
+                    if (c.IDEN_USUARIO === store._vm.loggedUser.id) {
+                      calificacionAux = c
+                    }
+                  })
+                  return {
+                    post: post,
+                    denouncereasons: denouncereasons,
+                    rating: calificacionAux
+                  }
+                })
             }
           })
       })
@@ -381,7 +397,11 @@ export default {
     },
     validateRating () {
       if (this.rating.NUMR_VALOR != null) {
-        ratingscontroller.POST(this)
+        if (this.rating.IDEN_CALIFICACION) {
+          ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
+        } else {
+          ratingscontroller.POST(this)
+        }
       } else {
         console.log('')
       }
