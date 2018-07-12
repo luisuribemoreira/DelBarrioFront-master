@@ -12,9 +12,9 @@
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
           <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Emprendedor..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarEmprendedor()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+              <icon name="search" :aria-hidden="true"></icon>
             </div>
           </form>
         </div>
@@ -76,9 +76,46 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
   },
+  data () {
+    return {
+      entrepreneurs: [],
+      search: '',
+      postsAux: []
+    }
+  },
   methods: {
     setState (entrepreneur) {
       controller.setState(this, entrepreneur)
+    },
+    buscarEmprendedor () {
+      // Copiar todos los posts, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.entrepreneurs
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todos los emprendedores en que el nombre de fantasia del emprendedor o parte de el posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(entrepreneur => {
+          if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search, 'gi')) !== null) return entrepreneur
+        })
+
+        // Limpia los emprendedores actuales y lo llena con los emprendedores que cumplan el criterio de busqueda
+        this.entrepreneurs = []
+        postAux.forEach(entrepreneur => {
+          if (entrepreneur) this.entrepreneurs.push(entrepreneur)
+        })
+
+        // Ordena los emprendedores en orden lexicografico.
+        this.entrepreneurs.sort(function (a, b) {
+          return a.DESC_NOMBRE_FANTASIA.localeCompare(b.DESC_NOMBRE_FANTASIA)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.entrepreneurs = this.postsAux
+      }
     }
   },
   head () {
