@@ -332,19 +332,37 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
-  asyncData ({ app, params }) {
+  asyncData ({ app, params, store }) {
     return controller.GET(app, params.id)
-      .then((post) => {
+      .then(({ post }) => {
         return denouncereasonscontroller.GETAll(app)
-          .then(denouncereasons => {
+          .then(({ denouncereasons }) => {
             let calificaciones = []
-            post.post.calificaciones.forEach(c => {
+            post.calificaciones.forEach(c => {
               if (!c.FLAG_BAN) calificaciones.push(c)
             })
-            post.post.calificaciones = calificaciones
-            return {
-              post: post.post,
-              denouncereasons: denouncereasons.denouncereasons
+            post.calificaciones = calificaciones
+            if (store._vm.isAuthenticated) {
+              if (post.emprendedor.usuario.IDEN_USUARIO === store._vm.loggedUser.id) {
+                return {
+                  post: post,
+                  denouncereasons: denouncereasons
+                }
+              }
+              return ratingscontroller.GET(app)
+                .then(({ calificaciones }) => {
+                  let calificacionAux = {}
+                  calificaciones.forEach(c => {
+                    if (c.IDEN_USUARIO === store._vm.loggedUser.id) {
+                      calificacionAux = c
+                    }
+                  })
+                  return {
+                    post: post,
+                    denouncereasons: denouncereasons,
+                    rating: calificacionAux
+                  }
+                })
             }
           })
       })
@@ -379,7 +397,11 @@ export default {
     },
     validateRating () {
       if (this.rating.NUMR_VALOR != null) {
-        ratingscontroller.POST(this)
+        if (this.rating.IDEN_CALIFICACION) {
+          ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
+        } else {
+          ratingscontroller.POST(this)
+        }
       } else {
         console.log('')
       }
