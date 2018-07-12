@@ -336,9 +336,14 @@ import { mapGetters } from 'vuex'
 export default {
   asyncData ({ app, params }) {
     return controller.GET(app, params.id)
-      .then(post => {
+      .then((post) => {
         return denouncereasonscontroller.GETAll(app)
           .then(denouncereasons => {
+            let calificaciones = []
+            post.post.calificaciones.forEach(c => {
+              if (!c.FLAG_BAN) calificaciones.push(c)
+            })
+            post.post.calificaciones = calificaciones
             return {
               post: post.post,
               denouncereasons: denouncereasons.denouncereasons
