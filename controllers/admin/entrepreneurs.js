@@ -50,7 +50,7 @@ function GETUser (app, userId) {
 // =======================================================================================
 function POST (context) {
   if (RutValidation(context.entrepreneur.RUT_EMPRENDEDOR)) {
-    context.$axios.$post(
+    return context.$axios.$post(
       'usuario',
       {
         EMAIL_USUARIO: context.entrepreneur.EMAIL_USUARIO,
@@ -58,23 +58,48 @@ function POST (context) {
         IDEN_ROL: 2
       }
     ).then(response => {
-      context.$axios.$post(
-        'private/emprendedor',
-        {
-          IDEN_USUARIO: response.data.IDEN_USUARIO,
-          DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
-          DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
-          DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
-          RUT_EMPRENDEDOR: parseInt(context.entrepreneur.RUT_EMPRENDEDOR.slice(0, -1)),
-          DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase()
-        }
-      ).then(response => {
-        context.entrepreneur = {}
-        context.$router.push({ path: '/administracion/emprendedores' })
-        context.$notify.success('Se ha agregado exitosamente.')
-      }).catch(errors => {
-        context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
-      })
+      if (context.entrepreneur.FECH_CREACION) {
+        context.entrepreneur.FECH_CREACION = undefined
+        return context.$axios.$post(
+          'private/emprendedor',
+          {
+            IDEN_USUARIO: response.data.IDEN_USUARIO,
+            IDEN_RUBRO: context.entrepreneur.IDEN_RUBRO,
+            DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
+            DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
+            DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
+            RUT_EMPRENDEDOR: parseInt(context.entrepreneur.RUT_EMPRENDEDOR.slice(0, -1)),
+            DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase(),
+            FECH_CREACION: context.entrepreneur.FECH_CREACION
+          }
+        ).then(response => {
+          context.entrepreneur = {}
+          context.$router.push({ path: '/administracion/emprendedores' })
+          context.$notify.success('Se ha agregado exitosamente.')
+        }).catch(errors => {
+          context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+        })
+      } else {
+        return context.$axios.$post(
+          'private/emprendedor',
+          {
+            IDEN_USUARIO: response.data.IDEN_USUARIO,
+            IDEN_RUBRO: context.entrepreneur.IDEN_RUBRO,
+            DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
+            DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
+            DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
+            RUT_EMPRENDEDOR: parseInt(context.entrepreneur.RUT_EMPRENDEDOR.slice(0, -1)),
+            DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase(),
+            FECH_CREACION: new Date()
+          }
+        ).then(response => {
+          context.entrepreneur = {}
+          context.$router.push({ path: '/administracion/emprendedores' })
+          context.$notify.success('Se ha agregado exitosamente.')
+        }).catch(errors => {
+          context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+        })
+      }
     }).catch(errors => {
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
     })

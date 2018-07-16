@@ -8,11 +8,6 @@
           <form @submit.prevent="validateBeforeSubmit">
             <h4>Datos del Emprendimiento</h4>
             <div class="form-group margin-top">
-              <label for="name">Nombre de fantasía</label>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="entrepreneur.DESC_NOMBRE_FANTASIA" class="form-control"/>
-              <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
-            </div>
-            <div class="form-group margin-top">
               <label for="realname">Nombre Empresa</label>
               <input v-validate data-vv-rules="required" data-vv-as="nombre empresa" name="realname" type="text" v-model="entrepreneur.DESC_NOMBRE_EMPRESA" class="form-control"/>
               <small class="text-danger" v-show="errors.has('realname')">{{ errors.first('realname') }}</small>
@@ -21,11 +16,6 @@
               <label for="rut">RUT</label>
               <input v-validate data-vv-rules="required|alpha_num" data-vv-as="RUT" name="rut" type="text" v-model="entrepreneur.RUT_EMPRENDEDOR" class="form-control"/>
               <small class="text-danger" v-show="errors.has('rut')">{{ errors.first('rut') }}</small>
-            </div>
-            <div class="form-group margin-top">
-              <label for="description">Descripcion</label>
-              <textarea v-validate data-vv-rules="required" data-vv-as="descripción" name="description" type="text" v-model="entrepreneur.DESC_EMPRENDEDOR" class="form-control"></textarea>
-              <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="workfield">Rubro</label>
@@ -44,8 +34,8 @@
               <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <div class="form-group margin-top">
-              <label for="pass">Clave municipalidad</label>
-              <input v-validate data-vv-rules="required" data-vv-as="clave de municipalidad" name="pass" type="text" v-model="entrepreneur.DESC_PASSWORD" class="form-control"/>
+              <label for="pass">Clave municipalidad (Autogenerada)</label>
+              <input v-validate data-vv-rules="required" data-vv-as="clave de municipalidad" name="pass" type="text" v-model="entrepreneur.DESC_PASSWORD" class="form-control" readonly/>
               <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
             <div>
@@ -68,26 +58,25 @@ import workfieldcontroller from '~/controllers/admin/workfields'
 export default {
   data () {
     return {
-      entrepreneur: {},
+      entrepreneur: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres
       message: false
     }
   },
   asyncData ({ app }) {
     return workfieldcontroller.GETAll(app)
-      .then(workfields => {
-        return controller.GETAll(app)
-          .then(entrepreneurs => {
-            return {
-              entrepreneurs: entrepreneurs.entrepreneurs,
-              workfields: workfields
-            }
-          })
+      .then(({ workfields }) => {
+        return {
+          workfields: workfields
+        }
       })
   },
   methods: {
     validateBeforeSubmit () {
       this.$validator.validateAll().then((result) => {
         if (result) {
+          this.entrepreneur.DESC_EMPRENDEDOR = 'DESCRIPCION TEMPORAL'
+          this.entrepreneur.DESC_NOMBRE_FANTASIA = 'NOMBRE TEMPORAL'
+          this.entrepreneur.FECH_CREACION = -1
           controller.POST(this)
         }
       })
