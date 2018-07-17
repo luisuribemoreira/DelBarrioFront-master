@@ -13,9 +13,9 @@
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
           <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar razón de desactivación..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazonDes">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+             <i class="fa fa-search" aria-hidden="true"></i>
             </div>
           </form>
         </div>
@@ -75,9 +75,46 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
   },
+  data () {
+    return {
+      deactivationreasons: [],
+      search: '',
+      postsAux: []
+    }
+  },
   methods: {
     setState (deactivationreason) {
       controller.setState(this, deactivationreason)
+    },
+    buscarRazonDes () {
+      // Copiar todas las razones, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.deactivationreasons
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todas las razones en que el nombre o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(deactivationreason => {
+          if (deactivationreason.NOMB_MOTIVO_DESHABILITACION.match(new RegExp(this.search, 'gi')) !== null) return deactivationreason
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.deactivationreasons = []
+        postAux.forEach(deactivationreason => {
+          if (deactivationreason) this.deactivationreasons.push(deactivationreason)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.deactivationreasons.sort(function (a, b) {
+          return a.NOMB_MOTIVO_DESHABILITACION.localeCompare(b.NOMB_MOTIVO_DESHABILITACION)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.deactivationreasons = this.postsAux
+      }
     }
   },
   head () {

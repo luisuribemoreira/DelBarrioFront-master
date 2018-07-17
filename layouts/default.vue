@@ -120,7 +120,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle usuario" data-toggle="dropdown" role="button" :aria-haspopup="true" :aria-expanded="false">{{ loggedUser.nombre }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><i class="fa fa-wrench" :aria-hidden="true"></i> Configuración</a></li>
+                            <li><nuxt-link to="/configuracion-admin"><i class="fa fa-wrench" :aria-hidden="true"></i> Configuración</nuxt-link></li>
                             <li role="separator" class="divider"></li>
                             <li><nuxt-link to="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</nuxt-link></li>
                         </ul>
