@@ -191,7 +191,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onClick="window.location.reload()">Volver</button>
           </div>
         </div>
       </div>
