@@ -95,13 +95,12 @@ export default {
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los clientes en que el nombre, apellidos o parte de ellos posea el texto escrito en el buscador
-        var cadena = this.search
-        cadena.split(' ')
+        let cadena = this.search.trim().split(' ')
         let postAux = this.postsAux.map(client => {
-          for (var i = 0; i < cadena.length; i++) {
-            var arregloTextoBusqueda = new RegExp(cadena, 'gi')
-            if (client.NOMBRES.match(arregloTextoBusqueda) || client.APELLIDO_PATERNO.match(arregloTextoBusqueda) ||
-                client.APELLIDO_MATERNO.match(arregloTextoBusqueda)) return client
+          for (let i = 0; i < cadena.length; i++) {
+            let palabraBusqueda = new RegExp(cadena[i], 'gi')
+            if (client.NOMBRES.match(palabraBusqueda) || client.APELLIDO_PATERNO.match(palabraBusqueda) ||
+                client.APELLIDO_MATERNO.match(palabraBusqueda)) return client
           }
         })
 
