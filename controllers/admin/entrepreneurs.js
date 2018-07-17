@@ -120,21 +120,25 @@ function POST (context) {
 //                    }
 // =======================================================================================
 function PUT (context) {
-  context.$axios.$put(
-    'private/emprendedor/' + context.id,
-    {
-      DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
-      DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
-      DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
-      RUT_EMPRENDEDOR: parseInt(context.rut.slice(0, -1)),
-      DV_EMPRENDEDOR: context.rut.slice(-1).toUpperCase()
-    }
-  ).then(response => {
-    context.$router.push({ path: '/administracion/emprendedores' })
-    context.$notify.success('Se ha editado exitosamente.')
-  }).catch(errors => {
-    context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
-  })
+  if (RutValidation(context.rut)) {
+    context.$axios.$put(
+      'private/emprendedor/' + context.id,
+      {
+        DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
+        DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
+        DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
+        RUT_EMPRENDEDOR: parseInt(context.rut.slice(0, -1)),
+        DV_EMPRENDEDOR: context.rut.slice(-1).toUpperCase()
+      }
+    ).then(response => {
+      context.$router.push({ path: '/administracion/emprendedores' })
+      context.$notify.success('Se ha editado exitosamente.')
+    }).catch(errors => {
+      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    })
+  } else {
+    context.message = 'Ingrese un rut válido.'
+  }
 }
 
 // estado emprendedor
