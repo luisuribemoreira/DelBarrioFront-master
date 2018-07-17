@@ -195,9 +195,23 @@
 <script>
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/auth.js'
+import userController from '~/controllers/admin/myaccount'
 
 export default {
   data () {
+    // Redirecciona a los emprendedores a su pagina de llenado de datos, en caso de no tenerlos aun.
+    this.$router.afterEach((transition) => {
+      if (this.isAuthenticated && this.loggedUser.rol === 102 && transition.path !== '/sign-out') {
+        userController.GET(this, this.loggedUser.id)
+          .then(({ user }) => {
+            if (!user.FECH_CREACION && this.$router.currentRoute.fullPath !== '/registro-emprendedor') {
+              this.$router.replace('/registro-emprendedor')
+            } else if (user.FECH_CREACION && this.$router.currentRoute.fullPath === '/registro-emprendedor') {
+              this.$router.replace('/')
+            }
+          })
+      }
+    })
     return {
       search: ''
     }
