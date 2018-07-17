@@ -30,7 +30,7 @@
                     
                 </div>
                 <div class="col-md-6 col-sm-12 margin-top">
-                   <img :src="entrepreneur.imagen.URL_IMAGEN ? entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-responsive margin-img" alt="">
+                   <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-responsive margin-img" alt="">
                    <social-sharing
                       v-bind:title="entrepreneur.DESC_NOMBRE_FANTASIA + ' | Del Barrio - Providencia'"
                       description="Portal de emprendimientos en Providencia."
