@@ -678,3 +678,7 @@ footer{
 .vue-input-tag-wrapper .input-tag .remove {
     color: #4f4344 !important;
 }
+
+canvas {
+    border: 1px solid;
+}
