@@ -11,12 +11,12 @@
           <nuxt-link :to="{ path: '/administracion/emprendedores/nuevo' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar Emprendedor..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarEmprendedor()">
+          <div class="input-group text-truncate">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Emprendedor..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarEmprendedor()">
             <div class="input-group-btn">
               <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div class="row margin-top">

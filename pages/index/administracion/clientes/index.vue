@@ -8,12 +8,12 @@
       </div>
       <div class="row">
         <div class="col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar Apellido de Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
+          <div class="input-group text-truncate">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar por Nombres o Apellidos del Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
             <div class="input-group-btn">
               <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div class="row margin-top">
@@ -95,8 +95,14 @@ export default {
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los clientes en que el nombre, apellidos o parte de ellos posea el texto escrito en el buscador
+        var cadena = this.search
+        cadena.split(' ')
         let postAux = this.postsAux.map(client => {
-          if (client.APELLIDO_PATERNO.match(new RegExp(this.search, 'gi')) !== null) return client
+          for (var i = 0; i < cadena.length; i++) {
+            var arregloTextoBusqueda = new RegExp(cadena, 'gi')
+            if (client.NOMBRES.match(arregloTextoBusqueda) || client.APELLIDO_PATERNO.match(arregloTextoBusqueda) ||
+                client.APELLIDO_MATERNO.match(arregloTextoBusqueda)) return client
+          }
         })
 
         // Limpia los clientes actuales y lo llena con los clientes que cumplan el criterio de busqueda

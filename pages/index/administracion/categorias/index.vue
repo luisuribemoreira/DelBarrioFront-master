@@ -11,12 +11,12 @@
           <nuxt-link to="/administracion/categorias/nueva" class="btn btn-tabla"><icon class="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+          <div class="input-group text-truncate">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Categoría..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCategoria()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+             <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div class="row margin-top">
@@ -79,12 +79,45 @@ export default {
   data () {
     return {
       open: false,
-      selected: 'caret-down'
+      selected: 'caret-down',
+      categories: [],
+      search: '',
+      postsAux: []
     }
   },
   methods: {
     setState (category) {
       controller.setState(this, category)
+    },
+    buscarCategoria () {
+      // Copiar todas las catagorias, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.categories
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todos los nombres de categoria o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux.map(category => {
+          if (category.NOMB_CATEGORIA.match(new RegExp(this.search, 'gi')) !== null) return category
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.categories = []
+        postAux.forEach(category => {
+          if (category) this.categories.push(category)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.categories.sort(function (a, b) {
+          return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.categories = this.postsAux
+      }
     }
   },
   head () {

@@ -8,12 +8,12 @@
       </div>
       <div class="row">
         <div class="col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-3">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" placeholder="Buscar" autocomplete="off" autofocus="autofocus" type="text">
+          <div class="input-group text-truncate">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar por Motivo..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscador()">
             <div class="input-group-btn">
-              <button class="btn btn-outline-success" type="submit"><icon name="search" :aria-hidden="true"></icon></button>
+              <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>        
       <div class="row margin-top">
@@ -215,7 +215,14 @@ export default {
       open: false,
       denounceresolution: {DESC_RESOLUCION: ''},
       type: '',
-      isBan: false
+      isBan: false,
+      publicaciones: [],
+      comentarios: [],
+      calificaciones: [],
+      search: '',
+      postsAux1: [],
+      postsAux2: [],
+      postsAux3: []
     }
   },
   computed: mapGetters([
@@ -224,6 +231,102 @@ export default {
   methods: {
     setState: client => {
       controller.setState(this, client)
+    },
+    buscador () {
+      // Filtra por cada tabpanel activo
+      this.buscarPublicacion()
+      this.buscarComentario()
+      this.buscarCalificacion()
+    },
+    buscarPublicacion () {
+      // Copiar todas las denuncias de publicaciones, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux1.length === 0) {
+        this.postsAux1 = this.publicaciones
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todas las denuncias de publicaciones en que el Motivo de denuncia o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux1.map(denounce => {
+          if (denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denounce
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.publicaciones = []
+        postAux.forEach(denounce => {
+          if (denounce) this.publicaciones.push(denounce)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.publicaciones.sort(function (a, b) {
+          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.publicaciones = this.postsAux1
+      }
+    },
+    buscarComentario () {
+      // Copiar todas las denuncias de comentarios, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux2.length === 0) {
+        this.postsAux2 = this.comentarios
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todas las denuncias de comentarios en que el Motivo de denuncia o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux2.map(denounce => {
+          if (denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denounce
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.comentarios = []
+        postAux.forEach(denounce => {
+          if (denounce) this.comentarios.push(denounce)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.comentarios.sort(function (a, b) {
+          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.comentarios = this.postsAux2
+      }
+    },
+    buscarCalificacion () {
+      // Copiar todas las denuncias de calificacion, si existen, a una variable auxiliar para no perder la lista original
+      if (this.postsAux3.length === 0) {
+        this.postsAux3 = this.calificaciones
+      }
+
+      // Si hay algo escrito en el buscador...
+      if (this.search.length > 0) {
+        // Se buscan todas las denuncias de calificacion en que el Motivo de denuncia o parte de ellos posea el texto escrito en el buscador
+        let postAux = this.postsAux3.map(denounce => {
+          if (denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denounce
+        })
+
+        // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
+        this.calificaciones = []
+        postAux.forEach(denounce => {
+          if (denounce) this.calificaciones.push(denounce)
+        })
+
+        // Ordena el listado obtenido en orden lexicografico.
+        this.calificaciones.sort(function (a, b) {
+          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        })
+      }
+
+      // Si no hay texto en el buscador se restaura la lista original
+      if (this.search.length === 0) {
+        this.calificaciones = this.postsAux3
+      }
     },
     validate () {
       this.$validator.validateAll().then((result) => {
