@@ -52,6 +52,12 @@
                   </no-ssr>
                 </div>
               </div>
+              <div>
+              <input type="checkbox" id="status" name="status" v-model="status"> Las imagenes adjuntadas son de mi autoría.
+              </div>
+              <div>
+                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
+              </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
                 <select v-model="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
@@ -119,7 +125,6 @@
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/posts'
 import categoriescontroller from '~/controllers/admin/categories'
-import customvalidations from '~/controllers/customvalidations'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
@@ -130,6 +135,8 @@ export default {
       sale: { },
       subcategorias: {},
       message: false,
+      status: false,
+      messageAutoria: false,
       selectedIndex: null,
       isSale: false,
       // Mensajes de error para validaciones manuales
@@ -152,43 +159,15 @@ export default {
       if (this.post.CODI_TIPO_PUBLICACION === 'undefined') this.post.CODI_TIPO_PUBLICACION = undefined
       this.$validator.validateAll().then(async (result) => {
         this.message = false
-        // Validar fechas de forma manual [Incompatibilidad con VV]
-        if (this.isSale) {
-          let errorMessages = {}
-          if (customvalidations.isDefined(this.sale.FECH_INICIO)) {
-            if (!customvalidations.isDate(this.sale.FECH_INICIO)) {
-              errorMessages.start_date = 'Este campo no corresponde a una fecha'
-            }
-          } else {
-            errorMessages.start_date = 'Este campo es obligatorio'
-          }
-
-          if (customvalidations.isDefined(this.sale.FECH_TERMINO)) {
-            if (!customvalidations.isDate(this.sale.FECH_TERMINO)) {
-              errorMessages.end_date = 'Este campo no corresponde a una fecha'
-            } else {
-              // Si la fecha de inicio existe y es válida, comparar que el término sea posterior al inicio
-              if (!errorMessages.start_date) {
-                if (!customvalidations.isDateAfter(this.sale.FECH_INICIO, this.sale.FECH_TERMINO)) {
-                  errorMessages.end_date = 'La fecha de término debe ser posterior a la de inicio'
-                }
-              }
-            }
-          } else {
-            errorMessages.end_date = 'Este campo es obligatorio'
-          }
-
-          if (errorMessages.start_date || errorMessages.end_date) {
-            result = undefined
-            this.errorMsgs.start_date = errorMessages.start_date
-            this.errorMsgs.end_date = errorMessages.end_date
-          }
-        }
         if (this.post.CODI_TIPO_PUBLICACION === undefined) {
           result = false
-          this.message = 'The tipo field is required.'
+          this.message = 'El campo tipo es obligatorio.'
         }
-
+        //  Revisar si la casilla de imagenes esta marcada, si no lo está obliga a marcarla.
+        if (!this.status) {
+          result = false
+          this.messageAutoria = 'Solo se permiten imagenes de su autoría.'
+        }
         if (result) {
           let blobs = []
           // Recorrer directamente los componentes, en vez de los modelos
