@@ -50,16 +50,15 @@ function GETUser (app, userId) {
 // =======================================================================================
 function POST (context) {
   if (RutValidation(context.entrepreneur.RUT_EMPRENDEDOR)) {
-    return context.$axios.$post(
-      'usuario',
-      {
-        EMAIL_USUARIO: context.entrepreneur.EMAIL_USUARIO,
-        DESC_PASSWORD: context.entrepreneur.DESC_PASSWORD,
-        IDEN_ROL: 2
-      }
-    ).then(response => {
-      if (context.entrepreneur.FECH_CREACION) {
-        context.entrepreneur.FECH_CREACION = undefined
+    if (context.entrepreneur.FECH_CREACION && context.entrepreneur.FECH_CREACION === -1) {
+      return context.$axios.$post(
+        'usuario',
+        {
+          EMAIL_USUARIO: context.entrepreneur.EMAIL_USUARIO,
+          DESC_PASSWORD: context.entrepreneur.DESC_PASSWORD,
+          IDEN_ROL: 2
+        }
+      ).then(response => {
         return context.$axios.$post(
           'private/emprendedor',
           {
@@ -69,8 +68,7 @@ function POST (context) {
             DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
             DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
             RUT_EMPRENDEDOR: parseInt(context.entrepreneur.RUT_EMPRENDEDOR.slice(0, -1)),
-            DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase(),
-            FECH_CREACION: context.entrepreneur.FECH_CREACION
+            DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase()
           }
         ).then(response => {
           context.entrepreneur = {}
@@ -79,7 +77,19 @@ function POST (context) {
         }).catch(errors => {
           context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
         })
-      } else {
+      }).catch(errors => {
+        context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+      })
+    } else {
+      return context.$axios.$post(
+        'usuario',
+        {
+          EMAIL_USUARIO: context.entrepreneur.EMAIL_USUARIO,
+          DESC_PASSWORD: context.entrepreneur.DESC_PASSWORD,
+          IDEN_ROL: 2,
+          FECH_CREACION: new Date()
+        }
+      ).then(response => {
         return context.$axios.$post(
           'private/emprendedor',
           {
@@ -89,8 +99,7 @@ function POST (context) {
             DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
             DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
             RUT_EMPRENDEDOR: parseInt(context.entrepreneur.RUT_EMPRENDEDOR.slice(0, -1)),
-            DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase(),
-            FECH_CREACION: new Date()
+            DV_EMPRENDEDOR: context.entrepreneur.RUT_EMPRENDEDOR.slice(-1).toUpperCase()
           }
         ).then(response => {
           context.entrepreneur = {}
@@ -99,10 +108,10 @@ function POST (context) {
         }).catch(errors => {
           context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
         })
-      }
-    }).catch(errors => {
-      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
-    })
+      }).catch(errors => {
+        context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+      })
+    }
   } else {
     context.message = 'Ingrese un rut válido'
   }
