@@ -130,20 +130,29 @@ function POST (context) {
 // =======================================================================================
 function PUT (context) {
   if (RutValidation(context.rut)) {
-    context.$axios.$put(
-      'private/emprendedor/' + context.id,
+    return context.$axios.$put('private/usuario/' + context.entrepreneur.usuario.IDEN_USUARIO,
       {
-        DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
-        DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
-        DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
-        RUT_EMPRENDEDOR: parseInt(context.rut.slice(0, -1)),
-        DV_EMPRENDEDOR: context.rut.slice(-1).toUpperCase()
+        EMAIL_USUARIO: context.entrepreneur.usuario.EMAIL_USUARIO,
+        DESC_PASSWORD: context.entrepreneur.usuario.DESC_PASSWORD
       }
     ).then(response => {
-      context.$router.push({ path: '/administracion/emprendedores' })
-      context.$notify.success('Se ha editado exitosamente.')
-    }).catch(errors => {
-      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+      return context.$axios.$put(
+        'private/emprendedor/' + context.id,
+        {
+          DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
+          DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
+          DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
+          RUT_EMPRENDEDOR: parseInt(context.rut.slice(0, -1)),
+          DV_EMPRENDEDOR: context.rut.slice(-1).toUpperCase()
+        })
+        .then(res => {
+          context.$router.push({ path: '/administracion/emprendedores' })
+          context.$notify.success('Se ha editado exitosamente.')
+        }).catch(errors => {
+          if (errors) context.$notify.warning('Ha ocurrido un error inesperado.')
+        })
+    }).catch(error => {
+      if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
     })
   } else {
     context.message = 'Ingrese un rut válido.'
