@@ -11,12 +11,12 @@
           <nuxt-link :to="{ path: '/administracion/preguntas-frecuentes/nueva' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
+          <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar Pregunta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPregunta()">
             <div class="input-group-btn">
              <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div class="row margin-top">

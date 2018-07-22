@@ -8,7 +8,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas?</label>
-                <input type="text" class="form-control" placeholder="Buscar..." v-model="search.find" required>
+                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto o Servicio..." v-model="search.find" required>
               </div>
             </div>
             <div class="col-sm-6">
@@ -61,9 +61,9 @@
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="categoria" class="margin-top-20">Categoria</label>
+                <label for="categoria" class="margin-top-20">Categoría</label>
                 <select class="form-control">
-                  <option>Seleccione</option>
+                  <option>Seleccione una Categoría</option>
                   <option v-for="category in categories" :key="category.IDEN_CATEGORIA">{{category.NOMB_CATEGORIA}}</option>
                 </select>
               </div>

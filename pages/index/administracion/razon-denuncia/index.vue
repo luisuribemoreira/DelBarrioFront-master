@@ -3,7 +3,7 @@
     <div class="container fondo-beige">
       <div class="row">
         <div class="col-xs-12">
-          <h2 class="text-center">Razones de denuncia</h2>
+          <h2 class="text-center">Razones de Denuncia</h2>
         </div>
       </div>
       <div class="row">
@@ -11,12 +11,12 @@
           <nuxt-link :to="{ path: '/administracion/razon-denuncia/nuevo' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de razón..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazon()">
+          <div class="input-group text-truncate">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Razón de Denuncia..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazon()">
             <div class="input-group-btn">
               <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div class="row margin-top">
@@ -25,7 +25,7 @@
         <thead>
           <tr>
             <th>Estado</th>
-            <th>Nombre</th>
+            <th>Nombre de Razón</th>
             <th>Acción</th>
           </tr>
         </thead>

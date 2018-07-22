@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-3">
           <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar por Motivo..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscador()">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar por Motivo de Denuncia..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscador()">
             <div class="input-group-btn">
               <icon name="search" :aria-hidden="true"></icon>
             </div>

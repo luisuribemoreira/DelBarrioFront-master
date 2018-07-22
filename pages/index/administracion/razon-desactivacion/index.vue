@@ -4,7 +4,7 @@
     <div class="container fondo-beige">
       <div class="row">
         <div class="col-xs-12">
-          <h2 class="text-center">Razones de desactivación de cuenta</h2>
+          <h2 class="text-center">Razones de Desactivación de Cuenta</h2>
         </div>
       </div>
       <div class="row">
@@ -12,12 +12,12 @@
           <nuxt-link :to="{ path: '/administracion/razon-desactivacion/nuevo' }" class="btn btn-tabla"><i class="fa fa-plus"></i> Agregar</nuxt-link>
         </div>
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <form class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar razón de desactivación..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazonDes">
+          <div class="input-group text-truncate">
+            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Razón de Desactivación..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazonDes">
             <div class="input-group-btn">
-             <i class="fa fa-search" aria-hidden="true"></i>
+             <icon name="search" :aria-hidden="true"></icon>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div class="row margin-top">
