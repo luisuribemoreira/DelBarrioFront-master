@@ -125,7 +125,7 @@
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
-              <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}</p>
+              <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>
               <h5 class="text-center">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
             </div>
           </transition-group>

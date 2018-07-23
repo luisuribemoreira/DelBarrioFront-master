@@ -36,8 +36,10 @@
                 <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
-              <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}</p>
+              <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
               <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+              <p class="text-center"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
+              <p class="text-center"></p>
             </div>
           </transition-group>
         </div>
@@ -119,12 +121,23 @@ export default {
           return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
             .then(({ posts }) => {
               let preguntas = 0
+              let PREG_SIN_RESPONDER
               posts.forEach(post => {
+                PREG_SIN_RESPONDER = 0
                 if (post.comentarios.length > 0) {
                   post.comentarios.forEach(comentario => {
-                    if (!comentario.respuesta.IDEN_RESPUESTA) preguntas++
+                    if (!comentario.respuesta.IDEN_RESPUESTA) {
+                      preguntas++
+                      PREG_SIN_RESPONDER++
+                    }
                   })
                 }
+                post.PREG_SIN_RESPONDER = PREG_SIN_RESPONDER
+              })
+              // Ordena los posts por fecha de creacion. El más reciente aparece primero en la lista (izquierda a derecha en la vista)
+              posts.sort(function (a, b) {
+                if (a.FECH_CREACION > b.FECH_CREACION) return -1
+                if (a.FECH_CREACION < b.FECH_CREACION) return 1
               })
               return {
                 user: user,
