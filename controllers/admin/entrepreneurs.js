@@ -51,6 +51,7 @@ function GETUser (app, userId) {
 function POST (context) {
   if (RutValidation(context.entrepreneur.RUT_EMPRENDEDOR)) {
     if (context.entrepreneur.FECH_CREACION && context.entrepreneur.FECH_CREACION === -1) {
+      // La fecha de creacion no se envia para que quede en null.
       return context.$axios.$post(
         'usuario',
         {
@@ -87,7 +88,7 @@ function POST (context) {
           EMAIL_USUARIO: context.entrepreneur.EMAIL_USUARIO,
           DESC_PASSWORD: context.entrepreneur.DESC_PASSWORD,
           IDEN_ROL: 2,
-          FECH_CREACION: new Date()
+          FECH_CREACION: 1 // En la api se cambia a new Date(). No se hace aqui para que no tome la fecha del computador del cliente.
         }
       ).then(response => {
         return context.$axios.$post(
