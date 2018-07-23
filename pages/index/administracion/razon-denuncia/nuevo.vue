@@ -23,6 +23,7 @@
 
 <script>
 import controller from '~/controllers/admin/denouncereasons'
+import _ from 'lodash'
 
 export default {
   data () {
@@ -33,7 +34,19 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
+        // Obtiene la lista de todas las razones de denuncia
+        let reasons = await (await controller.GETAll(this)).denouncereasons
+        // Evalua si la razon de denuncia ya existe. De ser así arroja un mensaje de error.
+        reasons.forEach((reason) => {
+          _.find(reason, r => {
+            if (r === this.denouncereason.NOMB_MOTIVO_DENUNCIA) {
+              result = false
+              this.message = 'La razón de denuncia ingresada ya existe.'
+              return result
+            }
+          })
+        })
         if (result) controller.POST(this)
       })
     }
