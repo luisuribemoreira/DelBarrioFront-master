@@ -19,7 +19,7 @@
           <table class="table table-responsive">
           <thead>
             <tr>
-              <th></th>
+              <th>Estado</th>
               <th>Título</th>
               <th>Tipo</th>
               <th>Categoría</th>
@@ -27,7 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in posts">
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in posts"><!--v-if="!post.FLAG_BAN"-->
               <td>
                 <icon :name="post.FLAG_VIGENTE ? 'check' : 'times'" :title="post.FLAG_VIGENTE ? 'Habilitado' : 'Deshabilitado'"></icon>
               </td>
@@ -44,6 +44,8 @@
                 <a class="btn" v-if="!post.FLAG_BAN" v-bind:class="post.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" @click="setState(post)" v-bind:title="post.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
                   <i class="fa" v-bind:class="post.FLAG_VIGENTE ? 'fa-times' : 'fa-check'"></i>
                 </a>
+                 <label v-if="post.FLAG_VIGENTE" style="padding: 10px">Deshabilitar</label>
+                 <label v-if="!post.FLAG_VIGENTE" style="padding: 10px">Habilitar</label>
               </td>
             </tr>
           </tbody>
