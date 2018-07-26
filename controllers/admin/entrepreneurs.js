@@ -133,15 +133,14 @@ function PUT (context) {
   if (RutValidation(context.rut)) {
     return context.$axios.$put('private/usuario/' + context.entrepreneur.usuario.IDEN_USUARIO,
       {
-        EMAIL_USUARIO: context.entrepreneur.usuario.EMAIL_USUARIO,
-        DESC_PASSWORD: context.entrepreneur.usuario.DESC_PASSWORD
+        EMAIL_USUARIO: context.entrepreneur.usuario.EMAIL_USUARIO
       }
     ).then(response => {
       return context.$axios.$put(
         'private/emprendedor/' + context.id,
         {
           DESC_EMPRENDEDOR: context.entrepreneur.DESC_EMPRENDEDOR,
-          DESC_NOMBRE_FANTASIA: context.entrepreneur.DESC_NOMBRE_FANTASIA,
+          IDEN_RUBRO: context.entrepreneur.IDEN_RUBRO,
           DESC_NOMBRE_EMPRESA: context.entrepreneur.DESC_NOMBRE_EMPRESA,
           RUT_EMPRENDEDOR: parseInt(context.rut.slice(0, -1)),
           DV_EMPRENDEDOR: context.rut.slice(-1).toUpperCase()
