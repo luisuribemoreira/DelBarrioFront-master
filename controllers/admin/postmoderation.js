@@ -12,6 +12,20 @@ function acceptPost (context, post) {
   })
 }
 
+function acceptOffer (context, offer) {
+  context.$axios.$put(
+    'private/oferta/' + offer.IDEN_OFERTA,
+    {
+      FLAG_VALIDADO: true
+    }
+  ).then(response => {
+    offer.FLAG_VALIDADO = true
+    context.$notify.success('Se ha aceptado la publicación')
+  }).catch(errors => {
+    context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+  })
+}
+
 function ban (context, post) {
   context.$axios.$put(
     'private/publicacion/' + post.IDEN_PUBLICACION,
@@ -25,8 +39,23 @@ function ban (context, post) {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
   })
 }
+function banOffer (context, offer) {
+  context.$axios.$put(
+    'private/oferta/' + offer.IDEN_OFERTA,
+    {
+      FLAG_BAN: true
+    }
+  ).then(response => {
+    offer.FLAG_BAN = true
+    context.$notify.success('Se ha rechazado la publicación')
+  }).catch(errors => {
+    context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+  })
+}
 
 export default {
   acceptPost,
-  ban
+  acceptOffer,
+  ban,
+  banOffer
 }

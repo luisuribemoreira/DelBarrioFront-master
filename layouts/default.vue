@@ -130,6 +130,7 @@
                 
                 <ul class="nav navbar-nav nav-admin">
                     <li><nuxt-link to="/administracion/moderar-publicaciones">Publicaciones</nuxt-link></li>
+                    <li><nuxt-link to="/administracion/moderar-ofertas">Ofertas</nuxt-link></li>
                     <li><nuxt-link to="/administracion/denuncias">Denuncias</nuxt-link></li>
                     <li><nuxt-link to="/administracion/emprendedores">Emprendedores</nuxt-link></li>
                     <li><nuxt-link to="/administracion/clientes">Clientes</nuxt-link></li>
