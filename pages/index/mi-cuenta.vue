@@ -95,7 +95,43 @@
               <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
               <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
-            <button type="submit" class="btn btn-default">Cambiar</button>
+            <div v-if="loggedUser.rol === 102">
+              <div style="text-align: center">
+                <h2><span style="vertical-align: super">Datos de mi Empresa</span></h2>
+                <hr>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Nombre de Fantasía</label>
+                <input v-validate data-vv-rules="required" data-vv-as="nombre fantasia" name="nombre fantasia" type="text" v-model="user.emprendedor.DESC_NOMBRE_FANTASIA" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('nombre fantasia')">{{ errors.first('nombre fantasia') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Descripción</label>
+                <input v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Dirección Comercial</label>
+                <input v-validate data-vv-rules="required" data-vv-as="direccion" name="direccion" type="text" v-model="contacto.Direccion.DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('direccion')">{{ errors.first('direccion') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Teléfono (Optativo)</label>
+                <input v-validate data-vv-rules="min:9|max:10" data-vv-as="telefono" name="telefono" type="text" v-model="contacto.Telefono.DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Celular</label>
+                <input v-validate data-vv-rules="required|min:8|max:8" data-vv-as="celular" name="celular" type="text" v-model="contacto.Celular.DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Correo de Contácto</label>
+                <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model="contacto.Correo.DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
+              </div>
+              <button type="submit" class="btn btn-default">Cambiar</button>
+            </div>
           </form>
         </div>
       </div>
@@ -139,10 +175,22 @@ export default {
                 if (a.FECH_CREACION > b.FECH_CREACION) return -1
                 if (a.FECH_CREACION < b.FECH_CREACION) return 1
               })
+
+              let contactos = { Telefono: {}, Direccion: {}, Correo: {}, Celular: {} }
+              user.persona.contacto.forEach(cont => {
+                if (cont.TIPO_CONTACTO === 'Telefono') contactos.Telefono = cont
+
+                if (cont.TIPO_CONTACTO === 'Direccion') contactos.Direccion = cont
+
+                if (cont.TIPO_CONTACTO === 'Correo') contactos.Correo = cont
+
+                if (cont.TIPO_CONTACTO === 'Celular') contactos.Celular = cont
+              })
               return {
                 user: user,
                 posts: posts,
-                preguntas
+                preguntas: preguntas,
+                contacto: contactos
               }
             })
         } else {
@@ -166,7 +214,10 @@ export default {
       format: 'dd MMM, yyyy',
       posts: [],
       dataErrorMsg: { error_edad: undefined, error_pw: undefined },
-      imageUrl: process.env.imagesUrl
+      imageUrl: process.env.imagesUrl,
+      entrepreneur: {},
+      contacto: {},
+      preguntas: 0
     }
   },
   components: {
@@ -192,7 +243,11 @@ export default {
         }
 
         if (result) {
-          controller.PUT(this, this.user)
+          if (this.loggedUser.rol === 102) {
+            controller.PUTEmprendedor(this)
+          } else {
+            controller.PUT(this, this.user)
+          }
         }
       })
     }
