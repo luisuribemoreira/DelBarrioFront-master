@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             <tr :key="post.IDEN_PUBLICACION" v-for="post in posts" v-if="!post.FLAG_VALIDADO && !post.FLAG_BAN">
-              <td>{{post.NOMB_PUBLICACION}}</td>
+              <td><nuxt-link :to="{ path: '/publicaciones/' + post.IDEN_PUBLICACION }">{{post.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>{{post.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
               <td>{{post.FECH_CREACION | dateFormat}}</td>

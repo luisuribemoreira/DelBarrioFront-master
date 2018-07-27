@@ -10,7 +10,7 @@
         <div class="row margin-top">
           <div class="row">
             <transition-group name="list" tag="div">
-              <div class="col-md-3 col-sm-3 col-xs-6 post-item" v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA" v-if="oferta.publicacion.FLAG_VIGENTE">
+              <div class="col-md-3 col-sm-3 col-xs-6 post-item" v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA" v-if="oferta.publicacion.FLAG_VIGENTE && !oferta.FLAG_BAN">
                 <nuxt-link :to="{ path: '/publicaciones/'+oferta.IDEN_PUBLICACION }">
                   <img v-if="!imagen[oferta.IDEN_PUBLICACION]" v-lazy="'/img/no-image.svg'" class="img-responsive" alt=""> 
                   <img v-else v-lazy="imageUrl + imagen[oferta.IDEN_PUBLICACION].URL_IMAGEN" class="img-responsive" alt="">

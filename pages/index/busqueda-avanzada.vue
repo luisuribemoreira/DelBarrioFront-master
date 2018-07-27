@@ -102,6 +102,7 @@
                 <nuxt-link :to="'/emprendedores/'+emprendedor.IDEN_EMPRENDEDOR">
                   <img :src="emprendedor.imagen.URL_IMAGEN ? emprendedor.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-responsive">
                 </nuxt-link>
+                <h3 class="text-center">{{emprendedor.DESC_NOMBRE_FANTASIA}}</h3>
               </slide>
             </carousel>
           </div>
