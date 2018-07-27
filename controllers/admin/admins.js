@@ -34,37 +34,36 @@ function GETAll (app) {
 //                    }
 // =======================================================================================
 function POST (context) {
-  context.$notify.success('Se ha agregado exitosamente')
-  context.$router.push({ path: '/administracion' })
-  /*
-  if (RutValidation(context.client.RUT_USUARIO)) {
+  context.$axios.$post(
+    'usuario',
+    {
+      EMAIL_USUARIO: context.user.EMAIL_USUARIO,
+      DESC_PASSWORD: context.user.DESC_PASSWORD,
+      IDEN_ROL: 3, // Rol de Administrador.
+      FECH_CREACION: 1 // Se auto genera en la API
+    }
+  ).then(response => {
+    console.log(response.data)
     context.$axios.$post(
-      'usuario',
+      'private/persona',
       {
-        EMAIL_USUARIO: context.client.EMAIL_USUARIO,
-        DESC_PASSWORD: context.client.DESC_PASSWORD
+        IDEN_USUARIO: response.data.IDEN_USUARIO,
+        NOMBRES: context.user.NOMBRES,
+        APELLIDO_PATERNO: context.user.APELLIDO_PATERNO,
+        APELLIDO_MATERNO: context.user.APELLIDO_MATERNO,
+        FECH_FECHA_NACIMIENTO: context.user.FECH_FECHA_NACIMIENTO
       }
-    ).then(response => {
-      context.$axios.$post(
-        'persona',
-        {
-          IDEN_USUARIO: response.data.IDEN_USUARIO
-          // AGREGAR DATOS DE CLIENTE
-        }
-      ).then(response => {
-        context.client = {}
-        // SE TIENE QUE AUTENTICAR AUTOMÁTICAMENTE
-        context.$notify.success('Se ha creado tu cuenta exitosamente.')
-      }).catch(errors => {
-        context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
-      })
+    ).then(() => {
+      context.$notify.success('Se ha agregado exitosamente')
+      context.$router.push({ path: '/' })
     }).catch(errors => {
+      console.log(errors)
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
     })
-  } else {
-    context.message = 'Ingrese un rut válido'
-  }
-  */
+  }).catch(errors => {
+    console.log(errors)
+    context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+  })
 }
 
 // Enviar PUT request a la fuente. Se utilizó placeholder.
