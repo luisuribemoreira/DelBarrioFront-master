@@ -25,7 +25,6 @@
             <thead>
               <tr>
                 <th>Estado</th>
-                <th></th>
                 <th>Nombre</th>
                 <th>Acción</th>
               </tr>

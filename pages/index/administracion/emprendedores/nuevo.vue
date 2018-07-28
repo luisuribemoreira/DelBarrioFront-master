@@ -15,7 +15,7 @@
             <div class="form-group margin-top">
               <label for="rut">RUT</label>
               <input v-validate data-vv-rules="required|alpha_num" data-vv-as="RUT" name="rut" type="text" v-model="entrepreneur.RUT_EMPRENDEDOR" class="form-control"/>
-              <small class="text-danger" v-show="errors.has('rut')">{{ errors.first('rut') }}</small>
+              <small class="text-danger" v-show="errors.has('rut')">{{ errors.first('rut')}}</small>
             </div>
             <div class="form-group margin-top">
               <label for="workfield">Rubro</label>
@@ -55,12 +55,24 @@
 import controller from '~/controllers/admin/entrepreneurs'
 import workfieldcontroller from '~/controllers/admin/workfields'
 
+// sobrescritura de mensaje para alpha_num en RUT
+const dict = {
+  custom: {
+    rut: {
+      alpha_num: 'El formato del RUT no debe contener puntos ni guion. (Ej: 16712581k)'
+    }
+  }
+}
+
 export default {
   data () {
     return {
       entrepreneur: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres
       message: false
     }
+  },
+  mounted () {
+    this.$validator.localize('es', dict)
   },
   asyncData ({ app }) {
     return workfieldcontroller.GETAll(app)
