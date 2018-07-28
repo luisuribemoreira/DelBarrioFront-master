@@ -120,7 +120,7 @@
       <div class="row margin-top">
         <div class="row">
           <transition-group name="list" tag="div">
-            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE">
+            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN">
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">

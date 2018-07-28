@@ -27,7 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in posts"><!--v-if="!post.FLAG_BAN"-->
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in posts" v-if="!post.FLAG_BAN">
               <td>
                 <icon :name="post.FLAG_VIGENTE ? 'check' : 'times'" :title="post.FLAG_VIGENTE ? 'Habilitado' : 'Deshabilitado'"></icon>
               </td>
