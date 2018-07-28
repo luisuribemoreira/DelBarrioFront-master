@@ -34,7 +34,8 @@ import controller from '~/controllers/admin/categories'
 export default {
   data () {
     return {
-      message: false
+      message: false,
+      subcategoriesAux: []
     }
   },
   asyncData ({ app, params }) {
@@ -53,7 +54,11 @@ export default {
   methods: {
     validateBeforeSubmit () {
       this.$validator.validateAll().then((result) => {
+        this.subcategoriesAux = this.category.subcategorias
         if (result) controller.PUT(this)
+        this.subcategoriesAux.forEach(sub => {
+          controller.PUT(sub)
+        })
       })
     }
   },
