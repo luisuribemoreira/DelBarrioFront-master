@@ -165,6 +165,14 @@ async function PUTEmprendedor (context) {
       }
     })
 
+    // Actualizacion de la imagen del emprendedor
+    const formData = new FormData()
+    formData.append('IDEN_EMPRENDEDOR', context.user.emprendedor.IDEN_EMPRENDEDOR)
+    for (let i = 0; i < context.user.blobs.length; i++) {
+      formData.append('avatar', context.user.blobs[i], 'image' + i + '.png')
+    }
+    await context.$axios.$put('/private/imagen/' + context.imagen.IDEN_IMAGEN, formData)
+
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
   } catch (error) {

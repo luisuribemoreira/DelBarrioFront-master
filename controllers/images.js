@@ -1,3 +1,19 @@
+// Retorna las imagenes correspondientes a la ID de un emprendedor en especifico.
+function GETByEmprendedor (context, id) {
+  return context.$axios.$get('imagen')
+    .then(response => {
+      let image
+      response.data.forEach(images => {
+        if (images.IDEN_EMPRENDEDOR === id) image = images
+      })
+      return {
+        image
+      }
+    }).catch(errors => {
+      console.log(errors)
+    })
+}
+
 function GETAll (context) {
   return context.$axios.get(
     'imagen'
@@ -47,5 +63,6 @@ function DELETE (context, id) {
 export default {
   POST,
   DELETE,
-  GETAll
+  GETAll,
+  GETByEmprendedor
 }

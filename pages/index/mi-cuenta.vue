@@ -100,6 +100,23 @@
                 <h2><span style="vertical-align: super">Datos de mi Empresa</span></h2>
                 <hr>
               </div>
+              <div class="row">
+                <div class="margin-left col-sm-6">
+                  <no-ssr>
+                  <croppa :width="200"
+                          :height="200"
+                          :quality="3.6"
+                          placeholder="Subir Imagen"
+                          :placeholder-font-size="18"
+                          :prevent-white-space="true"
+                          v-bind:initial-image="imagen ? imageUrl + imagen.URL_IMAGEN : ''"
+                          ></croppa>
+                  </no-ssr>
+                </div>
+              </div>
+              <div v-if="dataErrorMsg.error_foto">
+                <small class="text-danger">{{ dataErrorMsg.error_foto }}</small>
+              </div>
               <div class="form-group margin-top">
                 <label for="name">Nombre de Fantasía</label>
                 <input v-validate data-vv-rules="required" data-vv-as="nombre fantasia" name="nombre fantasia" type="text" v-model="user.emprendedor.DESC_NOMBRE_FANTASIA" class="form-control"/>
@@ -147,6 +164,7 @@ import controller from '~/controllers/admin/myaccount'
 import controllerPosts from '~/controllers/posts'
 import customValidations from '~/controllers/customvalidations'
 import commentsController from '~/controllers/comments'
+import controllerImages from '~/controllers/images'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
@@ -155,7 +173,7 @@ export default {
       .then(({ user }) => {
         if (store._vm.loggedUser.rol === 102) {
           return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
-            .then(({ posts }) => {
+            .then(async ({ posts }) => {
               let preguntas = 0
               let PREG_SIN_RESPONDER
               posts.forEach(post => {
@@ -186,11 +204,14 @@ export default {
 
                 if (cont.TIPO_CONTACTO === 'Celular') contactos.Celular = cont
               })
+
+              let imagen = await (await controllerImages.GETByEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)).image
               return {
                 user: user,
                 posts: posts,
                 preguntas: preguntas,
-                contacto: contactos
+                contacto: contactos,
+                imagen: imagen
               }
             })
         } else {
@@ -213,11 +234,12 @@ export default {
       selected: false,
       format: 'dd MMM, yyyy',
       posts: [],
-      dataErrorMsg: { error_edad: undefined, error_pw: undefined },
+      dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
       imageUrl: process.env.imagesUrl,
       entrepreneur: {},
       contacto: {},
-      preguntas: 0
+      preguntas: 0,
+      imagen: undefined
     }
   },
   components: {
@@ -227,7 +249,7 @@ export default {
     validateBeforeSubmit () {
       this.$validator.validateAll().then(async (result) => {
         // Se limpian los mensajes
-        this.dataErrorMsg = { error_edad: undefined, error_pw: undefined }
+        this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
         // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
         if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
           this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
@@ -238,12 +260,27 @@ export default {
           this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
         }
 
-        if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw) {
+        let blobs = []
+        // Recorrer directamente los componentes, en vez de los modelos
+        for (var key in this.$children) {
+          // Validar que efectivamente contiene los atributos que corresponden a un componente vue-croppa
+          if (this.$children[key] && this.$children[key].$children && this.$children[key].$children[0] && this.$children[key].$children[0].imageSet) {
+            let blob = await this.$children[key].$children[0].promisedBlob()
+            blobs.push(blob)
+          }
+        }
+
+        if (blobs.length === 0) {
+          this.dataErrorMsg.error_foto = 'Debe seleccionar una foto'
+        }
+
+        if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw || this.dataErrorMsg.error_foto) {
           result = undefined
         }
 
         if (result) {
           if (this.loggedUser.rol === 102) {
+            this.user.blobs = blobs
             controller.PUTEmprendedor(this)
           } else {
             controller.PUT(this, this.user)
