@@ -36,16 +36,17 @@
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
               <td>
                 <nuxt-link :to="{ path: '/administracion/publicaciones/editar/'+post.IDEN_PUBLICACION }" class="btn btn-secondary">
-                  <icon name="pencil-square-o" title="Editar"></icon>
+                  <!-- <icon name="pencil-square-o" title="Editar"></icon> -->
+                  <button class="btn btn-tabla">Editar</button>
                 </nuxt-link>
                 <nuxt-link :to="{ path: '/administracion/publicaciones/ofertas/'+post.IDEN_PUBLICACION }" class="btn btn-secondary">
-                  <i class="fa fa-money" title="Oferta"></i>
+                  <!-- <i class="fa fa-money" title="Oferta"></i> -->
+                  <button class="btn btn-tabla">Oferta</button>
                 </nuxt-link>
-                <a class="btn" v-if="!post.FLAG_BAN" v-bind:class="post.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" @click="setState(post)" v-bind:title="post.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
-                  <i class="fa" v-bind:class="post.FLAG_VIGENTE ? 'fa-times' : 'fa-check'"></i>
+                <a class="btn" @click="setState(post)">
+                  <button class="btn btn-tabla" v-if="!post.FLAG_VIGENTE">Habilitar</button>
+                  <button class="btn btn-tabla" v-if="post.FLAG_VIGENTE">Deshabilitar</button>
                 </a>
-                 <label v-if="post.FLAG_VIGENTE" style="padding: 10px">Deshabilitar</label>
-                 <label v-if="!post.FLAG_VIGENTE" style="padding: 10px">Habilitar</label>
               </td>
             </tr>
           </tbody>
