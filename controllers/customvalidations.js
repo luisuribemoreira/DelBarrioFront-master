@@ -23,16 +23,10 @@ function isOffer (before, after) {
 }
 
 function inicio (fecha) {
-  var f = new Date()
-  var dd = f.getDate()
-  var mm = f.getMonth()
-  var yyyy = f.getFullYear()
+  var fechaActual = new Date()
+  var fechaInicio = new Date(fecha)
 
-  var diaInput = fecha.getDate()
-  var mesInput = fecha.getMonth()
-  var anioInput = fecha.getFullYear()
-
-  if (diaInput + mesInput + anioInput >= dd + mm + yyyy) {
+  if (fechaActual <= fechaInicio) {
     return true
   } else {
     return false
@@ -40,15 +34,10 @@ function inicio (fecha) {
 }
 
 function isDateAfter (before, after) {
-  var ddb = before.getDate()
-  var mmb = before.getMonth()
-  var yyyyb = before.getFullYear()
+  var fechaInicio = new Date(before)
+  var fechaTermino = new Date(after)
 
-  var dda = after.getDate()
-  var mma = after.getMonth()
-  var yyyya = after.getFullYear()
-
-  if (ddb + mmb + yyyyb < dda + mma + yyyya) {
+  if (fechaInicio <= fechaTermino) {
     return true
   } else { return false }
 }
