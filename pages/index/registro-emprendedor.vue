@@ -90,7 +90,7 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label>
-                <input v-validate data-vv-rules="required|min:12|max:12" data-vv-as="celular" name="celular" type="text" v-model="contacto.CELULAR" class="form-control"/>
+                <input v-validate data-vv-rules="required|min:8|max:8" data-vv-as="celular" name="celular" type="text" v-model="contacto.CELULAR" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
@@ -131,8 +131,9 @@ export default {
       format: 'dd MMM, yyyy',
       dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
       user: {},
-      contacto: { CELULAR: '+569' },
-      entrepreneur: {}
+      contacto: {},
+      entrepreneur: {},
+      submitted: { valid: false, errors: false }
     }
   },
   components: {
@@ -176,9 +177,25 @@ export default {
           this.user.emprendedor.DESC_NOMBRE_FANTASIA = this.entrepreneur.DESC_NOMBRE_FANTASIA
           this.user.emprendedor.contacto = this.contacto
           this.user.blobs = blobs
-          controller.POST(this, this.user)
+          controller.POST(this, this.user).then(() => {
+            this.submitted.valid = true
+            this.submitted.errors = false
+            this.$router.replace('/sign-out')
+          }).catch(() => {
+            this.submitted.valid = false
+            this.submitted.errors = true
+          })
         }
       })
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    // Metodo que previene que el usuario navege sin haberse registrado.
+    // Permite la navegacion hacia la ruta /sign-out solo si el usuario la clickea o al finalizar el ingreso de datos.
+    if ((this.submitted.valid && !this.submitted.errors) || (to.path === '/sign-out' && !this.submitted.errors && !this.submitted.valid)) {
+      next()
+    } else {
+      next(false)
     }
   },
   computed: mapGetters([

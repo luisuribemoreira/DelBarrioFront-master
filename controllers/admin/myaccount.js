@@ -81,13 +81,20 @@ function GET (app, id) {
   return app.$axios.$get('/private/usuario/' + id)
     .then(res => {
       user = res.data
-      return app.$axios.$get('/private/contacto/' + user.persona.IDEN_PERSONA)
-        .then(response => {
-          user.persona.contacto = response.data
-          return {
-            user
-          }
-        })
+      if (user.persona && user.persona.IDEN_PERSONA) {
+        return app.$axios.$get('/private/contacto/' + user.persona.IDEN_PERSONA)
+          .then(response => {
+            user.persona.contacto = response.data
+            console.log(response.data)
+            return {
+              user
+            }
+          })
+      } else {
+        return {
+          user
+        }
+      }
     }).catch(errors => {
       console.log(errors)
     })
