@@ -124,7 +124,7 @@ export default {
   ]),
   head () {
     return {
-      title: 'Nuevo rubro',
+      title: 'Perfil',
       meta: [
         { hid: 'description', name: 'description', content: this.entrepreneur.DESC_EMPRENDEDOR },
         { property: 'og:title', content: this.entrepreneur.NOMB_FANTASIA },
