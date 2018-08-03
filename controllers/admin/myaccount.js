@@ -160,7 +160,6 @@ async function PUTEmprendedor (context) {
             DESC_CONTACTO: contacto[0].DESC_CONTACTO
           })
       } else if (!contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length > 0) {
-        debugger //eslint-disable-line
         await context.$axios.$post('/private/contacto/',
           {
             IDEN_PERSONA: context.user.persona.IDEN_PERSONA,
