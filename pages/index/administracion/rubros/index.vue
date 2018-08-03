@@ -37,10 +37,11 @@
                 <td>{{workfield.NOMB_RUBRO}}</td>
                 <td>
                   <nuxt-link :to="{ path: '/administracion/rubros/editar/'+ workfield.IDEN_RUBRO }" class="btn btn-secondary">
-                    <icon name="pencil-square-o" title="Editar"></icon>
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
-                  <a class="btn" v-bind:class="workfield.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" v-on:click="setState(workfield)" v-bind:title="workfield.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
-                    <icon :name="workfield.FLAG_VIGENTE ? 'times' : 'check'"></icon>
+                  <a class="btn" v-on:click="setState(workfield)">
+                    <button class="btn btn-tabla" v-if="!workfield.FLAG_VIGENTE">Habilitar</button>
+                    <button class="btn btn-tabla" v-if="workfield.FLAG_VIGENTE">Deshabilitar</button>
                   </a>
                 </td>
               </tr>

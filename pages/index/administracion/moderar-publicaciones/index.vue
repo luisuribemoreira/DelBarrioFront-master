@@ -35,8 +35,8 @@
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
               <td>{{post.FECH_CREACION | dateFormat}}</td>
               <td>
-                <a class="btn btn-success" @click="acceptPost(post)" title="Aceptar"><icon name="check"></icon></a>
-                <a class="btn btn-danger" @click="ban(post)" title="Rechazar"><icon name="times"></icon></a>
+                <a class="btn" @click="acceptPost(post)" title="Aceptar"><button class="btn btn-tabla">Aceptar</button></a>
+                <a class="btn" @click="ban(post)" title="Rechazar"><button class="btn btn-tabla">Rechazar</button></a>
               </td>
             </tr>
           </tbody>

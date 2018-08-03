@@ -35,8 +35,9 @@
                 <td>{{client.NOMBRES + ' ' + client.APELLIDO_PATERNO+ ' ' +client.APELLIDO_MATERNO}}</td>
                 <td>{{client.FECH_FECHA_NACIMIENTO | dateFormat }}</td>
                 <td>
-                  <a class="btn" :class="client.usuario.FLAG_BAN ? 'btn-success' : 'btn-danger'" @click="setState(client)" :title="client.usuario.FLAG_BAN ? 'Habilitar' : 'Deshabilitar'">
-                    <icon :name="client.usuario.FLAG_BAN ? 'check' : 'times'"></icon>
+                  <a class="btn"  @click="setState(client)">
+                  <button class="btn btn-tabla" v-if="client.usuario.FLAG_BAN">Habilitar</button>
+                  <button class="btn btn-tabla" v-if="!client.usuario.FLAG_BAN">Deshabilitar</button>
                   </a>
                 </td>
               </tr>

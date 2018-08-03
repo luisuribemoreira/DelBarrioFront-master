@@ -34,10 +34,12 @@
                 <td>{{f.DESC_FAQ}}</td>
                 <td>
                   <nuxt-link :to="{ path: '/administracion/preguntas-frecuentes/editar/'+f.IDEN_FAQ }" class="btn btn-secondary">
-                    <icon name="pencil-square-o" title="Editar"></icon>
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
-                  <a class="btn btn-danger" @click="deleteFaq(f)">
-                    <icon name="times" title="Deshabilitar"></icon>
+                </td>
+                  <td>
+                  <a @click="deleteFaq(f)">
+                    <button class="btn btn-tabla">Eliminar</button>
                   </a>
                 </td>
               </tr>

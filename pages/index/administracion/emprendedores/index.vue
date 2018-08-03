@@ -37,10 +37,12 @@
                 <td><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link></td>
                 <td>
                   <nuxt-link :to="{ path: '/administracion/emprendedores/editar/'+entrepreneur.IDEN_EMPRENDEDOR }" class="btn btn-secondary">
-                    <icon name="pencil-square-o" title="Editar"></icon>
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
-                  <a class="btn" :class="entrepreneur.usuario.FLAG_BAN ? 'btn-success' : 'btn-danger'" @click="setState(entrepreneur)" :title="entrepreneur.usuario.FLAG_BAN ? 'Deshabilitar' : 'Habilitar'">
-                    <icon :name="entrepreneur.usuario.FLAG_BAN ? 'check' : 'times'"></icon>
+                  <!--entrepreneur.usuario.FLAG_BAN -->
+                  <a @click="setState(entrepreneur)">
+                    <button class="btn" v-if="entrepreneur.usuario.FLAG_BAN">Habilitar</button>
+                    <button class="btn" v-if="!entrepreneur.usuario.FLAG_BAN">Deshabilitar</button>
                   </a>
                 </td>
               </tr>

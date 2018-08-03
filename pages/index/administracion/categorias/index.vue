@@ -38,10 +38,11 @@
                 <td><icon v-if="category.subcategorias.length > 0" name="angle-down"></icon> <b> {{category.NOMB_CATEGORIA}}</b></td>
                 <td>
                   <nuxt-link :to="{ path: '/administracion/categorias/editar/'+category.IDEN_CATEGORIA }" class="btn btn-secondary">
-                    <icon name="pencil-square-o" title="Editar"></icon>
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
-                  <a class="btn" v-bind:class="category.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" @click="setState(category)" v-bind:title="category.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
-                    <icon :name="category.FLAG_VIGENTE ? 'times' : 'check'"></icon>
+                  <a class="btn" @click="setState(category)">
+                  <button class="btn btn-tabla" v-if="!category.FLAG_VIGENTE">Habilitar</button>
+                  <button class="btn btn-tabla" v-if="category.FLAG_VIGENTE">Deshabilitar</button>
                   </a>
                 </td>
               </tr>
@@ -53,10 +54,11 @@
                 <td>{{subcategory.NOMB_CATEGORIA}}</td>
                 <td>
                   <nuxt-link :to="{ path: '/administracion/categorias/editar/'+subcategory.IDEN_CATEGORIA }" class="btn btn-default">
-                    <icon name="pencil-square-o" title="Editar"></icon>
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
-                  <a class="btn" :class="subcategory.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" v-on:click="setState(subcategory)" v-bind:title="subcategory.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
-                    <icon class="fa" :name="subcategory.FLAG_VIGENTE ? 'times' : 'check'"></icon>
+                   <a class="btn" @click="setState(subcategory)">
+                  <button class="btn btn-tabla" v-if="!subcategory.FLAG_VIGENTE">Habilitar</button>
+                  <button class="btn btn-tabla" v-if="subcategory.FLAG_VIGENTE">Deshabilitar</button>
                   </a>
                 </td>
               </tr>

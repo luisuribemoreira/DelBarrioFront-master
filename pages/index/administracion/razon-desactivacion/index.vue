@@ -38,8 +38,9 @@
             </td>
             <td>{{deactivationreason.NOMB_MOTIVO_DESHABILITACION}}</td>
             <td>
-              <a class="btn" v-bind:class="deactivationreason.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" v-on:click="setState(deactivationreason)" v-bind:title="deactivationreason.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
-                <i class="fa" v-bind:class="deactivationreason.FLAG_VIGENTE ? 'fa-times' : 'fa-check'"></i>
+              <a class="btn" v-on:click="setState(deactivationreason)">
+                <button class="btn btn-tabla" v-if="!deactivationreason.FLAG_VIGENTE">Habilitar</button>
+                <button class="btn btn-tabla" v-if="deactivationreason.FLAG_VIGENTE">Deshabilitar</button>
               </a>
             </td>
           </tr>

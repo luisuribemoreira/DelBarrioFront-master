@@ -41,8 +41,8 @@
               <td>{{oferta.FECH_INICIO}}</td>
               <td>{{oferta.FECH_TERMINO}}</td>
               <td>
-                <a class="btn btn-success" @click="acceptOffer(oferta)" title="Aceptar"><icon name="check"></icon></a>
-                <a class="btn btn-danger" @click="banOffer(oferta)" title="Rechazar"><icon name="times"></icon></a>
+                <a class="btn" @click="acceptOffer(oferta)" title="Aceptar"><button class="btn btn-tabla">Aceptar</button></a>
+                <a class="btn" @click="banOffer(oferta)" title="Rechazar"><button class="btn btn-tabla">Rechazar</button></a>
               </td>
             </tr>
           </tbody>

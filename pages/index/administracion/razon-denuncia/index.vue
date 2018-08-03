@@ -37,8 +37,9 @@
             </td>
             <td>{{denouncereason.NOMB_MOTIVO_DENUNCIA}}</td>
             <td>
-              <a class="btn" :class="denouncereason.FLAG_VIGENTE ? 'btn-danger' : 'btn-success'" v-on:click="setState(denouncereason)" :title="denouncereason.FLAG_VIGENTE ? 'Deshabilitar' : 'Habilitar'">
-                <icon :name="denouncereason.FLAG_VIGENTE ? 'times' : 'check'"></icon>
+              <a class="btn" v-on:click="setState(denouncereason)">
+                <button class="btn btn-tabla" v-if="!denouncereason.FLAG_VIGENTE">Habilitar</button>
+                <button class="btn btn-tabla" v-if="denouncereason.FLAG_VIGENTE">Deshabilitar</button>
               </a>
             </td>
           </tr>
