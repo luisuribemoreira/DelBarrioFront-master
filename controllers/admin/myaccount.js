@@ -153,21 +153,22 @@ async function PUTEmprendedor (context) {
 
     // _ -> Libreria externa llamada lodash.
     // Proporciona metodo forEach para recorrer objetos.
-    _.forEach(context.contacto, async (contacto, key) => {
-      if (contacto.IDEN_CONTACTO && contacto.DESC_CONTACTO.length > 0) {
-        await context.$axios.$put('/private/contacto/' + contacto.IDEN_CONTACTO,
+    _.forEach(context.user.persona.contacto, async (contacto, key) => {
+      if (contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length > 0) {
+        await context.$axios.$put('/private/contacto/' + contacto[0].IDEN_CONTACTO,
           {
-            DESC_CONTACTO: contacto.DESC_CONTACTO
+            DESC_CONTACTO: contacto[0].DESC_CONTACTO
           })
-      } else if (!contacto.IDEN_CONTACTO && contacto.DESC_CONTACTO.length > 0) {
+      } else if (!contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length > 0) {
+        debugger //eslint-disable-line
         await context.$axios.$post('/private/contacto/',
           {
             IDEN_PERSONA: context.user.persona.IDEN_PERSONA,
             TIPO_CONTACTO: key,
-            DESC_CONTACTO: contacto.DESC_CONTACTO
+            DESC_CONTACTO: contacto[0].DESC_CONTACTO
           })
-      } else if (key === 'Telefono' && contacto.DESC_CONTACTO.length === 0) {
-        await context.$axios.$delete('/private/contacto/' + contacto.IDEN_CONTACTO)
+      } else if (key === 'Telefono' && contacto[0].DESC_CONTACTO.length === 0) {
+        await context.$axios.$delete('/private/contacto/' + contacto[0].IDEN_CONTACTO)
       }
     })
 
