@@ -94,7 +94,7 @@ export default {
   ]),
   head () {
     return {
-      title: 'Nuevo Emprendedor'
+      title: 'Nuevo Administrador'
     }
   }
 }
