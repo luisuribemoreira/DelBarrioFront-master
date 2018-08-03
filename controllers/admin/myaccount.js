@@ -85,7 +85,6 @@ function GET (app, id) {
         return app.$axios.$get('/private/contacto/' + user.persona.IDEN_PERSONA)
           .then(response => {
             user.persona.contacto = response.data
-            console.log(response.data)
             return {
               user
             }
