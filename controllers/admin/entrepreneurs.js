@@ -5,9 +5,21 @@
 function GET (app, id) {
   return app.$axios.$get('emprendedor/' + id)
     .then(res => {
-      return {
-        id: id,
-        entrepreneur: res.data
+      let entrepreneur = res.data
+      if (entrepreneur.usuario.persona && entrepreneur.usuario.persona.IDEN_PERSONA) {
+        return app.$axios.$get('/private/contacto/' + entrepreneur.usuario.persona.IDEN_PERSONA)
+          .then(response => {
+            entrepreneur.usuario.persona.contacto = response.data
+            return {
+              id: id,
+              entrepreneur: res.data
+            }
+          })
+      } else {
+        return {
+          id: id,
+          entrepreneur: res.data
+        }
       }
     }).catch(errors => {
       console.log(errors)

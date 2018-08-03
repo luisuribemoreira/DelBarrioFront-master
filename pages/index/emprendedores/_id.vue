@@ -103,11 +103,13 @@ import { mapGetters } from 'vuex'
 export default {
   asyncData ({ app, params }) {
     return controller.GET(app, params.id)
-      .then(entrepreneur => {
-        return locationController.GETLocation(app, 'infante 1415')
-          .then(location => {
+      .then(({ entrepreneur }) => {
+        let direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
+        return locationController.GETLocation(app, direccion)
+          .then(({ geocode }) => {
             return {
-              entrepreneur: entrepreneur.entrepreneur
+              entrepreneur: entrepreneur,
+              geocode: geocode
             }
           })
       })
