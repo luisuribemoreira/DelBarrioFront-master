@@ -85,7 +85,7 @@ export default {
   },
   head () {
     return {
-      title: 'Clientes',
+      title: 'Moderar Administradores',
       meta: [
         { hid: 'description', name: 'description', content: 'description' }
       ]

@@ -129,7 +129,7 @@ export default {
   },
   head () {
     return {
-      title: 'Clientes',
+      title: 'Moderar Clientes',
       meta: [
         { hid: 'description', name: 'description', content: 'description' }
       ]

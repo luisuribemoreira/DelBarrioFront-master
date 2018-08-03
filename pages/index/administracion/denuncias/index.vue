@@ -343,7 +343,7 @@ export default {
   },
   head () {
     return {
-      title: 'Denuncias',
+      title: 'Moderar Denuncias',
       meta: [
         { hid: 'description', name: 'description', content: 'description' }
       ]

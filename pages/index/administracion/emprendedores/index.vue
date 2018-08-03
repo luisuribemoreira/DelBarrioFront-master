@@ -120,7 +120,7 @@ export default {
   },
   head () {
     return {
-      title: 'Emprendedores'
+      title: 'Moderar Emprendedores'
     }
   }
 }
