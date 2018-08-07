@@ -44,6 +44,9 @@
               </div>
               <button type="submit" class="btn btn-default">Ingresar</button>
             </form>
+            <div v-if='message'>
+              <span class="text-danger">{{message}}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -65,7 +68,8 @@ export default {
     return {
       format: 'dd MMM, yyyy',
       user: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres
-      dataErrorMsg: { error_edad: undefined }
+      dataErrorMsg: { error_edad: undefined },
+      message: undefined
     }
   },
   components: {

@@ -43,7 +43,7 @@
             <button type="submit" class="btn btn-default">Guardar</button>
           </form>
           <div v-if='message'>
-            <span>{{message}}</span>
+            <span class="text-danger">{{message}}</span>
           </div>
         </div>
       </div>

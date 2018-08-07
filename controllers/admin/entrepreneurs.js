@@ -91,7 +91,11 @@ function POST (context) {
           context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
         })
       }).catch(errors => {
-        context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+        if (errors.response.data.data.EMAIL_USUARIO) {
+          context.message = errors.response.data.data.EMAIL_USUARIO
+        } else {
+          context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+        }
       })
     } else {
       return context.$axios.$post(
