@@ -4,15 +4,28 @@ import _ from 'lodash'
 // Registra datos en persona, usuario, emprendedor y contactos.
 async function POST (context, user) {
   try {
+    let persona
     // Registro de los datos de persona
-    let persona = await context.$axios.$post('/private/persona',
-      {
-        IDEN_USUARIO: user.IDEN_USUARIO,
-        NOMBRES: user.persona.NOMBRES,
-        APELLIDO_PATERNO: user.persona.APELLIDO_PATERNO,
-        APELLIDO_MATERNO: user.persona.APELLIDO_MATERNO,
-        FECH_FECHA_NACIMIENTO: user.persona.FECH_FECHA_NACIMIENTO
-      })
+    if (!user.persona.IDEN_PERSONA) {
+      persona = (await context.$axios.$post('/private/persona',
+        {
+          IDEN_USUARIO: user.IDEN_USUARIO,
+          NOMBRES: user.persona.NOMBRES,
+          APELLIDO_PATERNO: user.persona.APELLIDO_PATERNO,
+          APELLIDO_MATERNO: user.persona.APELLIDO_MATERNO,
+          FECH_FECHA_NACIMIENTO: user.persona.FECH_FECHA_NACIMIENTO
+        })).data
+    } else {
+      await context.$axios.$put('/private/persona/' + user.persona.IDEN_PERSONA,
+        {
+          NOMBRES: user.persona.NOMBRES,
+          APELLIDO_PATERNO: user.persona.APELLIDO_PATERNO,
+          APELLIDO_MATERNO: user.persona.APELLIDO_MATERNO,
+          FECH_FECHA_NACIMIENTO: user.persona.FECH_FECHA_NACIMIENTO
+        })
+      persona = user.persona
+    }
+
     // Registro del cambio de contraseña del usuario
     await context.$axios.$put('/private/usuario/' + user.IDEN_USUARIO,
       {
@@ -32,39 +45,73 @@ async function POST (context, user) {
     for (let i = 0; i < user.blobs.length; i++) {
       formData.append('avatar', user.blobs[i], 'image' + i + '.png')
     }
-    await context.$axios.$post('/private/imagen', formData)
+    if (user.emprendedor.imagen.IDEN_IMAGEN) {
+      await context.$axios.$put('/private/imagen/' + user.emprendedor.imagen.IDEN_IMAGEN, formData)
+    } else {
+      await context.$axios.$post('/private/imagen', formData)
+    }
 
     // Registro de los contactos de la persona
     // Se verifica si se ingresó un teléfono, y de ser así, se registra
-    if (user.emprendedor.contacto.TELEFONO && user.emprendedor.contacto.TELEFONO.length > 0) {
-      await context.$axios.$post('/private/contacto',
-        {
-          TIPO_CONTACTO: 'Telefono',
-          DESC_CONTACTO: user.emprendedor.contacto.TELEFONO,
-          IDEN_PERSONA: persona.data.IDEN_PERSONA
-        })
+    if (user.persona.contacto.Telefono && user.persona.contacto.Telefono[0].DESC_CONTACTO.length > 0) {
+      if (user.persona.contacto.Telefono[0].IDEN_CONTACTO) {
+        await context.$axios.$put('/private/contacto/' + user.persona.contacto.Telefono[0].IDEN_CONTACTO,
+          {
+            DESC_CONTACTO: user.persona.contacto.Telefono[0].DESC_CONTACTO
+          })
+      } else {
+        await context.$axios.$post('/private/contacto',
+          {
+            TIPO_CONTACTO: 'Telefono',
+            DESC_CONTACTO: user.persona.contacto.Telefono[0].DESC_CONTACTO,
+            IDEN_PERSONA: persona.IDEN_PERSONA
+          })
+      }
     }
     // Registro del correo
-    await context.$axios.$post('/private/contacto',
-      {
-        TIPO_CONTACTO: 'Correo',
-        DESC_CONTACTO: user.emprendedor.contacto.CORREO,
-        IDEN_PERSONA: persona.data.IDEN_PERSONA
-      })
+    if (user.persona.contacto.Correo[0].IDEN_CONTACTO) {
+      await context.$axios.$put('/private/contacto/' + user.persona.contacto.Correo[0].IDEN_CONTACTO,
+        {
+          DESC_CONTACTO: user.persona.contacto.Correo[0].DESC_CONTACTO
+        })
+    } else {
+      await context.$axios.$post('/private/contacto',
+        {
+          TIPO_CONTACTO: 'Correo',
+          DESC_CONTACTO: user.persona.contacto.Correo[0].DESC_CONTACTO,
+          IDEN_PERSONA: persona.IDEN_PERSONA
+        })
+    }
+
     // Registro del celular
-    await context.$axios.$post('/private/contacto',
-      {
-        TIPO_CONTACTO: 'Celular',
-        DESC_CONTACTO: user.emprendedor.contacto.CELULAR,
-        IDEN_PERSONA: persona.data.IDEN_PERSONA
-      })
+    if (user.persona.contacto.Celular[0].IDEN_CONTACTO) {
+      await context.$axios.$put('/private/contacto/' + user.persona.contacto.Celular[0].IDEN_CONTACTO,
+        {
+          DESC_CONTACTO: user.persona.contacto.Celular[0].DESC_CONTACTO
+        })
+    } else {
+      await context.$axios.$post('/private/contacto',
+        {
+          TIPO_CONTACTO: 'Celular',
+          DESC_CONTACTO: user.persona.contacto.Celular[0].DESC_CONTACTO,
+          IDEN_PERSONA: persona.IDEN_PERSONA
+        })
+    }
+
     // Registro de la direccion
-    await context.$axios.$post('/private/contacto',
-      {
-        TIPO_CONTACTO: 'Direccion',
-        DESC_CONTACTO: user.emprendedor.contacto.DIRECCION,
-        IDEN_PERSONA: persona.data.IDEN_PERSONA
-      })
+    if (user.persona.contacto.Direccion[0].IDEN_CONTACTO) {
+      await context.$axios.$put('/private/contacto/' + user.persona.contacto.Direccion[0].IDEN_CONTACTO,
+        {
+          DESC_CONTACTO: user.persona.contacto.Direccion[0].DESC_CONTACTO
+        })
+    } else {
+      await context.$axios.$post('/private/contacto',
+        {
+          TIPO_CONTACTO: 'Direccion',
+          DESC_CONTACTO: user.persona.contacto.Direccion[0].DESC_CONTACTO,
+          IDEN_PERSONA: persona.IDEN_PERSONA
+        })
+    }
 
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')

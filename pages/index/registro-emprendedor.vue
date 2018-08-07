@@ -18,6 +18,7 @@
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
+                          v-bind:initial-image="user.emprendedor.imagen ? imageUrl + user.emprendedor.imagen.URL_IMAGEN : ''"
                           ></croppa>
                   </no-ssr>
                 </div>
@@ -70,32 +71,32 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Nombre de Fantasía</label>
-                <input v-validate data-vv-rules="required" data-vv-as="nombre fantasia" name="nombre fantasia" type="text" v-model="entrepreneur.DESC_NOMBRE_FANTASIA" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="nombre fantasia" name="nombre fantasia" type="text" v-model="user.emprendedor.DESC_NOMBRE_FANTASIA" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('nombre fantasia')">{{ errors.first('nombre fantasia') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Descripción</label>
-                <input v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="entrepreneur.DESC_EMPRENDEDOR" class="form-control"/>
+                <input v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Dirección Comercial</label>
-                <input v-validate data-vv-rules="required" data-vv-as="direccion" name="direccion" type="text" v-model="contacto.DIRECCION" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="direccion" name="direccion" type="text" v-model="user.persona.contacto.Direccion[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('direccion')">{{ errors.first('direccion') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Teléfono (Optativo)</label>
-                <input v-validate data-vv-rules="min:9|max:10" data-vv-as="telefono" name="telefono" type="text" v-model="contacto.TELEFONO" class="form-control"/>
+                <input v-validate data-vv-rules="min:9|max:10" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label>
-                <input v-validate data-vv-rules="required|min:8|max:8" data-vv-as="celular" name="celular" type="text" v-model="contacto.CELULAR" class="form-control"/>
+                <input v-validate data-vv-rules="required|min:8|max:8" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Correo de Contácto</label>
-                <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model="contacto.CORREO" class="form-control"/>
+                <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
               <button type="submit" class="btn btn-default">Guardar</button>
@@ -119,6 +120,7 @@ export default {
     if (store._vm.isAuthenticated) {
       return controller.GET(app, store._vm.loggedUser.id)
         .then(({ user }) => {
+          console.log(user)
           if (user.FECH_CREACION) redirect('/')
           return {
             user
@@ -130,10 +132,9 @@ export default {
     return {
       format: 'dd MMM, yyyy',
       dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
-      user: {},
-      contacto: {},
-      entrepreneur: {},
-      submitted: { valid: false, errors: false }
+      user: { emprendedor: {}, persona: { contacto: { Telefono: [], Correo: [], Direccion: [], Celular: [] } } },
+      submitted: { valid: false, errors: false },
+      imageUrl: process.env.imagesUrl
     }
   },
   components: {
@@ -173,9 +174,6 @@ export default {
         }
 
         if (result) {
-          this.user.emprendedor.DESC_EMPRENDEDOR = this.entrepreneur.DESC_EMPRENDEDOR
-          this.user.emprendedor.DESC_NOMBRE_FANTASIA = this.entrepreneur.DESC_NOMBRE_FANTASIA
-          this.user.emprendedor.contacto = this.contacto
           this.user.blobs = blobs
           controller.POST(this, this.user).then(() => {
             this.submitted.valid = true
