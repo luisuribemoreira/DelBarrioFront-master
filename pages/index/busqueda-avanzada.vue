@@ -98,7 +98,7 @@
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
                     >
-              <slide v-for="emprendedor in index.emprendedores" :key="emprendedor.IDEN_EMPRENDEDOR">
+              <slide v-for="emprendedor in index.emprendedores" :key="emprendedor.IDEN_EMPRENDEDOR" v-if="emprendedor.usuario.FECH_CREACION">
                 <nuxt-link :to="'/emprendedores/'+emprendedor.IDEN_EMPRENDEDOR">
                   <img :src="emprendedor.imagen.URL_IMAGEN ? emprendedor.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-responsive">
                 </nuxt-link>
