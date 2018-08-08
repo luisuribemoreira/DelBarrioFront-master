@@ -18,7 +18,7 @@
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
-                          v-bind:initial-image="user.emprendedor.imagen ? imageUrl + user.emprendedor.imagen.URL_IMAGEN : ''"
+                          v-bind:initial-image="user.emprendedor.imagen.IDEN_IMAGEN ? imageUrl + user.emprendedor.imagen.URL_IMAGEN : ''"
                           ></croppa>
                   </no-ssr>
                 </div>
@@ -120,8 +120,12 @@ export default {
     if (store._vm.isAuthenticated) {
       return controller.GET(app, store._vm.loggedUser.id)
         .then(({ user }) => {
-          console.log(user)
           if (user.FECH_CREACION) redirect('/')
+
+          if (!user.persona.IDEN_PERSONA) {
+            user.persona.contacto = { Direccion: [{}], Correo: [{}], Telefono: [{}], Celular: [{}] }
+          }
+
           return {
             user
           }
@@ -132,7 +136,7 @@ export default {
     return {
       format: 'dd MMM, yyyy',
       dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
-      user: { emprendedor: {}, persona: { contacto: { Telefono: [], Correo: [], Direccion: [], Celular: [] } } },
+      user: {},
       submitted: { valid: false, errors: false },
       imageUrl: process.env.imagesUrl
     }
