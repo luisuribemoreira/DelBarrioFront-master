@@ -49,7 +49,7 @@ export default {
           controller.login(this)
             .then(() => {
               if (!this.error) {
-                this.$router.push({ path: '/' })
+                this.$router.push({ path: '/redirect' })
               }
             })
         }
