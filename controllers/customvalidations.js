@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 function isDate (value) {
   if (isNaN(Date.parse(value))) {
     return false
@@ -23,9 +25,8 @@ function isOffer (before, after) {
 }
 
 function inicio (fecha) {
-  var fechaActual = new Date()
-  var fechaInicio = new Date(fecha)
-
+  var fechaActual = moment(new Date()).format('DD-MM-YYYY')
+  var fechaInicio = moment(fecha).format('DD-MM-YYYY')
   if (fechaActual <= fechaInicio) {
     return true
   } else {
