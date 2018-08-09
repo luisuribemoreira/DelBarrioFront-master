@@ -36,11 +36,12 @@
                 <td>{{client.usuario.EMAIL_USUARIO}}</td>
                 <td>{{client.NOMBRES + ' ' + client.APELLIDO_PATERNO+ ' ' +client.APELLIDO_MATERNO}}</td>
                 <td>
-                  <nuxt-link :to="{ path: '/administracion/administradores/editar/'+client.IDEN_USUARIO }" class="btn btn-default">
-                    <icon name="pencil-square-o" title="Editar"></icon>
+                  <nuxt-link :to="{ path: '/administracion/administradores/editar/'+client.IDEN_USUARIO }" class="btn btn-secondary">
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
-                  <a class="btn" :class="client.usuario.FLAG_BAN ? 'btn-success' : 'btn-danger'" @click="setState(client)" :title="client.usuario.FLAG_BAN ? 'Habilitar' : 'Deshabilitar'">
-                    <icon :name="client.usuario.FLAG_BAN ? 'check' : 'times'"></icon>
+                  <a @click="setState(client)">
+                    <button class="btn" v-if="client.usuario.FLAG_BAN">Habilitar</button>
+                    <button class="btn" v-if="!client.usuario.FLAG_BAN">Deshabilitar</button>
                   </a>
                 </td>
               </tr>

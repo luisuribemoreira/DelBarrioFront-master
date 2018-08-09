@@ -81,20 +81,28 @@ function POST (context) {
 //                    }
 // =======================================================================================
 function PUT (context) {
-  context.$notify.success('Se ha modificado exitosamente')
-  context.$router.push({ path: '/administracion' })
-  /*
-  context.$axios.$put(
-    'private/persona/' + context.id,
+  return context.$axios.$put('private/usuario/' + context.user.IDEN_USUARIO,
     {
-      // AGREGAR DATOS CLIENTE
+      EMAIL_USUARIO: context.user.usuario.EMAIL_USUARIO
     }
   ).then(response => {
-    context.message = 'Editado exitosamente!'
-    context.$router.push({ path: '/administracion/clientes' })
-  }).catch(errors => {
-    context.message = errors.response.data.message ? errors.response.data.message : 'Error inesperado'
-  }) */
+    return context.$axios.$put(
+      'private/persona/' + context.user.IDEN_PERSONA,
+      {
+        NOMBRES: context.user.NOMBRES,
+        APELLIDO_PATERNO: context.user.APELLIDO_PATERNO,
+        APELLIDO_MATERNO: context.user.APELLIDO_MATERNO,
+        FECH_FECHA_NACIMIENTO: context.user.FECH_FECHA_NACIMIENTO
+      })
+      .then(res => {
+        context.$router.push({ path: '/administracion/administradores' })
+        context.$notify.success('Se ha editado exitosamente.')
+      }).catch(err => {
+        if (err) context.$notify.warning('Ha ocurrido un error inesperado.')
+      })
+  }).catch(error => {
+    if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
+  })
 }
 
 // estado persona

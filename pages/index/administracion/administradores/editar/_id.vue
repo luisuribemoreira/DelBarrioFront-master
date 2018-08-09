@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 fondo-beige">
-          <h2 class="text-center">Nuevo Administrador</h2>
+          <h2 class="text-center">Editar Administrador</h2>
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Nombres</label>
@@ -29,9 +29,18 @@
                 :bootstrapStyling = "true"
                 name="date"
               ></datepicker>
+              <small class="text-danger" v-if="dataErrorMsg.error_edad">{{ dataErrorMsg.error_edad }}</small>
             </div>
-            <button type="submit" class="btn btn-default" @click="POST()">Ingresar</button>
+            <div class="form-group margin-top">
+                <label for="email">Correo electrónico</label>
+                <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model="user.usuario.EMAIL_USUARIO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
+            </div>
+            <button type="submit" class="btn btn-default">Guardar</button>
           </form>
+          <div v-if='message'>
+            <span class="text-danger">{{message}}</span>
+          </div>
         </div>
       </div>
     </div><!-- /container -->
@@ -41,6 +50,7 @@
 <script>
 import controller from '~/controllers/admin/admins'
 import Datepicker from 'vuejs-datepicker'
+import customValidations from '~/controllers/customvalidations'
 
 export default {
   asyncData ({ app, params }) {
@@ -49,20 +59,34 @@ export default {
   data () {
     return {
       format: 'dd MMM, yyyy',
-      user: {}
+      user: {},
+      dataErrorMsg: { error_edad: undefined },
+      message: undefined
     }
   },
   components: {
     Datepicker
   },
   methods: {
-    POST (client) {
-      controller.POST(this)
+    validateBeforeSubmit () {
+      this.$validator.validateAll().then((result) => {
+        this.dataErrorMsg = { error_edad: undefined }
+
+        if (customValidations.isUnderAge(this.user.FECH_FECHA_NACIMIENTO)) {
+          this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
+        }
+
+        if (this.dataErrorMsg.error_edad) {
+          result = undefined
+        }
+
+        if (result) controller.PUT(this)
+      })
     }
   },
   head () {
     return {
-      title: 'Nuevo Emprendedor'
+      title: 'Editar Administrador'
     }
   }
 }
