@@ -53,7 +53,7 @@ async function POST (context, user) {
 
     // Registro de los contactos de la persona
     // Se verifica si se ingresó un teléfono, y de ser así, se registra
-    if (user.persona.contacto.Telefono && user.persona.contacto.Telefono[0].DESC_CONTACTO.length > 0) {
+    if (user.persona.contacto.Telefono.length > 0 && user.persona.contacto.Telefono[0].DESC_CONTACTO && user.persona.contacto.Telefono[0].DESC_CONTACTO.length > 0) {
       if (user.persona.contacto.Telefono[0].IDEN_CONTACTO) {
         await context.$axios.$put('/private/contacto/' + user.persona.contacto.Telefono[0].IDEN_CONTACTO,
           {

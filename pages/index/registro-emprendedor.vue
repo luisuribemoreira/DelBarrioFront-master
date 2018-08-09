@@ -121,7 +121,6 @@ export default {
       return controller.GET(app, store._vm.loggedUser.id)
         .then(({ user }) => {
           if (user.FECH_CREACION) redirect('/')
-
           if (!user.persona.IDEN_PERSONA) {
             user.persona.contacto = { Direccion: [{}], Correo: [{}], Telefono: [{}], Celular: [{}] }
           }
