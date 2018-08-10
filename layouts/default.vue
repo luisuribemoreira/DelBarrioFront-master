@@ -84,6 +84,8 @@
                     <li><nuxt-link to="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i></nuxt-link></li>
                 </ul>
                 <ul class="nav navbar-nav nav-admin">
+                    <li><nuxt-link to="/listado-emprendedores">Emprendedores</nuxt-link></li>
+                    <li><nuxt-link to="/listado-productos">Publicaciones</nuxt-link></li>
                     <li><nuxt-link to="/administracion/publicaciones">Mis publicaciones</nuxt-link></li>
                     <li><nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link></li>
                 </ul>
@@ -169,6 +171,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
                     <li><nuxt-link to="/"><i class="fa fa-home" :aria-hidden="true"></i></nuxt-link></li>
+                    <li><nuxt-link to="/listado-emprendedores">Emprendedores</nuxt-link></li>
+                    <li><nuxt-link to="/listado-productos">Publicaciones</nuxt-link></li>
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">
