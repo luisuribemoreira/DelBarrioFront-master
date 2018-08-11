@@ -30,7 +30,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr :key="workfield.IDEN_RUBRO" v-for="workfield in workfields">
+              <tr :key="workfield.IDEN_RUBRO" v-for="workfield in paginatedData[pagination]">
                 <td>
                   <icon :name="workfield.FLAG_VIGENTE ? 'check' : 'times'" :title="workfield.FLAG_VIGENTE ? 'Habilitado': 'Deshabilitado'"></icon>
                 </td>
@@ -50,17 +50,21 @@
           <nav aria-label="Page navigation">
             <ul class="pagination">
               <li>
-                <a href="#" aria-label="Previous">
+                <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
+                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
                   <span :aria-hidden="true">&laquo;</span>
-                </a>
+                </span>
               </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
+              <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
+              <li v-bind:key="page" v-for="page in pages">
+                <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
+                <span v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+              </li>
               <li>
-                <a href="#" aria-label="Next">
+                <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
+                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
                   <span :aria-hidden="true">&raquo;</span>
-                </a>
+                </span>
               </li>
             </ul>
           </nav>
@@ -72,16 +76,31 @@
 
 <script>
 import controller from '~/controllers/admin/workfields'
+import custompaginator from '~/controllers/custompaginator'
 
 export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
+      .then(({ workfields }) => {
+        return custompaginator.paginate(workfields)
+          .then(({ paginatedData }) => {
+            let pages = paginatedData.length
+            return {
+              workfields,
+              paginatedData,
+              pages
+            }
+          })
+      })
   },
   data () {
     return {
       workfields: [],
+      pagination: 0, // Numero de la pagina
+      pages: 0, // Conteo cantidad total de paginas
+      paginatedData: [[]], // Datos paginados
       search: '',
-      postsAux: []
+      workfieldsAux: []
     }
   },
   methods: {
@@ -90,32 +109,48 @@ export default {
     },
     buscarRubro () {
       // Copiar todos los rubros, si existen, a una variable auxiliar para no perder la lista original
-      if (this.postsAux.length === 0) {
-        this.postsAux = this.workfields
+      if (this.workfieldsAux.length === 0) {
+        this.workfieldsAux = this.paginatedData // Se copian los datos paginados, en este caso.
       }
 
+      /*
+      * Se utiliza el arreglo SIN paginacion para el algoritmo de busqueda.
+      */
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los rubros en que el nombre o parte de ellos posea el texto escrito en el buscador
-        let postAux = this.postsAux.map(workfield => {
+        let workfieldSearch = this.workfields.map(workfield => {
           if (workfield.NOMB_RUBRO.match(new RegExp(this.search, 'gi')) !== null) return workfield
         })
 
         // Limpia los rubros actuales y lo llena con los rubros que cumplan el criterio de busqueda
-        this.workfields = []
-        postAux.forEach(workfield => {
-          if (workfield) this.workfields.push(workfield)
+        let workfieldsFound = []
+        workfieldSearch.forEach(workfield => {
+          if (workfield) workfieldsFound.push(workfield)
         })
 
         // Ordena los Rubros en orden lexicografico.
-        this.workfields.sort(function (a, b) {
+        workfieldsFound.sort(function (a, b) {
           return a.NOMB_RUBRO.localeCompare(b.NOMB_RUBRO)
         })
+
+        // Se llama al paginador con la lista de objetos encontrados
+        custompaginator.paginate(workfieldsFound)
+          .then(({ paginatedData }) => {
+            // Se reemplaza la lista paginada actual por la que contiene solo los objetos de la busqueda
+            this.paginatedData = paginatedData
+            // La cantidad total de paginas se reemplaza por la cantidad de paginas
+            // de la nueva lista de objetos encontrados por la busqueda
+            this.pages = paginatedData.length
+            this.pagination = 0 // Se envia a la pagina inicial en caso de que la busqueda contenga mas de 10 objetos
+          })
       }
 
       // Si no hay texto en el buscador se restaura la lista original
       if (this.search.length === 0) {
-        this.workfields = this.postsAux
+        this.paginatedData = this.workfieldsAux
+        this.pagination = 0 // Se devuelve a la pagina inicial de la lista
+        this.pages = this.paginatedData.length // Se restaura la cantidad de paginas totales
       }
     }
   },
