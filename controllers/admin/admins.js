@@ -55,7 +55,7 @@ function POST (context) {
       }
     ).then(() => {
       context.$notify.success('Se ha agregado exitosamente')
-      context.$router.push({ path: '/' })
+      context.$router.push({ path: '/administracion/administradores' })
     }).catch(errors => {
       console.log(errors)
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
