@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in entrepreneurs">
+              <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in entrepreneurs" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.FLAG_BAN" >
                 <td><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link></td>
               </tr>
             </tbody>
