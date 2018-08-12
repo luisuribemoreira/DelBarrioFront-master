@@ -42,7 +42,7 @@
                   <!--entrepreneur.usuario.FLAG_BAN -->
                   <a @click="setState(entrepreneur)">
                     <button class="btn" v-if="entrepreneur.usuario.FLAG_BAN">Habilitar</button>
-                    <button class="btn" v-if="!entrepreneur.usuario.FLAG_BAN">Deshabilitar</button>
+                    <button class="btn" v-if="!entrepreneur.usuario.FLAG_BAN" data-toggle="modal" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="deshabilitacion.client = entrepreneur ">Deshabilitar</button>
                   </a>
                 </td>
               </tr>
@@ -65,6 +65,49 @@
               </li>
             </ul>
           </nav>
+
+          <div class="modal fade" id="disableModal" v-if="isAuthenticated" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Deshabilitar Emprendedor</h4>
+                </div>
+                <div class="modal-body">
+                  <form @submit.prevent="validateDisable()">
+                    <h5>Selecciona el motivo de deshabilitación</h5>
+                    <div class="form-group" :key="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-for="deactivationreason in deactivationreasons">
+                      <div class="radio">
+                        <label>
+                          <input v-validate data-vv-rules="required" type="radio" name="deactivation" :value="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-model="deshabilitacion.IDEN_MOTIVO_DESHABILITACION"> {{deactivationreason.NOMB_MOTIVO_DESHABILITACION}}
+                        </label>
+                      </div>
+                    </div>
+                    <small class="text-danger" v-show="errors.has('deactivation')">{{ errors.first('deactivation') }}</small>
+                    <div class="form-group margin-top">
+                      <label for="denounceComment">Más detalles</label>
+                      <textarea 
+                        class="form-control"
+                        :rows="5"
+                        v-validate data-vv-rules="required|min:5|max:255"
+                        name="description"
+                        v-model="deshabilitacion.DESC_COMENTARIO">
+                      </textarea>
+                      <span :class="deshabilitacion.DESC_COMENTARIO.length > 255 || deshabilitacion.DESC_COMENTARIO.length < 5 ? 'text-danger' : ''">{{deshabilitacion.DESC_COMENTARIO.length}} de 255 caracteres</span>
+                    </div>
+                    <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
+                    <small class="text-danger" v-show="error.length">{{ error }}</small>
+                    <div>
+                      <button type="submit" class="btn btn-default">Enviar</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+                </div>
+              </div>
+            </div>
+          </div> <!-- /disable modal --> 
         </div>
       </div>
     </div>
@@ -72,22 +115,46 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/entrepreneurs'
+import controllerDeactivations from '~/controllers/admin/deactivationreasons'
+import controllerAccountDisable from '~/controllers/admin/accountdisable'
 
 export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
+      .then(({ entrepreneurs }) => {
+        return controllerDeactivations.GETAll(app)
+          .then(({ deactivationreasons }) => {
+            return {
+              entrepreneurs,
+              deactivationreasons
+            }
+          })
+      })
   },
   data () {
     return {
       entrepreneurs: [],
       search: '',
-      postsAux: []
+      postsAux: [],
+      deactivationreasons: [],
+      deshabilitacion: { DESC_COMENTARIO: '' },
+      error: ''
     }
   },
   methods: {
     setState (entrepreneur) {
-      controller.setState(this, entrepreneur)
+      if (entrepreneur.usuario.FLAG_BAN) {
+        controllerAccountDisable.GETByUser(this, entrepreneur)
+          .then(({ deshabilitacionUsuario }) => {
+            deshabilitacionUsuario.FLAG_VIGENTE = false // Se habilita nuevamente el usuario, dejando como no vigente su ultima deshabilitacion.
+            controllerAccountDisable.PUT(this, deshabilitacionUsuario)
+              .then(() => {
+                controller.setState(this, entrepreneur)
+              })
+          })
+      }
     },
     buscarEmprendedor () {
       // Copiar todos los posts, si existen, a una variable auxiliar para no perder la lista original
@@ -118,8 +185,23 @@ export default {
       if (this.search.length === 0) {
         this.entrepreneurs = this.postsAux
       }
+    },
+    validateDisable () {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          controllerAccountDisable.POST(this)
+            .then(() => {
+              controller.setState(this, this.deshabilitacion.client)
+              this.deshabilitacion = { DESC_COMENTARIO: '' }
+            })
+        }
+      })
     }
   },
+  computed: mapGetters([
+    'loggedUser',
+    'isAuthenticated'
+  ]),
   head () {
     return {
       title: 'Moderar Emprendedores'
