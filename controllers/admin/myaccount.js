@@ -186,7 +186,7 @@ async function PUTEmprendedor (context) {
       })
 
     if (context.user.pass) {
-      await context.$axios.$put('/pivate/usuario/' + context.user.IDEN_USUARIO,
+      await context.$axios.$put('/private/usuario/' + context.user.IDEN_USUARIO,
         {
           DESC_PASSWORD: context.user.pass
         })
