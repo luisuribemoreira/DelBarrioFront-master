@@ -76,7 +76,7 @@
                 <div class="modal-body">
                   <form @submit.prevent="validateDisable()">
                     <h5>Selecciona el motivo de deshabilitación</h5>
-                    <div class="form-group" :key="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-for="deactivationreason in deactivationreasons">
+                    <div class="form-group" :key="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-for="deactivationreason in deactivationreasons" v-if="deactivationreason.FLAG_VIGENTE">
                       <div class="radio">
                         <label>
                           <input v-validate data-vv-rules="required" type="radio" name="deactivation" :value="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-model="deshabilitacion.IDEN_MOTIVO_DESHABILITACION"> {{deactivationreason.NOMB_MOTIVO_DESHABILITACION}}
