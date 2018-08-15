@@ -41,8 +41,8 @@
                   </nuxt-link>
                   <!--entrepreneur.usuario.FLAG_BAN -->
                   <a @click="setState(entrepreneur)">
-                    <button class="btn" v-if="entrepreneur.usuario.FLAG_BAN">Habilitar</button>
-                    <button class="btn" v-if="!entrepreneur.usuario.FLAG_BAN" data-toggle="modal" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="deshabilitacion.client = entrepreneur ">Deshabilitar</button>
+                    <button class="btn" v-if="entrepreneur.usuario.FLAG_BAN" title="Habilitar">Habilitar</button>
+                    <button class="btn" v-if="!entrepreneur.usuario.FLAG_BAN" title="Deshabilitar" data-toggle="modal" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="deshabilitacion.client = entrepreneur ">Deshabilitar</button>
                   </a>
                 </td>
               </tr>
