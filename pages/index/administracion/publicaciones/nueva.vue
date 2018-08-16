@@ -87,7 +87,7 @@
                   <div class="form-group">
                     <label for="category">Categoría</label>
                       <select v-model="post.IDEN_CATEGORIA" v-validate data-vv-rules="required" data-vv-as="categoría" name="category" class="form-control" size=5>
-                      <option @click="selected(c.subcategorias)" :key="c.IDEN_CATEGORIA" v-for="(c, i) in categories" :value="c.IDEN_CATEGORIA">{{c.NOMB_CATEGORIA}}</option>
+                      <option @click="selected(c.subcategorias)" :key="c.IDEN_CATEGORIA" v-for="(c, i) in categories" :value="c.IDEN_CATEGORIA" v-if="c.FLAG_VIGENTE">{{c.NOMB_CATEGORIA}}</option>
                     </select>
                     <small class="text-danger" v-show="errors.has('category')">{{ errors.first('category') }}</small>
                   </div>
@@ -96,7 +96,7 @@
                   <div class="form-group">
                     <label for="category">Sub categoría</label>
                     <select v-model="post.IDEN_SUBCATEGORIA" name="subcategory" class="form-control" size=5>
-                      <option :key="sc.IDEN_CATEGORIA" v-for="sc in subcategorias" :value="sc.IDEN_CATEGORIA">{{sc.NOMB_CATEGORIA}}</option>
+                      <option :key="sc.IDEN_CATEGORIA" v-for="sc in subcategorias" :value="sc.IDEN_CATEGORIA" v-if="sc.FLAG_VIGENTE">{{sc.NOMB_CATEGORIA}}</option>
                     </select>
                   </div>
                 </div>
@@ -190,7 +190,6 @@ export default {
     },
     selected (i) {
       this.subcategorias = i
-      console.log(i)
     }
   },
   computed: mapGetters([
