@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Se sacara header de fotos 
     <header class="container-fluid">
         <div class="container">
             <div class="row">
@@ -11,7 +12,7 @@
                 </div>
             </div>
         </div>
-    </header>
+    </header> -->
     <!-- /Headers-->
     <!-- NAV CLIENTE REGISTRADO, 101: Cliente -->
     <nav id="navegacion" class="navbar navbar-default" v-if="isAuthenticated && loggedUser.rol === 101">
