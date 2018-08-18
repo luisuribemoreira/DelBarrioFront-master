@@ -265,7 +265,7 @@
           <div class="modal-body">
             <form @submit.prevent="validateDenounce()">
               <h5>Selecciona tu motivo de denuncia</h5>
-              <div class="form-group" :key="denouncereason.IDEN_MOTIVO_DENUNCIA" v-for="denouncereason in denouncereasons">
+              <div class="form-group" :key="denouncereason.IDEN_MOTIVO_DENUNCIA" v-for="denouncereason in denouncereasons" v-if="denouncereason.FLAG_VIGENTE">
                 <div class="radio">
                   <label>
                     <input type="radio" name="denounce" :value="denouncereason.IDEN_MOTIVO_DENUNCIA" v-model="denounce.IDEN_MOTIVO_DENUNCIA"> {{denouncereason.NOMB_MOTIVO_DENUNCIA}}

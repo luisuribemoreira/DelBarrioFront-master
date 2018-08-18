@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in posts" v-if="!post.FLAG_BAN">
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in posts" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE">
               <td>{{post.NOMB_PUBLICACION}}</td>
               <td>{{post.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>

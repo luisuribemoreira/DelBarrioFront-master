@@ -64,7 +64,7 @@
                 <label for="categoria" class="margin-top-20">Categoría</label>
                 <select class="form-control">
                   <option>Seleccione una Categoría</option>
-                  <option v-for="category in categories" :key="category.IDEN_CATEGORIA">{{category.NOMB_CATEGORIA}}</option>
+                  <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
                 </select>
               </div>
             </div>
