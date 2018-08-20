@@ -2,6 +2,8 @@ import jwtDecode from 'jwt-decode'
 import Cookie from 'js-cookie'
 
 function login (context) {
+  console.log('logging context')
+  console.log(context)
   return context.$axios.$post(
     'auth',
     {
@@ -13,6 +15,7 @@ function login (context) {
     context.$axios.setToken(response.data.token, 'Bearer')
     this.setToken(response.data.token)
   }).catch(errors => {
+    console.log(errors)
     context.error = true
     context.message = errors.response.data.data.message ? errors.response.data.data.message : 'Error inesperado'
   })

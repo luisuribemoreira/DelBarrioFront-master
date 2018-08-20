@@ -76,7 +76,7 @@ module.exports = {
   ** Axios configuration
   */
   axios: {
-    baseURL: 'http://localhost:3000' // CAMBIAR EN PRODUCTIVO #########################  baseURL: 'https://delbarrio.barrenechea.cl/api'
+    baseURL: process.env.API_HOST || 'http://172.29.0.3:8080' // CAMBIAR EN PRODUCTIVO #########################  baseURL: 'https://delbarrio.barrenechea.cl/api'
   },
   /*
   ** URLs como variables globales
