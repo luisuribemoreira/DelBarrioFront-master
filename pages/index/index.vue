@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-10 col-md-offset-1 fondo-beige">
           <form @submit.prevent="validateBeforeSubmit">
-            <div class="form-group margin-top">
+            <div class="form-group py-2">
               <input class="form-control input-lg" placeholder="¿Qué buscas?"/>
             </div>
           </form>

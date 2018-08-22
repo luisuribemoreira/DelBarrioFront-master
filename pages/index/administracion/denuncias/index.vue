@@ -21,9 +21,9 @@
           <div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#item1" aria-controls="item1" role="tab" data-toggle="tab">Publicaciones</a></li>
-              <li role="presentation"><a href="#item2" aria-controls="item2" role="tab" data-toggle="tab">Comentarios</a></li>
-              <li role="presentation"><a href="#item3" aria-controls="item3" role="tab" data-toggle="tab">Calificaciones</a></li>
+              <li role="presentation" class=" nav-item active"><a href="#item1" class="nav-link"  aria-controls="item1" role="tab" data-toggle="tab">Publicaciones</a></li>
+              <li role="presentation" class=" nav-item"><a href="#item2" class="nav-link" aria-controls="item2" role="tab" data-toggle="tab">Comentarios</a></li>
+              <li role="presentation" class=" nav-item"><a href="#item3" class="nav-link" aria-controls="item3" role="tab" data-toggle="tab">Calificaciones</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -31,7 +31,7 @@
               <div role="tabpanel" class="tab-pane active" id="item1">
                 <table class="table table-hover">
                   <thead>
-                    <tr>
+                    <tr class="text-center">
                       <th>Publicación</th>
                       <th>Fecha</th>
                       <th>Denunciante</th>

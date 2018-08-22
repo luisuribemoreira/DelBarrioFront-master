@@ -48,22 +48,22 @@
             </tbody>
           </table>
           <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li>
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
                 <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
                 <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
-                  <span :aria-hidden="true">&laquo;</span>
+                  <span class="page-link" :aria-hidden="true">&laquo;</span>
                 </span>
               </li>
               <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
-              <li v-bind:key="page" v-for="page in pages">
+              <li class="page-item" v-bind:key="page" v-for="page in pages">
                 <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
-                <span v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
               </li>
-              <li>
+              <li class="page-item">
                 <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
                 <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
-                  <span :aria-hidden="true">&raquo;</span>
+                  <span class="page-link" :aria-hidden="true">&raquo;</span>
                 </span>
               </li>
             </ul>

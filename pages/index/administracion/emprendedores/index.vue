@@ -7,10 +7,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-sm-6 margin-top">
+        <div class="col-md-4 col-sm-6 py-2">
           <nuxt-link :to="{ path: '/administracion/emprendedores/nuevo' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 py-2">
           <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Emprendedor..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarEmprendedor()">
             <div class="input-group-btn">
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="row margin-top">
+      <div class="row py-2">
         <div class="col-xs-12 table-responsive">
           <table class="table table-hover table-condensed">
             <thead>
@@ -84,7 +84,7 @@
                       </div>
                     </div>
                     <small class="text-danger" v-show="errors.has('deactivation')">{{ errors.first('deactivation') }}</small>
-                    <div class="form-group margin-top">
+                    <div class="form-group py-2">
                       <label for="denounceComment">Más detalles</label>
                       <textarea 
                         class="form-control"
