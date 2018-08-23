@@ -16,7 +16,7 @@
       </div>
       <div class="row margin-top">
         <div class="col-xs-12 table-responsive">
-          <table class="table table-responsive">
+          <table class="table">
           <thead>
             <tr>
               <th>Estado</th>

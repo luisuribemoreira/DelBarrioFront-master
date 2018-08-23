@@ -3,11 +3,11 @@
     <div class="container fondo-beige">
       <div class="row">
         <div class="col-xs-12">
-          <h2 class="text-center">Publicaciones sin revisar</h2>
+          <h2 class="text-center py-1">Publicaciones sin revisar</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 py-1">
           <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar Título de Publicación..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPublicaciones()">
             <div class="input-group-btn">
@@ -16,11 +16,11 @@
           </div>
         </div>
       </div>
-      <div class="row margin-top">
+      <div class="row py-2">
         <div class="col-xs-12 table-responsive">
-          <table class="table table-responsive">
+          <table class="table">
           <thead>
-            <tr>
+            <tr class="text-center">
               <th>Título</th>
               <th>Tipo</th>
               <th>Categoría</th>

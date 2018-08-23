@@ -53,6 +53,7 @@
 
 <script>
 import controller from '~/controllers/admin/entrepreneurs'
+import emailer from '~/controllers/admin/emailer'
 import workfieldcontroller from '~/controllers/admin/workfields'
 
 // sobrescritura de mensaje para alpha_num en RUT
@@ -89,7 +90,13 @@ export default {
           this.entrepreneur.DESC_EMPRENDEDOR = 'DESCRIPCION TEMPORAL'
           this.entrepreneur.DESC_NOMBRE_FANTASIA = 'NOMBRE TEMPORAL'
           this.entrepreneur.FECH_CREACION = -1
+          let mail = this.entrepreneur.EMAIL_USUARIO
+          let pass = this.entrepreneur.DESC_PASSWORD
           controller.POST(this)
+            .then(() => {
+              emailer.sendMail(this, mail, 'Usuario Ingresado',
+                'Su usuario ha sido registrado con el correo: ' + mail + ' y contraseña: ' + pass)
+            })
         }
       })
     }
