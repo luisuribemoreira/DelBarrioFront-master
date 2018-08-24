@@ -6,7 +6,7 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="col-md-6 fondo-beige">
               <div style="text-align: center">
-                <h2><span style="vertical-align: super" >Mis datos</span></h2>
+                <h2><span style="vertical-align: super" >Datos de emprendedor</span></h2>
                 <hr>
               </div>
               <div class="row">
@@ -66,7 +66,7 @@
                 <small class="text-danger" v-show="errors.has('confirmar contrasena')">{{ errors.first('confirmar contrasena') }}</small>
               </div>
               <div style="text-align: center">
-                <h2><span style="vertical-align: super">Datos de mi Empresa</span></h2>
+                <h2><span style="vertical-align: super">Datos de Empresa</span></h2>
                 <hr>
               </div>
               <div class="form-group margin-top">
