@@ -23,7 +23,31 @@ function GETAll (app) {
       console.log(errors)
     })
 }
-
+function GETAllList (app) {
+  return app.$axios.$get('categoria')
+    .then(response => {
+      let categories = []
+      let obj = {}
+      response.data.forEach(category => {
+        obj = {
+          FLAG_VIGENTE: category.FLAG_VIGENTE,
+          IDEN_CATEGORIA: category.IDEN_CATEGORIA,
+          NOMB_CATEGORIA: category.NOMB_CATEGORIA
+        }
+        categories.push(obj)
+        if (category.subcategorias.length > 0) {
+          category.subcategorias.forEach(sub => {
+            categories.push(sub)
+          })
+        }
+      })
+      return {
+        categories: categories
+      }
+    }).catch(errors => {
+      console.log(errors)
+    })
+}
 // Enviar POST request a la fuente.
 // Param.:       context -> Contiene los objetos instanciados en "data".
 // Return:       Retorna los datos del POST response por consola js.
@@ -91,6 +115,7 @@ function setState (context, category) {
 export default {
   GET,
   GETAll,
+  GETAllList,
   POST,
   PUT,
   setState
