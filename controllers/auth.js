@@ -14,7 +14,7 @@ function login (context) {
     this.setToken(response.data.token)
   }).catch(errors => {
     context.error = true
-    context.message = errors.response.data.data.message ? errors.response.data.data.message : 'Error inesperado'
+    context.message = errors.response.data ? errors.response.data.data.message : 'Error inesperado'
   })
 }
 
