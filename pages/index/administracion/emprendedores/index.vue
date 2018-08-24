@@ -119,6 +119,7 @@ import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/entrepreneurs'
 import controllerDeactivations from '~/controllers/admin/deactivationreasons'
 import controllerAccountDisable from '~/controllers/admin/accountdisable'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app }) {
@@ -190,6 +191,10 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           controllerAccountDisable.POST(this)
+          let mail = this.deshabilitacion.client.usuario.EMAIL_USUARIO
+          let razon = this.deshabilitacion.DESC_COMENTARIO
+          emailer.sendMail(this, mail, 'Usuario Baneado',
+            'Estimado: Le informamos que su cuenta fue baneada por el siguiente motivo: ' + razon + '. Le rogamos ponerse en contacto con el administrador.')
             .then(() => {
               controller.setState(this, this.deshabilitacion.client)
               this.deshabilitacion = { DESC_COMENTARIO: '' }
