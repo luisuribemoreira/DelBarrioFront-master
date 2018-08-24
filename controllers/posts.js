@@ -155,13 +155,16 @@ function PUT (context, blobs = undefined) {
 }
 
 function addSale (context, id) {
+  let now = moment().format('DD-MM-YYYY')
+  let inicio = moment(context.sale.FECH_TERMINO).format('DD-MM-YYYY')
   context.$axios.$post(
     'private/oferta',
     {
       IDEN_PUBLICACION: parseInt(id),
       FECH_INICIO: moment(new Date(context.sale.FECH_INICIO)).toJSON(),
       FECH_TERMINO: new Date(context.sale.FECH_TERMINO).toJSON(),
-      NUMR_PRECIO: parseInt(context.sale.NUMR_PRECIO)
+      NUMR_PRECIO: parseInt(context.sale.NUMR_PRECIO),
+      FLAG_VIGENTE: inicio > now ? false : undefined // se cambia a true en api en caso de undefined.
     })
     .then(response => {
       console.log(response)
