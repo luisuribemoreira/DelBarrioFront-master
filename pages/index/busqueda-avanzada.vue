@@ -284,7 +284,7 @@ export default {
         this.pages = entrepreneurs.length
         let options = { text: false, filter: false }
         let entrepreneursFound = entrepreneurs
-        if (this.search.query.find) {
+        if (this.search.query.find.length > 0) {
           options.text = true
           entrepreneursFound = []
           let entrepreneurSearch = entrepreneurs.map(entrepreneur => {
