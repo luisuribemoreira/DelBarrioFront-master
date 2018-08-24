@@ -194,7 +194,11 @@ export default {
                 if (a.FECH_CREACION < b.FECH_CREACION) return 1
               })
               // Se inicializa el Telefono como objeto vacio en caso de que el usuario no tenga un telefono definido.
+              // Se inicializan todos los campos para evitar errores.
               if (!user.persona.contacto.Telefono) user.persona.contacto.Telefono = [{}]
+              if (!user.persona.contacto.Direccion) user.persona.contacto.Direccion = [{}]
+              if (!user.persona.contacto.Celular) user.persona.contacto.Celular = [{}]
+              if (!user.persona.contacto.Correo) user.persona.contacto.Correo = [{}]
               let imagen = await (await controllerImages.GETByEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)).image
               return {
                 user: user,
