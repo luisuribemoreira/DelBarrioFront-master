@@ -7,31 +7,19 @@
         <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">
           
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6">
               <label for="tipo" class="margin-top-20">Tipo</label>
-              <div class="btn-group tipo-checkbox" style="width:100%">
+              <div class="btn-group tipo-form-check" style="width:100%">
                 <label class="btn btn-info col-sm-4">
                   <input type="checkbox" autocomplete="off" name="product" v-model="type.product" v-on:click="type.sale = false, type.entrepreneur = false">
-                  <icon label="Check">
-                    <icon name="square" style="color: #fff"></icon>
-                    <icon v-if="type.product" name="check" class="text-checkbox"></icon>
-                  </icon>
                   <span> Producto</span>
                 </label>
                 <label class="btn btn-info col-sm-4">
                   <input type="checkbox" autocomplete="off" v-model="type.entrepreneur" v-on:click="type.product = false, type.sale = false">
-                  <icon label="Check">
-                    <icon name="square" style="color: #fff"></icon>
-                    <icon v-if="type.entrepreneur" name="check" class="text-checkbox"></icon>
-                  </icon>
                   <span> Emprendedor</span>
                 </label>
                 <label class="btn btn-info col-sm-4">
                   <input type="checkbox" autocomplete="off" v-model="type.sale" v-on:click="type.product = false, type.entrepreneur = false">
-                  <icon label="Check">
-                    <icon name="square" style="color: #fff"></icon>
-                    <icon v-if="type.sale" name="check" class="text-checkbox"></icon>
-                  </icon>
                   <span> Oferta</span>
                 </label>
               </div>
@@ -40,34 +28,32 @@
 
           <!-- Menu Producto -->
           <div class="row" v-if="type.product"> 
-            <div class="col-sm-6">
+            <div class="col-lg-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas? (Opcional)</label>
                 <input type="text" class="form-control" placeholder="Buscar Nombre de Producto..." v-model="search.query.find">
               </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-6">
               <div class="form-group pricerange">
-                <label for="rangodeprecio" class="col-sm-12">Rango de precio de ${{search.minPrice}}{{search.maxPrice ? ' - $' + search.maxPrice : ''}} (Opcional)</label>
-                <div class="col-sm-6">
+                <label for="rangodeprecio" class="col-md-12">Rango de precio ${{search.minPrice}}{{search.maxPrice ? ' - $' + search.maxPrice : ''}} (Opcional)</label>
+                <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <div class="input-group-addon">$</div>
                     <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice">
                   </div>
                 </div>
-                <div class="col-sm-6 margin-top-responsive-20">
+                <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <div class="input-group-addon">$</div>
                     <input type="number" class="form-control" placeholder="Hasta" name="max" v-model="search.maxPrice"> 
                   </div>                      
                 </div>
               </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
                 <select class="form-control" v-model="search.query.filter">
-                  <option v-bind:value="false"></option>
+                  <option v-bind:value="false">Seleccione una categoría...</option>
                   <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
                 </select>
               </div>
@@ -76,17 +62,17 @@
 
           <!-- Menu Emprendedor -->
           <div class="row" v-if="type.entrepreneur"> 
-            <div class="col-sm-9">
+            <div class="col-md-9">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas? (Opcional)</label>
                 <input type="text" class="form-control" placeholder="Buscar Nombre de Emprendedor..." v-model="search.query.find">
               </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-md-9">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Rubro (Opcional)</label>
                 <select class="form-control" v-model="search.query.filter">
-                  <option v-bind:value="false"></option>
+                  <option v-bind:value="false">Seleccione un rubro...</option>
                   <option v-for="workfield in workfields" :key="workfield.IDEN_RUBRO" v-if="workfield.FLAG_VIGENTE">{{workfield.NOMB_RUBRO}}</option>
                 </select>
               </div>
@@ -99,7 +85,7 @@
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
                 <select class="form-control" v-model="search.query.filter">
-                  <option v-bind:value="false"></option>
+                  <option v-bind:value="false">Seleccione una categoría...</option>
                   <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
                 </select>
               </div>
@@ -107,7 +93,7 @@
           </div> <!-- Fin Menu Oferta -->
 
           <div class="mb-2">
-            <button type="submit" class="btn btn-default">
+            <button type="submit" class="btn btn-secondary">
               <icon name="search"></icon> <span class="icon-text"> Buscar</span>
             </button>
           </div>
@@ -118,8 +104,8 @@
     <section>
       <div class="container">
         <div class="row margin-top">
-          <div class="col-xs-12 table-responsive" v-if="paginatedData[0].length > 0">
-            <table class="table table-hover table-condensed">
+          <div class="col-12 table-responsive" v-if="paginatedData[0].length > 0">
+            <table class="table table-hover table-sm">
               <thead>
                 <tr>
                   <th :key="header" v-for="header in searchKeys">{{ header }}</th>
@@ -162,10 +148,10 @@
     <section id="emprendedores" class="container-fluid">
       <div class="container">
         <div class="row">
-          <div class="col-xs-12">
-            <h2 class="text-center">Emprendedores</h2>
+          <div class="col-12">
+            <h2 class="text-center">Emprendedores Destacados</h2>
           </div>
-          <div class="col-xs-12 py-5">
+          <div class="col-12 py-5">
             <carousel 
                     :navigationEnabled="true"
                     :loop="true"
@@ -194,25 +180,35 @@
     <section id="productos" class="container-fluid">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6">
-            <h2 class="no-margin-top">Publicaciones Destacadas</h2>
+          <div class="col-12">
+            <h2 class="text-center">Publicaciones Destacadas</h2>
           </div>
-      </div>
-      <div class="row margin-top">
-        <div class="row">
-          <transition-group name="list" tag="div">
-            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO">
+        <div class="col-12 py-5">
+           <carousel 
+                    :navigationEnabled="true"
+                    :loop="true"
+                    paginationActiveColor="#89dbee"
+                    paginationColor="#b2ebd1"
+                    :paginationSize="5"
+                    easing="linear"
+                    :speed="300"
+                    :perPageCustom="[[768, 1], [1024, 6]]"
+                    :autoplay ="true"
+                    :autoplayTimeout="5000"
+                    :autoplayHoverPause = "true"
+                    >
+            <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN"><!-- && !post.FLAG_VALIDADO-->
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
+               <!-- <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt=""> -->
               </nuxt-link>
               <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
               <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>
               <h5 class="text-center">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
-            </div>
-          </transition-group>
+            </slide>
+           </carousel>
         <!-- Productos -->
-        </div><!-- /row -->
+        </div>
       </div><!-- /row -->
     </div><!-- /container -->
   </section><!-- /Producto -->
@@ -221,6 +217,7 @@
 </no-ssr>
 </template>
 
+<!-- SCRIPT -->
 <script>
 import moment from 'moment'
 import controller from '~/controllers/index'
