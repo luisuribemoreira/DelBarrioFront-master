@@ -53,7 +53,7 @@
                 </div>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="status"> Las imagenes adjuntadas son de mi autoría.
+              <input type="checkbox" id="status" name="status" v-model="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
               </div>
               <div>
                 <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
@@ -107,7 +107,15 @@
               </div>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" v-model="post.FLAG_CONTENIDO_ADULTO">Producto para mayores de 18
+                  <input type="checkbox" v-model="post.FLAG_CONTENIDO_ADULTO"> Producto para mayores de 18
+                </label>
+              </div>
+              <div>
+              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <nuxt-link :to="'/'">Términos y condiciones</nuxt-link>
+              </div>
+              <div>
+                <label>
+                <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
                 </label>
               </div>
               <button type="submit" class="btn btn-default">Publicar</button>
@@ -135,7 +143,9 @@ export default {
       sale: { },
       subcategorias: {},
       message: false,
-      status: false,
+      statusAutoria: false,
+      statusTerminos: false,
+      messageTerminos: false,
       messageAutoria: false,
       selectedIndex: null,
       isSale: false,
@@ -164,9 +174,14 @@ export default {
           this.message = 'El campo tipo es obligatorio.'
         }
         //  Revisar si la casilla de imagenes esta marcada, si no lo está obliga a marcarla.
-        if (!this.status) {
+        if (!this.statusAutoria) {
           result = false
           this.messageAutoria = 'Solo se permiten imagenes de su autoría.'
+        }
+        //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
+        if (!this.statusTerminos) {
+          result = false
+          this.messageTerminos = 'Debe aceptar los términos y condiciones.'
         }
         if (result) {
           let blobs = []
