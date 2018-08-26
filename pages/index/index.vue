@@ -18,7 +18,7 @@
     </div>
     <div class="footer-dark bg-dark">
       <div class="container">
-        <nuxt-link :to="'/'">Términos y condiciones</nuxt-link>
+        <a :href="terms">Términos y condiciones</a>
       </div>
     </div>
   </section>
@@ -26,6 +26,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      terms: process.env.termsUrl
+    }
+  },
   head () {
     return {
       title: 'Inicio'
