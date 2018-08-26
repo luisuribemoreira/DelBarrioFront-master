@@ -1,42 +1,42 @@
 <template>
   <section class="container-fluid" id="admin-faq">
-    <div class="container fondo-beige">
+    <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <h2 class="text-center">Rubros</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-sm-6 margin-top">
+        <div class="col-lg-1 col-md-4 py-2">
           <nuxt-link :to="{ path: '/administracion/rubros/nuevo' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
+        <div class="col-lg-4 offset-md-3 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Rubro..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRubro()">
             <div class="input-group-btn">
-              <icon name="search" :aria-hidden="true"></icon>
+              <icon name="search"></icon>
             </div>
           </div>
         </div>
       </div>
       <div class="row margin-top">
-        <div class="col-xs-12 table-responsive">
-          <table class="table table-hover table-condensed">
+        <div class="col-12 table-responsive">
+          <table class="table">
             <thead>
-              <tr>
+              <tr class="text-center">
                 <th>Estado</th>
                 <th>Nombre</th>
                 <th>Acción</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
               <tr :key="workfield.IDEN_RUBRO" v-for="workfield in paginatedData[pagination]">
                 <td>
                   <icon :name="workfield.FLAG_VIGENTE ? 'check' : 'times'" :title="workfield.FLAG_VIGENTE ? 'Habilitado': 'Deshabilitado'"></icon>
                 </td>
                 <td>{{workfield.NOMB_RUBRO}}</td>
                 <td>
-                  <nuxt-link :to="{ path: '/administracion/rubros/editar/'+ workfield.IDEN_RUBRO }" class="btn btn-secondary">
+                  <nuxt-link :to="{ path: '/administracion/rubros/editar/'+ workfield.IDEN_RUBRO }">
                     <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
                   <a class="btn" v-on:click="setState(workfield)">

@@ -6,32 +6,42 @@
           <h2 class="text-center">Emprendedores</h2>
         </div>
       </div>
+      <!--Buscador de emprendedores -->
       <div class="row">
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Emprendedor..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarEmprendedor()">
-            <div class="input-group-btn">
-              <icon name="search" :aria-hidden="true"></icon>
+          <form class="mx-2 my-auto d-inline w-50">
+            <div class="input-group">
+                <input type="text" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search" @keyup="buscarEmprendedor()">
+                <span class="input-group-append">
+                <button class="btn btn-outline-secondary border border-left-0" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>
             </div>
-          </div>
+          </form>
         </div>
       </div>
+      <!--/Buscador de emprendedores-->
+      <!--Tabla de emprendedores-->
       <div class="row margin-top">
         <div class="col-xs-12 table-responsive">
           <table class="table table-hover table-condensed">
             <thead>
               <tr>
+                <th></th>
                 <th>Nombre</th>
               </tr>
             </thead>
             <tbody>
               <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in entrepreneurs" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.FLAG_BAN" >
+                <td><img :src="entrepreneur.imagen.URL_IMAGEN ? entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
                 <td><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+      <!--/Tabla de emprendedores-->
     </div>
   </section>
 </template>
@@ -47,7 +57,8 @@ export default {
     return {
       entrepreneurs: [],
       search: '',
-      postsAux: []
+      postsAux: [],
+      imageUrl: process.env.imagesUrl
     }
   },
   methods: {

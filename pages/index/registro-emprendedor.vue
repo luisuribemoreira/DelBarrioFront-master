@@ -6,7 +6,7 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="col-md-6 fondo-beige">
               <div style="text-align: center">
-                <h2><span style="vertical-align: super" >Mis datos</span></h2>
+                <h2><span style="vertical-align: super" >Datos de emprendedor</span></h2>
                 <hr>
               </div>
               <div class="row">
@@ -66,7 +66,7 @@
                 <small class="text-danger" v-show="errors.has('confirmar contrasena')">{{ errors.first('confirmar contrasena') }}</small>
               </div>
               <div style="text-align: center">
-                <h2><span style="vertical-align: super">Datos de mi Empresa</span></h2>
+                <h2><span style="vertical-align: super">Datos de Empresa</span></h2>
                 <hr>
               </div>
               <div class="form-group margin-top">
@@ -98,6 +98,14 @@
                 <label for="name">Correo de Contácto</label>
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
+              </div>
+              <div>
+              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <nuxt-link :to="'/'">Términos y condiciones</nuxt-link>
+              </div>
+              <div>
+                <label>
+                <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
+                </label>
               </div>
               <button type="submit" class="btn btn-default">Guardar</button>
             </div>
@@ -137,7 +145,9 @@ export default {
       dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
       user: {},
       submitted: { valid: false, errors: false },
-      imageUrl: process.env.imagesUrl
+      imageUrl: process.env.imagesUrl,
+      statusTerminos: false,
+      messageTerminos: false
     }
   },
   components: {
@@ -152,7 +162,11 @@ export default {
         if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
           this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
         }
-
+        //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
+        if (!this.statusTerminos) {
+          result = false
+          this.messageTerminos = 'Debe aceptar los términos y condiciones.'
+        }
         // Se valida que las contraseñas coincidan
         if (this.user.pass !== this.user.pass2) {
           this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'

@@ -6,31 +6,44 @@
           <h2 class="text-center">Publicaciones</h2>
         </div>
       </div>
+      <!--Buscador de publicaciones -->
       <div class="row">
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 margin-top">
-          <input class="form-control" name="search" v-model="search" placeholder="Buscar publicaciones..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPublicaciones()">
+          <form class="mx-2 my-auto d-inline w-50">
+            <div class="input-group">
+                <input type="text" class="form-control border border-right-0" placeholder="Buscar en publicaciones..." autocomplete="off" autofocus="autofocus" v-model="search" @keyup="buscarPublicaciones()">
+                <span class="input-group-append">
+                <button class="btn btn-outline-secondary border border-left-0" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </form>
         </div>
       </div>
+      <!-- /Buscador de publicaciones-->
+      <!-- Tabla de resultados -->
       <div class="row margin-top">
         <div class="col-xs-12 table-responsive">
-          <table class="table table-responsive">
+          <table class="table table-hover table-condensed">
           <thead>
             <tr>
+              <th></th>
               <th>Título</th>
-              <th>Tipo</th>
-              <th>Categoría</th>
+              <th>Precio</th>
             </tr>
           </thead>
           <tbody>
             <tr :key="post.IDEN_PUBLICACION" v-for="post in posts" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
+              <td><img :src="post.imagen.URL_IMAGEN ? post.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
               <td>{{post.NOMB_PUBLICACION}}</td>
-              <td>{{post.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
-              <td>{{post.categoria.NOMB_CATEGORIA}}</td>
+              <td>$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</td>
             </tr>
           </tbody>
         </table>
         </div>
       </div>
+      <!-- /Tabla de resultados -->
     </div>
   </section>
 </template>

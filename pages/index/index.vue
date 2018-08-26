@@ -16,6 +16,11 @@
         </div>
       </div>
     </div>
+    <div class="footer-dark bg-dark">
+      <div class="container">
+        <nuxt-link :to="'/'">Términos y condiciones</nuxt-link>
+      </div>
+    </div>
   </section>
 </template>
 

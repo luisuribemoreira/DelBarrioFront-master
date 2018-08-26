@@ -1,16 +1,16 @@
 <template>
   <section class="container-fluid">
     <div class="container">
-      <div class="container fondo-beige">
+      <div class="container">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-md-6">
             <h2 class="no-margin-top">Ofertas</h2>
           </div>
         </div>
         <div class="row margin-top">
           <div class="row">
             <transition-group name="list" tag="div">
-              <div class="col-md-3 col-sm-3 col-xs-6 post-item" v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA" v-if="oferta.publicacion.FLAG_VIGENTE && !oferta.FLAG_BAN && oferta.FLAG_VIGENTE && oferta.publicacion.FLAG_VALIDADO">
+              <div class="col-lg-3 col-md-3 col-6 post-item" v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA" v-if="oferta.publicacion.FLAG_VIGENTE && !oferta.FLAG_BAN && oferta.FLAG_VIGENTE && oferta.publicacion.FLAG_VALIDADO">
                 <nuxt-link :to="{ path: '/publicaciones/'+oferta.IDEN_PUBLICACION }">
                   <img v-if="!imagen[oferta.IDEN_PUBLICACION]" v-lazy="'/img/no-image.svg'" class="img-fluid" alt=""> 
                   <img v-else v-lazy="imageUrl + imagen[oferta.IDEN_PUBLICACION].URL_IMAGEN" class="img-fluid" alt="">
