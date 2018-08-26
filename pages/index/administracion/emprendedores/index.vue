@@ -2,70 +2,54 @@
 <section class="container-fluid" id="admin-faq">
     <div class="container fondo-beige">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <h2 class="text-center">Emprendedores</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-sm-6 py-2">
+        <div class="col-lg-1 col-md-4 py-2">
           <nuxt-link :to="{ path: '/administracion/emprendedores/nuevo' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 py-2">
+        <div class="col-lg-4 offset-md-3 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Emprendedor..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarEmprendedor()">
             <div class="input-group-btn">
-              <icon name="search" :aria-hidden="true"></icon>
+              <icon name="search"></icon>
             </div>
           </div>
         </div>
       </div>
       <div class="row py-2">
-        <div class="col-xs-12 table-responsive">
-          <table class="table table-hover table-condensed">
-            <thead>
+        <div class="col-12 table-responsive">
+          <table class="table table-hover table-sm">
+            <thead class="text-center">
               <tr>
                 <th>Estado</th>
                 <th>Nombre</th>
                 <th>Acción</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
               <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in entrepreneurs">
                 <td>
                   <icon :name="entrepreneur.usuario.FLAG_BAN ? 'times' : 'check'" :title="entrepreneur.FLAG_BAN ? 'Deshabilitado' : 'Habilitado'"></icon>
                 </td>
                 <td><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link></td>
                 <td>
-                  <nuxt-link :to="{ path: '/administracion/emprendedores/editar/'+entrepreneur.IDEN_EMPRENDEDOR }" class="btn btn-secondary">
-                    <button class="btn btn-tabla" title="Editar">Editar</button>
+                  <nuxt-link :to="{ path: '/administracion/emprendedores/editar/'+entrepreneur.IDEN_EMPRENDEDOR }">
+                  <a class="btn"> 
+                  <button class="btn btn-tabla" title="Editar">Editar</button>
+                  </a>
                   </nuxt-link>
                   <!--entrepreneur.usuario.FLAG_BAN -->
-                  <a @click="setState(entrepreneur)">
-                    <button class="btn" v-if="entrepreneur.usuario.FLAG_BAN" title="Habilitar">Habilitar</button>
-                    <button class="btn" v-if="!entrepreneur.usuario.FLAG_BAN" title="Deshabilitar" data-toggle="modal" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="deshabilitacion.client = entrepreneur ">Deshabilitar</button>
+                  <a @click="setState(entrepreneur)" class="btn">
+                    <button class="btn btn-tabla" v-if="entrepreneur.usuario.FLAG_BAN" title="Habilitar">Habilitar</button>
+                    <button class="btn btn-tabla" v-if="!entrepreneur.usuario.FLAG_BAN" title="Deshabilitar" data-toggle="modal" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="deshabilitacion.client = entrepreneur ">Deshabilitar</button>
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span :aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span :aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-
           <div class="modal fade" id="disableModal" v-if="isAuthenticated" role="dialog">
             <div class="modal-dialog">
               <div class="modal-content">

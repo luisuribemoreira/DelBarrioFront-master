@@ -1,13 +1,13 @@
 <template>
   <section class="container-fluid" id="admin-faq">
-    <div class="container fondo-beige">
+    <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <h2 class="text-center py-1">Ofertas sin revisar</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 py-1">
+        <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar Título de Oferta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarOfertas()">
             <div class="input-group-btn">
@@ -17,21 +17,21 @@
         </div>
       </div>
       <div class="row py-2">
-        <div class="col-xs-12 table-responsive">
+        <div class="col-12 table-responsive">
           <table class="table">
           <thead>
             <tr class="text-center">
               <th>Título</th>
               <th>Tipo</th>
               <th>Categoría</th>
-              <th>Precio Antiguo</th>
+              <th>Precio Original</th>
               <th>Precio Oferta</th>
               <th>Fecha Inicio</th>
               <th>Fecha Término</th>
               <th>Acción</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="text-center">
             <tr v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA" v-if="!oferta.FLAG_VALIDADO && !oferta.FLAG_BAN">
               <td><nuxt-link :to="{ path: '/publicaciones/' + oferta.publicacion.IDEN_PUBLICACION }">{{oferta.publicacion.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>{{oferta.publicacion.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
@@ -47,20 +47,24 @@
             </tr>
           </tbody>
         </table>
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span :aria-hidden="true">&laquo;</span>
-                </a>
+ <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
+                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                  <span class="page-link" :aria-hidden="true">&laquo;</span>
+                </span>
               </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span :aria-hidden="true">&raquo;</span>
-                </a>
+              <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
+              <li class="page-item" v-bind:key="page" v-for="page in pages">
+                <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
+                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+              </li>
+              <li class="page-item">
+                <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
+                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                  <span class="page-link" :aria-hidden="true">&raquo;</span>
+                </span>
               </li>
             </ul>
           </nav>
@@ -74,6 +78,7 @@
 import offerController from '~/controllers/offers'
 import controller from '~/controllers/admin/postmoderation'
 import moment from 'moment'
+// import custompaginator from '~/controllers/custompaginator'
 
 export default {
   asyncData ({ app }) {

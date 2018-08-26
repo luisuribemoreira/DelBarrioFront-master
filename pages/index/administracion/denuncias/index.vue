@@ -1,23 +1,23 @@
 <template>
   <section id="admin-denuncias" class="container-fluid">
-    <div class="container fondo-beige">
+    <div class="container">
       <div class="row">
-        <div class="col-xs-12">
-          <h2 class="text-center">Denuncias</h2>
+        <div class="col-12">
+          <h2 class="text-center py-1">Denuncias</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-3">
+        <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar por Motivo de Denuncia..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscador()">
             <div class="input-group-btn">
-              <icon name="search" :aria-hidden="true"></icon>
+              <icon name="search"></icon>
             </div>
           </div>
         </div>
       </div>        
       <div class="row margin-top">
-        <div class="col-xs-12 table-responsive">
+        <div class="col-12 table-responsive">
           <div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">

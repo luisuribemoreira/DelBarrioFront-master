@@ -2,7 +2,7 @@
   <section id="admin-agregar-faq" class="container-fluid">
     <div class="container">
       <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 fondo-beige">
+        <div class="col-lg-8 offset-md-2">
           <h2 class="text-center">Modificar FAQ</h2>
             <form @submit.prevent="validateBeforeSubmit">
               <div class="form-group margin-top">

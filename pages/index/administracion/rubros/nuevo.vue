@@ -2,7 +2,7 @@
 <section id="publicacion" class="container-fluid">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3 fondo-beige">
+        <div class="col-lg-6 offset-md-3">
           <h2 class="text-center">Nuevo Rubro</h2>
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
@@ -10,7 +10,6 @@
               <input v-validate data-vv-rules="required|min:5|max:50|alpha_spaces" data-vv-as="nombre" name="name" type="text" v-model="workfield.NOMB_RUBRO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
-            
             <div v-if='message'>
               <span>{{message}}</span>
             </div>
