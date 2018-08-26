@@ -100,7 +100,7 @@
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <nuxt-link :to="'/'">Términos y condiciones</nuxt-link>
+              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a :href="terms">Términos y condiciones</a>
               </div>
               <div>
                 <label>
@@ -147,7 +147,8 @@ export default {
       submitted: { valid: false, errors: false },
       imageUrl: process.env.imagesUrl,
       statusTerminos: false,
-      messageTerminos: false
+      messageTerminos: false,
+      terms: process.env.termsUrl
     }
   },
   components: {

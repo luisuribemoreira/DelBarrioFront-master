@@ -111,7 +111,7 @@
                 </label>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <nuxt-link :to="'/'">Términos y condiciones</nuxt-link>
+              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a :href="terms">Términos y condiciones</a>
               </div>
               <div>
                 <label>
@@ -150,8 +150,9 @@ export default {
       selectedIndex: null,
       isSale: false,
       // Mensajes de error para validaciones manuales
-      errorMsgs: {}
+      errorMsgs: {},
       // Se elimina modelo images, ya que no se utilizará
+      terms: process.env.termsUrl
     }
   },
   asyncData ({app}) {
