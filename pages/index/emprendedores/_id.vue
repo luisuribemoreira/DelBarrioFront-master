@@ -117,7 +117,8 @@ export default {
   data () {
     return {
       geocode: undefined,
-      imageUrl: process.env.imagesUrl
+      imageUrl: process.env.imagesUrl,
+      entrepreneur: []
     }
   },
   computed: mapGetters([

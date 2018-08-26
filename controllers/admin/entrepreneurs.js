@@ -7,7 +7,7 @@ function GET (app, id) {
     .then(res => {
       let entrepreneur = res.data
       if (entrepreneur.usuario.persona && entrepreneur.usuario.persona.IDEN_PERSONA) {
-        return app.$axios.$get('/private/contacto/' + entrepreneur.usuario.persona.IDEN_PERSONA)
+        return app.$axios.$get('/contacto/' + entrepreneur.usuario.persona.IDEN_PERSONA)
           .then(response => {
             entrepreneur.usuario.persona.contacto = response.data
             return {
