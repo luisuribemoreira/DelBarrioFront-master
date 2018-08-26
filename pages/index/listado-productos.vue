@@ -35,7 +35,7 @@
           </thead>
           <tbody>
             <tr :key="post.IDEN_PUBLICACION" v-for="post in posts" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
-              <td><img :src="post.imagen.URL_IMAGEN ? post.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
+              <td><img :src="post.imagenes.URL_IMAGEN ? post.imagenes.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
               <td>{{post.NOMB_PUBLICACION}}</td>
               <td>$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</td>
             </tr>
