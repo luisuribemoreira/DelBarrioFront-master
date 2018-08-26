@@ -82,7 +82,8 @@ module.exports = {
   ** URLs como variables globales
   */
   env: {
-    imagesUrl: 'http://localhost:8080/' // CAMBIAR EN PRODUCTIVO ######################### imagesUrl: 'https://delbarrio.barrenechea.cl/'
+    imagesUrl: 'http://localhost:8080/', // CAMBIAR EN PRODUCTIVO ######################### imagesUrl: 'https://delbarrio.barrenechea.cl/'
+    termsUrl: 'http://localhost:8080/terms/TERMINOS_CONDICIONES.pdf' // CAMBIAR EN PRODUCTIVO ######################### TERMINOS_CONDICIONES.pdf siempre será el archivo más reciente
   },
   /*
   ** Build configuration
