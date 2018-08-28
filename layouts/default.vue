@@ -30,6 +30,12 @@
                     <icon name="home" :aria-hidden="true"></icon>
                 </nuxt-link>
             </li>
+              <li class="nav-item">
+                <nuxt-link to="/listado-emprendedores">Emprendedores</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/listado-productos">Publicaciones</nuxt-link>
+            </li>
         </ul>
         
         <form class="mx-2 my-auto d-inline w-50">
