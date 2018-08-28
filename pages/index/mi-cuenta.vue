@@ -109,7 +109,7 @@
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
-                          v-bind:initial-image="imagen ? imageUrl + imagen.URL_IMAGEN : ''"
+                          v-bind:initial-image="user.emprendedor.imagen.URL_IMAGEN ? imageUrl + user.emprendedor.imagen.URL_IMAGEN : ''"
                           ></croppa>
                   </no-ssr>
                 </div>
@@ -164,7 +164,6 @@ import controller from '~/controllers/admin/myaccount'
 import controllerPosts from '~/controllers/posts'
 import customValidations from '~/controllers/customvalidations'
 import commentsController from '~/controllers/comments'
-import controllerImages from '~/controllers/images'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
@@ -199,12 +198,11 @@ export default {
               if (!user.persona.contacto.Direccion) user.persona.contacto.Direccion = [{}]
               if (!user.persona.contacto.Celular) user.persona.contacto.Celular = [{}]
               if (!user.persona.contacto.Correo) user.persona.contacto.Correo = [{}]
-              let imagen = await (await controllerImages.GETByEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)).image
+              console.log(user.emprendedor)
               return {
                 user: user,
                 posts: posts,
-                preguntas: preguntas,
-                imagen: imagen
+                preguntas: preguntas
               }
             })
         } else {
@@ -231,7 +229,6 @@ export default {
       imageUrl: process.env.imagesUrl,
       entrepreneur: {},
       preguntas: 0,
-      imagen: undefined,
       user: {}
     }
   },
