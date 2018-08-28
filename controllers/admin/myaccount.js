@@ -26,12 +26,6 @@ async function POST (context, user) {
       persona = user.persona
     }
 
-    // Registro del cambio de contraseña del usuario
-    await context.$axios.$put('/private/usuario/' + user.IDEN_USUARIO,
-      {
-        DESC_PASSWORD: user.pass,
-        FECH_CREACION: new Date()
-      })
     // Registro de los datos del emprendedor
     await context.$axios.$put('/private/emprendedor/' + user.emprendedor.IDEN_EMPRENDEDOR,
       {
@@ -112,6 +106,13 @@ async function POST (context, user) {
           IDEN_PERSONA: persona.IDEN_PERSONA
         })
     }
+
+    // Registro del cambio de contraseña del usuario
+    await context.$axios.$put('/private/usuario/' + user.IDEN_USUARIO,
+      {
+        DESC_PASSWORD: user.pass,
+        FECH_CREACION: new Date()
+      })
 
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
@@ -224,7 +225,12 @@ async function PUTEmprendedor (context) {
     for (let i = 0; i < context.user.blobs.length; i++) {
       formData.append('avatar', context.user.blobs[i], 'image' + i + '.png')
     }
-    await context.$axios.$put('/private/imagen/' + context.imagen.IDEN_IMAGEN, formData)
+    if (context.user.emprendedor.imagen.IDEN_IMAGEN) {
+      await context.$axios.$put('/private/imagen/' + context.user.emprendedor.imagen.IDEN_IMAGEN, formData)
+    } else {
+      await context.$axios.$post('/private/imagen/', formData)
+    }
+    
 
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
