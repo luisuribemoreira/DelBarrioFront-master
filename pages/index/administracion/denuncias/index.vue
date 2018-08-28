@@ -177,7 +177,9 @@
               <form @submit.prevent="validate">
                 <div class="form-group">
                   <div class="checkbox">
-                    <label><input type="checkbox" v-model="isBan" />Banear {{ type == 'pub' ? 'publicación' : type == 'com' ? 'comentario' : 'calificación' }}</label>
+                    <label class="px-1"><input type="radio" name="resolucion" required v-on:click="isBan=true" />Banear {{ type == 'pub' ? 'publicación' : type == 'com' ? 'comentario' : 'calificación' }} </label>
+                    <label><input type="radio" name="resolucion" v-on:click="isBan=false" required/> Descartar {{ type == 'pub' ? 'publicación' : type == 'com' ? 'comentario' : 'calificación' }}</label>
+
                   </div>
                 </div>
                 <div class="form-group">
@@ -203,6 +205,7 @@
 import controller from '~/controllers/admin/denounces'
 import resolutioncontroller from '~/controllers/admin/denounceresolutions'
 import moment from 'moment'
+import emailer from '~/controllers/admin/emailer'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -331,6 +334,50 @@ export default {
     validate () {
       this.$validator.validateAll().then((result) => {
         if (result) {
+          switch (this.type) {
+            case 'pub':
+              let mailDenunciado = this.denouncedetail.publicacion.emprendedor.usuario.EMAIL_USUARIO
+              let mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
+              let nombrePublicacion = this.denouncedetail.publicacion.NOMB_PUBLICACION
+              if (this.isBan) {
+                emailer.sendMail(this, mailDenunciado, 'Publicación Denunciada',
+                  'Hemos recibido una denuncia de su publicación llamada: "' + nombrePublicacion + '" la cual fue baneada porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                  'Hemos recibido su denuncia hacia la publicación: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+              } else {
+                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                  'Hemos recibido su denuncia hacia la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la publicación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+              }
+              break
+            case 'com':
+              mailDenunciado = this.denouncedetail.comentario.publicacion.emprendedor.usuario.EMAIL_USUARIO
+              mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
+              nombrePublicacion = this.denouncedetail.comentario.publicacion.denounceresolution
+              if (this.isBan) {
+                emailer.sendMail(this, mailDenunciado, 'Comentario Denunciado',
+                  'Hemos recibido una denuncia de su comentario en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                  'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+              } else {
+                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                  'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+              }
+              break
+            case 'cal':
+              mailDenunciado = this.denouncedetail.calificacion.publicacion.emprendedor.usuario.EMAIL_USUARIO
+              mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
+              nombrePublicacion = this.denouncedetail.calificacion.publicacion.DESC_PUBLICACION
+              if (this.isBan) {
+                emailer.sendMail(this, mailDenunciado, 'Calificación Denunciada',
+                  'Hemos recibido una denuncia de su calificacion en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                  'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+              } else {
+                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                  'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la calificación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+              }
+              break
+          }
           resolutioncontroller.POST(this)
         }
       })
