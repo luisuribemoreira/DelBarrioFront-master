@@ -30,7 +30,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE"><!-- FLAG_VALIDADO -->
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
               <td><img :src="post.imagenes.length > 0 && post.imagenes[0].URL_IMAGEN ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
               <td>{{post.NOMB_PUBLICACION}}</td>
               <td>$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</td>
