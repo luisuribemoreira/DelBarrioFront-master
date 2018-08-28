@@ -30,7 +30,7 @@
             </thead>
             <tbody class="text-center">
               <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in paginatedData[pagination]" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.FLAG_BAN" >
-                <td><img :src="entrepreneur.imagen.URL_IMAGEN ? entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
+                <td><img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
                 <td><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link></td>
               </tr>
             </tbody>

@@ -167,7 +167,7 @@
                     >
               <slide v-for="emprendedor in index.emprendedores" :key="emprendedor.IDEN_EMPRENDEDOR" v-if="emprendedor.usuario.FECH_CREACION">
                 <nuxt-link :to="'/emprendedores/'+emprendedor.IDEN_EMPRENDEDOR">
-                  <img :src="emprendedor.imagen.URL_IMAGEN ? emprendedor.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid">
+                  <img :src="emprendedor.imagen.URL_IMAGEN ? imageUrl + emprendedor.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid">
                 </nuxt-link>
                 <h3 class="text-center">{{emprendedor.DESC_NOMBRE_FANTASIA}}</h3>
               </slide>
@@ -200,7 +200,7 @@
             <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN"><!-- && !post.FLAG_VALIDADO-->
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-               <!-- <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt=""> -->
+                <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
               <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>

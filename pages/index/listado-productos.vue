@@ -31,7 +31,7 @@
           </thead>
           <tbody class="text-center">
             <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE"><!-- FLAG_VALIDADO -->
-              <td><img :src="post.imagenes.URL_IMAGEN ? post.imagenes.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
+              <td><img :src="post.imagenes.URL_IMAGEN ? imageUrl + post.imagenes.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid"></td>
               <td>{{post.NOMB_PUBLICACION}}</td>
               <td>$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</td>
             </tr>
@@ -103,7 +103,8 @@ export default {
       pages: 0,
       paginatedData: [[]],
       search: '',
-      postsAux: []
+      postsAux: [],
+      imageUrl: process.env.imagesUrl
     }
   },
   methods: {
