@@ -230,7 +230,6 @@ async function PUTEmprendedor (context) {
     } else {
       await context.$axios.$post('/private/imagen/', formData)
     }
-    
 
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
