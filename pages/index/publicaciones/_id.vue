@@ -364,6 +364,10 @@ export default {
                     rating: calificacionAux
                   }
                 })
+            } else {
+              return {
+                post: post
+              }
             }
           })
       })
@@ -378,7 +382,8 @@ export default {
       denounce: { DESC_DENUNCIA: '' },
       iden: '',
       error: '',
-      imageUrl: process.env.imagesUrl
+      imageUrl: process.env.imagesUrl,
+      post: []
     }
   },
   computed: mapGetters([
