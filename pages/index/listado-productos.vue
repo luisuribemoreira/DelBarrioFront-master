@@ -24,7 +24,7 @@
           <table class="table">
           <thead>
             <tr class="text-center">
-              <th></th>
+              <th>Imagen</th>
               <th>Título</th>
               <th>Precio</th>
             </tr>

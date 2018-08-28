@@ -3,13 +3,13 @@
     <section id="productos" class="container-fluid">
       <div class="container">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <h2>Productos</h2>
           </div>
         </div>
         <div class="row">
           <transition-group name="list" tag="div">
-            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION">
+            <div class="col-lg-2 col-md-3 col-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION">
               <nuxt-link :to="{ path: '/publicaciones/'+p.IDEN_PUBLICACION }">
                 <img v-if="p.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
                 <img v-else v-lazy="imageUrl+p.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">

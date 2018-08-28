@@ -3,13 +3,13 @@
   <section id="el-producto" class="container-fluid">
     <div class="container">
       <div class="row margin-top-sec">
-        <div class="col-sm-6">
+        <div class="col-xl-6">
           <div id="carousel" class="carousel slide">
             <div class="carousel-inner">
-              <div class="item active">
+              <div class="item active carousel-item">
                 <img :src="post.imagenes.length > 0 ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-responsive" alt="">
               </div>
-              <div class="item" :key="img.IDEN_IMAGEN" v-for="img in post.imagenes">
+              <div class="item carousel-item" :key="img.IDEN_IMAGEN" v-for="img in post.imagenes">
                 <img :src="imageUrl + img.URL_IMAGEN" class="img-responsive" alt="">
               </div>
             </div>
@@ -17,7 +17,7 @@
           <div class="clearfix">
             <div id="thumbcarousel" class="carousel slide" :data-interval="false">
               <div class="carousel-inner">
-                <div class="item active" v-if="post.imagenes.length>1" >
+                <div class="item active carousel-item" v-if="post.imagenes.length>1" >
                   <div data-target="#carousel" :data-slide-to="img.$index" class="thumb" v-bind:key="img.IDEN_IMAGEN" v-for="img in post.imagenes">
                       <img v-bind:src="imageUrl + img.URL_IMAGEN" class="img-responsive" alt="">
                   </div>                
@@ -26,7 +26,7 @@
             </div> <!-- /thumbcarousel -->
           </div><!-- /clearfix -->
         </div><!-- columna -->
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <h2>{{post.NOMB_PUBLICACION}}</h2>
           <div class="estrellas">
             <no-ssr>
@@ -93,7 +93,7 @@
       <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
         <div class="container">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <hr>
               <h2 class="margin-top">Calificaciones</h2>
               <p>Ingresa tu calificación</p>
@@ -124,7 +124,7 @@
         </div>
         </div>      
         <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
-          <div class="col-xs-12 contorno">
+          <div class="col-12">
             <h3>Última calificación</h3>
             <div class="estrellas">
               <no-ssr>
@@ -147,13 +147,13 @@
 
     <!-- COMENTARIOS -->
     <section id="comentarios" name="comentarios" class="container-fluid">
-        <div class="container">
-        <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">  
+        <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
+        <div class="container">  
         <div class="row">
+          <div class="col-12">
           <hr>
           <h2 class="margin-top">Comentarios</h2>
           <p>Ingresa tu comentario</p>
-
           <!--FORM DE COMENTAR-->
           <form @submit.prevent="validateComment">
             <div class="form-group margin-top-20">
@@ -174,13 +174,13 @@
         </div>
         </div>
         <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
-          <div v-if="c.FLAG_BAN" class="col-xs-12 contorno ban">
+          <div v-if="c.FLAG_BAN" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
               <span> Este comentario ha sido eliminado por no cumplir con los <a>términos y condiciones</a> del sitio</span>
             </p>
           </div>
-          <div v-else class="col-xs-12 contorno">
+          <div v-else class="col-12">
             <p class="margin-top-20">
               <icon name="comment"> </icon>
               <small class="margin-left"> {{c.FECH_CREACION | dateFormat}}</small>
@@ -211,6 +211,7 @@
                 <small class="text-danger" v-show="errors.has('resp')">{{ errors.first('resp') }}</small>
                 <p><button type="submit" class="btn btn-default">Comentar</button></p>
               </form>
+              </div>
             </div>
             <!-- FIN FORM RESPUESTA -->
             <p>
