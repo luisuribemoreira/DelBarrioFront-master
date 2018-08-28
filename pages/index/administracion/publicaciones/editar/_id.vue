@@ -2,11 +2,11 @@
     <section id="publicacion" class="container-fluid">
       <div class="container">
         <div class="row">
-          <div class="col-md-10 col-md-offset-1 fondo-beige">
+          <div class="col-lg-10 offset-md-1">
             <h2 class="text-center">Editar Publicación</h2>            
             <form class="margin-top" @submit.prevent="validateBeforeSubmit">
               <div class="row margin-top"> <!-- Corregir estilos -->
-                <div class="col-sm-3">
+                <div class="col-md-3">
                 <no-ssr>
                   <croppa v-model="images.image1"
                           :width="200"
@@ -20,7 +20,7 @@
                           ></croppa>
                 </no-ssr>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-md-3">
                   <no-ssr>
                   <croppa v-model="images.image2"
                           :width="200"
@@ -34,7 +34,7 @@
                           ></croppa>
                   </no-ssr>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-md-3">
                   <no-ssr>
                   <croppa v-model="images.image3"
                           :width="200"
@@ -48,7 +48,7 @@
                           ></croppa>
                   </no-ssr>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-md-3">
                   <no-ssr>
                   <croppa v-model="images.image4"
                           :width="200"
@@ -88,7 +88,7 @@
                 <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label for="category">Categoría</label>
                       <select v-model="post.IDEN_CATEGORIA" v-validate data-vv-rules="required" data-vv-as="categoría" name="category" class="form-control" size=5>
@@ -97,7 +97,7 @@
                     <small class="text-danger" v-show="errors.has('category')">{{ errors.first('category') }}</small>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label for="category">Sub categoría</label>
                     <select v-model="post.IDEN_SUBCATEGORIA" name="subcategory" class="form-control" size=5>

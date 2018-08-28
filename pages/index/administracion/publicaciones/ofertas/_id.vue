@@ -2,38 +2,38 @@
     <section id="publicacion" class="container-fluid">
       <div class="container">
         <div class="row">
-          <div class="col-md-10 col-md-offset-1 fondo-beige">
+          <div class="col-lg-10 offset-md-1">
             <h2 class="text-center">Editar Oferta</h2>            
             <form class="margin-top" @submit.prevent="validateBeforeSubmit">
               <h3>Publicación</h3>
-              <div class="row margin-top" v-if="post.imagenes.length > 0" style="text-align:center"> <!-- Corregir estilos -->
-                <div class="col-sm-3" v-for="img in post.imagenes" :key="img.IDEN_IMAGEN">
+              <div class="row margin-top" v-if="post.imagenes.length > 0">
+                <div class="col-md-3" v-for="img in post.imagenes" :key="img.IDEN_IMAGEN">
                   <img :src="imageUrl+img.URL_IMAGEN" style="width: 200px" />
                 </div>
               </div>
               <div class="row margin-top">
-                <div class="col-sm-6">
+                <div class="col-md-6">
                   <label for="tipo">Tipo</label>
                   <span class="data" id="tipo" v-if="post.CODI_TIPO_PUBLICACION === 'P'">Producto</span>
                   <span class="data" id="tipo" v-if="post.CODI_TIPO_PUBLICACION === 'S'">Servicio</span>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-md-6">
                   <label for="name">Título</label>
                   <span class="data" id="name">{{ post.NOMB_PUBLICACION }}</span>
                 </div> 
               </div>
               <div class="row margin-top">             
-                <div class="col-sm-6">
+                <div class="col-md-6">
                   <label for="price">Precio</label>
                   <span class="data" id="precio">{{ post.NUMR_PRECIO }}</span>
                 </div>              
-                <div class="col-sm-6">
+                <div class="col-md-6">
                   <label for="descripcion">Descripcion</label>
                   <span class="data" id="descripcion">{{ post.DESC_PUBLICACION }}</span>
                 </div>
               </div>
               <div class="row margin-top">
-                <div class="col-sm-6">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="category">Categoría</label>
                     <span class="data" id="category">{{ post.categoria.NOMB_CATEGORIA }}</span>
@@ -44,7 +44,7 @@
                 <span class="text-danger">Publicación para mayores de 18</span>
               </div>
               <div class="row" v-if="post.etiquetas.length > 0">
-                <div class="col-sm-12">
+                <div class="col-md-12">
                   <label for="tags">Tags</label>
                   <div id="tags">|<span v-for="eti in post.etiquetas" :key="eti.IDEN_ETIQUETA"> {{ eti.NOMB_ETIQUETA }} |</span></div>
                 </div>

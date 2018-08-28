@@ -2,7 +2,7 @@
   <section id="publicacion" class="container-fluid" align="center">
     <div class="container">
       <div class="row">
-        <div class="col-md-10 col-md-offset-1 fondo-beige">
+        <div class="col-md-10 offset-md-1">
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group py-2">
               <input class="form-control input-lg" placeholder="¿Qué buscas?"/>

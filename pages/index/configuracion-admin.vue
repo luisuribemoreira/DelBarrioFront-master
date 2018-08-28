@@ -1,14 +1,14 @@
 <template>
   <section id="admin" class="container-fluid">
-    <div class="container fondo-beige">
+    <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <h2 class="text-center">Cambiar contraseña</h2>
         </div>
       </div>
  <!-- CONFIGURACION DE CUENTA -->
      <div class="margin-top">
-        <div class="col-md-6 fondo-beige">
+        <div class="col-md-6">
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="pass">Contraseña</label>

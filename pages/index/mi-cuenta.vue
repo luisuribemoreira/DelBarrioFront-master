@@ -1,20 +1,20 @@
 <template>
   <section id="admin" class="container-fluid">
-    <div class="container fondo-beige">
+    <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <h2 class="text-center">Mi cuenta</h2>
         </div>
       </div>
       <div class="row">
         <!-- EMPRENDEDOR - PREGUNTAS -->
-        <div class="col-xs-12" v-if="isAuthenticated && loggedUser.rol === 102">
+        <div class="col-12" v-if="isAuthenticated && loggedUser.rol === 102">
           <h3><icon name="comments-o" :aria-hidden="true" :scale="2"></icon><span style="vertical-align: super"> Preguntas</span></h3>
           <hr>
           <p><span class="label label-default">{{ preguntas }}</span> <span style="vertical-align: sub"> Que aún no respondiste</span></p>
         </div>
         <!-- CLIENTE - RESPUESTAS -->
-        <div class="col-xs-12" v-if="isAuthenticated && loggedUser.rol === 101">
+        <div class="col-12" v-if="isAuthenticated && loggedUser.rol === 101">
           <h3><icon name="comments-o" :aria-hidden="true" :scale="2"></icon><span style="vertical-align: super"> Respuestas</span></h3>
           <hr>
           <p><span class="label label-default">{{ respuestas }}</span> <span style="vertical-align: sub"> Te han respondido</span></p>
@@ -23,14 +23,14 @@
       <hr>
       <div v-if="isAuthenticated && loggedUser.rol === 102">
         <div class="row margin-top">
-          <div class="col-xs-12">
+          <div class="col-12">
             <h3>Tus destacados</h3>
             <small class="text-muted"><nuxt-link to="/administracion/publicaciones">Ver todos</nuxt-link></small>
           </div>
         </div>
         <div class="row">
           <transition-group name="ListPosts" tag="div">
-            <div class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
+            <div class="col-lg-2 col-md-3 col-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
               <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">
                 <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
                 <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
@@ -45,17 +45,17 @@
         </div>
         <hr class="margin-top">
       </div>
-      <a class="btn btn-default" @click="selected = !selected">
+      <a class="btn btn-secondary" @click="selected = !selected">
         <icon name="wrench" :aria-hidden="true"></icon>
-        <span style="vertical-align: text-buttom"> Configuración Cuenta</span>
+        <span> Configuración Cuenta</span>
       </a>
       <!-- CONFIGURACION DE CUENTA -->
       <div v-if="selected" class="margin-top">
-        <div style="text-align: center">
-          <h2><span style="vertical-align: super" >Datos de emprendedor</span></h2>
+        <div>
+          <h2 class="text-center"><span>Datos de emprendedor</span></h2>
           <hr>
         </div>
-        <div class="col-md-6 fondo-beige">
+        <div class="col-lg-6">
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Nombres</label><span style="color: red"> (Formato ej: Marcelo Díaz)</span>
@@ -96,12 +96,12 @@
               <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
             <div v-if="loggedUser.rol === 102">
-              <div style="text-align: center">
-                <h2><span style="vertical-align: super">Datos de Empresa</span></h2>
+              <div>
+                <h2 class="text-center"><span>Datos de Empresa</span></h2>
                 <hr>
               </div>
               <div class="row">
-                <div class="margin-left col-sm-6">
+                <div class="margin-left col-md-6">
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
