@@ -63,8 +63,7 @@ module.exports = {
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/vue-input-tag', ssr: true },
     { src: '~/plugins/vue-google-maps', ssr: true },
-    { src: '~/plugins/vue-carousel', ssr: false },
-    { src: '~/plugins/vue-moment', ssr: true }
+    { src: '~/plugins/vue-carousel', ssr: false }
   ],
   /*
   ** Modules initialization
@@ -82,8 +81,8 @@ module.exports = {
   ** URLs como variables globales
   */
   env: {
-    imagesUrl: 'http://localhost:8080/', // CAMBIAR EN PRODUCTIVO ######################### imagesUrl: 'https://delbarrio.barrenechea.cl/'
-    termsUrl: 'http://localhost:8080/terms/TERMINOS_CONDICIONES.pdf' // CAMBIAR EN PRODUCTIVO ######################### TERMINOS_CONDICIONES.pdf siempre será el archivo más reciente
+    imagesUrl: 'http://localhost:3000/', // CAMBIAR EN PRODUCTIVO ######################### imagesUrl: 'https://delbarrio.barrenechea.cl/'
+    termsUrl: 'http://localhost:3000/TERMINOS_CONDICIONES.pdf' // CAMBIAR EN PRODUCTIVO ######################### TERMINOS_CONDICIONES.pdf siempre será el archivo más reciente
   },
   /*
   ** Build configuration
