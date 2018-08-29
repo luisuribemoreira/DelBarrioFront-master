@@ -113,7 +113,12 @@
               </thead>
               <tbody>
                 <tr :key="item[1]" v-for="item in paginatedData[pagination]">
+                  <nuxt-link v-if="type.entrepreneur" :to="{ path: '/emprendedores/'+item[1]}">
                   <td>{{item[2]}}</td>
+                  </nuxt-link>
+                  <nuxt-link v-else :to="{ path: '/publicaciones/'+item[1]}">
+                  <td>{{item[2]}}</td>
+                  </nuxt-link>
                   <td>{{item[3]}}</td>
                   <td>{{item[4]}}</td>
                   <td>{{item[5]}}</td>
