@@ -36,6 +36,9 @@
             <li class="nav-item">
                 <nuxt-link to="/listado-productos">Publicaciones</nuxt-link>
             </li>
+            <li class="nav-item">
+                <nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link>
+            </li>
         </ul>
         
         <form class="mx-2 my-auto d-inline w-50">
@@ -240,6 +243,12 @@
             <span class="icon-bar"></span>       
             <li class="nav-item">
                 <nuxt-link to="/listado-productos">Publicaciones</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/listado-productos-avanzado">Publicaciones dospuntocero</nuxt-link>
             </li>
         </ul>
         
