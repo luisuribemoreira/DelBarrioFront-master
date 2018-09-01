@@ -247,9 +247,6 @@
             <li class="nav-item">
                 <nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link>
             </li>
-            <li class="nav-item">
-                <nuxt-link to="/listado-productos-avanzado">Publicaciones dospuntocero</nuxt-link>
-            </li>
         </ul>
         
         <form class="mx-2 my-auto d-inline w-50">

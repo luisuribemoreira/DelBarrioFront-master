@@ -1,28 +1,60 @@
 <template>
-<section class="container-fluid" id="admin-faq">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h2 class="text-center">Publicaciones</h2>
-        </div>
-      </div>
-      <!--Buscador de publicaciones -->
-      <div class="row">
-        <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 margin-top py-1">
-            <div class="input-group text-truncate">
-                <input type="text" class="form-control border border-right-0" placeholder="Buscar en publicaciones..." autocomplete="off" autofocus="autofocus" v-model="search" @keyup="buscarPublicaciones()">
-              <div class="input-group-btn">
-                <icon name="search"></icon>
+  <no-ssr>
+  <div>
+    <section id="busqueda" class="container-fluid">
+      <div class="container">
+        <h4>Listado de productos</h4>
+        <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">
+
+          <!-- Menu Producto -->
+          <div class="row" v-if="type.product"> 
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="buscas">¿Qué Buscas?</label>
+                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto..." v-model="search.query.find">
               </div>
             </div>
-        </div>
-      </div>
-      <!-- /Buscador de publicaciones-->
-      <!-- Tabla de resultados -->
-      <div class="row">
-        <div class="col-12 table-responsive">
-          <table class="table">
-          <thead>
+            <div class="col-md-6">
+              <div class="form-group pricerange">
+                <label for="rangodeprecio" class="col-md-12">Rango de precio ${{search.minPrice}}{{search.maxPrice ? ' - $' + search.maxPrice : ''}} (Opcional)</label>
+                <div class="col-md-6">
+                  <div class="input-group mb-2 mb-sm-0">
+                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group mb-2 mb-sm-0">
+                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model="search.maxPrice"> 
+                  </div>                      
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
+                <select class="form-control" v-model="search.query.filter">
+                  <option v-bind:value="false">Seleccione una categoría...</option>
+                  <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
+                </select>
+              </div>
+            </div>
+          </div> <!-- Fin Menu Producto -->
+
+          <div class="mb-2">
+            <button type="submit" class="btn btn-secondary">
+              <icon name="search"></icon> <span class="icon-text"> Buscar</span>
+            </button>
+          </div>
+        </form><!-- /Formulario -->
+      </div><!-- /container -->
+</section><!-- /Busqueda -->
+
+    <section>
+      <div class="container">
+        <div class="row margin-top">
+          <div class="col-12 table-responsive" v-if="paginatedData[0].length > 0">
+            <table class="table table-hover table-sm">
+              <thead>
             <tr class="text-center">
               <th>Imagen</th>
               <th>Título</th>
@@ -33,134 +65,200 @@
             <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
               <td>
                 <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
-                <img :src="post.imagenes.length > 0 && post.imagenes[0].URL_IMAGEN ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-fluid">
+                <img :src="post.imagenes.length > 0 && post.imagenes[0].URL_IMAGEN ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-fluid" height="150" width="150">
                 </nuxt-link>
               </td>
               <td><nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">{{post.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</td>
             </tr>
           </tbody>
-        </table>
-         <nav aria-label="Page navigation">
+            </table><!-- /tabla generica de datos -->
+
+            <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
               <li class="page-item">
-                <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
                 <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
                   <span class="page-link" :aria-hidden="true">&laquo;</span>
                 </span>
               </li>
-              <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
               <li class="page-item" v-bind:key="page" v-for="page in pages">
-                <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
                 <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
               </li>
               <li class="page-item">
-                <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
                 <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
                   <span class="page-link" :aria-hidden="true">&raquo;</span>
                 </span>
               </li>
             </ul>
-          </nav>
+          </nav> <!-- navegacion -->
+
+          </div>
+          <span v-if="searchMessage" class="text-info">{{ searchMessage }}</span>
         </div>
       </div>
-      <!-- /Tabla de resultados -->
-    </div>
-  </section>
+    </section> <!-- Resultado Busqueda -->
+
+
+  </div>
+</no-ssr>
 </template>
 
+<!-- SCRIPT -->
 <script>
-import controllerPosts from '~/controllers/posts'
-// import moment from 'moment'
+import controller from '~/controllers/index'
 import custompaginator from '~/controllers/custompaginator'
+import categoriescontroller from '~/controllers/admin/categories'
+import workfieldsController from '~/controllers/admin/workfields'
+import postsController from '~/controllers/posts'
 
 export default {
-  asyncData ({ app, store }) {
-    return controllerPosts.GETAll(app)
-      .then(({ posts }) => {
-        return custompaginator.paginate(posts)
-          .then(({ paginatedData }) => {
-            let pages = paginatedData.length
-            return {
-              posts,
-              paginatedData,
-              pages
-            }
+  asyncData ({ app }) {
+    return controller.GETAll(app)
+      .then(({ index }) => {
+        return categoriescontroller.GETAllList(app)
+          .then(({ categories }) => {
+            return workfieldsController.GETAll(app)
+              .then(({ workfields }) => {
+                return {
+                  categories: categories,
+                  index: index,
+                  workfields: workfields
+                }
+              })
           })
-        /*  .then(({ posts }) => {
-            // Ordena los posts segun la fecha, el mas reciente primero y el mas antiguo al final
-            posts.sort(function (a, b) {
-              if (moment(a.FECH_CREACION).isAfter(b.FECH_CREACION)) return -1
-              if (moment(a.FECH_CREACION).isBefore(b.FECH_CREACION)) return 1
-              return 0
-            })
-            return {
-              posts: posts
-            }
-          }) */
       })
   },
   data () {
     return {
-      posts: [],
-      pagination: 0,
-      pages: 0,
+      search: {
+        query: {
+          find: '',
+          filter: false
+        },
+        minPrice: '',
+        maxPrice: ''
+      },
+      type: {
+        product: true
+      },
+      imageUrl: process.env.imagesUrl,
+      searchKeys: [], // Encabezados para la tabla segun los datos de busqueda
+      searchMessage: false,
+      categories: [],
+      index: [],
+      workfields: [],
       paginatedData: [[]],
-      search: '',
-      postsAux: [],
-      imageUrl: process.env.imagesUrl
+      pages: 0,
+      pagination: 0
     }
   },
   methods: {
-    setState (post) {
-      controllerPosts.setState(this, post)
-    },
-    buscarPublicaciones () {
-      // Copiar todos los posts, si existen, a una variable auxiliar para no perder la lista original
-      if (this.postsAux.length === 0) {
-        this.postsAux = this.paginatedData
-      }
+    async busquedaAvanzada () { // Busqueda avanzada usando un metodo similar al de las otras tablas de datos.
+      /*
+      * Publicaciones/Productos
+      */
+      if (this.type.product) {
+        let posts = (await postsController.GETAll(this)).posts
+        this.pages = posts.length
+        let options = { text: false, filter: false, price: false }
+        let postsFound = posts
+        if (this.search.query.find.length > 0) { // Si posee texto en el buscador...
+          options.text = true
+          postsFound = []
+          let postSearch = posts.map(post => {
+            if (post.NOMB_PUBLICACION.match(new RegExp(this.search.query.find, 'gi')) !== null) return post
+          })
 
-      // Si hay algo escrito en el buscador...
-      if (this.search.length > 0) {
-        // Se buscan todos los post en que el titulo o parte de el posea el texto escrito en el buscador
-        let postSearch = this.posts.map(post => {
-          if (post.NOMB_PUBLICACION.match(new RegExp(this.search, 'gi')) !== null) return post
-        })
+          postSearch.forEach(post => {
+            if (post) postsFound.push(post)
+          })
+        }
 
-        // Limpia los posts actuales y lo llena con los posts que cumplan el criterio de busqueda
-        let postFound = []
-        postSearch.forEach(post => {
-          if (post) postFound.push(post)
-        })
+        if (this.search.query.filter) { // Si posee una categoria de busqueda...
+          options.filter = true
+          if (options.text) { // Y también texto en el buscador
+            let postSearch = postsFound.map(post => {
+              if (post.categoria.NOMB_CATEGORIA.match(new RegExp(this.search.query.filter, 'gi')) !== null) return post
+            })
+            postsFound = []
+            postSearch.forEach(post => {
+              if (post) postsFound.push(post)
+            })
+          } else { // Sin texto en el buscador...
+            postsFound = []
+            let postSearch = posts.map(post => {
+              if (post.categoria.NOMB_CATEGORIA.match(new RegExp(this.search.query.filter, 'gi')) !== null) return post
+            })
 
-        // Ordena los posts en orden lexicografico.
-        postFound.sort(function (a, b) {
-          return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION)
+            postSearch.forEach(post => {
+              if (post) postsFound.push(post)
+            })
+          }
+        }
+
+        if (this.search.minPrice.length > 0 || this.search.maxPrice.length > 0) { // Si hay rangos ingresados...
+          options.price = true
+          if (options.text || options.filter) { // Si el buscador tiene texto y/o también hay una categoría de filtro
+            let postSearch = postsFound.map(post => {
+              if (this.search.minPrice.length > 0 && this.search.maxPrice.length === 0) { // Si solo hay un rango inferior
+                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice)) return post
+              }
+              if (this.search.minPrice.length === 0 && this.search.maxPrice.length > 0) { // Si solo hay un rango superior
+                if (Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+              }
+              if (this.search.minPrice.length > 0 && this.search.maxPrice.length > 0) { // Si estan ambos rangos
+                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice) &&
+                Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+              }
+            })
+            postsFound = []
+            postSearch.forEach(post => {
+              if (post) postsFound.push(post)
+            })
+          } else {
+            postsFound = []
+            let postSearch = posts.map(post => {
+              if (this.search.minPrice.length > 0 && this.search.maxPrice.length === 0) { // Si solo hay un rango inferior
+                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice)) return post
+              }
+              if (this.search.minPrice.length === 0 && this.search.maxPrice.length > 0) { // Si solo hay un rango superior
+                if (Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+              }
+              if (this.search.minPrice.length > 0 && this.search.maxPrice.length > 0) { // Si estan ambos rangos
+                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice) &&
+                Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+              }
+            })
+            postSearch.forEach(post => {
+              if (post) postsFound.push(post)
+            })
+          }
+        }
+
+        postsFound.sort(function (a, b) {
+          return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
-        // Se llama al paginador con la lista de objetos encontrados
-        custompaginator.paginate(postFound)
+        custompaginator.paginate(postsFound)
           .then(({ paginatedData }) => {
-            // Se reemplaza la lista paginada actual por la que contiene solo los objetos de la busqueda
             this.paginatedData = paginatedData
-            // La cantidad total de paginas se reemplaza por la cantidad de paginas
-            // de la nueva lista de objetos encontrados por la busqueda
             this.pages = paginatedData.length
-            this.pagination = 0 // Se envia a la pagina inicial en caso de que la busqueda contenga mas de 10 objetos
+            this.pagination = 0
           })
       }
 
-      // Si no hay texto en el buscador se restaura la lista original
-      if (this.search.length === 0) {
-        this.paginatedData = this.postsAux
+      if (this.paginatedData[0].length === 0) {
+        this.searchMessage = 'No se encontró ningún resultado.'
+        this.paginatedData = [[]]
         this.pagination = 0
-        this.pages = this.paginatedData.length
+        this.pages = 0
+      } else {
+        this.searchMessage = false
       }
     }
   },
   head () {
     return {
-      title: 'Publicaciones'
+      title: 'Listado de productos'
     }
   }
 }
