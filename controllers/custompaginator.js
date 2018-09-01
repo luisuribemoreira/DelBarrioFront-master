@@ -1,5 +1,4 @@
-async function paginate (data, maxItems) {
-  if (!maxItems) maxItems = 10 // Si no se definió la cantidad máxima de items por pagina se asignan 10 por defecto.
+async function paginate (data, maxItems = 10) { // Si no se indica la cantidad maxima de items por pagina estos seran 10 por defecto
   // Se crea un arreglo bidimensional para guardar los objetos paginados
   // donde el indice del primer nivel del arreglo actua como numero de pagina
   let paginatedData = [[]]
