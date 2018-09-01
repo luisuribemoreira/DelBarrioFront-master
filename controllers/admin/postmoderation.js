@@ -2,7 +2,8 @@ function acceptPost (context, post) {
   context.$axios.$put(
     'private/publicacion/' + post.IDEN_PUBLICACION,
     {
-      FLAG_VALIDADO: true
+      FLAG_VALIDADO: true,
+      FECH_APROBACION: 1
     }
   ).then(response => {
     post.FLAG_VALIDADO = true
@@ -30,7 +31,8 @@ function ban (context, post) {
   context.$axios.$put(
     'private/publicacion/' + post.IDEN_PUBLICACION,
     {
-      FLAG_BAN: true
+      FLAG_BAN: true,
+      FECH_RECHAZO: 1
     }
   ).then(response => {
     post.FLAG_BAN = true
