@@ -225,22 +225,29 @@ async function comentariosPorProducto (app) {
     if (post.comentarios.length > 0) {
       let comentarios = []
       post.comentarios.forEach(comentario => {
-        let obj = {
-          1: '-',
-          2: comentario.usuario.emprendedor.IDEN_EMPRENDEDOR
-            ? comentario.usuario.emprendedor.DESC_NOMBRE_FANTASIA
-            : comentario.usuario.persona.NOMBRES + ' ' + comentario.usuario.persona.APELLIDO_MATERNO + ' ' + comentario.usuario.persona.APELLIDO_PATERNO,
-          3: comentario.DESC_COMENTARIO.length > 50 ? comentario.DESC_COMENTARIO.substring(0, 50) + '...' : comentario.DESC_COMENTARIO,
-          4: moment(comentario.FECH_CREACION).format('DD-MM-YYYY'),
-          5: comentario.FLAG_BAN ? 'Baneado' : 'Activo'
+        // Devuelve los milisegundos desde el 1 de Enero de 1970 hasta la fecha ingresada.
+        // 31 dias en milisegundos -> 2678400000
+        let fechaEnMS = moment(comentario.FECH_CREACION).valueOf()
+        let actualEnMS = moment().valueOf()
+        // Verifica que la fecha de aprobación esté dentro de un rango de 31 días
+        if (actualEnMS - fechaEnMS <= 2678400000) {
+          let obj = {
+            1: '-',
+            2: comentario.usuario.emprendedor.IDEN_EMPRENDEDOR
+              ? comentario.usuario.emprendedor.DESC_NOMBRE_FANTASIA
+              : comentario.usuario.persona.NOMBRES + ' ' + comentario.usuario.persona.APELLIDO_MATERNO + ' ' + comentario.usuario.persona.APELLIDO_PATERNO,
+            3: comentario.DESC_COMENTARIO.length > 50 ? comentario.DESC_COMENTARIO.substring(0, 50) + '...' : comentario.DESC_COMENTARIO,
+            4: moment(comentario.FECH_CREACION).format('DD-MM-YYYY'),
+            5: comentario.FLAG_BAN ? 'Baneado' : 'Activo'
+          }
+          comentarios.push(obj)
         }
-        comentarios.push(obj)
       })
 
       let obj = {
         1: post.IDEN_PUBLICACION,
         2: post.NOMB_PUBLICACION,
-        3: post.comentarios.length,
+        3: comentarios.length,
         4: moment(post.FECH_CREACION).format('DD-MM-YYYY'),
         5: post.FLAG_BAN ? 'Baneada' : 'Activa',
         6: comentarios

@@ -23,7 +23,6 @@
       <hr>
       <div v-if="isAuthenticated && loggedUser.rol === 102">
         <h2>Listado De Reportes</h2>
-        <p><i>* Las estadísticas son compiladas con los datos del último mes</i></p>
         <br/>
         <div class="row">
           <div class="col-md-4">
@@ -40,6 +39,7 @@
         <div class="row margin-top" v-if="reportData.length > 0"> <!-- Datos de reporte -->
           <div class="col-12 table-responsive">
             <h4 class="text-center">{{type}}</h4> <br/>
+            <p v-if="type == 'Comentarios Por Publicación'"><i>* Lista compilada con los comentarios del último mes</i></p>
             <table class="table table-hover table-sm">
               <thead class="text-center">
                 <tr>
