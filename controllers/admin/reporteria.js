@@ -3,6 +3,11 @@ import controllerPosts from '~/controllers/posts'
 import _ from 'lodash'
 import moment from 'moment'
 
+/**
+ * Compila un listado de las denuncias a publicaciones del ultimo mes
+ * @param {*} app - Contexto de la aplicación
+ * @returns Encabezados para la tabla de datos y listado de todas las publicaciones denunciadas con sus respectivas denuncias.
+ */
 async function denunciasPublicaciones (app) {
   let reportData = []
   let headers = ['#', 'ID Publicación', 'Publicacion', 'Cantidad Denuncias / Descripcion', 'Dueño Publicacion / Denunciante']
@@ -23,7 +28,7 @@ async function denunciasPublicaciones (app) {
         2: '-',
         3: '-',
         4: publicacion.DESC_DENUNCIA,
-        5: publicacion.usuario.persona.IDEN_PERSONA
+        5: publicacion.usuario.emprendedor.IDEN_EMPRENDEDOR
           ? publicacion.usuario.persona.NOMBRES + ' ' + publicacion.usuario.persona.APELLIDO_MATERNO + ' ' + publicacion.usuario.persona.APELLIDO_PATERNO
           : publicacion.usuario.emprendedor.DESC_NOMBRE_FANTASIA
       }
@@ -42,7 +47,7 @@ async function denunciasPublicaciones (app) {
           2: '-',
           3: '-',
           4: publicacion.DESC_DENUNCIA,
-          5: publicacion.usuario.persona.IDEN_PERSONA
+          5: publicacion.usuario.emprendedor.IDEN_EMPRENDEDOR
             ? publicacion.usuario.persona.NOMBRES + ' ' + publicacion.usuario.persona.APELLIDO_MATERNO + ' ' + publicacion.usuario.persona.APELLIDO_PATERNO
             : publicacion.usuario.emprendedor.DESC_NOMBRE_FANTASIA
         }
@@ -66,6 +71,11 @@ async function denunciasPublicaciones (app) {
   }
 }
 
+/**
+ * Metodo para compilar todas las publicaciones aprobadas dentro del ultimo mes
+ * @param {*} app - Contexto de la aplicación
+ * @returns Encabezados para tabla de datos y listado de las publicaciones aprobadas dentro del ultimo mes
+ */
 async function publicacionesAprobadas (app) {
   let reportData = []
   let headers = ['#', 'ID Publicación', 'Título Publicación', 'Fecha de Aprobación']
@@ -96,6 +106,11 @@ async function publicacionesAprobadas (app) {
   }
 }
 
+/**
+ * Metodo para compilar todas las publicaciones rechazadas dentro del ultimo mes
+ * @param {*} app - Contexto de la aplicación
+ * @returns Encabezados para tabla de datos y listado de las publicaciones rechazadas dentro del ultimo mes
+ */
 async function publicacionesRechazadas (app) {
   let reportData = []
   let headers = ['#', 'ID Publicación', 'Título Publicación', 'Fecha de Rechazo']
@@ -126,8 +141,133 @@ async function publicacionesRechazadas (app) {
   }
 }
 
+/**
+ * Compila un listado de publicaciones pertenecientes a un emprendedor ordenadas de forma descendiente por la cantidad de visitas
+ * @param {*} app -  Contexto de la aplicación
+ * @returns Encabezados para la tabla de datos y listado de productos del emprendedor ordenados por visitas
+ */
+async function productosPorVisitas (app) {
+  let reportData = []
+  let headers = ['#', 'ID Publicación', 'Título Publicación', 'Visitas', 'Fecha De Creación', 'Estado']
+  let posts = (await controllerPosts.GETPostEmprendedor(app, app.user.emprendedor.IDEN_EMPRENDEDOR)).posts
+  posts.forEach(post => {
+    let obj = {
+      1: post.IDEN_PUBLICACION,
+      2: post.NOMB_PUBLICACION,
+      3: post.NUMR_CONTADOR,
+      4: moment(post.FECH_CREACION).format('DD-MM-YYYY'),
+      5: post.FLAG_BAN ? 'Baneada' : 'Activa'
+    }
+    reportData.push(obj)
+  })
+
+  // Ordenar por cantidad de visitas, descendiente.
+  reportData.sort(function (a, b) {
+    if (a[3] > b[3]) return -1
+    if (a[3] < b[3]) return 1
+    if (a[3] === b[3]) return 0
+  })
+
+  // Se verifica si el nuevo arreglo es identico al que ya existe, para evitar duplicidad de datos
+  if (app.reportData.length > 0 && _.isEqual(reportData, app.reportData)) return -1
+  return {
+    reportData,
+    headers
+  }
+}
+
+/**
+ * Compila un listado de publicaciones pertenecientes a un emprendedor ordenadas de forma descendiente por la valoracion
+ * @param {*} app - Contexto de la aplicación
+ * @returns Encabezados para la tabla de datos y listado de publicaciones del emprendedor ordenados por valoracion
+ */
+async function productosPorValoracion (app) {
+  let reportData = []
+  let headers = ['#', 'ID Publicación', 'Título Publicación', 'Valoración', 'Fecha De Creación', 'Estado']
+  let posts = (await controllerPosts.GETPostEmprendedor(app, app.user.emprendedor.IDEN_EMPRENDEDOR)).posts
+  posts.forEach(post => {
+    let obj = {
+      1: post.IDEN_PUBLICACION,
+      2: post.NOMB_PUBLICACION,
+      3: post.NUMR_CALIFICACION,
+      4: moment(post.FECH_CREACION).format('DD-MM-YYYY'),
+      5: post.FLAG_BAN ? 'Baneada' : 'Activa'
+    }
+    reportData.push(obj)
+  })
+
+  // Ordenar por valoración, descendiente.
+  reportData.sort(function (a, b) {
+    if (a[3] > b[3]) return -1
+    if (a[3] < b[3]) return 1
+    if (a[3] === b[3]) return 0
+  })
+
+  // Se verifica si el nuevo arreglo es identico al que ya existe, para evitar duplicidad de datos
+  if (app.reportData.length > 0 && _.isEqual(reportData, app.reportData)) return -1
+  return {
+    reportData,
+    headers
+  }
+}
+
+/**
+ * Compila un listado de publicaciones pertenecientes a un emprendedor ordenadas de forma descendiente por la cantidad de comentarios
+ * con sus comentarios respectivos.
+ * @param {*} app - Contexto de la aplicación
+ * @returns Encabezados de la tabla de datos y listado de productos por cantidad de comentarios y sus comentarios respectivos.
+ */
+async function comentariosPorProducto (app) {
+  let reportData = []
+  let headers = ['#', 'ID Publicación', 'Título Publicación / Usuario', 'Cantidad Comentarios / Descripción', 'Fecha De Creación', 'Estado']
+  let posts = (await controllerPosts.GETPostEmprendedor(app, app.user.emprendedor.IDEN_EMPRENDEDOR)).posts
+  posts.forEach(post => {
+    if (post.comentarios.length > 0) {
+      let comentarios = []
+      post.comentarios.forEach(comentario => {
+        let obj = {
+          1: '-',
+          2: comentario.usuario.emprendedor.IDEN_EMPRENDEDOR
+            ? comentario.usuario.emprendedor.DESC_NOMBRE_FANTASIA
+            : comentario.usuario.persona.NOMBRES + ' ' + comentario.usuario.persona.APELLIDO_MATERNO + ' ' + comentario.usuario.persona.APELLIDO_PATERNO,
+          3: comentario.DESC_COMENTARIO.length > 50 ? comentario.DESC_COMENTARIO.substring(0, 50) + '...' : comentario.DESC_COMENTARIO,
+          4: moment(comentario.FECH_CREACION).format('DD-MM-YYYY'),
+          5: comentario.FLAG_BAN ? 'Baneado' : 'Activo'
+        }
+        comentarios.push(obj)
+      })
+
+      let obj = {
+        1: post.IDEN_PUBLICACION,
+        2: post.NOMB_PUBLICACION,
+        3: post.comentarios.length,
+        4: moment(post.FECH_CREACION).format('DD-MM-YYYY'),
+        5: post.FLAG_BAN ? 'Baneada' : 'Activa',
+        6: comentarios
+      }
+      reportData.push(obj)
+    }
+  })
+
+  // Ordenar por valoración, descendiente.
+  reportData.sort(function (a, b) {
+    if (a[3] > b[3]) return -1
+    if (a[3] < b[3]) return 1
+    if (a[3] === b[3]) return 0
+  })
+  // Se verifica si el nuevo arreglo es identico al que ya existe, para evitar duplicidad de datos
+  if (app.reportData.length > 0 && _.isEqual(reportData, app.reportData)) return -1
+  return {
+    reportData,
+    headers
+  }
+}
+
 export default {
   denunciasPublicaciones,
   publicacionesAprobadas,
-  publicacionesRechazadas
+  publicacionesRechazadas,
+  productosPorVisitas,
+  productosPorValoracion,
+  comentariosPorProducto
 }
