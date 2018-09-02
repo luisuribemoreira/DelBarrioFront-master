@@ -5,7 +5,7 @@ import moment from 'moment'
 
 async function denunciasPublicaciones (app) {
   let reportData = []
-  let headers = ['', 'ID Publicación', 'Publicacion', 'Cantidad Denuncias / Descripcion', 'Dueño Publicacion / Denunciante']
+  let headers = ['#', 'ID Publicación', 'Publicacion', 'Cantidad Denuncias / Descripcion', 'Dueño Publicacion / Denunciante']
   let publicaciones = (await controllerDenounces.GETAll(app)).publicaciones
 
   publicaciones.forEach((publicacion) => {
@@ -68,7 +68,7 @@ async function denunciasPublicaciones (app) {
 
 async function publicacionesAprobadas (app) {
   let reportData = []
-  let headers = ['', 'ID Publicación', 'Título Publicación', 'Fecha de Aprobación']
+  let headers = ['#', 'ID Publicación', 'Título Publicación', 'Fecha de Aprobación']
   let posts = (await controllerPosts.GETAll(app)).posts
   posts.forEach(post => {
     if (post.FECH_APROBACION) {
@@ -98,7 +98,7 @@ async function publicacionesAprobadas (app) {
 
 async function publicacionesRechazadas (app) {
   let reportData = []
-  let headers = ['', 'ID Publicación', 'Título Publicación', 'Fecha de Rechazo']
+  let headers = ['#', 'ID Publicación', 'Título Publicación', 'Fecha de Rechazo']
   let posts = (await controllerPosts.GETAll(app)).posts
   posts.forEach(post => {
     if (post.FECH_RECHAZO) {
