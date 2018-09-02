@@ -17,7 +17,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - Soy Providencias',
+    titleTemplate: '%s - Soy Providencia',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -26,6 +26,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/img/LOGO HUB.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Raleway' },
       { rel: 'stylesheet', href: '/css/bootstrap.min.css' },
+      { rel: 'stylesheet', href: '/css/otros.css' },
       { rel: 'stylesheet', href: '/css/font-awesome.min.css' }
     ],
     script: [
