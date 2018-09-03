@@ -10,7 +10,7 @@ import moment from 'moment'
  */
 async function denunciasPublicaciones (app) {
   let reportData = []
-  let headers = ['#', 'ID Publicación', 'Publicacion', 'Cantidad Denuncias / Descripcion', 'Dueño Publicacion / Denunciante']
+  let headers = ['#', 'ID Publicación', 'Titulo Publicacion', 'Cantidad Denuncias / Descripcion', 'Dueño Publicacion / Denunciante']
   let publicaciones = (await controllerDenounces.GETAll(app)).publicaciones
 
   publicaciones.forEach((publicacion) => {
@@ -29,8 +29,8 @@ async function denunciasPublicaciones (app) {
         3: '-',
         4: publicacion.DESC_DENUNCIA,
         5: publicacion.usuario.emprendedor.IDEN_EMPRENDEDOR
-          ? publicacion.usuario.persona.NOMBRES + ' ' + publicacion.usuario.persona.APELLIDO_MATERNO + ' ' + publicacion.usuario.persona.APELLIDO_PATERNO
-          : publicacion.usuario.emprendedor.DESC_NOMBRE_FANTASIA
+          ? publicacion.usuario.emprendedor.DESC_NOMBRE_FANTASIA
+          : publicacion.usuario.persona.NOMBRES + ' ' + publicacion.usuario.persona.APELLIDO_MATERNO + ' ' + publicacion.usuario.persona.APELLIDO_PATERNO
       }
       // Se inserta al arreglo de denuncias la nueva denuncia.
       reportData[index][5].push(denuncia)
@@ -48,8 +48,8 @@ async function denunciasPublicaciones (app) {
           3: '-',
           4: publicacion.DESC_DENUNCIA,
           5: publicacion.usuario.emprendedor.IDEN_EMPRENDEDOR
-            ? publicacion.usuario.persona.NOMBRES + ' ' + publicacion.usuario.persona.APELLIDO_MATERNO + ' ' + publicacion.usuario.persona.APELLIDO_PATERNO
-            : publicacion.usuario.emprendedor.DESC_NOMBRE_FANTASIA
+            ? publicacion.usuario.emprendedor.DESC_NOMBRE_FANTASIA
+            : publicacion.usuario.persona.NOMBRES + ' ' + publicacion.usuario.persona.APELLIDO_MATERNO + ' ' + publicacion.usuario.persona.APELLIDO_PATERNO
         }
         denuncias.push(denuncia)
         reportData.push({
@@ -270,11 +270,31 @@ async function comentariosPorProducto (app) {
   }
 }
 
+/**
+ * Genera y envia un PDF con los datos del reporte.
+ * @param {*} app - Contexto de la aplicación
+ * @param {array} data - Datos del reporte con el que se generará el PDF
+ * @returns True si se envía correctamente, de lo contrario, False.
+ */
+function sendPDF (app, data, headers, type) {
+  app.$axios.post('/private/generate',
+    {
+      titles: headers,
+      items: data,
+      type: type,
+      user: app.user.EMAIL_USUARIO
+    })
+    .then().catch(err => {
+      console.log(err)
+    })
+}
+
 export default {
   denunciasPublicaciones,
   publicacionesAprobadas,
   publicacionesRechazadas,
   productosPorVisitas,
   productosPorValoracion,
-  comentariosPorProducto
+  comentariosPorProducto,
+  sendPDF
 }
