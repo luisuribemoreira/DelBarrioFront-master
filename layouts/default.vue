@@ -245,6 +245,9 @@
                             <a class="nav-link" href="/">Nosotros</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/registro">Registro</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="btn btn-round btn-danger" href="/autenticar" >Ingresar</a>
                         </li>
                         <li class="nav-item"> 
