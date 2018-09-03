@@ -3,21 +3,21 @@
     <h2>Listado De Reportes</h2>
     <p><i>* Las estadísticas son compiladas con los datos del último mes</i></p>
     <br/>
-    <div class="col-md-12 col-md-offset-3">
-        <button type="submit" class="btn btn-default" @click="denunciasPublicaciones(), type = 'Denuncias de Publicaciones'">Denuncias de Publicaciones</button>
+    <div class="row">
+      <div class="col-md-4">
+          <button type="submit" class="btn btn-default" @click="denunciasPublicaciones(), type = 'denuncias', reportTitle = 'Denuncias de Publicaciones'">Denuncias de Publicaciones</button>
+      </div>
+      <div class="col-md-4">
+          <button type="submit" class="btn btn-default" @click="publicacionesAprobadas(), type = 'aprobadas', reportTitle = 'Publicaciones Aprobadas'">Publicaciones Aprobadas</button>
+      </div>
+      <div class="col-md-4">
+          <button type="submit" class="btn btn-default" @click="publicacionesRechazadas(), type = 'rechazadas', reportTitle = 'Publicaciones Rechazadas'">Publicaciones Rechazadas</button>
+      </div>
     </div>
-    <br/>
-    <div class="col-md-12 col-md-offset-3">
-        <button type="submit" class="btn btn-default" @click="publicacionesAprobadas(), type = 'Publicaciones Aprobadas'">Publicaciones Aprobadas</button>
-    </div>
-    <br/>
-    <div class="col-md-12 col-md-offset-3">
-        <button type="submit" class="btn btn-default" @click="publicacionesRechazadas(), type = 'Publicaciones Rechazadas'">Publicaciones Rechazadas</button>
-    </div>
-    <br/><br/><br/>
-    <div class="row margin-top" v-if="reportData.length > 0">
+    <div class="row mt-4" v-if="reportData.length > 0">
+      <button type="submit" class="btn btn-default" style="margin-left: 0.9rem !important" @click="enviarPorCorreo()">Enviar Reporte por Correo</button>
       <div class="col-12 table-responsive">
-        <h4 class="text-center">{{type}}</h4> <br/>
+        <h4 class="text-center">{{reportTitle}}</h4> <br/>
         <table class="table table-hover table-sm">
           <thead class="text-center">
             <tr>
@@ -68,6 +68,8 @@
 <script>
 import controllerReporteria from '~/controllers/admin/reporteria'
 import customPaginator from '~/controllers/custompaginator'
+import controllerMyAccount from '~/controllers/admin/myaccount'
+import { mapGetters } from 'vuex'
 
 export default {
   methods: {
@@ -102,6 +104,10 @@ export default {
         this.pages = this.paginatedData.length
         this.pagination = 0
       }
+    },
+    async enviarPorCorreo () {
+      this.user = (await controllerMyAccount.GET(this, this.isAuthenticated.id)).user
+      controllerReporteria.sendPDF(this, this.reportData, this.headers, this.type)
     }
   },
   data () {
@@ -112,11 +118,17 @@ export default {
       reportData: [],
       textWeight: 'font-weight-bold',
       type: '',
+      reportTitle: false,
       pagination: 0,
       pages: 0,
-      paginatedData: [[]]
+      paginatedData: [[]],
+      user: {}
     }
   },
+  computed: mapGetters([
+    'isAuthenticated',
+    'loggedUser'
+  ]),
   head () {
     return {
       title: 'Reportes',
