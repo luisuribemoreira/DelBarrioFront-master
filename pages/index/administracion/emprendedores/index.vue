@@ -37,9 +37,7 @@
                 <td><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link></td>
                 <td>
                   <nuxt-link :to="{ path: '/administracion/emprendedores/editar/'+entrepreneur.IDEN_EMPRENDEDOR }">
-                  <a class="btn"> 
-                  <button class="btn btn-tabla" title="Editar">Editar</button>
-                  </a>
+                    <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
                   <!--entrepreneur.usuario.FLAG_BAN -->
                   <a @click="setState(entrepreneur)" class="btn">
