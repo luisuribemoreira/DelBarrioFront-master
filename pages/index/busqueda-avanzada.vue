@@ -486,7 +486,7 @@ export default {
 
       if (type === 'product') {
         data.forEach(item => {
-          if (!item.FLAG_BAN) {
+          if (!item.FLAG_BAN && item.FLAG_VIGENTE && item.FLAG_VALIDADO) {
             object = {
               1: item.IDEN_PUBLICACION,
               2: item.NOMB_PUBLICACION,
@@ -503,7 +503,7 @@ export default {
 
       if (type === 'sale') {
         data.forEach(item => {
-          if (!item.FLAG_BAN && item.FLAG_VIGENTE) {
+          if (!item.FLAG_BAN && item.FLAG_VIGENTE && item.FLAG_VALIDADO) {
             object = {
               1: item.IDEN_OFERTA,
               2: item.publicacion.NOMB_PUBLICACION,
