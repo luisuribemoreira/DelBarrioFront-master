@@ -121,6 +121,41 @@ async function POST (context, user) {
     context.$notify.warning('Ha ocurrido un error inesperado.')
   }
 }
+function POSTCliente (context) {
+  context.$axios.$post(
+    'usuario',
+    {
+      EMAIL_USUARIO: context.user.EMAIL_USUARIO,
+      DESC_PASSWORD: context.user.pass,
+      IDEN_ROL: 1, // Rol de Cliente.
+      FECH_CREACION: 1 // Se auto genera en la API
+    }
+  ).then(response => {
+    console.log(response.data)
+    context.$axios.$post(
+      'persona',
+      {
+        IDEN_USUARIO: response.data.IDEN_USUARIO,
+        NOMBRES: context.persona.NOMBRES,
+        APELLIDO_PATERNO: context.persona.APELLIDO_PATERNO,
+        APELLIDO_MATERNO: context.persona.APELLIDO_MATERNO,
+        FECH_FECHA_NACIMIENTO: context.persona.FECH_FECHA_NACIMIENTO
+      }
+    ).then(() => {
+      context.$notify.success('Se ha completado el registro exitosamente')
+      context.$router.push({ path: '/autenticar' })
+    }).catch(errors => {
+      console.log(errors)
+      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    })
+  }).catch(errors => {
+    if (errors.response.data.data.EMAIL_USUARIO) {
+      context.message = errors.response.data.data.EMAIL_USUARIO
+    } else {
+      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    }
+  })
+}
 
 function GET (app, id) {
 // console.log(sessionStorage)
@@ -243,5 +278,6 @@ export default {
   POST,
   GET,
   PUT,
-  PUTEmprendedor
+  PUTEmprendedor,
+  POSTCliente
 }
