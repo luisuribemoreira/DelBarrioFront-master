@@ -26,20 +26,21 @@
         <br/>
         <div class="row">
           <div class="col-md-4">
-              <button type="submit" class="btn btn-default" @click="ProductosPorVisitas(), type = 'Publicaciones por Visitas'">Publicaciones por Visitas</button>
+              <button type="submit" class="btn btn-default" @click="ProductosPorVisitas(), type = 'visitas', reportTitle = 'Publicaciones Por Visitas'">Publicaciones por Visitas</button>
           </div>
           <div class="col-md-4">
-              <button type="submit" class="btn btn-default" @click="ProductosPorValoracion(), type = 'Publicaciones por Valoración'">Publicaciones por Valoración</button>
+              <button type="submit" class="btn btn-default" @click="ProductosPorValoracion(), type = 'valoracion', reportTitle = 'Publicaciones Por Valoración'">Publicaciones por Valoración</button>
           </div>
           <div class="col-md-4">
-              <button type="submit" class="btn btn-default" @click="ComentariosPorPublicacion(), type = 'Comentarios Por Publicación'">Comentarios Por Publicación</button>
+              <button type="submit" class="btn btn-default" @click="ComentariosPorPublicacion(), type = 'comentarios', reportTitle = 'Comentarios Por Publicación'">Comentarios Por Publicación</button>
           </div>
         </div>
         <br/><br/>
         <div class="row margin-top" v-if="reportData.length > 0"> <!-- Datos de reporte -->
+          <button type="submit" class="btn btn-default" style="margin-left: 0.9rem !important" @click="enviarPorCorreo()">Enviar Reporte por Correo</button>
           <div class="col-12 table-responsive">
-            <h4 class="text-center">{{type}}</h4> <br/>
-            <p v-if="type == 'Comentarios Por Publicación'"><i>* Lista compilada con los comentarios del último mes</i></p>
+            <h4 class="text-center">{{reportTitle}}</h4> <br/>
+            <p v-if="reportTitle == 'Comentarios Por Publicación'"><i>* Lista compilada con los comentarios del último mes</i></p>
             <table class="table table-hover table-sm">
               <thead class="text-center">
                 <tr>
@@ -302,6 +303,7 @@ export default {
       reportData: [],
       textWeight: 'font-weight-bold',
       type: '',
+      reportTitle: false,
       pagination: 0,
       pages: 0,
       paginatedData: [[]],
@@ -404,6 +406,9 @@ export default {
       } else {
         this.message = false
       }
+    },
+    enviarPorCorreo () {
+      controllerReporteria.sendPDF(this, this.reportData, this.headers, this.type)
     }
   },
   computed: mapGetters([
