@@ -29,7 +29,7 @@
               </tr>
             </thead>
             <tbody class="text-center">
-              <tr :key="client.IDEN_PERSONA" v-for="client in clients">
+              <tr :key="client.IDEN_PERSONA" v-for="client in paginatedData[pagination]">
                 <td><icon :name="client.usuario.FLAG_BAN ? 'times' : 'check'" :title="client.usuario.FLAG_BAN ? 'Deshabilitado' : 'Habilitado'"></icon></td>
                 <td>{{client.usuario.EMAIL_USUARIO}}</td>
                 <td>{{client.NOMBRES + ' ' + client.APELLIDO_PATERNO+ ' ' +client.APELLIDO_MATERNO}}</td>
@@ -118,6 +118,7 @@ import controller from '~/controllers/admin/clients'
 import controllerDeactivations from '~/controllers/admin/deactivationreasons'
 import controllerAccountDisable from '~/controllers/admin/accountdisable'
 import moment from 'moment'
+import custompaginator from '~/controllers/custompaginator'
 
 export default {
   asyncData ({ app }) {
@@ -125,10 +126,16 @@ export default {
       .then(({ clients }) => {
         return controllerDeactivations.GETAll(app)
           .then(({ deactivationreasons }) => {
-            return {
-              clients,
-              deactivationreasons
-            }
+            return custompaginator.paginate(clients)
+              .then(({ paginatedData }) => {
+                let pages = paginatedData.length
+                return {
+                  clients,
+                  deactivationreasons,
+                  paginatedData,
+                  pages
+                }
+              })
           })
       })
   },
@@ -139,7 +146,10 @@ export default {
       postsAux: [],
       deactivationreasons: [],
       deshabilitacion: { DESC_COMENTARIO: '' },
-      error: ''
+      error: '',
+      pagination: 0,
+      pages: 0,
+      paginatedData: []
     }
   },
   methods: {
@@ -158,14 +168,14 @@ export default {
     buscarCliente () {
       // Copiar todos los clientes, si existen, a una variable auxiliar para no perder la lista original
       if (this.postsAux.length === 0) {
-        this.postsAux = this.clients
+        this.postsAux = this.paginatedData
       }
 
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los clientes en que el nombre, apellidos o parte de ellos posea el texto escrito en el buscador
         let cadena = this.search.trim().split(' ')
-        let postAux = this.postsAux.map(client => {
+        let cliSearch = this.clients.map(client => {
           for (let i = 0; i < cadena.length; i++) {
             let palabraBusqueda = new RegExp(cadena[i], 'gi')
             if (client.NOMBRES.match(palabraBusqueda) || client.APELLIDO_PATERNO.match(palabraBusqueda) ||
@@ -174,20 +184,32 @@ export default {
         })
 
         // Limpia los clientes actuales y lo llena con los clientes que cumplan el criterio de busqueda
-        this.clients = []
-        postAux.forEach(client => {
-          if (client) this.clients.push(client)
+        let cliFound = []
+        cliSearch.forEach(client => {
+          if (client) cliFound.push(client)
         })
 
         // Ordena los Clientes en orden lexicografico.
-        this.clients.sort(function (a, b) {
+        cliFound.sort(function (a, b) {
           return a.NOMBRES.localeCompare(b.NOMBRES)
         })
+        // Se llama al paginador con la lista de objetos encontrados
+        custompaginator.paginate(cliFound)
+          .then(({ paginatedData }) => {
+            // Se reemplaza la lista paginada actual por la que contiene solo los objetos de la busqueda
+            this.paginatedData = paginatedData
+            // La cantidad total de paginas se reemplaza por la cantidad de paginas
+            // de la nueva lista de objetos encontrados por la busqueda
+            this.pages = paginatedData.length
+            this.pagination = 0 // Se envia a la pagina inicial en caso de que la busqueda contenga mas de 10 objetos
+          })
       }
 
       // Si no hay texto en el buscador se restaura la lista original
       if (this.search.length === 0) {
-        this.clients = this.postsAux
+        this.paginatedData = this.postsAux
+        this.pagination = 0
+        this.pages = this.paginatedData.length
       }
     },
     validateDisable () {
