@@ -35,16 +35,12 @@
               <td>{{post.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
               <td>
-                <a class="btn">
                 <nuxt-link :to="{ path: '/administracion/publicaciones/editar/'+post.IDEN_PUBLICACION }">
                   <button class="btn btn-tabla">Editar</button>
                 </nuxt-link>
-                </a>
-                <a class="btn">
                 <nuxt-link :to="{ path: '/administracion/publicaciones/ofertas/'+post.IDEN_PUBLICACION }">
                   <button class="btn btn-tabla">Oferta</button>
                 </nuxt-link>
-                </a>
                 <a class="btn" @click="setState(post)">
                   <button class="btn btn-tabla" v-if="!post.FLAG_VIGENTE">Habilitar</button>
                   <button class="btn btn-tabla" v-if="post.FLAG_VIGENTE">Deshabilitar</button>
@@ -176,6 +172,7 @@ export default {
   computed: mapGetters([
     'loggedUser'
   ]),
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Publicaciones'
