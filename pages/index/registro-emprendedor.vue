@@ -100,7 +100,7 @@
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a :href="terms">Términos y condiciones</a>
+              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
               </div>
               <div>
                 <label>

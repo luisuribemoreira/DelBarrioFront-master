@@ -18,7 +18,7 @@
     </div>
     <div class="footer-light bg-light">
       <div class="container">
-        <a :href="terms">Términos y condiciones</a>
+        <a target="_blank" :href="terms">Términos y condiciones</a>
       </div>
     </div>
   </section>

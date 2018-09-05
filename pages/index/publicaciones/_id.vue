@@ -177,7 +177,7 @@
           <div v-if="c.FLAG_BAN" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
-              <span> Este comentario ha sido eliminado por no cumplir con los <a>términos y condiciones</a> del sitio</span>
+              <span> Este comentario ha sido eliminado por no cumplir con los <a target="_blank" :href="terms">términos y condiciones</a> del sitio</span>
             </p>
           </div>
           <div v-else class="col-12">
@@ -383,7 +383,8 @@ export default {
       iden: '',
       error: '',
       imageUrl: process.env.imagesUrl,
-      post: []
+      post: [],
+      terms: process.env.termsUrl
     }
   },
   computed: mapGetters([
