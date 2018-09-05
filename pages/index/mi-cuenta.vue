@@ -199,7 +199,7 @@
                 <small class="text-danger" v-show="errors.has('direccion')">{{ errors.first('direccion') }}</small>
               </div>
               <div class="form-group margin-top">
-                <label for="name">Teléfono (Optativo)</label><span style="color: red"> (Formato ej: 224213146)</span>
+                <label for="name">Teléfono (Optativo)</label><span style="color: red"> (Formato ej: 221342146)</span>
                 <input v-validate data-vv-rules="min:9|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>

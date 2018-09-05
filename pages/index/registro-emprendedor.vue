@@ -86,12 +86,12 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Teléfono (Optativo)</label>
-                <input v-validate data-vv-rules="min:9|max:10" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="min:9|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label>
-                <input v-validate data-vv-rules="required|min:8|max:8" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
