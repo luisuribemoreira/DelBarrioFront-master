@@ -49,7 +49,15 @@
               <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
               <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
-              <button type="submit" class="btn btn-default">Registrar</button>
+            <div>
+              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
+            </div>
+            <div>
+              <label>
+                <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-default">Registrar</button>
             </form>
             <div v-if='message'>
             <span class="text-danger">{{message}}</span>
@@ -79,7 +87,11 @@ export default {
       format: 'dd MMM, yyyy',
       dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
       user: {},
-      persona: {}
+      persona: {},
+      message: false,
+      terms: process.env.termsUrl,
+      messageTerminos: false,
+      statusTerminos: false
     }
   },
   mounted () {
@@ -104,6 +116,14 @@ export default {
         }
         if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw) {
           result = undefined
+        }
+
+        //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
+        if (!this.statusTerminos) {
+          result = false
+          this.messageTerminos = 'Debe aceptar los términos y condiciones.'
+        } else {
+          this.messageTerminos = false
         }
 
         if (result) {
