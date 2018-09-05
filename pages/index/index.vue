@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-dark bg-dark">
+    <div class="footer-light bg-light">
       <div class="container">
         <a :href="terms">Términos y condiciones</a>
       </div>

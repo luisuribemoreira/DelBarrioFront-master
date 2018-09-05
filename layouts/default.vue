@@ -1,29 +1,24 @@
 <template>
     <div>
         <!-- NAV CLIENTE REGISTRADO, 101: Cliente -->
-        <nav id="navegacion" class="navbar navbar-dark  bg-dark navbar-expand-md" v-if="isAuthenticated && loggedUser.rol === 101">
-            <a href="/" class="navbar-brand">DelBarrio</a>   
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" :aria-expanded="false"> 
-                <span class="sr-only">Toggle navigation</span>
-            &#x2630;</button>
-            <!-- Collect
-            the nav links, forms, and other content for toggling -->
+        <nav id="navegacion" class="navbar navbar-light navbar-expand-md" v-if="isAuthenticated && loggedUser.rol === 101">
+            <!-- Logo Providencia MENU -->
+                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+            <!-- Botton Menu Responsive -->
+                <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="navbar-nav nav-fill w-25">
                     <li class="nav-item">
-                        <nuxt-link to="/">
-                            <icon name="home" :aria-hidden="true"></icon>
-                        </nuxt-link>
+                        <a class="nav-link" href="/listado-emprendedores">Emprendedores</a>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/listado-emprendedores">Emprendedores</nuxt-link>
+                        <a class="nav-link" href="/listado-productos">Publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/listado-productos">Publicaciones</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link>
+                        <a class="nav-link" href="/administracion/ofertas">Ofertas</a>
                     </li>
                 </ul>
                 
@@ -34,7 +29,7 @@
                         <button class="btn btn-outline-secondary border border-left-0" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                    </span>
+                        </span>
                     </div>
                 </form>
 
@@ -44,46 +39,45 @@
                         <ul
                         class="dropdown-menu">
                             <li class="dropdown-item">
-                                <nuxt-link to="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</nuxt-link>
+                                <a class="nav-link" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</nuxt-link>
+                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</a>
                             </li>
                 </ul>
                 </li>
                 <li class="nav-item">
-                    <nuxt-link to="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i>
-                    </nuxt-link>
+                    <a class="nav-link" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i></a>
                 </li>
                 </ul>
             </div>
         </nav>
 
         <!-- NAV EMPRENDEDOR, 102: Emprendedor -->
-        <nav id="navegacion" class="navbar navbar-dark  bg-dark navbar-expand-md" v-if="isAuthenticated && loggedUser.rol === 102">
-            <a href="/" class="navbar-brand">DelBarrio</a>
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <button type="button" class="navbar-toggler collapsed" data-toggle="collapse"
-            data-target="#bs-example-navbar-collapse-1" :aria-expanded="false"> <span class="sr-only">Toggle navigation</span></button>
+        <nav id="navegacion" class="navbar navbar-light navbar-expand-md" v-if="isAuthenticated && loggedUser.rol === 102">
+            <div class="container">
+            <!-- Logo Providencia MENU -->
+                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+            <!-- Botton Menu Responsive -->
+                <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 
                 <ul class="navbar-nav ml-auto nav-fill w-50">
                     <li class="nav-item">
-                        <nuxt-link to="/"><i class="fa fa-home" :aria-hidden="true"></i>
-                        </nuxt-link>
+                        <a class="nav-link" href="/listado-emprendedores">Emprendedores</a>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/listado-emprendedores">Emprendedores</nuxt-link>
+                        <a class="nav-link" href="/listado-productos">Publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/listado-productos">Publicaciones</nuxt-link>
+                        <a class="nav-link" href="/administracion/publicaciones">Mis publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/administracion/publicaciones">Mis publicaciones</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/ofertas">Ofertas</nuxt-link>
+                        <a class="nav-link" href="/administracion/ofertas">Ofertas</a>
                     </li>
                 </ul>
 
@@ -104,110 +98,105 @@
                         <ul
                         class="dropdown-menu">
                             <li class="dropdown-item">
-                                <nuxt-link to="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</nuxt-link>
+                                <a class="nav-link" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</nuxt-link>
+                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i>
-                        </nuxt-link>
+                        <a class="nav-link" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
                     </li>
                 </ul>
 
+            </div>
             </div>
         </nav>
 
         <!-- NAV ADMINISTRADOR, 103: Administrador, 104: Super Administrador -->
-        <nav id="navegacion" class="navbar navbar-dark  bg-dark navbar-expand-md" v-if="isAuthenticated && (loggedUser.rol === 103 || loggedUser.rol === 104)">
-            <a href="/" class="navbar-brand">DelBarrio</a>
-            <button type="button" class="navbar-toggler collapsed" data-toggle="collapse"
-            data-target="#bs-example-navbar-collapse-1" :aria-expanded="false"> <span class="sr-only">Toggle navigation</span></button>
+        <nav id="navegacion" class="navbar navbar-expand-md navbar-light" v-if="isAuthenticated && (loggedUser.rol === 103 || loggedUser.rol === 104)">
+            <div class="container">
+            
+             <!-- Logo Providencia MENU -->
+                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="navbar-nav ml-auto w-25">
-                    <li class="nav-item">
-                        <nuxt-link to="/"><i class="fa fa-home" :aria-hidden="true"></i>
-                        </nuxt-link>
-                    </li>
-                </ul>
+            <!-- Botton Menu Responsive -->
+                <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <ul class="navbar-nav mx-auto nav-fill w-50 h-50">
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/moderar-publicaciones">Publicaciones</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/moderar-ofertas">Ofertas</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/denuncias">Denuncias</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/emprendedores">Emprendedores</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/administracion/clientes">Clientes</nuxt-link>
-                    </li>
+                <!-- Vinculo Paginas -->
+                <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/administracion/moderar-publicaciones">Publicaciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/administracion/moderar-ofertas">Ofertas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/administracion/denuncias">Denuncias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/administracion/emprendedores">Emprendedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/administracion/clientes">Clientes</a>
+                        </li>
 
-                    <li v-if="loggedUser.rol === 104" class="nav-item">
-                        <nuxt-link to="/administracion/administradores">Administradores</nuxt-link>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav mr-auto nav-fill w-25">
-                    
-                    <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
+                        <li v-if="loggedUser.rol === 104" class="nav-item">
+                            <a class="nav-link" href="/administracion/administradores">Administradores</a>
+                        </li>
+                        <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
                         :aria-haspopup="true" :aria-expanded="false">Administración <span class="caret"></span></a>
                         <ul
                         class="dropdown-menu">
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion">Reportes</nuxt-link>
+                                <a class="nav-link" href="/administracion">Reportes</a>
                             </li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion/categorias">Categorías</nuxt-link>
+                                <a class="nav-link" href="/administracion/categorias">Categorías</a>
                             </li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion/rubros">Rubros</nuxt-link>
+                                <a class="nav-link" href="/administracion/rubros">Rubros</a>
                             </li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion/razon-denuncia">Razón de denuncia</nuxt-link>
+                                <a class="nav-link" href="/administracion/razon-denuncia">Razón de denuncia</a>
                             </li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion/razon-desactivacion">Razón de desactivación</nuxt-link>
+                                <a class="nav-link" href="/administracion/razon-desactivacion">Razón de desactivación</a>
                             </li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion/terminos-condiciones">Términos y condiciones</nuxt-link>
+                                <a class="nav-link" href="/administracion/terminos-condiciones">Términos y condiciones</a>
                             </li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/administracion/preguntas-frecuentes">Preguntas Frecuentes</nuxt-link>
+                                <a class="nav-link" href="/administracion/preguntas-frecuentes">Preguntas Frecuentes</a>
                             </li>
                         </ul>
-                    </li>
-
-                    <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
+                        </li>
+                        <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
                         role="button" :aria-haspopup="true" :aria-expanded="false">{{ loggedUser.nombre }} <span class="caret"></span></a>
                     
                         <ul class="dropdown-menu">
                             <li class="dropdown-item">
-                                <nuxt-link to="/configuracion-admin"><i class="fa fa-wrench" :aria-hidden="true"></i> Configuración</nuxt-link>
+                                <a class="nav-link" href="/configuracion-admin"><i class="fa fa-wrench" :aria-hidden="true"></i> Configuración</a>
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
-                                <nuxt-link to="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</nuxt-link>
+                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</a>
                             </li>
                         </ul>
 
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i>
-                        </nuxt-link>
+                        <a class="nav-link" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
                     </li>
-                </ul>
-            </div>
-        </nav>
+                    </ul>
+                </div>
+        </div><!-- /.container -->
+    </nav>
 
         <!-- NAV INVITADO -->
         <nav class="navbar navbar-expand-md navbar-light" id="navegacion" v-if="!isAuthenticated">
