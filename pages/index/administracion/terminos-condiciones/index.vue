@@ -50,6 +50,7 @@ export default {
       controller.saveTermsConditions(this)
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Términos y condiciones'

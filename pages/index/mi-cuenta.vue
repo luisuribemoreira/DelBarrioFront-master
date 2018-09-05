@@ -415,6 +415,7 @@ export default {
     'isAuthenticated',
     'loggedUser'
   ]),
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Mi Cuenta'

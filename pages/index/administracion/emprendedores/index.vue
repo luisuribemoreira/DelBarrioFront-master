@@ -232,6 +232,7 @@ export default {
     'loggedUser',
     'isAuthenticated'
   ]),
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Moderar Emprendedores'

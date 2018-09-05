@@ -148,6 +148,7 @@ export default {
       }
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Razones de desactivación de cuentas'

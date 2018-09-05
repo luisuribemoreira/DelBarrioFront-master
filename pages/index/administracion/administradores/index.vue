@@ -84,6 +84,7 @@ export default {
       controller.setState(this, client)
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Moderar Administradores',

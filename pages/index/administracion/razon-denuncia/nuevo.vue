@@ -51,6 +51,7 @@ export default {
       })
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Nueva razón denuncia'

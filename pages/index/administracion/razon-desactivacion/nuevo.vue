@@ -38,6 +38,7 @@ export default {
       })
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Nueva razón de desactivación de denuncia'

@@ -154,6 +154,7 @@ export default {
       return moment(String(date)).format('DD/MM/YYYY HH:mm')
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Moderar publicaciones'

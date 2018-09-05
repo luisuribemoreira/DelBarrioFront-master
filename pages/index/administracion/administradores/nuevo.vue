@@ -96,6 +96,7 @@ export default {
     'isAuthenticated',
     'loggedUser'
   ]),
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Nuevo Administrador'

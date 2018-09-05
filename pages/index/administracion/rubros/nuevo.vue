@@ -40,6 +40,7 @@ export default {
       })
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Nuevo rubro'

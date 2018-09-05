@@ -197,6 +197,7 @@ export default {
       console.log('placeholder')
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Editar Publicación'

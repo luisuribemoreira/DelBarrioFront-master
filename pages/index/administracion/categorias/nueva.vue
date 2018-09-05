@@ -49,6 +49,7 @@ export default {
       })
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Nueva categoría',

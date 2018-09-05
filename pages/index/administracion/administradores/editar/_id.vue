@@ -84,6 +84,7 @@ export default {
       })
     }
   },
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Editar Administrador'
