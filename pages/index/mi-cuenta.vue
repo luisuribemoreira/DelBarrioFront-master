@@ -124,12 +124,12 @@
         <div class="col-lg-6">
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
-              <label for="name">Nombres</label><span style="color: red"> (Formato ej: Marcelo Díaz)</span>
+              <label for="name">Nombres</label><span style="color: red"> (Formato ej: Manuel Antonio)</span>
               <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="user.persona.NOMBRES" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group margin-top">
-              <label for="lastname">Apellido Paterno</label><span style="color: red"> (Formato ej: Pérez)</span>
+              <label for="lastname">Apellido Paterno</label><span style="color: red"> (Formato ej: Fernández)</span>
               <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model="user.persona.APELLIDO_PATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
             </div>
