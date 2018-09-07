@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr v-for="oferta in oferta.offers" :key="oferta.IDEN_OFERTA" v-if="!oferta.FLAG_VALIDADO && !oferta.FLAG_BAN">
+            <tr v-for="oferta in paginatedData[pagination]" :key="oferta.IDEN_OFERTA" v-if="!oferta.FLAG_VALIDADO && !oferta.FLAG_BAN">
               <td><nuxt-link :to="{ path: '/publicaciones/' + oferta.publicacion.IDEN_PUBLICACION }">{{oferta.publicacion.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>{{oferta.publicacion.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{oferta.publicacion.categoria.NOMB_CATEGORIA}}</td>
@@ -78,7 +78,7 @@
 import offerController from '~/controllers/offers'
 import controller from '~/controllers/admin/postmoderation'
 import moment from 'moment'
-// import custompaginator from '~/controllers/custompaginator'
+import custompaginator from '~/controllers/custompaginator'
 
 export default {
   asyncData ({ app }) {
@@ -88,17 +88,26 @@ export default {
           ofertas.offers[key].FECH_INICIO = moment(oferta.FECH_INICIO).format('DD-MM-YYYY')
           ofertas.offers[key].FECH_TERMINO = moment(oferta.FECH_TERMINO).format('DD-MM-YYYY')
         })
-        return {
-          oferta: ofertas,
-          imagen: ofertas ? ofertas.images : {}
-        }
+        return custompaginator.paginate(ofertas.offers)
+          .then(({ paginatedData }) => {
+            let pages = paginatedData.length
+            return {
+              oferta: ofertas,
+              imagen: ofertas ? ofertas.images : {},
+              paginatedData,
+              pages
+            }
+          })
       })
   },
   data () {
     return {
       offers: [],
       search: '',
-      offersAux: []
+      offersAux: [],
+      pagination: 0,
+      pages: 0,
+      paginatedData: [[]]
     }
   },
   methods: {
@@ -111,31 +120,43 @@ export default {
     buscarOfertas () {
       // Copiar todos los.oferta.offers, si existen, a una variable auxiliar para no perder la lista original
       if (this.offersAux.length === 0) {
-        this.offersAux = this.oferta.offers
+        this.offersAux = this.paginatedData
       }
 
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los offer en que el titulo o parte de el posea el texto escrito en el buscador
-        let offerAux = this.offersAux.map(offer => {
+        let offerSearch = this.offers.map(offer => {
           if (offer.publicacion.NOMB_PUBLICACION.match(new RegExp(this.search, 'gi')) !== null) return offer
         })
 
         // Limpia los.oferta.offers actuales y lo llena con los.oferta.offers que cumplan el criterio de busqueda
-        this.oferta.offers = []
-        offerAux.forEach(offer => {
-          if (offer) this.oferta.offers.push(offer)
+        let offerFound = []
+        offerSearch.forEach(offer => {
+          if (offer) offerFound.push(offer)
         })
 
         // Ordena los.oferta.offers en orden lexicografico.
-        this.oferta.offers.sort(function (a, b) {
+        offerFound.sort(function (a, b) {
           return a.publicacion.NOMB_PUBLICACION.localeCompare(b.publicacion.NOMB_PUBLICACION)
         })
+        // Se llama al paginador con la lista de objetos encontrados
+        custompaginator.paginate(offerFound)
+          .then(({ paginatedData }) => {
+            // Se reemplaza la lista paginada actual por la que contiene solo los objetos de la busqueda
+            this.paginatedData = paginatedData
+            // La cantidad total de paginas se reemplaza por la cantidad de paginas
+            // de la nueva lista de objetos encontrados por la busqueda
+            this.pages = paginatedData.length
+            this.pagination = 0 // Se envia a la pagina inicial en caso de que la busqueda contenga mas de 10 objetos
+          })
       }
 
       // Si no hay texto en el buscador se restaura la lista original
       if (this.search.length === 0) {
-        this.oferta.offers = this.offersAux
+        this.paginatedData = this.offersAux
+        this.pagination = 0
+        this.pages = this.paginatedData.length
       }
     }
   },

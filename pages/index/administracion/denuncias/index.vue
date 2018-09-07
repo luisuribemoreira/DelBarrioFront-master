@@ -58,6 +58,27 @@
                     </tr>
                   </tbody>
                 </table>
+                   <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
+                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                  <span class="page-link" :aria-hidden="true">&laquo;</span>
+                </span>
+              </li>
+              <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
+              <li class="page-item" v-bind:key="page" v-for="page in pages">
+                <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
+                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+              </li>
+              <li class="page-item">
+                <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
+                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                  <span class="page-link" :aria-hidden="true">&raquo;</span>
+                </span>
+              </li>
+            </ul>
+          </nav>
               </div>
               <!-- COMENTARIOS-->
               <div role="tabpanel" class="tab-pane" id="item2">
@@ -88,6 +109,27 @@
                       </tr>
                     </tbody>
                   </table>
+                     <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
+                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                  <span class="page-link" :aria-hidden="true">&laquo;</span>
+                </span>
+              </li>
+              <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
+              <li class="page-item" v-bind:key="page" v-for="page in pages">
+                <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
+                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+              </li>
+              <li class="page-item">
+                <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
+                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                  <span class="page-link" :aria-hidden="true">&raquo;</span>
+                </span>
+              </li>
+            </ul>
+          </nav>
               </div>
               <!-- CALIFICACIONES -->
               <div role="tabpanel" class="tab-pane" id="item3">
@@ -118,6 +160,27 @@
                     </tr>
                   </tbody>
                 </table>
+                   <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
+                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                  <span class="page-link" :aria-hidden="true">&laquo;</span>
+                </span>
+              </li>
+              <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
+              <li class="page-item" v-bind:key="page" v-for="page in pages">
+                <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
+                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+              </li>
+              <li class="page-item">
+                <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
+                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                  <span class="page-link" :aria-hidden="true">&raquo;</span>
+                </span>
+              </li>
+            </ul>
+          </nav>
               </div>
           </div>
           </div>
