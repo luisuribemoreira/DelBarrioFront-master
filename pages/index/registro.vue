@@ -12,7 +12,7 @@
               <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <div class="form-group margin-top">
-              <label for="name">Nombres</label><span style="color: red"> (Formato ej: Marcelo Díaz)</span>
+              <label for="name">Nombres</label><span style="color: red"> (Formato ej: Marcelo Antonio)</span>
               <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="persona.NOMBRES" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
@@ -71,6 +71,7 @@
 import customValidations from '~/controllers/customvalidations'
 import Datepicker from 'vuejs-datepicker'
 import controller from '~/controllers/admin/myaccount'
+import emailer from '~/controllers/admin/emailer'
 
 const dict = {
   custom: {
@@ -127,14 +128,18 @@ export default {
         }
 
         if (result) {
+          let mail = this.user.EMAIL_USUARIO
+          let password = this.user.pass
           controller.POSTCliente(this)
+          emailer.sendMail(this, mail, 'Registro completado',
+            'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + password + '.')
         }
       })
-    },
-    head () {
-      return {
-        title: 'Registro'
-      }
+    }
+  },
+  head () {
+    return {
+      title: 'Registro'
     }
   }
 }

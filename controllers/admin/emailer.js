@@ -3,7 +3,7 @@
 // subject -> Asunto del correo
 // text -> Cuerpo del correo
 function sendMail (context, to, subject, text) {
-  return context.$axios.$post('private/email',
+  return context.$axios.$post('/email',
     {
       to,
       subject,
