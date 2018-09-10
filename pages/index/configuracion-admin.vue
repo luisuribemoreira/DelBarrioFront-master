@@ -32,6 +32,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app, store }) {
@@ -63,6 +64,10 @@ export default {
         }
 
         if (result) {
+          let mail = this.user.EMAIL_USUARIO
+          let password = this.user.pass
+          emailer.sendMail(this, mail, 'Cambio de contraseña',
+            'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
           controller.PUT(this, this.user)
         }
       })

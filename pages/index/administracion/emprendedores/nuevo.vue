@@ -33,11 +33,6 @@
               <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model="entrepreneur.EMAIL_USUARIO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
-            <div class="form-group margin-top">
-              <label for="pass">Clave municipalidad (Autogenerada)</label>
-              <input v-validate data-vv-rules="required" data-vv-as="clave de municipalidad" name="pass" type="text" v-model="entrepreneur.DESC_PASSWORD" class="form-control" readonly/>
-              <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
-            </div>
             <div>
             </div>
             <button type="submit" class="btn btn-default">Guardar</button>

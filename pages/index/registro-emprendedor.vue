@@ -122,6 +122,7 @@ import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
 import customValidations from '~/controllers/customvalidations'
 import Datepicker from 'vuejs-datepicker'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app, store, redirect }) {
@@ -193,6 +194,10 @@ export default {
 
         if (result) {
           this.user.blobs = blobs
+          let mail = this.user.EMAIL_USUARIO
+          let password = this.user.pass
+          emailer.sendMail(this, mail, 'Cambio de contraseña',
+            'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
           controller.POST(this, this.user).then(() => {
             this.submitted.valid = true
             this.submitted.errors = false

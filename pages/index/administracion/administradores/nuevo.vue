@@ -37,11 +37,6 @@
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model="user.EMAIL_USUARIO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
               </div>
-              <div class="form-group margin-top">
-                <label for="contrasena">Clave (Autogenerada)</label>
-                <input v-validate data-vv-rules="required" data-vv-as="contrasena" name="contrasena" type="text" v-model="user.DESC_PASSWORD" class="form-control" readonly/>
-                <small class="text-danger" v-show="errors.has('contrasena')">{{ errors.first('contrasena') }}</small>
-              </div>
               <button type="submit" class="btn btn-default">Ingresar</button>
             </form>
             <div v-if='message'>
@@ -59,6 +54,7 @@ import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/admins'
 import Datepicker from 'vuejs-datepicker'
 import customValidations from '~/controllers/customvalidations'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app }) {
@@ -88,7 +84,13 @@ export default {
           result = undefined
         }
 
-        if (result) controller.POST(this)
+        if (result) {
+          let mail = this.user.EMAIL_USUARIO
+          let pass = this.user.DESC_PASSWORD
+          emailer.sendMail(this, mail, 'Registro completado',
+            'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + pass + '.')
+          controller.POST(this)
+        }
       })
     }
   },

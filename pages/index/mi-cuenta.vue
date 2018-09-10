@@ -295,6 +295,7 @@ import commentsController from '~/controllers/comments'
 import Datepicker from 'vuejs-datepicker'
 import controllerReporteria from '~/controllers/admin/reporteria'
 import customPaginator from '~/controllers/custompaginator'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app, store }) {
@@ -429,6 +430,10 @@ export default {
             result = undefined
           }
           if (result) {
+            let mail = this.user.EMAIL_USUARIO
+            let password = this.user.pass
+            emailer.sendMail(this, mail, 'Cambio de contraseña',
+              'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
             controller.PUT(this, this.user)
           }
         })
