@@ -175,6 +175,7 @@ export default {
               this.$router.push({ path: '/administracion/publicaciones' })
             } else if (this.post.oferta.IDEN_OFERTA !== undefined) {
               controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
+              this.$router.push({ path: '/administracion/publicaciones' })
             } else {
               controller.addSale(this, this.post.IDEN_PUBLICACION)
               this.$router.push({ path: '/administracion/publicaciones' })
