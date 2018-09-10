@@ -19,12 +19,12 @@
                 <label for="rangodeprecio" class="col-md-12">Rango de precio ${{search.minPrice}}{{search.maxPrice ? ' - $' + search.maxPrice : ''}} (Opcional)</label>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice">
+                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice" min="1" max="900000">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model="search.maxPrice"> 
+                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model="search.maxPrice" min="1" max="900000"> 
                   </div>                      
                 </div>
               </div>
