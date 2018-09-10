@@ -111,9 +111,20 @@
         </div>
         <hr class="margin-top">
       </div>
-      <a class="btn btn-secondary" @click="selected = !selected">
+      <!-- Boton de Configuracion de cuenta Emprendedor -->
+      <a class="btn btn-secondary" v-if="loggedUser.rol === 102" @click="selected = !selected">
         <icon name="wrench" :aria-hidden="true"></icon>
         <span> Configuración Cuenta</span>
+      </a>
+      <!-- Boton de Configuracion de cuenta Cliente -->
+      <a class="btn btn-secondary" v-if="loggedUser.rol === 101" @click="selectedClient = !selectedClient">
+        <icon name="wrench" :aria-hidden="true"></icon>
+        <span> Configuración Cuenta </span>
+      </a>
+      <!-- Boton de Configuracion de cuenta Contraseña de ambos -->
+      <a class="btn btn-secondary mx-1" @click="selectedPass = !selectedPass">
+        <icon name="wrench" :aria-hidden="true"></icon>
+        <span> Configuración de contraseña</span>
       </a>
       <!-- CONFIGURACION DE CUENTA -->
       <div v-if="selected" class="margin-top">
@@ -150,16 +161,6 @@
             </div>
             <div v-if="dataErrorMsg.error_edad">
               <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
-            </div>
-            <div class="form-group margin-top">
-              <label for="pass">Contraseña</label><span style="color: red"> (*No utilice palabras o números de conocimiento público)</span>
-              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model="user.pass" class="form-control"/>
-              <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
-            </div>
-            <div class="form-group margin-top">
-              <label for="pass2">Confirmar Contraseña</label>
-              <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
-              <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
             <div v-if="loggedUser.rol === 102">
               <div>
@@ -218,7 +219,68 @@
           </form>
         </div>
       </div>
-      
+            <!-- CONFIGURACION DE CONTRASEÑA -->
+      <div v-if="selectedPass" class="margin-top">
+        <div>
+          <h2 class="text-center"><span>Configuracion de Contraseña</span></h2>
+          <hr>
+        </div>
+        <div class="col-lg-6">
+          <form @submit.prevent="validateBeforeSubmit">
+            <div class="form-group margin-top">
+              <label for="pass">Contraseña</label><span style="color: red"> (*No utilice palabras o números de conocimiento público)</span>
+              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model="user.pass" class="form-control"/>
+              <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
+            </div>
+            <div class="form-group margin-top">
+              <label for="pass2">Confirmar Contraseña</label>
+              <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
+              <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
+            </div>
+              <button type="submit" class="btn btn-default">Guardar</button>
+              </form>
+            </div>
+        </div>
+              <!-- CONFIGURACION DE CLIENTE -->
+        <div v-if="selectedClient" class="margin-top">
+        <div>
+          <h2 class="text-center"><span>Datos de cliente</span></h2>
+          <hr>
+        </div>
+        <div class="col-lg-6">
+          <form @submit.prevent="validateBeforeSubmit">
+                        <div class="form-group margin-top">
+              <label for="name">Nombres</label><span style="color: red"> (Formato ej: Manuel Antonio)</span>
+              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="user.persona.NOMBRES" class="form-control"/>
+              <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
+            </div>
+            <div class="form-group margin-top">
+              <label for="lastname">Apellido Paterno</label><span style="color: red"> (Formato ej: Fernández)</span>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model="user.persona.APELLIDO_PATERNO" class="form-control"/>
+              <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
+            </div>
+            <div class="form-group margin-top">
+              <label for="lastname2">Apellido Materno</label><span style="color: red"> (Formato ej: Gallardo)</span>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model="user.persona.APELLIDO_MATERNO" class="form-control"/>
+              <small class="text-danger" v-show="errors.has('lastname2')">{{ errors.first('lastname2') }}</small>
+            </div>
+            <div class="form-group margin-top">
+              <label for="date">Fecha de Nacimiento</label>
+              <datepicker 
+                language="es"
+                :format='format'
+                v-model="user.persona.FECH_FECHA_NACIMIENTO"
+                :bootstrapStyling = "true"
+                name="date"
+              ></datepicker>
+            </div>
+            <div v-if="dataErrorMsg.error_edad">
+              <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
+            </div>
+              <button type="submit" class="btn btn-default">Guardar</button>
+              </form>
+            </div>
+        </div>
     </div> <!-- /container -->
   </section>
 
@@ -290,6 +352,8 @@ export default {
   data () {
     return {
       selected: false,
+      selectedPass: false,
+      selectedClient: false,
       format: 'dd MMM, yyyy',
       posts: [],
       dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
@@ -315,46 +379,75 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      this.$validator.validateAll().then(async (result) => {
-        // Se limpian los mensajes
-        this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
-        // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
-        if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
-          this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
-        }
-
-        // Se valida que las contraseñas coincidan
-        if (this.user.pass && (!this.user.pass2 || this.user.pass !== this.user.pass2)) {
-          this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
-        }
-
-        let blobs = []
-        // Recorrer directamente los componentes, en vez de los modelos
-        for (var key in this.$children) {
-          // Validar que efectivamente contiene los atributos que corresponden a un componente vue-croppa
-          if (this.$children[key] && this.$children[key].$children && this.$children[key].$children[0] && this.$children[key].$children[0].imageSet) {
-            let blob = await this.$children[key].$children[0].promisedBlob()
-            blobs.push(blob)
+      if (this.selected) {
+        this.$validator.validateAll().then(async (result) => {
+          // Se limpian los mensajes
+          this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
+          // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
+          if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
+            this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
           }
-        }
 
-        if (blobs.length === 0) {
-          this.dataErrorMsg.error_foto = 'Debe seleccionar una foto'
-        }
+          // Se valida que las contraseñas coincidan
+          if (this.user.pass && (!this.user.pass2 || this.user.pass !== this.user.pass2)) {
+            this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
+          }
 
-        if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw || this.dataErrorMsg.error_foto) {
-          result = undefined
-        }
+          let blobs = []
+          // Recorrer directamente los componentes, en vez de los modelos
+          for (var key in this.$children) {
+            // Validar que efectivamente contiene los atributos que corresponden a un componente vue-croppa
+            if (this.$children[key] && this.$children[key].$children && this.$children[key].$children[0] && this.$children[key].$children[0].imageSet) {
+              let blob = await this.$children[key].$children[0].promisedBlob()
+              blobs.push(blob)
+            }
+          }
 
-        if (result) {
-          if (this.loggedUser.rol === 102) {
-            this.user.blobs = blobs
-            controller.PUTEmprendedor(this)
-          } else {
+          if (blobs.length === 0) {
+            this.dataErrorMsg.error_foto = 'Debe seleccionar una foto'
+          }
+
+          if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw || this.dataErrorMsg.error_foto) {
+            result = undefined
+          }
+
+          if (result) {
+            if (this.loggedUser.rol === 102) {
+              this.user.blobs = blobs
+              controller.PUTEmprendedor(this)
+            }
+          }
+        })
+      } else if (this.selectedPass) {
+        this.$validator.validateAll().then(async (result) => {
+          this.dataErrorMsg = {error_pw: undefined}
+          // Se valida que las contraseñas coincidan
+          if (this.user.pass && (!this.user.pass2 || this.user.pass !== this.user.pass2)) {
+            this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
+          }
+          if (this.dataErrorMsg.error_pw) {
+            result = undefined
+          }
+          if (result) {
             controller.PUT(this, this.user)
           }
-        }
-      })
+        })
+      } else if (this.selectedClient) {
+        this.$validator.validateAll().then(async (result) => {
+          // Se limpian los mensajes
+          this.dataErrorMsg = { error_edad: undefined }
+          // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
+          if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
+            this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
+          }
+          if (this.dataErrorMsg.error_edad) {
+            result = undefined
+          }
+          if (result) {
+            controller.PUT(this, this.user)
+          }
+        })
+      }
     },
     async ProductosPorVisitas () {
       let data = await controllerReporteria.productosPorVisitas(this)
