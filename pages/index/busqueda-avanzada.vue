@@ -273,7 +273,8 @@ export default {
       workfields: [],
       paginatedData: [[]],
       pages: 0,
-      pagination: 0
+      pagination: 0,
+      loaded: true
     }
   },
   methods: {
@@ -518,6 +519,36 @@ export default {
         this.searchKeys = ['Nombre', 'Descripción', 'Precio', 'Fecha de Termino', 'Categoría']
         return dataAux
       }
+    },
+    globalSearch () {
+      if (this.$route.query.nombre && this.$route.query.tipo) {
+        // timeout con tiempo 0 ms, solo para empujar las asignaciones
+        // y la llamada al metodo al final del call stack, para darle tiempo a la pagina para que carge completamente.
+        setTimeout(() => {
+          this.search.query.find = this.$route.query.nombre
+          if (this.$route.query.tipo === 'publicacion') {
+            this.type.product = true
+            this.type.entrepreneur = false
+            this.type.sale = false
+          }
+          if (this.$route.query.tipo === 'emprendedor') {
+            this.type.product = false
+            this.type.entrepreneur = true
+            this.type.sale = false
+          }
+          this.busquedaAvanzada()
+        }, 0)
+      }
+    }
+  },
+  mounted () {
+    this.globalSearch()
+  },
+  updated () {
+    // Condicion para permitir utilizar el buscador ya estando en la página.
+    if (this.loaded) {
+      this.globalSearch()
+      this.loaded = false
     }
   },
   head () {

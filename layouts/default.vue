@@ -22,16 +22,21 @@
                     </li>
                 </ul>
                 
-                <form class="mx-2 my-auto d-inline w-50">
+                <div class="mx-2 my-auto d-inline w-50">
                     <div class="input-group">
-                        <input type="text" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search">
+                        <input type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
+                        <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
+                          <li class="dropdown-item" v-for="item in items" :key="item.nombre + new Date().getTime()" @click="search = item, buscar()">
+                            <i class="fa fa-search"></i> {{ item.nombre }} 
+                          </li>
+                        </ul>
                         <span class="input-group-append">
                         <button class="btn btn-outline-secondary border border-left-0" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                         </span>
                     </div>
-                </form>
+                </div>
 
                 <ul class="navbar-nav mr-auto nav-fill w-25">
                     <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
@@ -81,16 +86,21 @@
                     </li>
                 </ul>
 
-                <form class="mx-2 my-auto d-inline w-50">
+                <div class="mx-2 my-auto d-inline w-50">
                     <div class="input-group">
-                        <input type="text" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search">
+                        <input type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
+                        <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
+                          <li class="dropdown-item" v-for="item in items" :key="item.nombre + new Date().getTime()" @click="search = item, buscar()">
+                            <i class="fa fa-search"></i> {{ item.nombre }} 
+                          </li>
+                        </ul>
                         <span class="input-group-append">
                         <button class="btn btn-outline-secondary border border-left-0" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
                     </div>
-                </form>
+                </div>
 
                 <ul class="navbar-nav mr-auto nav-fill w-25">
                     <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
@@ -211,14 +221,21 @@
 
                 <!-- Buscador -->
                 <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
-                    <form class="form-inline my-2 my-lg-0" action="#">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Buscar Producto">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
+                  <div class="mx-2 my-auto d-inline">
+                    <div class="input-group">
+                        <input type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
+                        <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
+                          <li class="dropdown-item" v-for="item in items" :key="item.nombre + new Date().getTime()" @click="search = item, buscar()">
+                            <i class="fa fa-search"></i> {{ item.nombre }} 
+                          </li>
+                        </ul>
+                        <span class="input-group-append">
+                          <button class="btn btn-outline-secondary border border-left-0" type="submit">
+                              <i class="fa fa-search"></i>
+                          </button>
+                        </span>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Vinculo Paginas -->
@@ -246,7 +263,7 @@
                 </div><!-- /.collapse-navbar -->
 
             </div><!-- /.container -->
-        </nav>
+            </nav>
 
     <nuxt/>
         <footer class="container-fluid">
@@ -260,6 +277,8 @@
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/auth.js'
 import userController from '~/controllers/admin/myaccount'
+import postController from '~/controllers/posts'
+import entrepreneurController from '~/controllers/admin/entrepreneurs'
 
 export default {
   data () {
@@ -277,7 +296,9 @@ export default {
       }
     })
     return {
-      search: ''
+      items: [],
+      search: {},
+      searchMenu: ''
     }
   },
   computed: mapGetters([
@@ -285,6 +306,44 @@ export default {
     'loggedUser'
   ]),
   methods: {
+    async searchItems () {
+      let posts = (await postController.GETAll(this)).posts
+      let entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
+      // Se inicia con la lista limpia, para evitar duplicados y limpiarla si no hay nada en el buscador.
+      this.items = []
+      if (this.search.nombre && this.search.nombre.length > 0) {
+        if (posts.length > 0) {
+          let obj = { tipo: 'publicacion' }
+          posts.forEach(post => {
+            if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
+              if (post.NOMB_PUBLICACION.match(new RegExp(this.search.nombre, 'gi')) !== null) {
+                obj.nombre = post.NOMB_PUBLICACION
+                this.items.push(obj)
+              }
+            }
+          })
+        }
+
+        if (entrepreneurs.length > 0) {
+          let obj = { tipo: 'emprendedor' }
+          entrepreneurs.forEach(entrepreneur => {
+            if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.nombre, 'gi')) !== null) {
+              obj.nombre = entrepreneur.DESC_NOMBRE_FANTASIA
+              this.items.push(obj)
+            }
+          })
+        }
+        // Se ordenan los items encontrados por orden alfabetico
+        this.items.sort(function (a, b) {
+          return a.nombre.localeCompare(b.nombre, 'es', { numeric: true })
+        })
+      }
+    },
+    buscar () {
+      this.items = []
+      this.$router.push({ path: '/busqueda-avanzada?nombre=' + this.search.nombre + '&tipo=' + this.search.tipo })
+      this.search = {}
+    },
     logout () {
       controller.unsetToken()
       this.$router.push({ path: '/' })
