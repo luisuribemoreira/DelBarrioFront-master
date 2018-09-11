@@ -325,12 +325,10 @@ export default {
           return a.DESC_NOMBRE_FANTASIA.localeCompare(b.DESC_NOMBRE_FANTASIA, 'es', { numeric: true })
         })
         entrepreneursFound = this.toGeneric(entrepreneursFound, 'entrepreneur')
-        custompaginator.paginate(entrepreneursFound)
-          .then(({ paginatedData }) => {
-            this.paginatedData = paginatedData
-            this.pages = paginatedData.length
-            this.pagination = 0
-          })
+        let paginatedData = (await custompaginator.paginate(entrepreneursFound)).paginatedData
+        this.paginatedData = paginatedData
+        this.pages = paginatedData.length
+        this.pagination = 0
       }
 
       /*
@@ -418,12 +416,10 @@ export default {
           return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
         postsFound = this.toGeneric(postsFound, 'product')
-        custompaginator.paginate(postsFound)
-          .then(({ paginatedData }) => {
-            this.paginatedData = paginatedData
-            this.pages = paginatedData.length
-            this.pagination = 0
-          })
+        let paginatedData = (await custompaginator.paginate(postsFound)).paginatedData
+        this.paginatedData = paginatedData
+        this.pages = paginatedData.length
+        this.pagination = 0
       }
 
       /*
@@ -448,12 +444,10 @@ export default {
           return a.publicacion.NOMB_PUBLICACION.localeCompare(b.publicacion.NOMB_PUBLICACION, 'es', { numeric: true })
         })
         offersFound = this.toGeneric(offersFound, 'sale')
-        custompaginator.paginate(offersFound)
-          .then(({ paginatedData }) => {
-            this.paginatedData = paginatedData
-            this.pages = paginatedData.length
-            this.pagination = 0
-          })
+        let paginatedData = (await custompaginator.paginate(offersFound)).paginatedData
+        this.paginatedData = paginatedData
+        this.pages = paginatedData.length
+        this.pagination = 0
       }
 
       if (this.paginatedData[0].length === 0) {
