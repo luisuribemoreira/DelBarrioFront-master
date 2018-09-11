@@ -37,7 +37,7 @@
                     <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
                   <a class="btn" @click="deleteFaq(f)">
-                    <button class="btn btn-tabla">Eliminar</button>
+                    <button class="btn btn-tabla" onClick="window.location.reload()">Eliminar</button>
                   </a>
                 </td>
               </tr>
