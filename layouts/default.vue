@@ -22,11 +22,11 @@
                     </li>
                 </ul>
                 
-                <div class="mx-2 my-auto d-inline w-50">
+                <form class="mx-2 my-auto d-inline w-50" @submit.prevent v-on:submit="search.tipo = undefined, buscar()">
                     <div class="input-group">
-                        <input type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
+                        <input ref="searchInput" type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
                         <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
-                          <li class="dropdown-item" v-for="item in items" :key="item.nombre + new Date().getTime()" @click="search = item, buscar()">
+                          <li class="dropdown-item" tabIndex="-1" :ref="item.id" :class='{"active": currentItem === item.id}' v-for="item in items" :key="item.id" @click="search = item, buscar()">
                             <i class="fa fa-search"></i> {{ item.nombre }} 
                           </li>
                         </ul>
@@ -36,7 +36,7 @@
                         </button>
                         </span>
                     </div>
-                </div>
+                </form>
 
                 <ul class="navbar-nav mr-auto nav-fill w-25">
                     <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
@@ -86,11 +86,11 @@
                     </li>
                 </ul>
 
-                <div class="mx-2 my-auto d-inline w-50">
+                <form class="mx-2 my-auto d-inline w-50" @submit.prevent v-on:submit="search.tipo = undefined, buscar()">
                     <div class="input-group">
-                        <input type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
+                        <input ref="searchInput" type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
                         <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
-                          <li class="dropdown-item" v-for="item in items" :key="item.nombre + new Date().getTime()" @click="search = item, buscar()">
+                          <li class="dropdown-item" tabIndex="-1" :ref="item.id" :class='{"active": currentItem === item.id}' v-for="item in items" :key="item.id" @click="search = item, buscar()">
                             <i class="fa fa-search"></i> {{ item.nombre }} 
                           </li>
                         </ul>
@@ -100,7 +100,7 @@
                         </button>
                     </span>
                     </div>
-                </div>
+                </form>
 
                 <ul class="navbar-nav mr-auto nav-fill w-25">
                     <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
@@ -221,12 +221,12 @@
 
                 <!-- Buscador -->
                 <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
-                  <div class="mx-2 my-auto d-inline">
+                  <form class="mx-2 my-auto d-inline"  @submit.prevent v-on:submit="search.tipo = undefined, buscar()">
                     <div class="input-group">
-                        <input type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" autofocus="autofocus" v-model="search.nombre">
+                        <input ref="searchInput" type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" v-model="search.nombre">
                         <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
-                          <li class="dropdown-item" v-for="item in items" :key="item.nombre + new Date().getTime()" @click="search = item, buscar()">
-                            <i class="fa fa-search"></i> {{ item.nombre }} 
+                          <li class="dropdown-item" tabIndex="-1" :ref="item.id" :class='{"active": currentItem === item.id}' v-for="item in items" :key="item.id" @click="search = item, buscar()">
+                            <i class="fa fa-search"></i> {{ item.nombre }}
                           </li>
                         </ul>
                         <span class="input-group-append">
@@ -235,7 +235,7 @@
                           </button>
                         </span>
                     </div>
-                  </div>
+                  </form>
                 </div>
 
                 <!-- Vinculo Paginas -->
@@ -298,7 +298,8 @@ export default {
     return {
       items: [],
       search: {},
-      searchMenu: ''
+      searchMenu: '',
+      currentItem: 0
     }
   },
   computed: mapGetters([
@@ -307,6 +308,9 @@ export default {
   ]),
   methods: {
     async searchItems () {
+      // EventListener para la navegacion con las flechas
+      document.addEventListener('keyup', this.siguienteItem)
+
       let posts = (await postController.GETAll(this)).posts
       let entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
       // Se inicia con la lista limpia, para evitar duplicados y limpiarla si no hay nada en el buscador.
@@ -337,12 +341,41 @@ export default {
         this.items.sort(function (a, b) {
           return a.nombre.localeCompare(b.nombre, 'es', { numeric: true })
         })
+        // Se corta el arreglo despues de ordenarlo para que solo aparescan las primeras 10 coincidencias.
+        this.items = this.items.slice(0, 10)
+        for (let i = 0; i < this.items.length; i++) {
+          // Asignar ids a los items
+          this.items[i].id = i + 1
+        }
+      } else {
+        this.currentItem = 0
+        document.removeEventListener('keyup', this.siguienteItem)
       }
     },
     buscar () {
       this.items = []
-      this.$router.push({ path: '/busqueda-avanzada?nombre=' + this.search.nombre + '&tipo=' + this.search.tipo })
+      if (this.search.tipo) {
+        this.$router.push({ path: '/busqueda-avanzada?nombre=' + this.search.nombre + '&tipo=' + this.search.tipo })
+      } else {
+        this.$router.push({ path: '/busqueda-avanzada?nombre=' + this.search.nombre + '&tipo=publicacion' })
+      }
       this.search = {}
+    },
+    siguienteItem (event) {
+      // Metodo para permitir la navegacion en los resultados con las flechas hacia arriba y abajo y el Enter.
+      if (event.keyCode === 38 && this.currentItem === 1) {
+        this.currentItem = 0
+        this.$refs.searchInput.focus()
+      } else if (event.keyCode === 38 && this.currentItem > 1) {
+        this.currentItem--
+        this.$refs[this.currentItem][0].focus()
+      } else if (event.keyCode === 40 && this.currentItem < 10) {
+        this.currentItem++
+        this.$refs[this.currentItem][0].focus()
+      }
+      if (event.keyCode === 13 && this.currentItem > 0 && this.items.length > 0) {
+        this.$refs[this.currentItem][0].click()
+      }
     },
     logout () {
       controller.unsetToken()
