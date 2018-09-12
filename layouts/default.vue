@@ -297,9 +297,11 @@ export default {
     })
     return {
       items: [],
-      search: {},
+      search: { nombre: '' },
       searchMenu: '',
-      currentItem: 0
+      currentItem: 0,
+      posts: [],
+      entrepreneurs: []
     }
   },
   computed: mapGetters([
@@ -308,47 +310,53 @@ export default {
   ]),
   methods: {
     async searchItems () {
-      // EventListener para la navegacion con las flechas
-      document.addEventListener('keyup', this.siguienteItem)
+      if (this.posts.length === 0 && this.entrepreneurs.length === 0) {
+        this.posts = (await postController.GETAll(this)).posts
+        this.entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
+      }
 
-      let posts = (await postController.GETAll(this)).posts
-      let entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
-      // Se inicia con la lista limpia, para evitar duplicados y limpiarla si no hay nada en el buscador.
-      this.items = []
-      if (this.search.nombre && this.search.nombre.length > 0) {
-        if (posts.length > 0) {
-          let obj = { tipo: 'publicacion' }
-          posts.forEach(post => {
-            if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
-              if (post.NOMB_PUBLICACION.match(new RegExp(this.search.nombre, 'gi')) !== null) {
-                obj.nombre = post.NOMB_PUBLICACION
-                this.items.push(obj)
+      if (this.search.nombre.length > 0) {
+        if (this.items.length === 0) {
+          if (this.posts.length > 0) {
+            this.posts.forEach(post => {
+              if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
+                if (post.NOMB_PUBLICACION.match(new RegExp(this.search.nombre, 'gi')) !== null) {
+                  this.items.push({
+                    id: 0,
+                    nombre: post.NOMB_PUBLICACION,
+                    tipo: 'publicacion'
+                  })
+                }
               }
-            }
-          })
-        }
+            })
+          }
 
-        if (entrepreneurs.length > 0) {
-          let obj = { tipo: 'emprendedor' }
-          entrepreneurs.forEach(entrepreneur => {
-            if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.nombre, 'gi')) !== null) {
-              obj.nombre = entrepreneur.DESC_NOMBRE_FANTASIA
-              this.items.push(obj)
-            }
+          if (this.entrepreneurs.length > 0) {
+            this.entrepreneurs.forEach(entrepreneur => {
+              if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.nombre, 'gi')) !== null) {
+                this.items.push({
+                  id: 0,
+                  nombre: entrepreneur.DESC_NOMBRE_FANTASIA,
+                  tipo: 'emprendedor'
+                })
+              }
+            })
+          }
+          // Se ordenan los items encontrados por orden alfabetico
+          this.items.sort(function (a, b) {
+            return a.nombre.localeCompare(b.nombre, 'es', { numeric: true })
           })
-        }
-        // Se ordenan los items encontrados por orden alfabetico
-        this.items.sort(function (a, b) {
-          return a.nombre.localeCompare(b.nombre, 'es', { numeric: true })
-        })
-        // Se corta el arreglo despues de ordenarlo para que solo aparescan las primeras 10 coincidencias.
-        this.items = this.items.slice(0, 10)
-        for (let i = 0; i < this.items.length; i++) {
-          // Asignar ids a los items
-          this.items[i].id = i + 1
+          // Se corta el arreglo despues de ordenarlo para que solo aparescan las primeras 10 coincidencias.
+          this.items = this.items.slice(0, 10)
+          for (let i = 0; i < this.items.length; i++) {
+            // Asignar ids a los items
+            this.items[i].id = i + 1
+          }
+          document.addEventListener('keyup', this.siguienteItem)
         }
       } else {
         this.currentItem = 0
+        this.items = []
         document.removeEventListener('keyup', this.siguienteItem)
       }
     },
