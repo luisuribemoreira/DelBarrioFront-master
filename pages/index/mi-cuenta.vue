@@ -214,7 +214,7 @@
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
-              <button type="submit" class="btn btn-default">Guardar</button>
+              <button type="submit" class="btn btn-default" >Guardar</button>
             </div>
           </form>
         </div>
@@ -237,7 +237,7 @@
               <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
               <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
-              <button type="submit" class="btn btn-default">Guardar</button>
+              <button type="submit" class="btn btn-default" >Guardar</button>
               </form>
             </div>
         </div>
@@ -277,7 +277,7 @@
             <div v-if="dataErrorMsg.error_edad">
               <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
             </div>
-              <button type="submit" class="btn btn-default">Guardar</button>
+              <button type="submit" class="btn btn-default" >Guardar</button>
               </form>
             </div>
         </div>
@@ -303,7 +303,7 @@ export default {
       .then(({ user }) => {
         if (store._vm.loggedUser.rol === 102) {
           return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
-            .then(async ({ posts }) => {
+            .then(({ posts }) => {
               let preguntas = 0
               let PREG_SIN_RESPONDER
               posts.forEach(post => {
@@ -325,7 +325,7 @@ export default {
               })
               // Se inicializa el Telefono como objeto vacio en caso de que el usuario no tenga un telefono definido.
               // Se inicializan todos los campos para evitar errores.
-              if (!user.persona.contacto.Telefono) user.persona.contacto.Telefono = [{}]
+              if (!user.persona.contacto.Telefono) user.persona.contacto.Telefono = [{ DESC_CONTACTO: '' }]
               if (!user.persona.contacto.Direccion) user.persona.contacto.Direccion = [{}]
               if (!user.persona.contacto.Celular) user.persona.contacto.Celular = [{}]
               if (!user.persona.contacto.Correo) user.persona.contacto.Correo = [{}]
@@ -372,7 +372,8 @@ export default {
       pagination: 0,
       pages: 0,
       paginatedData: [[]],
-      message: false
+      message: false,
+      processing: false
     }
   },
   components: {
@@ -380,6 +381,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       if (this.selected) {
         this.$validator.validateAll().then(async (result) => {
           // Se limpian los mensajes

@@ -203,6 +203,7 @@ function PUT (context, user) {
             if (err) context.$notify.warning('Ha ocurrido un error inesperado.')
           })
       }
+      context.processing = false
       context.$router.push({ path: '/' })
       context.$notify.success('Se han modificado tus datos exitosamente.')
     }).catch(error => {
@@ -249,7 +250,7 @@ async function PUTEmprendedor (context) {
             TIPO_CONTACTO: key,
             DESC_CONTACTO: contacto[0].DESC_CONTACTO
           })
-      } else if (key === 'Telefono' && contacto[0].DESC_CONTACTO.length === 0) {
+      } else if (key === 'Telefono' && contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length === 0) {
         await context.$axios.$delete('/private/contacto/' + contacto[0].IDEN_CONTACTO)
       }
     })
@@ -266,6 +267,7 @@ async function PUTEmprendedor (context) {
       await context.$axios.$post('/private/imagen/', formData)
     }
 
+    context.processing = false
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
   } catch (error) {
