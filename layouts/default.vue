@@ -314,9 +314,8 @@ export default {
         this.posts = (await postController.GETAll(this)).posts
         this.entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
       }
-
-      if (this.search.nombre.length > 0) {
-        if (this.items.length === 0) {
+      if (this.search.nombre && this.search.nombre.length > 0) {
+        if (this.items && this.items.length === 0) {
           if (this.posts.length > 0) {
             this.posts.forEach(post => {
               if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
@@ -352,7 +351,7 @@ export default {
             // Asignar ids a los items
             this.items[i].id = i + 1
           }
-          document.addEventListener('keyup', this.siguienteItem)
+          if (this.items.length > 0) document.addEventListener('keyup', this.siguienteItem)
         }
       } else {
         this.currentItem = 0
