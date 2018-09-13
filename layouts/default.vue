@@ -242,7 +242,7 @@
                 <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/listado-productos">Productos</a>
+                            <a class="nav-link" href="/listado-productos">Publicaciones</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/listado-emprendedores">Emprendedores</a>
