@@ -238,12 +238,10 @@ export default {
         postsFound.sort(function (a, b) {
           return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
-        custompaginator.paginate(postsFound)
-          .then(({ paginatedData }) => {
-            this.paginatedData = paginatedData
-            this.pages = paginatedData.length
-            this.pagination = 0
-          })
+        let paginatedData = (await custompaginator.paginate(postsFound)).paginatedData
+        this.paginatedData = paginatedData
+        this.pages = paginatedData.length
+        this.pagination = 0
       }
 
       if (this.paginatedData[0].length === 0) {
