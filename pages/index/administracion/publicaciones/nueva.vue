@@ -11,7 +11,7 @@
                 <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="3.6"
+                          :quality="2"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -22,7 +22,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="3.6"
+                          :quality="2"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -33,7 +33,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="3.6"
+                          :quality="2"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -44,7 +44,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="3.6"
+                          :quality="2"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"

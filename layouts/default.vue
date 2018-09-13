@@ -315,7 +315,8 @@ export default {
         this.entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
       }
       if (this.search.nombre && this.search.nombre.length > 0) {
-        if (this.items && this.items.length === 0) {
+        this.items = []
+        if (this.items) {
           if (this.posts.length > 0) {
             this.posts.forEach(post => {
               if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
@@ -376,7 +377,7 @@ export default {
       } else if (event.keyCode === 38 && this.currentItem > 1) {
         this.currentItem--
         this.$refs[this.currentItem][0].focus()
-      } else if (event.keyCode === 40 && this.currentItem < 10) {
+      } else if (event.keyCode === 40 && this.currentItem < this.items.length) {
         this.currentItem++
         this.$refs[this.currentItem][0].focus()
       }

@@ -80,18 +80,19 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
         if (result) {
           this.entrepreneur.DESC_EMPRENDEDOR = 'DESCRIPCION TEMPORAL'
           this.entrepreneur.DESC_NOMBRE_FANTASIA = 'NOMBRE TEMPORAL'
           this.entrepreneur.FECH_CREACION = -1
+          this.entrepreneur.EMAIL_USUARIO = this.entrepreneur.EMAIL_USUARIO.toLowerCase()
           let mail = this.entrepreneur.EMAIL_USUARIO
           let pass = this.entrepreneur.DESC_PASSWORD
-          controller.POST(this)
-            .then(() => {
-              emailer.sendMail(this, mail, 'Usuario Ingresado',
-                'Su usuario ha sido registrado con el correo: ' + mail + ' y contraseña: ' + pass)
-            })
+          let err = await controller.POST(this)
+          if (!err) {
+            emailer.sendMail(this, mail, 'Usuario Ingresado',
+              'Su usuario ha sido registrado con el correo: ' + mail + ' y contraseña: ' + pass)
+          }
         }
       })
     }

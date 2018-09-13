@@ -14,7 +14,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="3.6"
+                          :quality="2"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -149,7 +149,8 @@ export default {
       imageUrl: process.env.imagesUrl,
       statusTerminos: false,
       messageTerminos: false,
-      terms: process.env.termsUrl
+      terms: process.env.termsUrl,
+      processing: false
     }
   },
   components: {
@@ -157,6 +158,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then(async (result) => {
         // Se limpian los mensajes
         this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
@@ -201,8 +204,10 @@ export default {
           controller.POST(this, this.user).then(() => {
             this.submitted.valid = true
             this.submitted.errors = false
+            this.processing = false
             this.$router.replace('/sign-out')
           }).catch(() => {
+            this.processing = false
             this.submitted.valid = false
             this.submitted.errors = true
           })
