@@ -101,7 +101,7 @@ body {
 
 .home-products,
 .publication-sales{
-	background: url(../img/home-products-bg.png);
+	background: #3CB6B5;
 }
 
 .home-products .carousel-control-prev-icon,
@@ -225,7 +225,7 @@ body {
 
 
 .home-entrepreneur {
-	background: url(../img/home-entrepreneur-bg.jpg);
+	background: url(../../img/img/home-entrepreneur-bg.jpg);
 	background-size: cover;
 	background-position: center;
 	position: relative;
@@ -254,7 +254,7 @@ body {
 
 
 .footer {
-	background: url(../img/footer-bg.png);
+	background: url(../../img/img/footer-bg.png);
 	background-repeat: repeat;
 	padding: 40px 0;
 }

@@ -28,7 +28,8 @@ module.exports = {
       { rel: 'stylesheet', href: '/css/bootstrap.min.css' },
       { rel: 'stylesheet', href: '/css/otros.css' },
       { rel: 'stylesheet', href: '/css/font-awesome.min.css' },
-      { rel: 'stylesheet', href: '/css/style-landing.css' }
+      { rel: 'stylesheet', href: '/css/css/main.css' },
+      { rel: 'stylesheet', href: '/css/css/all.css' }
     ],
     script: [
       { src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js' },
