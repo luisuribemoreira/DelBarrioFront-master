@@ -69,7 +69,6 @@
 
 <script>
 import customValidations from '~/controllers/customvalidations'
-import Datepicker from 'vuejs-datepicker'
 import controller from '~/controllers/admin/myaccount'
 import emailer from '~/controllers/admin/emailer'
 
@@ -98,9 +97,6 @@ export default {
   },
   mounted () {
     this.$validator.localize('es', dict)
-  },
-  components: {
-    Datepicker
   },
   methods: {
     validateBeforeSubmit () {
