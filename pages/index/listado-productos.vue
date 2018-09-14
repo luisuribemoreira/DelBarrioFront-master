@@ -3,7 +3,7 @@
   <div>
     <section id="busqueda" class="container-fluid">
       <div class="container">
-        <h4>Listado de productos</h4>
+        <h4>Listado de Publicaciones</h4>
         <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">
 
           <!-- Menu Producto -->
@@ -11,7 +11,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas?</label>
-                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto..." v-model="search.query.find">
+                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto o Servicio..." v-model="search.query.find">
               </div>
             </div>
             <div class="col-md-6">
@@ -239,12 +239,10 @@ export default {
         postsFound.sort(function (a, b) {
           return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
-        custompaginator.paginate(postsFound)
-          .then(({ paginatedData }) => {
-            this.paginatedData = paginatedData
-            this.pages = paginatedData.length
-            this.pagination = 0
-          })
+        let paginatedData = (await custompaginator.paginate(postsFound)).paginatedData
+        this.paginatedData = paginatedData
+        this.pages = paginatedData.length
+        this.pagination = 0
       }
 
       if (this.paginatedData[0].length === 0) {
@@ -259,7 +257,7 @@ export default {
   },
   head () {
     return {
-      title: 'Listado de productos'
+      title: 'Listado de publicaciones'
     }
   }
 }
