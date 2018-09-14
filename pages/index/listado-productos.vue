@@ -65,7 +65,8 @@
             <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
               <td>
                 <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
-                <img :src="post.imagenes.length > 0 && post.imagenes[0].URL_IMAGEN ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-fluid" height="150" width="150">
+                  <img v-if="post.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" height="125" width="125">
+                  <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" height="125" width="125">
                 </nuxt-link>
               </td>
               <td><nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">{{post.NOMB_PUBLICACION}}</nuxt-link></td>
