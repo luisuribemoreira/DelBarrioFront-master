@@ -92,7 +92,8 @@ export default {
       message: false,
       terms: process.env.termsUrl,
       messageTerminos: false,
-      statusTerminos: false
+      statusTerminos: false,
+      processing: false
     }
   },
   mounted () {
@@ -103,6 +104,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then(async (result) => {
         // Se limpian los mensajes
         this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
@@ -130,9 +133,11 @@ export default {
         if (result) {
           let mail = this.user.EMAIL_USUARIO
           let password = this.user.pass
-          controller.POSTCliente(this)
-          emailer.sendMail(this, mail, 'Registro completado',
-            'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + password + '.')
+          let err = await controller.POSTCliente(this)
+          if (!err) {
+            emailer.sendMail(this, mail, 'Registro completado',
+              'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + password + '.')
+          }
         }
       })
     }
