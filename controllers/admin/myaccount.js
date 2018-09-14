@@ -203,6 +203,7 @@ function PUT (context, user) {
             context.$notify.success('Se han modificado tus datos exitosamente.')
           }).catch(err => {
             if (err) context.$notify.warning('Ha ocurrido un error inesperado.')
+            return err
           })
       }
       context.processing = false
@@ -210,6 +211,7 @@ function PUT (context, user) {
       context.$notify.success('Se han modificado tus datos exitosamente.')
     }).catch(error => {
       if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
+      return error
     })
 }
 

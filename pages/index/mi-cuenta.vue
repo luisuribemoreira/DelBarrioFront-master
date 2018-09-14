@@ -435,9 +435,11 @@ export default {
           if (result) {
             let mail = this.user.EMAIL_USUARIO
             let password = this.user.pass
-            emailer.sendMail(this, mail, 'Cambio de contraseña',
-              'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
-            controller.PUT(this, this.user)
+            let err = await controller.PUT(this, this.user)
+            if (!err) {
+              emailer.sendMail(this, mail, 'Cambio de contraseña',
+                'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
+            }
           }
         })
       } else if (this.selectedClient) {
