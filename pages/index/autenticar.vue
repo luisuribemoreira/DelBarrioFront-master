@@ -1,6 +1,10 @@
 <template>
+
   <section id="publicacion" class="container-fluid">
     <div class="container">
+       <hr>
+    </div>
+    <div class="container border p-3">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 fondo-beige">
           <h2 class="text-center">Inicia sesión</h2>
