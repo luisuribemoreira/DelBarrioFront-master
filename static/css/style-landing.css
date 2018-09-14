@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,600,700');
+
+* {
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	font-family: 'Raleway', sans-serif;
+}
+
+.section {
+	padding: 70px 0;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+	font-weight: 300;
+}
+
+.h2 {
+	font-size: 250%;
+}
+
+.p {
+	line-height: 25px;
+	font-size: 90%;
+	color: #575757;
+}
+
+.color__white {
+	color: #fff;
+}
+
+.btn-primary__turquoise {
+	background-color: #3cb6b6;
+	border-color: #3cb6b6;
+}
+
+.btn-primary__turquoise:hover {
+	background-color: #258d8d;
+	border-color: #258d8d;
+}
+/*GENERALES*/
+
+
+
+.header {
+	background-color: #fff;
+}
+
+.btn--search {
+	border-color: #ced4da;
+	border-left: none;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.form--search-input {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: none;
+}
+
+.navbar--btn__ingresar {
+	border-radius: 30px;
+}
+
+.header .fa-search {
+	color: #3cb6b6;
+}
+
+.header .fa-search:hover {
+	opacity: 0.5;
+}
+
+/*HEADER*/
+
+.home-slider {
+	position: relative;
+}
+
+.home-slider .carousel-item::before {
+	content: "";
+	background-color: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.home-slider--h2 {
+	font-size: 300%;
+}
+/*HOME SLIDER*/
+
+
+
+.home-products,
+.publication-sales{
+	background: url(../img/home-products-bg.png);
+}
+
+.home-products .carousel-control-prev-icon,
+.home-products .carousel-control-next-icon,
+.home-entrepreneur .carousel-control-prev-icon,
+.home-entrepreneur .carousel-control-next-icon,
+.publication-sales .carousel-control-next-icon,
+.publication-sales .carousel-control-prev-icon{
+	background-image: none;
+}
+
+.home-products .carousel-control-prev,
+.home-products .carousel-control-next,
+.home-entrepreneur .carousel-control-prev,
+.home-entrepreneur .carousel-control-next,
+.publication-sales .carousel-control-prev,
+.publication-sales .carousel-control-next{
+	position: relative;
+	display: inline;
+}
+
+.home-products .carousel-control-prev-icon::before,
+.home-entrepreneur .carousel-control-prev-icon::before,
+.publication-sales .carousel-control-prev-icon::before{
+	content: "\f053";
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	color: #000;
+	font-size: 200%;
+}
+
+.home-products .carousel-control-next-icon::before,
+.home-entrepreneur .carousel-control-next-icon::before,
+.publication-sales .carousel-control-next-icon::before{
+	content: "\f054";
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	color: #000;
+	font-size: 200%;
+}
+
+.card,
+.home-products .card,
+.home-entrepreneur .card {
+	border: none;
+	border-radius: .55rem;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+.card-img-top,
+.home-products .card-img-top,
+.home-entrepreneur .card-img-top {
+	border-top-left-radius: .55rem;
+	border-top-right-radius: .55rem;
+}
+
+.card-img-link,
+.home-products .card-img-link,
+.home-entrepreneur .card-img-link,
+.publication-products .product--img,
+.publication-products a,
+.publication-sales .card-body{
+	-webkit-transition: 0.7s;
+	-moz-transition: 0.7s;
+	-o-transition: 0.7s;
+	transition: 0.7s;
+}
+
+.card-img-link:hover,
+.home-products .card-img-link:hover,
+.home-entrepreneur .card-img-link:hover,
+.publication-products .product--img:hover{
+	opacity: 0.7;
+}
+
+.card-body,
+.home-products .card-body,
+.home-entrepreneur .card-body {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.card-title,
+.home-products .card-title,
+.home-entrepreneur .card-title,
+.publication-products .product--title{
+	font-size: 1rem;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.card-text,
+.home-products .card-text,
+.home-entrepreneur .card-text{
+	color: #575757;
+}
+
+.card-price,
+.home-products .card-price, .publication-products .product--price {
+	font-size: 150%;
+}
+
+.home-products .card-link a,
+.home-entrepreneur .card-link a{
+	color: #dc3545;
+	font-weight: 600;
+}
+
+.home-products .card-link::after,
+.home-entrepreneur .card-link::after{
+	content: "\f101";
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	margin-left: 10px;
+	color: #dc3545;
+}
+/*HOME PRODUCTS*/
+
+
+
+.home-entrepreneur {
+	background: url(../img/home-entrepreneur-bg.jpg);
+	background-size: cover;
+	background-position: center;
+	position: relative;
+}
+
+.home-entrepreneur::before {
+	content: "";
+	background-color: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.home-entrepreneur .carousel-control-next-icon::before,
+.home-entrepreneur .carousel-control-prev-icon::before {
+	color: #fff;
+}
+
+.home-entrepreneur .card {
+	background-color: rgba(255, 255, 255, 0.7);
+}
+/*HOME ENTREPRENEUR*/
+
+
+
+.footer {
+	background: url(../img/footer-bg.png);
+	background-repeat: repeat;
+	padding: 40px 0;
+}
+
+.footer--bottom-text {
+	font-weight: 300;
+}
+/*FOOTER*/
+/* --------END HOME-------- */
+
+
+
+
+/* --------START PUBLICACIONES-------- */
+.publication-top{
+	overflow: hidden;
+	max-height: 200px;
+}
+.publication-top img{
+	width: 100%;
+}
+/*TOP*/
+
+
+
+.publication-products .card{
+	border: 1px solid rgba(0,0,0,.125);
+}
+
+.publication-products a,
+.publication-sales a{
+	text-decoration: none;
+	color: #212529;
+}
+
+.publication-products a:hover,
+.publication-sales .card-body:hover{
+	opacity: 0.7;
+}
+
+.product--price{
+	font-weight: 600;
+}
+/*PRODUCTS*/
+
+.publication-sales .card-price{
+	color: #dc3545;
+	font-weight: 700;
+}
+
+.publication-sales a{
+	text-decoration: none;
+}
+
+
+
+
+
+/* --------INICIO MEDIA QUERIES-------- */
+@media screen and (max-width: 1024px) {
+	.header .form-inline .form-control{
+		width: 65%;
+	}
+	.navbar-brand{
+		margin-right: 18px!important;
+	}
+	/*HEADER*/
+}
+
+@media screen and (max-width: 768px){
+	.header .form-inline .form-control{
+		width: 90%;
+	}
+	.navbar--btn__ingresar{
+		display: inline-block;
+		margin-right: 0!important;
+		margin-left: 0!important;
+	}
+	/*HEADER*/
+	
+	.home-slider--h2{
+		font-size: 220%;
+	}
+	.home-slider .carousel-caption{
+		margin-bottom: 10px!important;
+	}
+	/*HOME SLIDER*/
+}
+
+@media screen and (max-width: 414px){
+	.header .form-inline .form-control{
+		width: 80%;
+	}
+	.home-slider .carousel-img{
+		width: 400%!important;
+	}
+	.home-slider .carousel-caption{
+		margin-bottom: 90px!important;
+	}
+	/*HOME SLIDER*/
+}
+
+@media screen and (max-width: 375px){
+	.home-slider--h2{
+		font-size: 180%;
+	}
+	/*HOME SLIDER*/
+}
