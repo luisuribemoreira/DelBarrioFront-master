@@ -146,8 +146,8 @@ function POSTCliente (context) {
       context.$router.push({ path: '/autenticar' })
     }).catch(errors => {
       console.log(errors)
-      return -1
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+      return -1
     })
   }).catch(errors => {
     if (errors.response && errors.response.data.data.EMAIL_USUARIO) {
