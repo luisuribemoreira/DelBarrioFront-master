@@ -76,6 +76,7 @@ export default {
       this.processing = true
       this.$validator.validateAll().then((result) => {
         if (result) {
+          this.entrepreneur.usuario.EMAIL_USUARIO = this.entrepreneur.usuario.EMAIL_USUARIO.toLowerCase()
           controller.PUT(this)
         } else {
           this.processing = false

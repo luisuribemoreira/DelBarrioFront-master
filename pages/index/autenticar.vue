@@ -53,6 +53,7 @@ export default {
       this.processing = true
       this.$validator.validateAll().then(result => {
         if (result) {
+          this.auth.email = this.auth.email.toLowerCase()
           controller.login(this)
             .then(() => {
               if (!this.error) {
