@@ -65,12 +65,14 @@
                 </div>
                 <div class="form-group">
                   <label for="fecha-inicio">Fecha Inicio</label>
-                  <datepicker 
-                    language="es"
-                    :format='format'
-                    v-model="sale.FECH_INICIO"
-                    :bootstrapStyling = "true"
-                  ></datepicker>
+                  <no-ssr>
+                    <datepicker 
+                      language="es"
+                      :format='format'
+                      v-model="sale.FECH_INICIO"
+                      :bootstrapStyling = "true"
+                    ></datepicker>
+                  </no-ssr>
                   <small class="text-danger" v-if="errorMsgs.start_date != undefined">{{ errorMsgs.start_date }}</small>
                 </div>
                 <div class="form-group">
@@ -109,7 +111,8 @@ export default {
       sale: {},
       errorMsgs: {},
       format: 'dd MMM, yyyy',
-      imageUrl: process.env.imagesUrl
+      imageUrl: process.env.imagesUrl,
+      processing: false
     }
   },
   asyncData ({ app, params }) {
@@ -128,6 +131,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       if (this.isSale === true) {
         this.$validator.validateAll().then((result) => {
           // Validar fechas de forma manual [Incompatibilidad con VV]
@@ -180,6 +185,8 @@ export default {
               controller.addSale(this, this.post.IDEN_PUBLICACION)
               this.$router.push({ path: '/administracion/publicaciones' })
             }
+          } else {
+            this.processing = false
           }
         })
       }

@@ -22,13 +22,15 @@
             </div>
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
-              <datepicker 
-                language="es"
-                :format='format'
-                v-model="user.FECH_FECHA_NACIMIENTO"
-                :bootstrapStyling = "true"
-                name="date"
-              ></datepicker>
+              <no-ssr>
+                <datepicker 
+                  language="es"
+                  :format='format'
+                  v-model="user.FECH_FECHA_NACIMIENTO"
+                  :bootstrapStyling = "true"
+                  name="date"
+                ></datepicker>
+              </no-ssr>
               <small class="text-danger" v-if="dataErrorMsg.error_edad">{{ dataErrorMsg.error_edad }}</small>
             </div>
             <div class="form-group margin-top">
@@ -61,7 +63,8 @@ export default {
       format: 'dd MMM, yyyy',
       user: {},
       dataErrorMsg: { error_edad: undefined },
-      message: undefined
+      message: undefined,
+      processing: false
     }
   },
   components: {
@@ -69,6 +72,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then((result) => {
         this.dataErrorMsg = { error_edad: undefined }
 
@@ -80,7 +85,11 @@ export default {
           result = undefined
         }
 
-        if (result) controller.PUT(this)
+        if (result) {
+          controller.PUT(this)
+        } else {
+          this.processing = false
+        }
       })
     }
   },
