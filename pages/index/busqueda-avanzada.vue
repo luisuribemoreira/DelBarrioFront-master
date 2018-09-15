@@ -11,15 +11,15 @@
               <label for="tipo" class="margin-top-20">Tipo</label>
               <div class="btn-group tipo-form-check" style="width:100%">
                 <label class="btn btn-info col-sm-4">
-                  <input type="checkbox" autocomplete="off" name="product" v-model="type.product" v-on:click="type.sale = false, type.entrepreneur = false">
+                  <input type="checkbox" autocomplete="off" name="product" v-model="type.product" v-on:click="type.sale = false, type.entrepreneur = false, clean()">
                   <span> Producto</span>
                 </label>
                 <label class="btn btn-info col-sm-4">
-                  <input type="checkbox" autocomplete="off" v-model="type.entrepreneur" v-on:click="type.product = false, type.sale = false">
+                  <input type="checkbox" autocomplete="off" v-model="type.entrepreneur" v-on:click="type.product = false, type.sale = false, clean()">
                   <span> Emprendedor</span>
                 </label>
                 <label class="btn btn-info col-sm-4">
-                  <input type="checkbox" autocomplete="off" v-model="type.sale" v-on:click="type.product = false, type.entrepreneur = false">
+                  <input type="checkbox" autocomplete="off" v-model="type.sale" v-on:click="type.product = false, type.entrepreneur = false, clean()">
                   <span> Oferta</span>
                 </label>
               </div>
@@ -113,17 +113,17 @@
               </thead>
               <tbody>
                 <tr :key="item[1]" v-for="item in paginatedData[pagination]">
-                  <nuxt-link v-if="type.entrepreneur" :to="{ path: '/emprendedores/'+item[1]}">
-                  <td>{{item[2]}}</td>
-                  </nuxt-link>
-                  <nuxt-link v-else :to="{ path: '/publicaciones/'+item[1]}">
-                  <td>{{item[2]}}</td>
-                  </nuxt-link>
+                  <td v-if="type.entrepreneur">
+                    <nuxt-link :to="{ path: '/emprendedores/'+item[1]}">{{item[2]}}
+                    </nuxt-link>
+                  </td>
+                  <td v-if="type.product || type.sale">
+                    <nuxt-link :to="{ path: '/publicaciones/'+item[1]}">{{item[2]}}</nuxt-link>
+                  </td>
                   <td>{{item[3]}}</td>
                   <td>{{item[4]}}</td>
                   <td>{{item[5]}}</td>
                   <td v-if="item[6]">{{item[6]}}</td>
-                  <td v-if="item[7]">{{item[7]}}</td>
                 </tr>
               </tbody>
             </table><!-- /tabla generica de datos -->
@@ -274,7 +274,8 @@ export default {
       paginatedData: [[]],
       pages: 0,
       pagination: 0,
-      loaded: true
+      loaded: true,
+      processing: false
     }
   },
   methods: {
@@ -282,6 +283,8 @@ export default {
       /*
       * Emprendedores
       */
+      if (this.processing) return
+      this.processing = true
       if (this.type.entrepreneur) {
         let entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
         this.pages = entrepreneurs.length
@@ -455,7 +458,9 @@ export default {
         this.paginatedData = [[]]
         this.pagination = 0
         this.pages = 0
+        this.processing = false
       } else {
+        this.processing = false
         this.searchMessage = false
       }
     },
@@ -500,12 +505,12 @@ export default {
         data.forEach(item => {
           if (!item.FLAG_BAN && item.FLAG_VIGENTE && item.FLAG_VALIDADO) {
             object = {
-              1: item.IDEN_OFERTA,
+              1: item.publicacion.IDEN_PUBLICACION,
               2: item.publicacion.NOMB_PUBLICACION,
               3: item.publicacion.DESC_PUBLICACION.length > 40 ? item.publicacion.DESC_PUBLICACION.substring(0, 40) + '...' : item.publicacion.DESC_PUBLICACION,
               4: item.NUMR_PRECIO,
-              6: item.publicacion.categoria.NOMB_CATEGORIA,
-              5: moment(item.FECH_TERMINO).format('DD-MM-YYYY')
+              5: moment(item.FECH_TERMINO).format('DD-MM-YYYY'),
+              6: item.publicacion.categoria.NOMB_CATEGORIA
             }
             dataAux.push(object)
           }
@@ -533,6 +538,11 @@ export default {
           this.busquedaAvanzada()
         }, 0)
       }
+    },
+    clean () {
+      this.paginatedData = [[]]
+      this.pagination = 0
+      this.pages = 0
     }
   },
   mounted () {
