@@ -86,6 +86,7 @@ export default {
         }
 
         if (result) {
+          this.user.usuario.EMAIL_USUARIO = this.user.usuario.EMAIL_USUARIO.toLowerCase()
           controller.PUT(this)
         } else {
           this.processing = false

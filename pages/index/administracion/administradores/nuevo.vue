@@ -90,6 +90,7 @@ export default {
         }
 
         if (result) {
+          this.user.EMAIL_USUARIO = this.user.EMAIL_USUARIO.toLowerCase()
           let mail = this.user.EMAIL_USUARIO
           let pass = this.user.DESC_PASSWORD
           emailer.sendMail(this, mail, 'Registro completado',
