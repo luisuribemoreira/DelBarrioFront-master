@@ -11,6 +11,7 @@
                   <croppa v-model="images.image1"
                           :width="200"
                           :height="200"
+                          :quality="2.7"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -25,6 +26,7 @@
                   <croppa v-model="images.image2"
                           :width="200"
                           :height="200"
+                          :quality="2.7"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -39,6 +41,7 @@
                   <croppa v-model="images.image3"
                           :width="200"
                           :height="200"
+                          :quality="2.7"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -53,6 +56,7 @@
                   <croppa v-model="images.image4"
                           :width="200"
                           :height="200"
+                          :quality="2.7"
                           placeholder="Subir imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -84,7 +88,7 @@
               </div>              
               <div class="form-group">
                 <label for="descripcion">Descripcion</label>
-                  <textarea v-model="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:5000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
+                  <textarea v-model="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:10000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
                 <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
               </div>
               <div class="row">
@@ -139,7 +143,8 @@ export default {
       subcategorias: {},
       deletedImages: [],
       changedImages: [],
-      imageUrl: process.env.imagesUrl
+      imageUrl: process.env.imagesUrl,
+      processing: false
     }
   },
   asyncData ({ app, params }) {
@@ -158,6 +163,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       if (this.post.CODI_TIPO_PUBLICACION === 'undefined') this.post.CODI_TIPO_PUBLICACION = undefined
       this.$validator.validateAll().then(async (result) => {
         if (result) {
@@ -175,6 +182,8 @@ export default {
           } else {
             controller.PUT(this)
           }
+        } else {
+          this.processing = false
         }
       })
     },
