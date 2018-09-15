@@ -23,13 +23,15 @@
               </div>
               <div class="form-group margin-top">
                 <label for="date">Fecha de Nacimiento</label>
-                <datepicker 
-                  language="es"
-                  :format='format'
-                  v-model="user.FECH_FECHA_NACIMIENTO"
-                  :bootstrapStyling = "true"
-                  name="date"
-                ></datepicker>
+                <no-ssr>
+                  <datepicker 
+                    language="es"
+                    :format='format'
+                    v-model="user.FECH_FECHA_NACIMIENTO"
+                    :bootstrapStyling = "true"
+                    name="date"
+                  ></datepicker>
+                </no-ssr>
                 <small class="text-danger" v-if="dataErrorMsg.error_edad">{{ dataErrorMsg.error_edad }}</small>
               </div>
               <div class="form-group margin-top">
@@ -65,7 +67,8 @@ export default {
       format: 'dd MMM, yyyy',
       user: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres
       dataErrorMsg: { error_edad: undefined },
-      message: undefined
+      message: undefined,
+      processing: false
     }
   },
   components: {
@@ -73,6 +76,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then((result) => {
         this.dataErrorMsg = { error_edad: undefined }
 
@@ -90,6 +95,8 @@ export default {
           emailer.sendMail(this, mail, 'Registro completado',
             'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + pass + '.')
           controller.POST(this)
+        } else {
+          this.processing = false
         }
       })
     }
