@@ -83,7 +83,7 @@
               </div>              
               <div class="form-group">
                 <label for="price">Precio</label>
-                <input type="text" class="form-control" v-model="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric" data-vv-as="precio" name="price">
+                <input type="number" class="form-control" v-model="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric" data-vv-as="precio" name="price">
                 <small class="text-danger" v-show="errors.has('price')">{{ errors.first('price') }}</small>
               </div>              
               <div class="form-group">
