@@ -47,7 +47,7 @@
     <div class="container pt-5 pb-5">
         <div class="row mb-5">
             <div class="col">
-                <h2 class="home-products--top-title h2 text-center text-white">Publicaciones Destacadas</h2>
+                <h2 class="home-products--top-title h2 text-center text-white">Publicaciones</h2>
             </div>
         </div>
         <!-- /row 1 -->
