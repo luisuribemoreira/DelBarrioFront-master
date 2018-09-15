@@ -47,7 +47,7 @@
                       </td>
                       <td>{{denounce.FECH_CREACION | dateFormat}}</td>
                       <td>{{denounce.usuario.EMAIL_USUARIO}}</td>
-                      <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10)}}</td>
+                      <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10) + "..."}}</td>
                       <td>
                         <p class="label label-success" v-if="Object.keys(denounce.resolucion_denuncia).length !== 0">Resuelto</p>
                         <p class="label label-warning" v-else>Pendiente</p>
@@ -97,8 +97,8 @@
                       <tr v-for="denounce in comentarios" :key="denounce.IDEN_DENUNCIA">
                         <td>{{denounce.FECH_CREACION | dateFormat}}</td>
                         <td>{{denounce.usuario.EMAIL_USUARIO}}</td>
-                        <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10)}}</td>
-                        <td>{{denounce.DESC_DENUNCIA.substring(0,10)}}</td>
+                        <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10) + "..."}}</td>
+                        <td>{{denounce.DESC_DENUNCIA.substring(0,10) + "..."}}</td>
                         <td>
                           <p class="label label-success" v-if="Object.keys(denounce.resolucion_denuncia).length !== 0">Resuelto</p>
                           <p class="label label-warning" v-else>Pendiente</p>
@@ -148,8 +148,8 @@
                     <tr v-for="denounce in calificaciones" :key="denounce.IDEN_DENUNCIA">
                       <td>{{denounce.FECH_CREACION | dateFormat}}</td>
                       <td>{{denounce.usuario.EMAIL_USUARIO}}</td>
-                      <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10)}}</td>
-                      <td>{{denounce.DESC_DENUNCIA.substring(0,10)}}</td>
+                      <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10) + "..."}}</td>
+                      <td>{{denounce.DESC_DENUNCIA.substring(0,10) + "..."}}</td>
                       <td>
                         <p class="label label-success" v-if="Object.keys(denounce.resolucion_denuncia).length !== 0">Resuelto</p>
                         <p class="label label-warning" v-else>Pendiente</p>
