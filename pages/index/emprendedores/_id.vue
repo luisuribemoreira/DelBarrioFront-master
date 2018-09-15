@@ -116,11 +116,18 @@ import locationController from '~/controllers/location'
 import { mapGetters } from 'vuex'
 
 export default {
-  asyncData ({ app, params, redirect }) {
+  asyncData ({ app, params, redirect, store }) {
     return controller.GET(app, params.id)
       .then(emprendedor => {
+        // Si el emprendedor al que se intenta ingresar no existe, se redirecciona al landing
         if (!emprendedor) redirect('/')
         let entrepreneur = emprendedor.entrepreneur
+        // Si el emprendedor al que se intenta ingresar aun no ha completado su registro
+        // se redirecciona al landing a todo aquel que no sea admin o super admin.
+        if (!entrepreneur.usuario.FECH_CREACION && (!store._vm.isAuthenticated ||
+        (store._vm.isAuthenticated && !(store._vm.isAuthenticated.rol === 103 || store._vm.isAuthenticated.rol === 104)))) {
+          redirect('/')
+        }
         let direccion
         try {
           direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
