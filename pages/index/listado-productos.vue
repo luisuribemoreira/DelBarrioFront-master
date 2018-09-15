@@ -255,6 +255,9 @@ export default {
       }
     }
   },
+  mounted () {
+    this.busquedaAvanzada()
+  },
   head () {
     return {
       title: 'Listado de publicaciones'
