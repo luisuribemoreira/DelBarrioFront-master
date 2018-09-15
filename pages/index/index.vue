@@ -58,131 +58,27 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-lg-3 col-sm-6">
+                                <div class="col-lg-3 col-sm-6" v-for="post in posts" :key="post.IDEN_PUBLICACION">
                                     <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-1.jpg" alt="Producto 1"></a>
+                                        <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION" class="card-img-link">
+                                          <img v-if="post.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
+                                          <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="card-img-top" alt="">
+                                        </nuxt-link>
                                         <div class="card-body">
-                                            <h5 class="card-title">Joyas</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
+                                            <h5 class="card-title">{{ post.NOMB_PUBLICACION }}</h5>
+                                            <p class="card-text">{{ post.DESC_PUBLICACION.length > 50 ?  post.DESC_PUBLICACION.substring(0, 50) + '...' : post.DESC_PUBLICACION }}</p>
                                             <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
+                                            <p class="card-text card-price">{{ post.NUMR_PRECIO }}</p>
+                                            <p class="card-text card-link">
+                                              <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION">Ver publicación</nuxt-link>
+                                              </p>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /Card 1 -->
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-2.jpg" alt="Producto 2"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Amigurumis</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 2 -->
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-3.jpg" alt="Producto 3"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Juegos de madera</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 3 -->
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-4.jpg" alt="Producto 4"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Pulseras</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 4 -->
+                                <!-- /Card -->
                             </div>
                         </div>
-                        <!-- /Slider Item 1 -->
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-5.jpg" alt="Producto 5"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Amigurumis</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 5 -->
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-6.jpg" alt="Producto 6"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Sandwich</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 6 -->
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-7.jpg" alt="Producto 7"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Maceteros</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 7 -->
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-product-8.jpg" alt="Producto 8"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Espejos</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-price">$1.500</p>
-                                            <p class="card-text card-link"><a href="#">Ver publicación</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 8 -->
-                            </div>
-                        </div>
-                        <!-- /Slider Item 2 -->
                     </div>
-
-                    <div class="carousel-controls d-flex justify-content-center mt-2">
-                        <a class="carousel-control-prev" href="#home-products--carousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#home-products--carousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <!-- /Controls -->
                 </div>
                 <!-- /Slider -->
             </div>
@@ -207,99 +103,26 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR">
                                     <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-entrepreneur-1.jpg" alt="Emprendedor 1"></a>
+                                        <nuxt-link :to="'/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR" class="card-img-link">
+                                          <img v-if="!entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
+                                          <img v-else v-lazy="imageUrl + entrepreneur.imagen.URL_IMAGEN" class="card-img-top" alt="">
+                                        </nuxt-link>
                                         <div class="card-body">
-                                            <h5 class="card-title">Emprendedor 1</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
+                                            <h5 class="card-title">{{ entrepreneur.DESC_NOMBRE_FANTASIA }}</h5>
+                                            <p class="card-text">{{ entrepreneur.DESC_EMPRENDEDOR.length > 80 ? entrepreneur.DESC_EMPRENDEDOR.substring(0, 80) + '...' : entrepreneur.DESC_EMPRENDEDOR }}</p>
                                             <hr>
-                                            <p class="card-text card-link"><a href="#">Ver emprendedor</a></p>
+                                            <p class="card-text card-link">
+                                              <nuxt-link :to="'/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR">Ver emprendedor</nuxt-link>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /Card 1 -->
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-entrepreneur-2.jpg" alt="Emprendedor 2"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Emprendedor 2</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-link"><a href="#">Ver emprendedor</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 2 -->
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-entrepreneur-3.jpg" alt="Emprendedor 3"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Emprendedor 3</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-link"><a href="#">Ver emprendedor</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 3 -->
                             </div>
                         </div>
-                        <!-- /Slider Item 1 -->
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-entrepreneur-4.jpg" alt="Emprendedor 4"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Emprendedor 4</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-link"><a href="#">Ver emprendedor</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 5 -->
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-entrepreneur-5.jpg" alt="Emprendedor 5"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Emprendedor 5</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-link"><a href="#">Ver emprendedor</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 6 -->
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <a href="#" class="card-img-link"><img class="card-img-top" src="img/img/home-entrepreneur-6.jpg" alt="Emprendedor 6"></a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Emprendedor 6</h5>
-                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere libero laboriosam.</p>
-                                            <hr>
-                                            <p class="card-text card-link"><a href="#">Ver emprendedor</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Card 7 -->
-                            </div>
-                        </div>
-                        <!-- /Slider Item 2 -->
                     </div>
-
-                    <div class="carousel-controls d-flex justify-content-center mt-2">
-                        <a class="carousel-control-prev" href="#home-entrepreneur--carousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#home-entrepreneur--carousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <!-- /Controls -->
                 </div>
                 <!-- /Slider -->
             </div>
@@ -329,10 +152,64 @@
 </template>
 
 <script>
+import controllerEntrepreneurs from '~/controllers/admin/entrepreneurs'
+import controllerPosts from '~/controllers/posts'
+import Numeral from 'numeral'
+// Se debe importar el locale de numeral para que funcione, no es necesario llamarlo por lo que se desactiva el linter para la linea.
+import es from 'numeral/locales/es' //eslint-disable-line
+
 export default {
+  async asyncData ({ app }) {
+    // Se fija el locale a 'es' para que el punto delimite los miles y la coma los decimales
+    Numeral.locale('es')
+    // Se llama a todos los emprendedores y luego se filtran y se asignan al array entrepreneurs.
+    let entrepreneurs = []
+    let entrepreneursAux = (await controllerEntrepreneurs.GETAll(app)).entrepreneurs
+    entrepreneursAux.forEach(entrepreneur => {
+      // Se verifica que el emprendedor haya finalizado su creacion(Ya se logueo al menos 1 ves y completo todos sus datos)
+      if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) entrepreneurs.push(entrepreneur)
+    })
+    // Se ordenan por fecha, el mas nuevo primero.
+    entrepreneurs.sort(function (a, b) {
+      if (a.usuario.FECH_CREACION > b.usuario.FECH_CREACION) return -1
+      if (a.usuario.FECH_CREACION < b.usuario.FECH_CREACION) return 1
+      return 0
+    })
+    // Solo se dejan los primeros 3 emprendedores
+    entrepreneurs = entrepreneurs.slice(0, 3)
+
+    // Se llama a todas las publicaciones y luego se filtran y se asignan al array posts
+    let posts = []
+    let postsAux = (await controllerPosts.GETAll(app)).posts
+    postsAux.forEach(post => {
+      // Se verifica que el post no este baneado, este vigente y haya sido validado por un administrador.
+      if (!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO) {
+        // Se le da formato a los precios, '$ 0,0' produce: 1500 -> $ 1.500
+        post.NUMR_PRECIO = Numeral(post.NUMR_PRECIO).format('$ 0,0')
+        posts.push(post)
+      }
+    })
+
+    // Se ordenan por fecha, la mas reciente primero.
+    posts.sort(function (a, b) {
+      if (a.FECH_CREACION > b.FECH_CREACION) return -1
+      if (a.FECH_CREACION < b.FECH_CREACION) return 1
+      return 0
+    })
+    // Solo se dejan las primeros 4 publicaciones
+    posts = posts.slice(0, 4)
+
+    return {
+      posts,
+      entrepreneurs
+    }
+  },
   data () {
     return {
-      terms: process.env.termsUrl
+      imageUrl: process.env.imagesUrl,
+      terms: process.env.termsUrl,
+      posts: [],
+      entrepreneurs: []
     }
   },
   head () {
