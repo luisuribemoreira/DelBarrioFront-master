@@ -169,6 +169,7 @@
                     :autoplay ="true"
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
+                    style="width: 100%;"
                     >
               <slide v-for="emprendedor in index.emprendedores" :key="emprendedor.IDEN_EMPRENDEDOR" v-if="emprendedor.usuario.FECH_CREACION">
                 <nuxt-link :to="'/emprendedores/'+emprendedor.IDEN_EMPRENDEDOR">
@@ -201,6 +202,7 @@
                     :autoplay ="true"
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
+                    style="width: 100%;"
                     >
             <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO">
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">

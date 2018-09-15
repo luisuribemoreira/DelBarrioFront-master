@@ -68,6 +68,7 @@
                     :autoplay ="true"
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
+                    style="width: 100%;"
                     >
             <slide class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="p in entrepreneur.publicaciones" :key="p.IDEN_PUBLICACION" v-if="p.FLAG_VIGENTE && !p.FLAG_BAN && p.FLAG_VALIDADO">
               <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">

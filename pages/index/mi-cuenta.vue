@@ -107,6 +107,7 @@
                     :autoplay ="true"
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
+                    style="width: 100%;"
                     >
             <slide class="col-lg-2 col-md-3 col-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
               <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">

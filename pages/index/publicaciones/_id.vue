@@ -15,7 +15,9 @@
                     :perPage="1"
                     :autoplay ="false"
                     :autoplayTimeout="5000"
-                    :navigationClickTargetSize="0">
+                    :navigationClickTargetSize="0"
+                    style="width: 100%;"
+                    >
               <slide v-for="imagen in post.imagenes" :key="imagen.IDEN_IMAGEN">
                 <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
                 <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
