@@ -18,6 +18,11 @@ export default {
   computed: mapGetters([
     'isAuthenticated',
     'loggedUser'
-  ])
+  ]),
+  head () {
+    return {
+      title: 'Redirecting...'
+    }
+  }
 }
 </script>
