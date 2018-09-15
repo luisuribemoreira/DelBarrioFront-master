@@ -8,6 +8,11 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .section {
 	padding: 70px 0;
 }
