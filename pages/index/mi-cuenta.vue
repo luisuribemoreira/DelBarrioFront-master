@@ -95,19 +95,31 @@
           </div>
         </div>
         <div class="row">
-          <transition-group name="ListPosts" tag="div">
-            <div class="col-lg-2 col-md-3 col-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
+          <carousel 
+                    :navigationEnabled="true"
+                    :loop="true"
+                    paginationActiveColor="#89dbee"
+                    paginationColor="#b2ebd1"
+                    :paginationSize="5"
+                    easing="linear"
+                    :speed="300"
+                    :perPageCustom="[[768, 1], [1024, 6]]"
+                    :autoplay ="true"
+                    :autoplayTimeout="5000"
+                    :autoplayHoverPause = "true"
+                    >
+            <slide class="col-lg-2 col-md-3 col-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
               <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">
-                <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-responsive" alt="">
-                <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-responsive" alt="">
+                <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+                <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
               <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
               <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
               <p class="text-center"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
               <p class="text-center"></p>
-            </div>
-          </transition-group>
+            </slide>
+          </carousel>
         </div>
         <hr class="margin-top">
       </div>
@@ -151,13 +163,15 @@
             </div>
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
-              <datepicker 
-                language="es"
-                :format='format'
-                v-model="user.persona.FECH_FECHA_NACIMIENTO"
-                :bootstrapStyling = "true"
-                name="date"
-              ></datepicker>
+              <no-ssr>
+                <datepicker 
+                  language="es"
+                  :format='format'
+                  v-model="user.persona.FECH_FECHA_NACIMIENTO"
+                  :bootstrapStyling = "true"
+                  name="date"
+                ></datepicker>
+              </no-ssr>
             </div>
             <div v-if="dataErrorMsg.error_edad">
               <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
@@ -191,7 +205,7 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Descripción</label><span style="color: grey"> (*Breve resumen sobre el servicio o producto ofrecido)</span>
-                <input v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control"/>
+                <textarea v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control" rows="3"></textarea>
                 <small class="text-danger" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</small>
               </div>
               <div class="form-group margin-top">
@@ -201,12 +215,12 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Teléfono (Optativo)</label><span style="color: grey"> (Formato ej: 221342146)</span>
-                <input v-validate data-vv-rules="min:9|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="min:9|numeric|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label><span style="color: grey"> (Formato ej: 982275364)</span>
-                <input v-validate data-vv-rules="required|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required|numeric|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
@@ -266,13 +280,15 @@
             </div>
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
-              <datepicker 
-                language="es"
-                :format='format'
-                v-model="user.persona.FECH_FECHA_NACIMIENTO"
-                :bootstrapStyling = "true"
-                name="date"
-              ></datepicker>
+              <no-ssr>
+                <datepicker 
+                  language="es"
+                  :format='format'
+                  v-model="user.persona.FECH_FECHA_NACIMIENTO"
+                  :bootstrapStyling = "true"
+                  name="date"
+                ></datepicker>
+              </no-ssr>
             </div>
             <div v-if="dataErrorMsg.error_edad">
               <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
@@ -339,9 +355,11 @@ export default {
           return commentsController.GETByUser(app, store._vm.loggedUser.id)
             .then(({ comentarios }) => {
               let respuestas = 0
-              comentarios.forEach(comentario => {
-                if (comentario.respuesta.IDEN_RESPUESTA) respuestas++
-              })
+              if (comentarios.length > 0) {
+                comentarios.forEach(comentario => {
+                  if (comentario.respuesta.IDEN_RESPUESTA) respuestas++
+                })
+              }
               return {
                 user: user,
                 respuestas
@@ -414,12 +432,13 @@ export default {
           if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw || this.dataErrorMsg.error_foto) {
             result = undefined
           }
-
           if (result) {
             if (this.loggedUser.rol === 102) {
               this.user.blobs = blobs
               controller.PUTEmprendedor(this)
             }
+          } else {
+            this.processing = false
           }
         })
       } else if (this.selectedPass) {
@@ -440,6 +459,8 @@ export default {
               emailer.sendMail(this, mail, 'Cambio de contraseña',
                 'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
             }
+          } else {
+            this.processing = false
           }
         })
       } else if (this.selectedClient) {
@@ -455,6 +476,8 @@ export default {
           }
           if (result) {
             controller.PUT(this, this.user)
+          } else {
+            this.processing = false
           }
         })
       }
