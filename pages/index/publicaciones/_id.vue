@@ -4,27 +4,23 @@
     <div class="container">
       <div class="row margin-top-sec">
         <div class="col-xl-6">
-          <div id="carousel" class="carousel slide">
-            <div class="carousel-inner">
-              <div class="item active carousel-item">
-                <img :src="post.imagenes.length > 0 ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" class="img-responsive" alt="">
-              </div>
-              <div class="item carousel-item" :key="img.IDEN_IMAGEN" v-for="img in post.imagenes">
-                <img :src="imageUrl + img.URL_IMAGEN" class="img-responsive" alt="">
-              </div>
-            </div>
-          </div><!--- Carrousel Grande -->
-          <div class="clearfix">
-            <div id="thumbcarousel" class="carousel slide" :data-interval="false">
-              <div class="carousel-inner">
-                <div class="item active carousel-item" v-if="post.imagenes.length>1" >
-                  <div data-target="#carousel" :data-slide-to="img.$index" class="thumb" v-bind:key="img.IDEN_IMAGEN" v-for="img in post.imagenes">
-                      <img v-bind:src="imageUrl + img.URL_IMAGEN" class="img-responsive" alt="">
-                  </div>                
-                </div><!-- /item -->
-              </div><!-- /carousel-inner -->
-            </div> <!-- /thumbcarousel -->
-          </div><!-- /clearfix -->
+          <carousel 
+                    :navigationEnabled="true"
+                    :loop="false"
+                    paginationActiveColor="#89dbee"
+                    paginationColor="#b2ebd1"
+                    :paginationSize="20"
+                    easing="linear"
+                    :speed="300"
+                    :perPage="1"
+                    :autoplay ="false"
+                    :autoplayTimeout="5000"
+                    :navigationClickTargetSize="0">
+              <slide v-for="imagen in post.imagenes" :key="imagen.IDEN_IMAGEN">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+            </slide>
+          </carousel><!--- Carrousel Grande -->
         </div><!-- columna -->
         <div class="col-md-6">
           <h2>{{post.NOMB_PUBLICACION}}</h2>
