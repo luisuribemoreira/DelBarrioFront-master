@@ -16,7 +16,9 @@
                             <img class="carousel-img d-block w-100" src="img/img/home-slider-1.jpg" alt="First slide">
                             <div class="carousel-caption text-left mb-5">
                                 <h2 class="home-slider--h2 h2 mb-4">Bienvenido a la Comunidad de emprendedores de Providencia</h2>
-                                <a class="btn btn-primary btn-primary__turquoise mb-2" href="listado-productos" role="button">Ir a Publicaciones</a>
+                                <nuxt-link :to="{ path: '/listado-productos'}" class="btn btn-primary btn-primary__turquoise mb-2"  role="button">
+                                Ir a publicaciones
+                                </nuxt-link>
                             </div>
                         </div>
                         <div class="carousel-item">
