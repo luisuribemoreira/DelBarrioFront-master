@@ -27,12 +27,15 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Raleway' },
       { rel: 'stylesheet', href: '/css/bootstrap.min.css' },
       { rel: 'stylesheet', href: '/css/otros.css' },
-      { rel: 'stylesheet', href: '/css/font-awesome.min.css' }
+      { rel: 'stylesheet', href: '/css/font-awesome.min.css' },
+      { rel: 'stylesheet', href: '/css/css/main.css' },
+      { rel: 'stylesheet', href: '/css/css/all.css' }
     ],
     script: [
       { src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js' },
       { src: '/js/bootstrap.min.js' },
-      { src: '/js/style.js' }
+      { src: '/js/style.js' },
+      { src: '/js/popper.min.js' }
     ]
   },
   /*
