@@ -90,15 +90,20 @@ function PUT (context) {
 
 // estado persona
 function setState (context, client) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/usuario/' + client.usuario.IDEN_USUARIO,
     {
       FLAG_BAN: !client.usuario.FLAG_BAN
     }
   ).then(response => {
     client.usuario.FLAG_BAN = !client.usuario.FLAG_BAN
+    return {
+      data: response.data,
+      disabled: true
+    }
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    return errors
   })
 }
 

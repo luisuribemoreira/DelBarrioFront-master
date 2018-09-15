@@ -42,7 +42,7 @@
                   <!--entrepreneur.usuario.FLAG_BAN -->
                   <a @click="setState(entrepreneur)" class="btn">
                     <button class="btn btn-tabla" v-if="entrepreneur.usuario.FLAG_BAN" title="Habilitar">Habilitar</button>
-                    <button class="btn btn-tabla" v-if="!entrepreneur.usuario.FLAG_BAN" title="Deshabilitar" data-toggle="modal" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="deshabilitacion.client = entrepreneur ">Deshabilitar</button>
+                    <button class="btn btn-tabla" v-if="!entrepreneur.usuario.FLAG_BAN" title="Deshabilitar" :data-toggle="enabled ? 'modal' : ''" :data-target= "isAuthenticated ? '#disableModal' : ''" @click="check(), deshabilitacion.client = entrepreneur ">Deshabilitar</button>
                   </a>
                 </td>
               </tr>
@@ -73,7 +73,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <button type="button" ref="modalDismiss" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Deshabilitar Emprendedor</h4>
                 </div>
                 <div class="modal-body">
@@ -154,20 +154,31 @@ export default {
       error: '',
       pagination: 0,
       pages: 0,
-      paginatedData: [[]]
+      paginatedData: [[]],
+      processing: false,
+      enabled: false
     }
   },
   methods: {
-    setState (entrepreneur) {
+    check () {
+      if (this.deactivationreasons.length === 0) {
+        this.$notify.warning('Aún no se han agregado razones de deshabilitación.')
+      } else {
+        this.enabled = true
+      }
+    },
+    async setState (entrepreneur) {
       if (entrepreneur.usuario.FLAG_BAN) {
-        controllerAccountDisable.GETByUser(this, entrepreneur)
-          .then(({ deshabilitacionUsuario }) => {
-            deshabilitacionUsuario.FLAG_VIGENTE = false // Se habilita nuevamente el usuario, dejando como no vigente su ultima deshabilitacion.
-            controllerAccountDisable.PUT(this, deshabilitacionUsuario)
-              .then(() => {
-                controller.setState(this, entrepreneur)
-              })
-          })
+        if (this.processing) return
+        this.processing = true
+        let data = await controllerAccountDisable.GETByUser(this, entrepreneur)
+        if (data) {
+          let deshabilitacionUsuario = data.deshabilitacionUsuario
+          deshabilitacionUsuario.FLAG_VIGENTE = false // Se habilita nuevamente el usuario, dejando como no vigente su ultima deshabilitacion.
+          await controllerAccountDisable.PUT(this, deshabilitacionUsuario)
+          await controller.setState(this, entrepreneur)
+          this.processing = false
+        }
       }
     },
     buscarEmprendedor () {
@@ -213,17 +224,32 @@ export default {
       }
     },
     validateDisable () {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
+        if (this.processing) return
+        this.processing = true
         if (result) {
-          controllerAccountDisable.POST(this)
-          let mail = this.deshabilitacion.client.usuario.EMAIL_USUARIO
-          let razon = this.deshabilitacion.DESC_COMENTARIO
-          emailer.sendMail(this, mail, 'Usuario Baneado',
-            'Estimado: Le informamos que su cuenta fue baneada por el siguiente motivo: ' + razon + '. Le rogamos ponerse en contacto con el administrador.')
-            .then(() => {
-              controller.setState(this, this.deshabilitacion.client)
-              this.deshabilitacion = { DESC_COMENTARIO: '' }
-            })
+          let data = await controllerAccountDisable.POST(this)
+          if (data.disabled) {
+            let mail = this.deshabilitacion.client.usuario.EMAIL_USUARIO
+            let razon = this.deshabilitacion.DESC_COMENTARIO
+            let dat = await controller.setState(this, this.deshabilitacion.client)
+            if (dat.disabled) {
+              emailer.sendMail(this, mail, 'Usuario Baneado',
+                'Estimado: Le informamos que su cuenta fue baneada por el siguiente motivo: ' + razon + '. Le rogamos ponerse en contacto con el administrador.')
+                .then(() => {
+                  this.deshabilitacion = { DESC_COMENTARIO: '' }
+                  // Esconde el modal.
+                  this.$refs.modalDismiss.click()
+                  this.processing = false
+                })
+            } else {
+              this.processing = false
+            }
+          } else {
+            this.processing = false
+          }
+        } else {
+          this.processing = false
         }
       })
     }

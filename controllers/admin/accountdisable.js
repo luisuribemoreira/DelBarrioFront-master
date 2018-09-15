@@ -38,13 +38,15 @@ function POST (context) {
     .then(response => {
       context.$notify.success('Usuario deshabilitado exitosamente.')
       return {
-        disabled: response.data
+        data: response.data,
+        disabled: true
       }
     }).catch(errors => {
       if (errors) {
         console.log(errors.data)
         context.$notify.danger('Ha ocurrido un error inesperado.')
       }
+      return errors
     })
 }
 

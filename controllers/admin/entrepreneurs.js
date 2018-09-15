@@ -182,15 +182,20 @@ function PUT (context) {
 
 // estado emprendedor
 function setState (context, entrepreneur) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/usuario/' + entrepreneur.usuario.IDEN_USUARIO,
     {
       FLAG_BAN: !entrepreneur.usuario.FLAG_BAN
     }
   ).then(response => {
     entrepreneur.usuario.FLAG_BAN = !entrepreneur.usuario.FLAG_BAN
+    return {
+      data: response.data,
+      disabled: true
+    }
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    return errors
   })
 }
 
