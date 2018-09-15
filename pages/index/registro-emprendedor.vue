@@ -43,13 +43,15 @@
               </div>
               <div class="form-group margin-top">
                 <label for="date">Fecha de Nacimiento</label>
-                <datepicker 
-                  language="es"
-                  :format='format'
-                  v-model="user.persona.FECH_FECHA_NACIMIENTO"
-                  :bootstrapStyling = "true"
-                  name="date"
-                ></datepicker>
+                <no-ssr>
+                  <datepicker 
+                    language="es"
+                    :format='format'
+                    v-model="user.persona.FECH_FECHA_NACIMIENTO"
+                    :bootstrapStyling = "true"
+                    name="date"
+                  ></datepicker>
+                </no-ssr>
               </div>
               <div v-if="dataErrorMsg.error_edad">
                 <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
@@ -76,7 +78,7 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Descripción</label>
-                <input v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control"/>
+                <textarea v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control" rows="3"></textarea>
                 <small class="text-danger" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</small>
               </div>
               <div class="form-group margin-top">
@@ -86,12 +88,12 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Teléfono (Optativo)</label>
-                <input v-validate data-vv-rules="min:9|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="min:9|numeric|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label>
-                <input v-validate data-vv-rules="required|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required|numeric|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
@@ -211,6 +213,8 @@ export default {
             this.submitted.valid = false
             this.submitted.errors = true
           })
+        } else {
+          this.processing = false
         }
       })
     }
