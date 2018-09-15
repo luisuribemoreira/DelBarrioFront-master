@@ -8,8 +8,10 @@ function acceptPost (context, post) {
   ).then(response => {
     post.FLAG_VALIDADO = true
     context.$notify.success('Se ha aceptado la publicación')
+    context.processing = false
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    context.processing = false
   })
 }
 
@@ -22,8 +24,10 @@ function acceptOffer (context, offer) {
   ).then(response => {
     offer.FLAG_VALIDADO = true
     context.$notify.success('Se ha aceptado la publicación')
+    context.processing = false
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    context.processing = false
   })
 }
 
@@ -37,8 +41,10 @@ function ban (context, post) {
   ).then(response => {
     post.FLAG_BAN = true
     context.$notify.success('Se ha rechazado la publicación')
+    context.processing = false
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    context.processing = false
   })
 }
 function banOffer (context, offer) {
@@ -50,8 +56,10 @@ function banOffer (context, offer) {
   ).then(response => {
     offer.FLAG_BAN = true
     context.$notify.success('Se ha rechazado la publicación')
+    context.processing = false
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    context.processing = false
   })
 }
 

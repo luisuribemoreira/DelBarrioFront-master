@@ -96,14 +96,21 @@ export default {
       pages: 0,
       paginatedData: [[]],
       search: '',
-      postsAux: []
+      postsAux: [],
+      processing: false
     }
   },
   methods: {
     acceptPost (post) {
+      if (this.processing) return
+      this.processing = true
+
       controller.acceptPost(this, post)
     },
     ban (post) {
+      if (this.processing) return
+      this.processing = true
+
       controller.ban(this, post)
     },
     buscarPublicaciones () {

@@ -107,14 +107,21 @@ export default {
       offersAux: [],
       pagination: 0,
       pages: 0,
-      paginatedData: [[]]
+      paginatedData: [[]],
+      processing: false
     }
   },
   methods: {
     acceptOffer (oferta) {
+      if (this.processing) return
+      this.processing = true
+
       controller.acceptOffer(this, oferta)
     },
     banOffer (oferta) {
+      if (this.processing) return
+      this.processing = true
+
       controller.banOffer(this, oferta)
     },
     buscarOfertas () {
