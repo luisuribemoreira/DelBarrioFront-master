@@ -14,7 +14,7 @@
             </div>
             <div class="form-group margin-top">
               <label for="rut">RUT</label>
-              <input v-validate data-vv-rules="required|alpha_num" data-vv-as="RUT" name="rut" type="text" v-model="rut" class="form-control"/>
+              <input v-validate data-vv-rules="required|alpha_num|min:8" data-vv-as="RUT" name="rut" type="text" v-model="rut" class="form-control"/>
               <small class="text-danger" v-show="errors.has('rut')">{{ errors.first('rut') }}</small>
             </div>
             <div class="form-group margin-top">
@@ -52,7 +52,8 @@ import workfieldcontroller from '~/controllers/admin/workfields'
 export default {
   data () {
     return {
-      message: false
+      message: false,
+      processing: false
     }
   },
   asyncData ({app, params}) {
@@ -71,8 +72,14 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then((result) => {
-        if (result) controller.PUT(this)
+        if (result) {
+          controller.PUT(this)
+        } else {
+          this.processing = false
+        }
       })
     }
   },

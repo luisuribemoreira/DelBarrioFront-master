@@ -28,14 +28,19 @@ export default {
   data () {
     return {
       workfield: {},
-      message: false
+      message: false,
+      processing: false
     }
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then((result) => {
         if (result) {
           controller.POST(this)
+        } else {
+          this.processing = false
         }
       })
     }

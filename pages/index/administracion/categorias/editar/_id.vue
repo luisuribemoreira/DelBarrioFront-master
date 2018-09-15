@@ -34,7 +34,8 @@ export default {
   data () {
     return {
       message: false,
-      subcategoriesAux: []
+      subcategoriesAux: [],
+      processing: false
     }
   },
   asyncData ({ app, params }) {
@@ -52,12 +53,18 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then((result) => {
         this.subcategoriesAux = this.category.subcategorias
-        if (result) controller.PUT(this)
-        this.subcategoriesAux.forEach(sub => {
-          controller.PUT(sub)
-        })
+        if (result) {
+          controller.PUT(this)
+          this.subcategoriesAux.forEach(sub => {
+            controller.PUT(sub)
+          })
+        } else {
+          this.processing = false
+        }
       })
     }
   },

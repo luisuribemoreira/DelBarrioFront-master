@@ -14,7 +14,7 @@
             </div>
             <div class="form-group margin-top">
               <label for="rut">RUT</label>
-              <input v-validate data-vv-rules="required|alpha_num" data-vv-as="RUT" name="rut" type="text" v-model="entrepreneur.RUT_EMPRENDEDOR" class="form-control"/>
+              <input v-validate data-vv-rules="required|alpha_num|min:8" data-vv-as="RUT" name="rut" type="text" v-model="entrepreneur.RUT_EMPRENDEDOR" class="form-control"/>
               <small class="text-danger" v-show="errors.has('rut')">{{ errors.first('rut')}}</small>
             </div>
             <div class="form-group margin-top">
@@ -64,7 +64,8 @@ export default {
   data () {
     return {
       entrepreneur: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres
-      message: false
+      message: false,
+      processing: false
     }
   },
   mounted () {
@@ -80,6 +81,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then(async (result) => {
         if (result) {
           this.entrepreneur.DESC_EMPRENDEDOR = 'DESCRIPCION TEMPORAL'
@@ -93,6 +96,8 @@ export default {
             emailer.sendMail(this, mail, 'Usuario Ingresado',
               'Su usuario ha sido registrado con el correo: ' + mail + ' y contraseña: ' + pass)
           }
+        } else {
+          this.processing = false
         }
       })
     }

@@ -34,7 +34,8 @@ export default {
   data () {
     return {
       category: {},
-      message: false
+      message: false,
+      processing: false
     }
   },
   asyncData ({ app }) {
@@ -42,9 +43,13 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then((result) => {
         if (result) {
           controller.POST(this)
+        } else {
+          this.processing = false
         }
       })
     }

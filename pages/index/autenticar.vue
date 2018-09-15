@@ -34,7 +34,8 @@ export default {
     return {
       auth: {},
       error: false,
-      message: ''
+      message: '',
+      processing: false
     }
   },
   methods: {
@@ -44,14 +45,20 @@ export default {
           controller.authenticate(this)
         }
       } */
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then(result => {
         if (result) {
           controller.login(this)
             .then(() => {
               if (!this.error) {
                 this.$router.push({ path: '/redirect' })
+              } else {
+                this.processing = false
               }
             })
+        } else {
+          this.processing = false
         }
       })
     }

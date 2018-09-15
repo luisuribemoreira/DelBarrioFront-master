@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       denouncereason: {},
-      message: false
+      message: false,
+      processing: false
     }
   },
   methods: {
@@ -47,7 +48,11 @@ export default {
             }
           })
         })
-        if (result) controller.POST(this)
+        if (result) {
+          controller.POST(this)
+        } else {
+          this.processing = false
+        }
       })
     }
   },
