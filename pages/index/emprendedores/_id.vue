@@ -56,6 +56,7 @@
                 </div>
             </div>
  <div class="row">
+   <no-ssr>
           <carousel 
                     :navigationEnabled="true"
                     :loop="true"
@@ -70,16 +71,17 @@
                     :autoplayHoverPause = "true"
                     style="width: 100%;"
                     >
-            <slide class="col-md-2 col-sm-3 col-xs-6 post-item" v-for="p in entrepreneur.publicaciones" :key="p.IDEN_PUBLICACION" v-if="p.FLAG_VIGENTE && !p.FLAG_BAN && p.FLAG_VALIDADO">
+            <slide v-for="p in entrepreneur.publicaciones" :key="p.IDEN_PUBLICACION" v-if="p.FLAG_VIGENTE && !p.FLAG_BAN && p.FLAG_VALIDADO">
               <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">
                 <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                 <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
-              <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}</p>
+              <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) + '...' }}</p>
               <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
             </slide>
           </carousel>
+   </no-ssr>
         </div>
         </div><!-- /container -->
     </section><!-- /Fila de Productos -->

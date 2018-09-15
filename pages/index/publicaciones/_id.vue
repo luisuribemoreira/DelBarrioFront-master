@@ -4,6 +4,7 @@
     <div class="container">
       <div class="row margin-top-sec">
         <div class="col-xl-6">
+          <no-ssr>
           <carousel 
                     :navigationEnabled="true"
                     :loop="false"
@@ -23,6 +24,7 @@
                 <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
             </slide>
           </carousel><!--- Carrousel Grande -->
+          </no-ssr>
         </div><!-- columna -->
         <div class="col-md-6">
           <h2>{{post.NOMB_PUBLICACION}}</h2>

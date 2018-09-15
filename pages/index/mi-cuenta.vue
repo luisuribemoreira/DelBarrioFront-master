@@ -95,7 +95,8 @@
           </div>
         </div>
         <div class="row">
-          <carousel 
+          <no-ssr>
+            <carousel 
                     :navigationEnabled="true"
                     :loop="true"
                     paginationActiveColor="#89dbee"
@@ -107,20 +108,19 @@
                     :autoplay ="true"
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
-                    style="width: 100%;"
-                    >
-            <slide class="col-lg-2 col-md-3 col-6 post-item" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
-              <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION ">
-                <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
-              </nuxt-link>
-              <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
-              <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
-              <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
-              <p class="text-center"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
-              <p class="text-center"></p>
-            </slide>
-          </carousel>
+                    style="width: 100%;">
+              <slide v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
+                <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION">
+                  <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+                  <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
+                </nuxt-link>
+                <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
+                <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
+                <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+                <p class="text-center"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
+              </slide>
+            </carousel>
+          </no-ssr>
         </div>
         <hr class="margin-top">
       </div>
