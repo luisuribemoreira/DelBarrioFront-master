@@ -11,7 +11,7 @@
                 <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="2"
+                          :quality="2.7"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -22,7 +22,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="2"
+                          :quality="2.7"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -33,7 +33,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="2"
+                          :quality="2.7"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -44,7 +44,7 @@
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
-                          :quality="2"
+                          :quality="2.7"
                           placeholder="Subir Imagen"
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
@@ -133,7 +133,6 @@
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/posts'
 import categoriescontroller from '~/controllers/admin/categories'
-import Datepicker from 'vuejs-datepicker'
 
 export default {
   data () {
@@ -152,14 +151,12 @@ export default {
       // Mensajes de error para validaciones manuales
       errorMsgs: {},
       // Se elimina modelo images, ya que no se utilizará
-      terms: process.env.termsUrl
+      terms: process.env.termsUrl,
+      processing: false
     }
   },
   asyncData ({app}) {
     return categoriescontroller.GETAll(app)
-  },
-  components: {
-    Datepicker
   },
   methods: {
     addPost () {
@@ -167,6 +164,8 @@ export default {
       controller.POST(this)
     },
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       if (this.post.CODI_TIPO_PUBLICACION === 'undefined') this.post.CODI_TIPO_PUBLICACION = undefined
       this.$validator.validateAll().then(async (result) => {
         this.message = false
@@ -201,6 +200,8 @@ export default {
             console.log('POST without blobs :(')
             controller.POST(this)
           }
+        } else {
+          this.processing = false
         }
       })
     },
