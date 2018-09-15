@@ -11,7 +11,7 @@ module.exports = {
   ** Router config
   */
   router: {
-    middleware: 'check-auth'
+    middleware: ['check-auth', 'globalUnauthorized']
   },
   /*
   ** Headers of the page
