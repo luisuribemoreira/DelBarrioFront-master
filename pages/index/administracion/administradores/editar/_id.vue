@@ -55,8 +55,12 @@ import Datepicker from 'vuejs-datepicker'
 import customValidations from '~/controllers/customvalidations'
 
 export default {
-  asyncData ({ app, params }) {
-    return controller.GET(app, params.id)
+  async asyncData ({ app, params, redirect }) {
+    let user = await controller.GET(app, params.id)
+    if (!user || user.user.usuario.IDEN_ROL !== 3) redirect('/')
+    return {
+      user: user.user
+    }
   },
   data () {
     return {

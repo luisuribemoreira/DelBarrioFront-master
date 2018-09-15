@@ -39,11 +39,17 @@ export default {
   data () {
     return {
       message: false,
-      processing: false
+      processing: false,
+      f: {}
     }
   },
-  asyncData ({ app, params }) {
-    return controller.GET(app, params.id)
+  async asyncData ({ app, params, redirect }) {
+    let faq = await controller.GET(app, params.id)
+    if (!faq) redirect('/')
+
+    return {
+      faq: faq.f
+    }
   },
   methods: {
     validateBeforeSubmit () {

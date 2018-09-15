@@ -147,11 +147,12 @@ export default {
       processing: false
     }
   },
-  asyncData ({ app, params }) {
+  asyncData ({ app, params, redirect }) {
     return categoriescontroller.GETAll(app)
       .then(categories => {
         return controller.GET(app, params.id)
           .then(post => {
+            if (!post) redirect('/')
             return {
               id: post.id,
               post: post.post,

@@ -56,11 +56,12 @@ export default {
       processing: false
     }
   },
-  asyncData ({app, params}) {
+  asyncData ({ app, params, redirect }) {
     return workfieldcontroller.GETAll(app)
       .then(workfields => {
         return controller.GET(app, params.id)
           .then(entrepreneur => {
+            if (!entrepreneur) redirect('/')
             return {
               id: entrepreneur.id,
               entrepreneur: entrepreneur.entrepreneur,

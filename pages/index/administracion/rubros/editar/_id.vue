@@ -29,11 +29,17 @@ export default {
   data () {
     return {
       message: false,
-      processing: false
+      processing: false,
+      workfield: {}
     }
   },
-  asyncData ({ app, params }) {
-    return controller.GET(app, params.id)
+  async asyncData ({ app, params, redirect }) {
+    let workfield = await controller.GET(app, params.id)
+    if (!workfield) redirect('/')
+
+    return {
+      workfield: workfield.workfield
+    }
   },
   methods: {
     validateBeforeSubmit () {

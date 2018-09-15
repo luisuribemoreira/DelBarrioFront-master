@@ -329,9 +329,11 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
-  asyncData ({ app, params, store }) {
+  asyncData ({ app, params, store, redirect }) {
     return controller.GET(app, params.id)
-      .then(({ post }) => {
+      .then(publicacion => {
+        if (!publicacion) redirect('/')
+        let post = publicacion.post
         return denouncereasonscontroller.GETAll(app)
           .then(({ denouncereasons }) => {
             let calificaciones = []

@@ -113,10 +113,17 @@ import locationController from '~/controllers/location'
 import { mapGetters } from 'vuex'
 
 export default {
-  asyncData ({ app, params }) {
+  asyncData ({ app, params, redirect }) {
     return controller.GET(app, params.id)
-      .then(({ entrepreneur }) => {
-        let direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
+      .then(emprendedor => {
+        if (!emprendedor) redirect('/')
+        let entrepreneur = emprendedor.entrepreneur
+        let direccion
+        try {
+          direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
+        } catch (err) {
+          // Nada
+        }
         return locationController.GETLocation(app, direccion)
           .then(({ geocode }) => {
             return {
