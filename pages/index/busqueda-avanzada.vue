@@ -232,6 +232,8 @@ import workfieldsController from '~/controllers/admin/workfields'
 import entrepreneurController from '~/controllers/admin/entrepreneurs'
 import postsController from '~/controllers/posts'
 import offersController from '~/controllers/offers'
+import Numeral from 'numeral'
+import es from 'numeral/locales/es' //eslint-disable-line
 
 export default {
   asyncData ({ app }) {
@@ -251,6 +253,7 @@ export default {
       })
   },
   data () {
+    Numeral.locale('es')
     return {
       search: {
         query: {
@@ -289,12 +292,17 @@ export default {
         let entrepreneurs = (await entrepreneurController.GETAll(this)).entrepreneurs
         this.pages = entrepreneurs.length
         let options = { text: false, filter: false }
-        let entrepreneursFound = entrepreneurs
+        let entrepreneursFound = []
+        entrepreneurs.forEach(entrepreneur => {
+          if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) entrepreneursFound.push(entrepreneur)
+        })
         if (this.search.query.find.length > 0) {
           options.text = true
           entrepreneursFound = []
           let entrepreneurSearch = entrepreneurs.map(entrepreneur => {
-            if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.query.find, 'gi')) !== null) return entrepreneur
+            if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) {
+              if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.query.find, 'gi')) !== null) return entrepreneur
+            }
           })
 
           entrepreneurSearch.forEach(entrepreneur => {
@@ -306,16 +314,20 @@ export default {
           options.filter = true
           if (options.text) {
             let entrepreneurSearch = entrepreneursFound.map(entrepreneur => {
-              if (entrepreneur.rubro.NOMB_RUBRO.match(new RegExp(this.search.query.filter, 'gi')) !== null) return entrepreneur
+              if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) {
+                if (entrepreneur.rubro.NOMB_RUBRO.match(new RegExp(this.search.query.filter, 'gi')) !== null) return entrepreneur
+              }
             })
             entrepreneursFound = []
-            entrepreneurSearch.forEach(post => {
-              if (post) entrepreneursFound.push(post)
+            entrepreneurSearch.forEach(entrepreneur => {
+              if (entrepreneur) entrepreneursFound.push(entrepreneur)
             })
           } else {
             entrepreneursFound = []
             let entrepreneurSearch = entrepreneurs.map(entrepreneur => {
-              if (entrepreneur.rubro.NOMB_RUBRO.match(new RegExp(this.search.query.filter, 'gi')) !== null) return entrepreneur
+              if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) {
+                if (entrepreneur.rubro.NOMB_RUBRO.match(new RegExp(this.search.query.filter, 'gi')) !== null) return entrepreneur
+              }
             })
 
             entrepreneurSearch.forEach(entrepreneur => {
@@ -492,7 +504,7 @@ export default {
               2: item.NOMB_PUBLICACION,
               3: item.categoria.NOMB_CATEGORIA.length > 40 ? item.categoria.NOMB_CATEGORIA.substring(0, 40) + '...' : item.categoria.NOMB_CATEGORIA,
               4: item.DESC_PUBLICACION.length > 40 ? item.DESC_PUBLICACION.substring(0, 40) + '...' : item.DESC_PUBLICACION,
-              5: item.NUMR_PRECIO
+              5: Numeral(item.NUMR_PRECIO).format('$ 0,0')
             }
             dataAux.push(object)
           }
@@ -508,7 +520,7 @@ export default {
               1: item.publicacion.IDEN_PUBLICACION,
               2: item.publicacion.NOMB_PUBLICACION,
               3: item.publicacion.DESC_PUBLICACION.length > 40 ? item.publicacion.DESC_PUBLICACION.substring(0, 40) + '...' : item.publicacion.DESC_PUBLICACION,
-              4: item.NUMR_PRECIO,
+              4: Numeral(item.NUMR_PRECIO).format('$ 0,0'),
               5: moment(item.FECH_TERMINO).format('DD-MM-YYYY'),
               6: item.publicacion.categoria.NOMB_CATEGORIA
             }
@@ -543,6 +555,14 @@ export default {
       this.paginatedData = [[]]
       this.pagination = 0
       this.pages = 0
+      this.search = {
+        query: {
+          find: '',
+          filter: false
+        },
+        minPrice: '',
+        maxPrice: ''
+      }
     }
   },
   mounted () {

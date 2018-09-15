@@ -333,12 +333,14 @@ export default {
 
           if (this.entrepreneurs.length > 0) {
             this.entrepreneurs.forEach(entrepreneur => {
-              if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.nombre, 'gi')) !== null) {
-                this.items.push({
-                  id: 0,
-                  nombre: entrepreneur.DESC_NOMBRE_FANTASIA,
-                  tipo: 'emprendedor'
-                })
+              if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) {
+                if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.nombre, 'gi')) !== null) {
+                  this.items.push({
+                    id: 0,
+                    nombre: entrepreneur.DESC_NOMBRE_FANTASIA,
+                    tipo: 'emprendedor'
+                  })
+                }
               }
             })
           }
