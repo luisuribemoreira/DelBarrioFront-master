@@ -28,13 +28,15 @@
             </div>
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
-              <datepicker 
-                language="es"
-                :format='format'
-                v-model="persona.FECH_FECHA_NACIMIENTO"
-                :bootstrapStyling = "true"
-                name="date"
-              ></datepicker>
+              <no-ssr>
+                <datepicker 
+                  language="es"
+                  :format='format'
+                  v-model="persona.FECH_FECHA_NACIMIENTO"
+                  :bootstrapStyling = "true"
+                  name="date"
+                ></datepicker>
+              </no-ssr>
             </div>
             <div v-if="dataErrorMsg.error_edad">
               <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
@@ -69,6 +71,7 @@
 
 <script>
 import customValidations from '~/controllers/customvalidations'
+import Datepicker from 'vuejs-datepicker'
 import controller from '~/controllers/admin/myaccount'
 import emailer from '~/controllers/admin/emailer'
 
@@ -97,6 +100,9 @@ export default {
   },
   mounted () {
     this.$validator.localize('es', dict)
+  },
+  components: {
+    Datepicker
   },
   methods: {
     validateBeforeSubmit () {
@@ -134,6 +140,8 @@ export default {
             emailer.sendMail(this, mail, 'Registro completado',
               'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + password + '.')
           }
+        } else {
+          this.processing = false
         }
       })
     }
