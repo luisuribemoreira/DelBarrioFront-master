@@ -357,7 +357,7 @@ export default {
               let respuestas = 0
               if (comentarios.length > 0) {
                 comentarios.forEach(comentario => {
-                  if (comentario.respuesta.IDEN_RESPUESTA) respuestas++
+                  if (comentario && comentario.respuesta.IDEN_RESPUESTA) respuestas++
                 })
               }
               return {
