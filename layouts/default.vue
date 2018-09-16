@@ -272,7 +272,7 @@
         <div class="col text-center">
           <p class="footer--top-text p text-white">Av. Pedro de Valdivia 963 | Providencia, Santiago de Chile | Mesa Central: +562 2654 3200</p>
           <p class="footer--bottom-text p text-white">Horario General: Lunes a Jueves: 8:30 a 14 y 15 a 17 hrs. / Viernes: 8:30 a 14 y de 15 a 16 hrs. | municipalidad@providencia.cl</p>
-          <p class="footer--bottom--text p text-white"><a target="_blank" href="#" class="text-info">Terminos & Condiciones</a></p>
+          <p class="footer--bottom--text p text-white"><a target="_blank" :href="terms">Términos y condiciones</a></p>
         </div>
       </div>
     </div>
