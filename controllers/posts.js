@@ -14,10 +14,14 @@ function GET (app, id) {
       if (postAux.oferta.IDEN_OFERTA !== undefined) {
         saleAux = true
       }
-      return {
-        post: postAux,
-        isSale: saleAux
-      }
+      return app.$axios.$get('/contacto/' + postAux.emprendedor.usuario.persona.IDEN_PERSONA)
+        .then(res => {
+          postAux.emprendedor.usuario.persona.contacto = res.data
+          return {
+            post: postAux,
+            isSale: saleAux
+          }
+        })
     }).catch(errors => {
       console.log(errors)
     })
@@ -178,7 +182,8 @@ function updateSale (context, id) {
       IDEN_PUBLICACION: context.sale.IDEN_PUBLICACION,
       FECH_INICIO: moment(new Date(context.sale.FECH_INICIO)).toJSON(),
       FECH_TERMINO: new Date(context.sale.FECH_TERMINO).toJSON(),
-      NUMR_PRECIO: parseInt(context.sale.NUMR_PRECIO)
+      NUMR_PRECIO: parseInt(context.sale.NUMR_PRECIO),
+      FLAG_VALIDADO: false
     })
     .then(response => {
       console.log(response)

@@ -54,9 +54,10 @@
             <p><label>{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</label></p>
             <p>{{post.emprendedor.DESC_EMPRENDEDOR}}</p>
             <!-- Listado de números de contacto -->
-            <p v-if="post.emprendedor.usuario.telefonos.length != 0">{{post.emprendedor.usuario.telefonos.length == 1 ? 'Teléfono' : 'Teléfonos'}}</p>
-            <ul class="list-unstyled" v-for="phone in post.emprendedor.usuario.telefonos" :key="phone.IDEN_FONO">
-              <li> <a :href="'tel:'+phone.NUMR_FONO">{{phone.NUMR_FONO}}</a></li>
+            <p>Número(s) de Contácto</p>
+            <ul class="list-unstyled">
+              <li>Celular: {{ contactos.celular }}</li>
+              <li v-if="contactos.telefono.length > 0">Teléfono: {{ contactos.telefono }}</li>
             </ul>
             <p><small>{{post.emprendedor.rubro.NOMB_RUBRO}}</small></p>
             <p><nuxt-link :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Ver más</nuxt-link></p>
@@ -111,7 +112,7 @@
                 <div class="form-group margin-top-20">
                   <textarea class="form-control" 
                     :rows="3"
-                    v-model="rating.DESC_CALIFICACION"
+                    v-model.trim="rating.DESC_CALIFICACION"
                     v-validate data-vv-rules="min:10|max:250"
                   ></textarea>
                 </div>
@@ -163,7 +164,7 @@
                 v-validate data-vv-rules="required|min:10|max:250"
                 data-vv-as="comentario"
                 name="com"
-                v-model="comment.DESC_COMENTARIO">
+                v-model.trim="comment.DESC_COMENTARIO">
               </textarea>
             </div>
             <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}</small>
@@ -205,7 +206,7 @@
                     v-validate data-vv-rules="min:2|max:250"
                     data-vv-as="respuesta"
                     name="resp"
-                    v-model="answer.DESC_RESPUESTA">
+                    v-model.trim="answer.DESC_RESPUESTA">
                   </textarea>
                 </div>
                 <small class="text-danger" v-show="errors.has('resp')">{{ errors.first('resp') }}</small>
@@ -269,18 +270,21 @@
               <div class="form-group" :key="denouncereason.IDEN_MOTIVO_DENUNCIA" v-for="denouncereason in denouncereasons" v-if="denouncereason.FLAG_VIGENTE">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="denounce" :value="denouncereason.IDEN_MOTIVO_DENUNCIA" v-model="denounce.IDEN_MOTIVO_DENUNCIA"> {{denouncereason.NOMB_MOTIVO_DENUNCIA}}
+                    <input type="radio" name="denounce" :value="denouncereason.IDEN_MOTIVO_DENUNCIA" v-model.trim="denounce.IDEN_MOTIVO_DENUNCIA"> {{denouncereason.NOMB_MOTIVO_DENUNCIA}}
                   </label>
                 </div>
+              </div>
+              <div v-if="denouncereasons.length === 0" class="form-group">
+                <i>Aún no hay motivos de denuncia registrados.</i>
               </div>
               <div class="form-group margin-top">
                 <label for="denounceComment">Más detalles</label>
                 <textarea 
                   class="form-control"
                   :rows="5"
-                  v-validate data-vv-rules="required"
+                  v-validate data-vv-rules="required|min:10|max:250"
                   name="description"
-                  v-model="denounce.DESC_DENUNCIA">
+                  v-model.trim="denounce.DESC_DENUNCIA">
                 </textarea>
                 <span :class="denounce.DESC_DENUNCIA.length > 250 || denounce.DESC_DENUNCIA.length < 10 ? 'text-danger' : ''">{{denounce.DESC_DENUNCIA.length}} de 250 caracteres</span>
               </div>
@@ -338,6 +342,16 @@ export default {
       .then(publicacion => {
         if (!publicacion) redirect('/')
         let post = publicacion.post
+        let contactos = {}
+        try {
+          // Telefono se inicializa distinto ya que este es opcional y puede no existir.
+          contactos.telefono = post.emprendedor.usuario.persona.contacto.Telefono
+            ? post.emprendedor.usuario.persona.contacto.Telefono[0].DESC_CONTACTO.substring(0, 1) + ' ' + post.emprendedor.usuario.persona.contacto.Telefono[0].DESC_CONTACTO.substring(1) : ''
+          contactos.celular = post.emprendedor.usuario.persona.contacto.Celular[0].DESC_CONTACTO.substring(0, 1) + ' ' + post.emprendedor.usuario.persona.contacto.Celular[0].DESC_CONTACTO.substring(1)
+          contactos.correo = post.emprendedor.usuario.persona.contacto.Correo[0].DESC_CONTACTO
+        } catch (err) {
+          // Nada...
+        }
         return denouncereasonscontroller.GETAll(app)
           .then(({ denouncereasons }) => {
             let calificaciones = []
@@ -349,7 +363,8 @@ export default {
               if (post.emprendedor.usuario.IDEN_USUARIO === store._vm.loggedUser.id) {
                 return {
                   post: post,
-                  denouncereasons: denouncereasons
+                  denouncereasons: denouncereasons,
+                  contactos
                 }
               }
               return ratingscontroller.GET(app)
@@ -363,12 +378,14 @@ export default {
                   return {
                     post: post,
                     denouncereasons: denouncereasons,
-                    rating: calificacionAux
+                    rating: calificacionAux,
+                    contactos
                   }
                 })
             } else {
               return {
-                post: post
+                post: post,
+                contactos
               }
             }
           })
@@ -386,7 +403,8 @@ export default {
       error: '',
       imageUrl: process.env.imagesUrl,
       post: [],
-      terms: process.env.termsUrl
+      terms: process.env.termsUrl,
+      contactos: {}
     }
   },
   computed: mapGetters([

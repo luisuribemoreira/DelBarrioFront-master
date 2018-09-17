@@ -11,17 +11,11 @@
                     <h4>Datos de contacto</h4>
                     <!-- DATOS DEL EMPRENDEDOR -->
                     <div v-if="isAuthenticated">
-                      <h5 v-if="entrepreneur.usuario.telefonos.length != 0">{{entrepreneur.usuario.telefonos.length == 1 ? 'Teléfono' : 'Teléfonos'}}</h5>
-                      <ul class="list-unstyled" v-for="phone in entrepreneur.usuario.telefonos" :key="phone.IDEN_FONO">
-                        <li><a :href="'tel:'+phone.NUMR_FONO">{{phone.NUMR_FONO}}</a></li>
+                      <ul class="list-unstyled">
+                        <li>Celular: {{contactos.celular}}</li>
+                        <li v-if="contactos.telefono.length > 0">Teléfono: {{contactos.telefono}}</li>
                       </ul>
-                      <!--
-                      <div v-if="entrepreneur.redes_sociales.length != 0">
-                        <h5>Búscanos también en nuestras redes sociales</h5>
-                        AQUÍ VAN LAS RRSS
-                      </div>
-                      -->
-                      <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a :href="'mailto:'+entrepreneur.usuario.EMAIL_USUARIO">{{entrepreneur.usuario.EMAIL_USUARIO}}</a></h5>
+                      <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a :href="'mailto:'+contactos.correo">{{contactos.correo}}</a></h5>
                     </div>
                     <div v-else class="contorno">
                       <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para ver los datos del emprendedor</p>
@@ -90,7 +84,7 @@
     <section id="ubicacion">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 no-padding">
+                <div class="col-md-12 no-padding">
                     <h2 class="text-center">Ubicación</h2>
                     <gmap-map
             :center="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }"
@@ -132,13 +126,25 @@ export default {
         try {
           direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
         } catch (err) {
-          // Nada
+          // Nada...
+        }
+        // Datos de contácto
+        let contactos = {}
+        try {
+          // Telefono se inicializa distinto ya que este es opcional y puede no existir.
+          contactos.telefono = entrepreneur.usuario.persona.contacto.Telefono
+            ? entrepreneur.usuario.persona.contacto.Telefono[0].DESC_CONTACTO.substring(0, 2) + ' ' + entrepreneur.usuario.persona.contacto.Telefono[0].DESC_CONTACTO.substring(2) : ''
+          contactos.celular = entrepreneur.usuario.persona.contacto.Celular[0].DESC_CONTACTO.substring(0, 1) + ' ' + entrepreneur.usuario.persona.contacto.Celular[0].DESC_CONTACTO.substring(1)
+          contactos.correo = entrepreneur.usuario.persona.contacto.Correo[0].DESC_CONTACTO
+        } catch (err) {
+          // Nada...
         }
         return locationController.GETLocation(app, direccion)
           .then(({ geocode }) => {
             return {
               entrepreneur: entrepreneur,
-              geocode: geocode
+              geocode: geocode,
+              contactos
             }
           })
       })
