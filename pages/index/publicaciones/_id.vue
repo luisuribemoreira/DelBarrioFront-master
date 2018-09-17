@@ -234,7 +234,7 @@
             <h4 class="modal-title">Calificaciones</h4>
           </div>
           <div class="modal-body">
-            <div :key="rating.IDEN_CALIFICACION" v-for="rating in post.calificaciones">
+            <div :key="rating.IDEN_CALIFICACION" v-for="rating in post.calificaciones" v-if="post.calificaciones.length > 0">
               <no-ssr>
                 <star-rating 
                   v-model="rating.NUMR_VALOR"
@@ -245,6 +245,7 @@
               </no-ssr>
               <p><small>{{rating.FECH_CREACION | dateFormat}}</small></p>
               <p>{{rating.DESC_CALIFICACION}} </p>
+              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
               <hr>
             </div>
           </div>
