@@ -11,12 +11,12 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label>Correo electrónico</label>
-              <input type="text" v-validate data-vv-rules="required|email" v-model="auth.email" class="form-control" name="email"/>
+              <input type="text" v-validate data-vv-rules="required|email" v-model.trim="auth.email" class="form-control" name="email"/>
               <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <div class="form-group margin-top">
               <label>Contraseña</label>
-              <input type="password" v-validate data-vv-rules="required" v-model="auth.password" class="form-control" name="pass"/>
+              <input type="password" v-validate data-vv-rules="required" v-model.trim="auth.password" class="form-control" name="pass"/>
               <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
             <div v-if="message">

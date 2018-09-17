@@ -11,7 +11,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas?</label>
-                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto o Servicio..." v-model="search.query.find">
+                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto o Servicio..." v-model.trim="search.query.find">
               </div>
             </div>
             <div class="col-md-6">
@@ -19,12 +19,12 @@
                 <label for="rangodeprecio" class="col-md-12">Rango de precio ${{search.minPrice}}{{search.maxPrice ? ' - $' + search.maxPrice : ''}} (Opcional)</label>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice" min="1" max="900000">
+                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model.trim="search.minPrice" min="1" max="900000">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model="search.maxPrice" min="1" max="900000"> 
+                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model.trim="search.maxPrice" min="1" max="900000"> 
                   </div>                      
                 </div>
               </div>
@@ -32,7 +32,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
-                <select class="form-control" v-model="search.query.filter">
+                <select class="form-control" v-model.trim="search.query.filter">
                   <option v-bind:value="false">Seleccione una categoría...</option>
                   <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
                 </select>

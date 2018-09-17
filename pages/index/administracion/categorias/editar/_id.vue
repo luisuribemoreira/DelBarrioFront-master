@@ -7,12 +7,12 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Nombre</label>
-              <input v-validate data-vv-rules="required|min:5|max:50|alpha_spaces" data-vv-as="nombre" name="name" type="text" v-model="category.NOMB_CATEGORIA" class="form-control"/>
+              <input v-validate data-vv-rules="required|min:5|max:50" data-vv-as="nombre" name="name" type="text" v-model.trim="category.NOMB_CATEGORIA" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group margin-top" v-if="category.subcategorias.length > 0">
               <label>Categoria Padre</label>
-              <select v-model="category.IDEN_CATEGORIA_PADRE">
+              <select v-model.trim="category.IDEN_CATEGORIA_PADRE">
                 <option v-bind:key="c.IDEN_CATEGORIA" v-for="c in categories" v-bind:value="c.IDEN_CATEGORIA">{{c.NOMB_CATEGORIA}}</option>
               </select>
             </div>

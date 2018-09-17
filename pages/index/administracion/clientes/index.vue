@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar por Nombres o Apellidos del Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
+            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar por Nombres o Apellidos del Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
             <div class="input-group-btn">
               <icon name="search"></icon>
             </div>
@@ -77,7 +77,7 @@
                     <div class="form-group" :key="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-for="deactivationreason in deactivationreasons">
                       <div class="radio">
                         <label>
-                          <input v-validate data-vv-rules="required" type="radio" name="deactivation" :value="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-model="deshabilitacion.IDEN_MOTIVO_DESHABILITACION"> {{deactivationreason.NOMB_MOTIVO_DESHABILITACION}}
+                          <input v-validate data-vv-rules="required" type="radio" name="deactivation" :value="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-model.trim="deshabilitacion.IDEN_MOTIVO_DESHABILITACION"> {{deactivationreason.NOMB_MOTIVO_DESHABILITACION}}
                         </label>
                       </div>
                     </div>
@@ -89,7 +89,7 @@
                         :rows="5"
                         v-validate data-vv-rules="required|min:5|max:255"
                         name="description"
-                        v-model="deshabilitacion.DESC_COMENTARIO">
+                        v-model.trim="deshabilitacion.DESC_COMENTARIO">
                       </textarea>
                       <span :class="deshabilitacion.DESC_COMENTARIO.length > 255 || deshabilitacion.DESC_COMENTARIO.length < 5 ? 'text-danger' : ''">{{deshabilitacion.DESC_COMENTARIO.length}} de 255 caracteres</span>
                     </div>

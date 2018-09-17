@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar por Motivo de Denuncia..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscador()">
+            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar por Motivo de Denuncia..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscador()">
             <div class="input-group-btn">
               <icon name="search"></icon>
             </div>
@@ -199,39 +199,39 @@
           </div>
           <div class="modal-body">
             <!-- DATOS DEL DENUNCIANTE -->
-            <label>Email de denunciante</label>
+            <label><b>Email de denunciante</b></label>
             <p>{{denouncedetail.usuario.EMAIL_USUARIO}}</p>
-            <label>Nombre de denunciante</label>
+            <label><b>Nombre de denunciante</b></label>
             <p>{{Object.keys(denouncedetail.usuario.persona && denouncedetail.usuario.persona).length !== 0? denouncedetail.usuario.persona.NOMBRES + ' ' + denouncedetail.usuario.persona.APELLIDO_PATERNO : denouncedetail.usuario.emprendedor.DESC_NOMBRE_EMPRESA}}</p>
             <!-- DATOS DE LA PUBLICACIÓN, COMENTARIO O CALIFICACIÓN DENUNCIADOS -->
             <div v-if="denouncedetail.publicacion && Object.keys(denouncedetail.publicacion).length !== 0">
-              <label>Publicación</label>
+              <label><b>Publicación</b></label>
               <p>{{denouncedetail.publicacion.NOMB_PUBLICACION}}</p>
             </div>
             <div v-if="denouncedetail.comentario && Object.keys(denouncedetail.comentario).length !== 0">
-              <label>Comentario</label>
+              <label><b>Comentario</b></label>
               <p>{{denouncedetail.comentario.DESC_COMENTARIO}}</p>
             </div>
             <div v-if="denouncedetail.calificacion && Object.keys(denouncedetail.calificacion).length !== 0">
-              <label>Texto de calificación</label>
+              <label><b>Texto de calificación</b></label>
               <p v-if="denouncedetail.calificacion.DESC_CALIFICACION">{{denouncedetail.calificacion.DESC_CALIFICACION}}</p>
               <p v-else><i>No posee</i></p>
             </div>
-            <label>Fecha de creación</label>
+            <label><b>Fecha de creación</b></label>
             <p>{{denouncedetail.FECH_CREACION | dateFormat}}</p>
-            <label>Motivo de denuncia</label>
+            <label><b>Motivo de denuncia</b></label>
             <p>{{denouncedetail.motivo_denuncia.NOMB_MOTIVO_DENUNCIA}}</p>
-            <label>Descripción de la denuncia</label>
+            <label><b>Descripción de la denuncia</b></label>
             <p>{{denouncedetail.DESC_DENUNCIA}}</p>
             <hr class="margin-top">
             <!-- RESOLUCIÓN DE LA DENUNCIA (SI EXISTE) -->
             <div v-if="denouncedetail.resolucion_denuncia && Object.keys(denouncedetail.resolucion_denuncia).length !== 0">
               <h4>Resolución de denuncia</h4>
-              <label>Fecha de resolución</label>
+              <label><b>Fecha de resolución</b></label>
               <p>{{denouncedetail.resolucion_denuncia.FECH_CREACION | dateFormat}}</p>
-              <label>Administrador a cargo</label>
+              <label><b>Administrador a cargo</b></label>
               <p>{{denouncedetail.resolucion_denuncia.usuario.persona.NOMBRES +' '+ denouncedetail.resolucion_denuncia.usuario.persona.APELLIDO_PATERNO}} ({{denouncedetail.resolucion_denuncia.usuario.EMAIL_USUARIO}})</p>
-              <label>Descripción</label>
+              <label><b>Descripción</b></label>
               <p>{{denouncedetail.resolucion_denuncia.DESC_RESOLUCION}}</p>
             </div>
             <!-- SI NO EXISTE DENUNCIA, FORMULARIO DE RESOLUCIÓN -->
@@ -247,7 +247,7 @@
                 </div>
                 <div class="form-group">
                   <label for="description">Descripción</label>
-                  <textarea v-validate data-vv-rules="required|min:5|max:250" data-vv-as="descripción" name="description" v-model="denounceresolution.DESC_RESOLUCION" class="form-control"></textarea>
+                  <textarea v-validate data-vv-rules="required|min:5|max:250" data-vv-as="descripción" name="description" v-model.trim="denounceresolution.DESC_RESOLUCION" class="form-control"></textarea>
                   <small :class="denounceresolution.DESC_RESOLUCION.length > 250 ? 'text-danger' : ''">{{ denounceresolution.DESC_RESOLUCION.length }} de 250</small>
                   <small class="text-danger" v-show="errors.has('description')"><p>{{ errors.first('description') }}</p></small>
                 </div>
@@ -288,7 +288,9 @@ export default {
       search: '',
       postsAux1: [],
       postsAux2: [],
-      postsAux3: []
+      postsAux3: [],
+      pages: 0,
+      pagination: 0
     }
   },
   computed: mapGetters([

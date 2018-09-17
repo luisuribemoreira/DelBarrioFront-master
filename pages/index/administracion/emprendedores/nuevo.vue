@@ -9,17 +9,17 @@
             <h4>Datos del Emprendimiento</h4>
             <div class="form-group margin-top">
               <label for="realname">Nombre Empresa</label>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre empresa" name="realname" type="text" v-model="entrepreneur.DESC_NOMBRE_EMPRESA" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="nombre empresa" name="realname" type="text" v-model.trim="entrepreneur.DESC_NOMBRE_EMPRESA" class="form-control"/>
               <small class="text-danger" v-show="errors.has('realname')">{{ errors.first('realname') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="rut">RUT</label>
-              <input v-validate data-vv-rules="required|alpha_num|min:8" data-vv-as="RUT" name="rut" type="text" v-model="entrepreneur.RUT_EMPRENDEDOR" class="form-control"/>
+              <input v-validate data-vv-rules="required|alpha_num|min:8" data-vv-as="RUT" name="rut" type="text" v-model.trim="entrepreneur.RUT_EMPRENDEDOR" class="form-control"/>
               <small class="text-danger" v-show="errors.has('rut')">{{ errors.first('rut')}}</small>
             </div>
             <div class="form-group margin-top">
               <label for="workfield">Rubro</label>
-              <select v-model="entrepreneur.IDEN_RUBRO" class="form-control" v-validate data-vv-rules="required" :size="5" name="workfield">
+              <select v-model.trim="entrepreneur.IDEN_RUBRO" class="form-control" v-validate data-vv-rules="required" :size="5" name="workfield">
                 <option v-for="workfield in workfields" v-if="workfield.FLAG_VIGENTE" :key="workfield.IDEN_RUBRO" :value="workfield.IDEN_RUBRO">
                   {{workfield.NOMB_RUBRO}}
                 </option>
@@ -30,7 +30,7 @@
             <h4>Datos de emprendedor</h4>
             <div class="form-group margin-top">
               <label for="email">Correo electrónico</label>
-              <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model="entrepreneur.EMAIL_USUARIO" class="form-control"/>
+              <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model.trim="entrepreneur.EMAIL_USUARIO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <div>

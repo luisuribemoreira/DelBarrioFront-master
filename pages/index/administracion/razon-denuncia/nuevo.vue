@@ -7,7 +7,7 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Descripción</label>
-              <input v-validate data-vv-rules="required|min:5|max:100" data-vv-as="nombre" name="name" type="text" v-model="denouncereason.NOMB_MOTIVO_DENUNCIA" class="form-control"/>
+              <input v-validate data-vv-rules="required|min:5|max:100" data-vv-as="nombre" name="name" type="text" v-model.trim="denouncereason.NOMB_MOTIVO_DENUNCIA" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div v-if='message'>

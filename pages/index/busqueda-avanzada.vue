@@ -11,15 +11,15 @@
               <label for="tipo" class="margin-top-20">Tipo</label>
               <div class="btn-group tipo-form-check" style="width:100%">
                 <label class="btn btn-info col-sm-4">
-                  <input type="checkbox" autocomplete="off" name="product" v-model="type.product" v-on:click="type.sale = false, type.entrepreneur = false, clean()">
+                  <input type="checkbox" autocomplete="off" name="product" v-model.trim="type.product" v-on:click="type.sale = false, type.entrepreneur = false, clean()">
                   <span> Producto</span>
                 </label>
                 <label class="btn btn-info col-sm-4">
-                  <input type="checkbox" autocomplete="off" v-model="type.entrepreneur" v-on:click="type.product = false, type.sale = false, clean()">
+                  <input type="checkbox" autocomplete="off" v-model.trim="type.entrepreneur" v-on:click="type.product = false, type.sale = false, clean()">
                   <span> Emprendedor</span>
                 </label>
                 <label class="btn btn-info col-sm-4">
-                  <input type="checkbox" autocomplete="off" v-model="type.sale" v-on:click="type.product = false, type.entrepreneur = false, clean()">
+                  <input type="checkbox" autocomplete="off" v-model.trim="type.sale" v-on:click="type.product = false, type.entrepreneur = false, clean()">
                   <span> Oferta</span>
                 </label>
               </div>
@@ -31,7 +31,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas? (Opcional)</label>
-                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto..." v-model="search.query.find">
+                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto..." v-model.trim="search.query.find">
               </div>
             </div>
             <div class="col-md-6">
@@ -39,12 +39,12 @@
                 <label for="rangodeprecio" class="col-md-12">Rango de precio ${{search.minPrice}}{{search.maxPrice ? ' - $' + search.maxPrice : ''}} (Opcional)</label>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model="search.minPrice" min="1" max="900000">
+                    <input type="number" class="form-control" placeholder="Desde" name="min" v-model.trim="search.minPrice" min="1" max="900000">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model="search.maxPrice" min="1" max="900000"> 
+                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model.trim="search.maxPrice" min="1" max="900000"> 
                   </div>                      
                 </div>
               </div>
@@ -52,7 +52,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
-                <select class="form-control" v-model="search.query.filter">
+                <select class="form-control" v-model.trim="search.query.filter">
                   <option v-bind:value="false">Seleccione una categoría...</option>
                   <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
                 </select>
@@ -65,13 +65,13 @@
             <div class="col-md-9">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas? (Opcional)</label>
-                <input type="text" class="form-control" placeholder="Buscar Nombre de Emprendedor..." v-model="search.query.find">
+                <input type="text" class="form-control" placeholder="Buscar Nombre de Emprendedor..." v-model.trim="search.query.find">
               </div>
             </div>
             <div class="col-md-9">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Rubro (Opcional)</label>
-                <select class="form-control" v-model="search.query.filter">
+                <select class="form-control" v-model.trim="search.query.filter">
                   <option v-bind:value="false">Seleccione un rubro...</option>
                   <option v-for="workfield in workfields" :key="workfield.IDEN_RUBRO" v-if="workfield.FLAG_VIGENTE">{{workfield.NOMB_RUBRO}}</option>
                 </select>
@@ -84,7 +84,7 @@
             <div class="col-sm-9">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
-                <select class="form-control" v-model="search.query.filter">
+                <select class="form-control" v-model.trim="search.query.filter">
                   <option v-bind:value="false">Seleccione una categoría...</option>
                   <option v-for="category in categories" :key="category.IDEN_CATEGORIA" v-if="category.FLAG_VIGENTE">{{category.NOMB_CATEGORIA}}</option>
                 </select>

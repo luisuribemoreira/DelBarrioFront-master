@@ -7,17 +7,17 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Nombres</label>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model="user.NOMBRES" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model.trim="user.NOMBRES" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="name">Apellido Paterno</label>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model="user.APELLIDO_PATERNO" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model.trim="user.APELLIDO_PATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="name">Apellido Materno</label>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model="user.APELLIDO_MATERNO" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model.trim="user.APELLIDO_MATERNO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('lastname2')">{{ errors.first('lastname2') }}</small>
             </div>
             <div class="form-group margin-top">
@@ -35,7 +35,7 @@
             </div>
             <div class="form-group margin-top">
                 <label for="email">Correo electrónico</label>
-                <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model="user.usuario.EMAIL_USUARIO" class="form-control"/>
+                <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model.trim="user.usuario.EMAIL_USUARIO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <button type="submit" class="btn btn-default">Guardar</button>

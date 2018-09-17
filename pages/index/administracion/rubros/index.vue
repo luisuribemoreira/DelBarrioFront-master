@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-4 offset-md-3 col-md-6 offset-sm-3 py-1">
           <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model="search" placeholder="Buscar Nombre de Rubro..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRubro()">
+            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar Nombre de Rubro..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRubro()">
             <div class="input-group-btn">
               <icon name="search"></icon>
             </div>

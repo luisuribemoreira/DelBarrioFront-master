@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 margin-top py-1">
             <div class="input-group text-truncate">
-                <input type="text" class="form-control border border-right-0" placeholder="Buscar emprendedor..." autocomplete="off" autofocus="autofocus" v-model="search" @keyup="buscarEmprendedor()">
+                <input type="text" class="form-control border border-right-0" placeholder="Buscar emprendedor..." autocomplete="off" autofocus="autofocus" v-model.trim="search" @keyup="buscarEmprendedor()">
                  <div class="input-group-btn">
                   <icon name="search"></icon>
                 </div>

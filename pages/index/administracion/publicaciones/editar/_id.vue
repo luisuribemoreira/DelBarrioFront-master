@@ -69,7 +69,7 @@
               </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
-                <select v-model="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
+                <select v-model.trim="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
                   <option value="undefined">Seleccionar</option>
                   <option value="P">Producto</option>
                   <option value="S">Servicio</option>

@@ -28,17 +28,17 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Nombres</label>
-                <input v-validate data-vv-rules="required" data-vv-as="nombre" name="nombre" type="text" v-model="user.persona.NOMBRES" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="nombre" name="nombre" type="text" v-model.trim="user.persona.NOMBRES" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('nombre')">{{ errors.first('nombre') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="lastname">Apellido Paterno</label>
-                <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="apellido paterno" type="text" v-model="user.persona.APELLIDO_PATERNO" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="apellido paterno" type="text" v-model.trim="user.persona.APELLIDO_PATERNO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('apellido paterno')">{{ errors.first('apellido paterno') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="lastname2">Apellido Materno</label>
-                <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="apellido materno" type="text" v-model="user.persona.APELLIDO_MATERNO" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="apellido materno" type="text" v-model.trim="user.persona.APELLIDO_MATERNO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('apellido materno')">{{ errors.first('apellido materno') }}</small>
               </div>
               <div class="form-group margin-top">
@@ -58,12 +58,12 @@
               </div>
               <div class="form-group margin-top">
                 <label for="contrasena">Contraseña</label>
-                <input v-validate data-vv-rules="required|min:6" data-vv-as="contrasena" name="contrasena" type="password" v-model="user.pass" class="form-control"/>
+                <input v-validate data-vv-rules="required|min:6" data-vv-as="contrasena" name="contrasena" type="password" v-model.trim="user.pass" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('contrasena')">{{ errors.first('contrasena') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="confirmar contrasena">Confirmar Contraseña</label>
-                <input v-validate data-vv-rules="required|min:6" data-vv-as="confirmar contrasena" name="confirmar contrasena" type="password" v-model="user.pass2" class="form-control"/>
+                <input v-validate data-vv-rules="required|min:6" data-vv-as="confirmar contrasena" name="confirmar contrasena" type="password" v-model.trim="user.pass2" class="form-control"/>
                 <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
                 <small class="text-danger" v-show="errors.has('confirmar contrasena')">{{ errors.first('confirmar contrasena') }}</small>
               </div>
@@ -73,36 +73,36 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Nombre de Fantasía</label>
-                <input v-validate data-vv-rules="required" data-vv-as="nombre fantasia" name="nombre fantasia" type="text" v-model="user.emprendedor.DESC_NOMBRE_FANTASIA" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="nombre fantasia" name="nombre fantasia" type="text" v-model.trim="user.emprendedor.DESC_NOMBRE_FANTASIA" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('nombre fantasia')">{{ errors.first('nombre fantasia') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Descripción</label>
-                <textarea v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model="user.emprendedor.DESC_EMPRENDEDOR" class="form-control" rows="3"></textarea>
+                <textarea v-validate data-vv-rules="required|min:30|max:255" data-vv-as="descripcion" name="descripcion" type="text" v-model.trim="user.emprendedor.DESC_EMPRENDEDOR" class="form-control" rows="3"></textarea>
                 <small class="text-danger" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Dirección Comercial</label>
-                <input v-validate data-vv-rules="required" data-vv-as="direccion" name="direccion" type="text" v-model="user.persona.contacto.Direccion[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required" data-vv-as="direccion" name="direccion" type="text" v-model.trim="user.persona.contacto.Direccion[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('direccion')">{{ errors.first('direccion') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Teléfono (Optativo)</label>
-                <input v-validate data-vv-rules="min:9|numeric|max:9" data-vv-as="telefono" name="telefono" type="text" v-model="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="min:9|numeric|max:9" data-vv-as="telefono" name="telefono" type="text" v-model.trim="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label>
-                <input v-validate data-vv-rules="required|numeric|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required|numeric|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model.trim="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Correo de Contácto</label>
-                <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model.trim="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
+              <input type="checkbox" id="status" name="status" v-model.trim="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
               </div>
               <div>
                 <label>

@@ -53,14 +53,14 @@
               <h3>Oferta</h3>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" v-model="isSale"> Oferta habilitada
+                  <input type="checkbox" v-model.trim="isSale"> Oferta habilitada
                 </label>
               </div>
               <div v-if="isSale">
                 <h3>Datos de la Oferta</h3>
                 <div class="form-group">
                   <label for="precio-oferta">Precio Oferta</label>
-                  <input type="text" v-model="sale.NUMR_PRECIO" name="price" class="form-control" v-validate :data-vv-rules="isSale ? 'required|numeric|between:0,1000000000': ''" />
+                  <input type="text" v-model.trim="sale.NUMR_PRECIO" name="price" class="form-control" v-validate :data-vv-rules="isSale ? 'required|numeric|between:0,1000000000': ''" />
                   <small class="text-danger" v-if="errorMsgs.offer != undefined">{{ errorMsgs.offer }}</small>
                 </div>
                 <div class="form-group">

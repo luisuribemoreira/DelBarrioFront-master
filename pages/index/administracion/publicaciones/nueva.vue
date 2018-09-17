@@ -53,14 +53,14 @@
                 </div>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
+              <input type="checkbox" id="status" name="status" v-model.trim="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
               </div>
               <div>
                 <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
-                <select v-model="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
+                <select v-model.trim="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
                   <option value="undefined">Seleccionar</option>
                   <option value="P">Producto</option>
                   <option value="S">Servicio</option>
@@ -69,24 +69,24 @@
               </div>
               <div class="form-group">
                 <label for="name">Título</label>
-                <input type="text" class="form-control" v-validate data-vv-rules="required|min:5|max:100" data-vv-as="título" name="name" v-model="post.NOMB_PUBLICACION">
+                <input type="text" class="form-control" v-validate data-vv-rules="required|min:5|max:100" data-vv-as="título" name="name" v-model.trim="post.NOMB_PUBLICACION">
                 <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
               </div>              
               <div class="form-group">
                 <label for="price">Precio</label>
-                <input type="text" class="form-control" v-model="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric|max:7" data-vv-as="precio" name="price">
+                <input type="text" class="form-control" v-model.trim="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric|max:7" data-vv-as="precio" name="price">
                 <small class="text-danger" v-show="errors.has('price')">{{ errors.first('price') }}</small>
               </div>              
               <div class="form-group">
                 <label for="descripcion">Descripcion</label>
-                  <textarea v-model="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:10000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
+                  <textarea v-model.trim="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:10000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
                 <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
               </div>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label for="category">Categoría</label>
-                      <select v-model="post.IDEN_CATEGORIA" v-validate data-vv-rules="required" data-vv-as="categoría" name="category" class="form-control" size=5>
+                      <select v-model.trim="post.IDEN_CATEGORIA" v-validate data-vv-rules="required" data-vv-as="categoría" name="category" class="form-control" size=5>
                       <option @click="selected(c.subcategorias)" :key="c.IDEN_CATEGORIA" v-for="(c, i) in categories" :value="c.IDEN_CATEGORIA" v-if="c.FLAG_VIGENTE">{{c.NOMB_CATEGORIA}}</option>
                     </select>
                     <small class="text-danger" v-show="errors.has('category')">{{ errors.first('category') }}</small>
@@ -95,7 +95,7 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label for="category">Sub categoría</label>
-                    <select v-model="post.IDEN_SUBCATEGORIA" name="subcategory" class="form-control" size=5>
+                    <select v-model.trim="post.IDEN_SUBCATEGORIA" name="subcategory" class="form-control" size=5>
                       <option :key="sc.IDEN_CATEGORIA" v-for="sc in subcategorias" :value="sc.IDEN_CATEGORIA" v-if="sc.FLAG_VIGENTE">{{sc.NOMB_CATEGORIA}}</option>
                     </select>
                   </div>
@@ -107,11 +107,11 @@
               </div>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" v-model="post.FLAG_CONTENIDO_ADULTO"> Producto para mayores de 18
+                  <input type="checkbox" v-model.trim="post.FLAG_CONTENIDO_ADULTO"> Producto para mayores de 18
                 </label>
               </div>
               <div>
-              <input type="checkbox" id="status" name="status" v-model="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
+              <input type="checkbox" id="status" name="status" v-model.trim="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
               </div>
               <div>
                 <label>

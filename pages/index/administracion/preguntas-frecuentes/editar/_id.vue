@@ -7,7 +7,7 @@
             <form @submit.prevent="validateBeforeSubmit">
               <div class="form-group margin-top">
                 <label for="question">Pregunta</label>
-                <input v-validate data-vv-rules="required|min:5|max:255" data-vv-as="pregunta" name="question" type="text" v-model="f.NOMB_FAQ" class="form-control">
+                <input v-validate data-vv-rules="required|min:5|max:255" data-vv-as="pregunta" name="question" type="text" v-model.trim="f.NOMB_FAQ" class="form-control">
                 <small class="text-danger" v-show="errors.has('question')">{{ errors.first('question') }}</small>
               </div>        
               <div class="form-group margin-top">
@@ -17,7 +17,7 @@
                           v-validate data-vv-rules="required|min:5|max:1000"
                           data-vv-as="respuesta"
                           name="answer"
-                          v-model="f.DESC_FAQ">
+                          v-model.trim="f.DESC_FAQ">
                 </textarea>
                 <small class="text-danger" v-show="errors.has('answer')">{{ errors.first('answer') }}</small>
               </div>

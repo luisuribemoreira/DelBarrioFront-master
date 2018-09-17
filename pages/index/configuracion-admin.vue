@@ -12,12 +12,12 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="pass">Contraseña</label>
-              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model="user.pass" class="form-control"/>
+              <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model.trim="user.pass" class="form-control"/>
               <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
             <div class="form-group margin-top">
               <label for="pass2">Confirmar Contraseña</label>
-              <input type="password" data-vv-as="contraseña" name="pass2" v-model="user.pass2" class="form-control"/>
+              <input type="password" data-vv-as="contraseña" name="pass2" v-model.trim="user.pass2" class="form-control"/>
               <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
             <button type="submit" class="btn btn-default">Cambiar</button>
