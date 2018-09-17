@@ -105,7 +105,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR">
+                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR" v-if="!entrepreneur.usuario.FLAG_BAN">
                                     <div class="card">
                                         <nuxt-link :to="'/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR" class="card-img-link">
                                           <img v-if="!entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
@@ -169,7 +169,7 @@ export default {
     let postsAux = (await controllerPosts.GETAll(app)).posts
     postsAux.forEach(post => {
       // Se verifica que el post no este baneado, este vigente y haya sido validado por un administrador.
-      if (!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO) {
+      if (!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
         // Se le da formato a los precios, '$ 0,0' produce: 1500 -> $ 1.500
         post.NUMR_PRECIO = Numeral(post.NUMR_PRECIO).format('$ 0,0')
         posts.push(post)

@@ -29,7 +29,7 @@
               </tr>
             </thead>
             <tbody class="text-center">
-              <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in paginatedData[pagination]" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.FLAG_BAN" >
+              <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in paginatedData[pagination]" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.usuario.FLAG_BAN" >
                 <td>
                   <nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">
                     <img v-if="!entrepreneur.imagen || !entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="img-fluid" height="125" width="125">

@@ -62,7 +62,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN">
               <td>
                 <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                   <img v-if="post.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" height="125" width="125">
