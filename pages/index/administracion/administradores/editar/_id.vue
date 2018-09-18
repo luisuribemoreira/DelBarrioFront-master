@@ -53,6 +53,7 @@
 import controller from '~/controllers/admin/admins'
 import Datepicker from 'vuejs-datepicker'
 import customValidations from '~/controllers/customvalidations'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   async asyncData ({ app, params, redirect }) {
@@ -67,7 +68,7 @@ export default {
       format: 'dd MMM, yyyy',
       user: {},
       dataErrorMsg: { error_edad: undefined },
-      message: undefined,
+      message: false,
       processing: false
     }
   },
@@ -91,11 +92,14 @@ export default {
 
         if (result) {
           this.user.usuario.EMAIL_USUARIO = this.user.usuario.EMAIL_USUARIO.toLowerCase()
-          await controller.PUT(this)
-          this.processing = false
-        } else {
-          this.processing = false
+          let mail = this.user.usuario.EMAIL_USUARIO
+          let err = await controller.PUT(this)
+          if (!err) {
+            emailer.sendMail(this, mail, 'Cambio de correo',
+              'Buenas, junto con saludar le informamos que su correo electronico para ingresar al portal DelBarrio a sido cambiado exitosamente.')
+          }
         }
+        this.processing = false
       })
     }
   },

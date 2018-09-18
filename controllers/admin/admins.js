@@ -58,7 +58,7 @@ function POST (context) {
       context.$router.push({ path: '/administracion/administradores' })
     }).catch(errors => {
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
-      return errors
+      return -1
     })
   }).catch(errors => {
     if (errors.response.data.data.EMAIL_USUARIO) {
@@ -66,7 +66,7 @@ function POST (context) {
     } else {
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
     }
-    return errors
+    return -1
   })
 }
 
@@ -100,11 +100,15 @@ function PUT (context) {
         context.$notify.success('Se ha editado exitosamente.')
       }).catch(err => {
         if (err) context.$notify.warning('Ha ocurrido un error inesperado.')
-        return err
+        return -1
       })
   }).catch(error => {
-    if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
-    return error
+    if (error.response && error.response.data.data.EMAIL_USUARIO) {
+      context.message = error.response.data.data.EMAIL_USUARIO
+    } else {
+      context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    }
+    return -1
   })
 }
 

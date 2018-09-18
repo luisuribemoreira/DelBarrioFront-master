@@ -36,7 +36,7 @@
             <button type="submit" class="btn btn-default">Guardar</button>
           </form>
           <div v-if='message'>
-            <span>{{message}}</span>
+            <span class="text-danger">{{message}}</span>
           </div>
         </div>
       </div>
@@ -48,6 +48,7 @@
 <script>
 import controller from '~/controllers/admin/entrepreneurs'
 import workfieldcontroller from '~/controllers/admin/workfields'
+import emailer from '~/controllers/admin/emailer'
 
 export default {
   data () {
@@ -78,7 +79,12 @@ export default {
       this.$validator.validateAll().then(async (result) => {
         if (result) {
           this.entrepreneur.usuario.EMAIL_USUARIO = this.entrepreneur.usuario.EMAIL_USUARIO.toLowerCase()
-          await controller.PUT(this)
+          let mail = this.entrepreneur.usuario.EMAIL_USUARIO
+          let err = await controller.PUT(this)
+          if (!err) {
+            emailer.sendMail(this, mail, 'Cambio de correo',
+              'Buenas, junto con saludar le informamos que su correo electronico para ingresar al portal DelBarrio a sido cambiado exitosamente.')
+          }
         }
         this.processing = false
       })

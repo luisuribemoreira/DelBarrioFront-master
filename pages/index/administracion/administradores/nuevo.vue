@@ -97,12 +97,9 @@ export default {
           if (!err) {
             emailer.sendMail(this, mail, 'Registro completado',
               'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + pass + '.')
-          } else {
-            this.processing = false
           }
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     }
   },

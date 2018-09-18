@@ -132,7 +132,6 @@ function POSTCliente (context) {
       FECH_CREACION: 1 // Se auto genera en la API
     }
   ).then(response => {
-    console.log(response.data)
     context.$axios.$post(
       'persona',
       {

@@ -175,14 +175,16 @@ function PUT (context) {
           if (errors) context.$notify.warning('Ha ocurrido un error inesperado.')
           context.message = false
           context.processing = false
+          return -1
         })
-    }).catch(error => {
-      if (error.response) {
-        context.message = error.response.data.data.EMAIL_USUARIO
+    }).catch(errors => {
+      if (errors.response && errors.response.data.data.EMAIL_USUARIO) {
+        context.message = errors.response.data.data.EMAIL_USUARIO
       } else {
-        context.$notify.warning('Ha ocurrido un error inesperado.')
+        context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
       }
       context.processing = false
+      return -1
     })
   } else {
     context.processing = false
