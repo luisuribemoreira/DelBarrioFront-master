@@ -112,17 +112,19 @@ export default {
     }
   },
   methods: {
-    acceptOffer (oferta) {
+    async acceptOffer (oferta) {
       if (this.processing) return
       this.processing = true
 
-      controller.acceptOffer(this, oferta)
+      await controller.acceptOffer(this, oferta)
+      this.processing = false
     },
-    banOffer (oferta) {
+    async banOffer (oferta) {
       if (this.processing) return
       this.processing = true
 
-      controller.banOffer(this, oferta)
+      await controller.banOffer(this, oferta)
+      this.processing = false
     },
     buscarOfertas () {
       // Copiar todos los.oferta.offers, si existen, a una variable auxiliar para no perder la lista original

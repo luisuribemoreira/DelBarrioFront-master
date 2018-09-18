@@ -57,7 +57,7 @@ function GETAllList (app) {
 //                    }
 // =======================================================================================
 function POST (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/categoria',
     {
       IDEN_CATEGORIA_PADRE: context.category.IDEN_CATEGORIA_PADRE,
@@ -69,6 +69,7 @@ function POST (context) {
     context.$notify.success('Se ha agregado exitosamente.')
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error. Inténtelo más tarde.')
+    return errors
   })
 }
 
@@ -84,7 +85,7 @@ function POST (context) {
 //                    }
 // =======================================================================================
 function PUT (context) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/categoria/' + context.id,
     {
       NOMB_CATEGORIA: context.category.NOMB_CATEGORIA,
@@ -95,6 +96,7 @@ function PUT (context) {
     context.$notify.success('Se ha editado exitosamente.')
   }).catch(errors => {
     context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+    return errors
   })
 }
 

@@ -167,15 +167,25 @@ function PUT (context) {
           DV_EMPRENDEDOR: context.rut.slice(-1).toUpperCase()
         })
         .then(res => {
+          context.processing = false
+          context.message = false
           context.$router.push({ path: '/administracion/emprendedores' })
           context.$notify.success('Se ha editado exitosamente.')
         }).catch(errors => {
           if (errors) context.$notify.warning('Ha ocurrido un error inesperado.')
+          context.message = false
+          context.processing = false
         })
     }).catch(error => {
-      if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
+      if (error.response) {
+        context.message = error.response.data.data.EMAIL_USUARIO
+      } else {
+        context.$notify.warning('Ha ocurrido un error inesperado.')
+      }
+      context.processing = false
     })
   } else {
+    context.processing = false
     context.message = 'Ingrese un rut válido.'
   }
 }

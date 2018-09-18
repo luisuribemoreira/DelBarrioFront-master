@@ -173,8 +173,8 @@ export default {
           deshabilitacionUsuario.FLAG_VIGENTE = false // Se habilita nuevamente el usuario, dejando como no vigente su ultima deshabilitacion.
           await controllerAccountDisable.PUT(this, deshabilitacionUsuario)
           await controller.setState(this, client)
-          this.processing = false
         }
+        this.processing = false
       }
     },
     buscarCliente () {

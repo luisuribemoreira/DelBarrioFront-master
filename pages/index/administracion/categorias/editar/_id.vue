@@ -56,13 +56,14 @@ export default {
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
         this.subcategoriesAux = this.category.subcategorias
         if (result) {
-          controller.PUT(this)
-          this.subcategoriesAux.forEach(sub => {
-            controller.PUT(sub)
+          await controller.PUT(this)
+          this.subcategoriesAux.forEach(async (sub) => {
+            await controller.PUT(sub)
           })
+          this.processing = false
         } else {
           this.processing = false
         }

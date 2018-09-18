@@ -45,27 +45,17 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      /* this.$validator.validateAll().then((result) => {
-        if (result) {
-          controller.authenticate(this)
-        }
-      } */
       if (this.processing) return
       this.processing = true
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then(async (result) => {
         if (result) {
           this.auth.email = this.auth.email.toLowerCase()
-          controller.login(this)
-            .then(() => {
-              if (!this.error) {
-                this.$router.push({ path: '/redirect' })
-              } else {
-                this.processing = false
-              }
-            })
-        } else {
-          this.processing = false
+          await controller.login(this)
+          if (!this.error) {
+            this.$router.push({ path: '/redirect' })
+          }
         }
+        this.processing = false
       })
     }
   },

@@ -75,13 +75,12 @@ export default {
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
         if (result) {
           this.entrepreneur.usuario.EMAIL_USUARIO = this.entrepreneur.usuario.EMAIL_USUARIO.toLowerCase()
-          controller.PUT(this)
-        } else {
-          this.processing = false
+          await controller.PUT(this)
         }
+        this.processing = false
       })
     }
   },

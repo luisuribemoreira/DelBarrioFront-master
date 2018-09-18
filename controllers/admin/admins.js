@@ -34,7 +34,7 @@ function GETAll (app) {
 //                    }
 // =======================================================================================
 function POST (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'usuario',
     {
       EMAIL_USUARIO: context.user.EMAIL_USUARIO,
@@ -57,8 +57,8 @@ function POST (context) {
       context.$notify.success('Se ha agregado exitosamente')
       context.$router.push({ path: '/administracion/administradores' })
     }).catch(errors => {
-      console.log(errors)
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+      return errors
     })
   }).catch(errors => {
     if (errors.response.data.data.EMAIL_USUARIO) {
@@ -66,6 +66,7 @@ function POST (context) {
     } else {
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
     }
+    return errors
   })
 }
 
@@ -99,9 +100,11 @@ function PUT (context) {
         context.$notify.success('Se ha editado exitosamente.')
       }).catch(err => {
         if (err) context.$notify.warning('Ha ocurrido un error inesperado.')
+        return err
       })
   }).catch(error => {
     if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
+    return error
   })
 }
 

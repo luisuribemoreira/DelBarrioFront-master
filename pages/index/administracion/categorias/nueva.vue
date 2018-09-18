@@ -45,9 +45,10 @@ export default {
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
         if (result) {
-          controller.POST(this)
+          await controller.POST(this)
+          this.processing = false
         } else {
           this.processing = false
         }

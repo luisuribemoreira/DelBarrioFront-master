@@ -82,7 +82,7 @@ function GETPostEmprendedor (app, idEmprendedor) {
 //                    }
 // =======================================================================================
 function POST (context, blobs = undefined) {
-  entrepeneurController.GETUser(
+  return entrepeneurController.GETUser(
     context,
     context.loggedUser.id
   ).then(entrepeneur => {
@@ -131,7 +131,7 @@ function POST (context, blobs = undefined) {
 //                    }
 // =======================================================================================
 function PUT (context, blobs = undefined) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/publicacion/' + context.post.IDEN_PUBLICACION,
     {
       CODI_TIPO_PUBLICACION: context.post.CODI_TIPO_PUBLICACION,
@@ -159,7 +159,7 @@ function PUT (context, blobs = undefined) {
 }
 
 function addSale (context, id) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/oferta',
     {
       IDEN_PUBLICACION: parseInt(id),
@@ -176,7 +176,7 @@ function addSale (context, id) {
 }
 
 function updateSale (context, id) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/oferta/' + id,
     {
       IDEN_PUBLICACION: context.sale.IDEN_PUBLICACION,
@@ -195,7 +195,7 @@ function updateSale (context, id) {
 }
 
 function removeSale (context, id) {
-  context.$axios.$delete(
+  return context.$axios.$delete(
     'private/oferta/' + id
   ).then(response => {
     console.log(response)
@@ -207,7 +207,7 @@ function removeSale (context, id) {
 // comentarios
 function setState (context, post) {
   if (!post.FLAG_BAN) {
-    context.$axios.$put(
+    return context.$axios.$put(
       'private/publicacion/' + post.IDEN_PUBLICACION,
       {
         FLAG_VIGENTE: !post.FLAG_VIGENTE

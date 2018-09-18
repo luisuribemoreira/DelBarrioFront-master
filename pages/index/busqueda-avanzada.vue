@@ -472,11 +472,10 @@ export default {
         this.paginatedData = [[]]
         this.pagination = 0
         this.pages = 0
-        this.processing = false
       } else {
-        this.processing = false
         this.searchMessage = false
       }
+      this.processing = false
     },
     toGeneric (data, type) { // Transforma los datos de las busquedas en datos genericos, para que se acomoden a la tabla
       let dataAux = []

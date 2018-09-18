@@ -1,5 +1,5 @@
 function acceptPost (context, post) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/publicacion/' + post.IDEN_PUBLICACION,
     {
       FLAG_VALIDADO: true,
@@ -16,7 +16,7 @@ function acceptPost (context, post) {
 }
 
 function acceptOffer (context, offer) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/oferta/' + offer.IDEN_OFERTA,
     {
       FLAG_VALIDADO: true
@@ -32,7 +32,7 @@ function acceptOffer (context, offer) {
 }
 
 function ban (context, post) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/publicacion/' + post.IDEN_PUBLICACION,
     {
       FLAG_BAN: true,
@@ -48,7 +48,7 @@ function ban (context, post) {
   })
 }
 function banOffer (context, offer) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/oferta/' + offer.IDEN_OFERTA,
     {
       FLAG_BAN: true

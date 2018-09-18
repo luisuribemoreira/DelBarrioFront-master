@@ -135,7 +135,7 @@ export default {
       if (this.processing) return
       this.processing = true
       if (this.isSale === true) {
-        this.$validator.validateAll().then((result) => {
+        this.$validator.validateAll().then(async (result) => {
           // Validar fechas de forma manual [Incompatibilidad con VV]
           let errorMessages = {}
           this.errorMsgs = {}
@@ -177,18 +177,17 @@ export default {
 
           if (result) {
             if (!this.isSale && this.post.oferta.IDEN_OFERTA !== undefined) {
-              controller.removeSale(this, this.post.oferta.IDEN_OFERTA)
+              await controller.removeSale(this, this.post.oferta.IDEN_OFERTA)
               this.$router.push({ path: '/administracion/publicaciones' })
             } else if (this.post.oferta.IDEN_OFERTA !== undefined) {
-              controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
+              await controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
               this.$router.push({ path: '/administracion/publicaciones' })
             } else {
-              controller.addSale(this, this.post.IDEN_PUBLICACION)
+              await controller.addSale(this, this.post.IDEN_PUBLICACION)
               this.$router.push({ path: '/administracion/publicaciones' })
             }
-          } else {
-            this.processing = false
           }
+          this.processing = false
         })
       }
     }

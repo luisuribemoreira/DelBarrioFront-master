@@ -436,10 +436,8 @@ export default {
           if (result) {
             if (this.loggedUser.rol === 102) {
               this.user.blobs = blobs
-              controller.PUTEmprendedor(this)
+              await controller.PUTEmprendedor(this)
             }
-          } else {
-            this.processing = false
           }
         })
       } else if (this.selectedPass) {
@@ -460,8 +458,6 @@ export default {
               emailer.sendMail(this, mail, 'Cambio de contraseña',
                 'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
             }
-          } else {
-            this.processing = false
           }
         })
       } else if (this.selectedClient) {
@@ -476,12 +472,11 @@ export default {
             result = undefined
           }
           if (result) {
-            controller.PUT(this, this.user)
-          } else {
-            this.processing = false
+            await controller.PUT(this, this.user)
           }
         })
       }
+      this.processing = false
     },
     async ProductosPorVisitas () {
       let data = await controllerReporteria.productosPorVisitas(this)

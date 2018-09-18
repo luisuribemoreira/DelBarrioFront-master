@@ -159,10 +159,6 @@ export default {
     return categoriescontroller.GETAll(app)
   },
   methods: {
-    addPost () {
-      event.preventDefault()
-      controller.POST(this)
-    },
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
@@ -195,14 +191,13 @@ export default {
           }
           if (blobs.length > 0) {
             console.log('POST with blobs!')
-            controller.POST(this, blobs)
+            await controller.POST(this, blobs)
           } else {
             console.log('POST without blobs :(')
-            controller.POST(this)
+            await controller.POST(this)
           }
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     },
     selected (i) {

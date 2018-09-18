@@ -213,9 +213,8 @@ export default {
             this.submitted.valid = false
             this.submitted.errors = true
           })
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     }
   },

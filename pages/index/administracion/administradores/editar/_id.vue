@@ -78,7 +78,7 @@ export default {
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
         this.dataErrorMsg = { error_edad: undefined }
 
         if (customValidations.isUnderAge(this.user.FECH_FECHA_NACIMIENTO)) {
@@ -91,7 +91,8 @@ export default {
 
         if (result) {
           this.user.usuario.EMAIL_USUARIO = this.user.usuario.EMAIL_USUARIO.toLowerCase()
-          controller.PUT(this)
+          await controller.PUT(this)
+          this.processing = false
         } else {
           this.processing = false
         }

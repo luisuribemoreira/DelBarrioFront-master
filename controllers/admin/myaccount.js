@@ -116,13 +116,14 @@ async function POST (context, user) {
 
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
+    return true
   } catch (error) {
-    console.log(error)
     context.$notify.warning('Ha ocurrido un error inesperado.')
+    return false
   }
 }
 function POSTCliente (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'usuario',
     {
       EMAIL_USUARIO: context.user.EMAIL_USUARIO,
@@ -274,9 +275,10 @@ async function PUTEmprendedor (context) {
     context.processing = false
     context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
+    return true
   } catch (error) {
-    console.log(error)
     context.$notify.warning('Ha ocurrido un error inesperado.')
+    return false
   }
 }
 

@@ -35,7 +35,7 @@ function GETAll (app) {
 // Constraints:  post { NOMB_RUBRO: string (required) }
 // =======================================================================================
 function POST (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/rubro',
     {
       NOMB_RUBRO: context.workfield.NOMB_RUBRO
@@ -55,7 +55,7 @@ function POST (context) {
 // Constraints:  post { NOMB_CATEGORIA: string (required) }
 // =======================================================================================
 function PUT (context) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/rubro/' + context.id,
     {
       NOMB_RUBRO: context.workfield.NOMB_RUBRO
@@ -70,7 +70,7 @@ function PUT (context) {
 
 // comentarios
 function setState (context, workfield) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/rubro/' + workfield.IDEN_RUBRO,
     {
       FLAG_VIGENTE: !workfield.FLAG_VIGENTE

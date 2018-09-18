@@ -45,11 +45,14 @@ export default {
   },
   data () {
     return {
-      dataErrorMsg: {}
+      dataErrorMsg: {},
+      processing: false
     }
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then(async (result) => {
         // Se limpian los mensajes
         this.dataErrorMsg = {}
@@ -72,6 +75,7 @@ export default {
               'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
           }
         }
+        this.processing = false
       })
     }
   },

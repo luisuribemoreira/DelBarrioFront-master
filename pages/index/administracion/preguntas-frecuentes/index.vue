@@ -97,12 +97,16 @@ export default {
       pages: 0,
       paginatedData: [[]],
       search: '',
-      faqAux: []
+      faqAux: [],
+      processing: false
     }
   },
   methods: {
-    deleteFaq: function (f) {
-      controller.DELETE(f, this)
+    deleteFaq: async function (f) {
+      if (this.processing) return
+      this.processing = true
+      await controller.DELETE(f, this)
+      this.processing = false
     },
     buscarPregunta () {
       // Copiar todas las faqs, si existen, a una variable auxiliar para no perder la lista original

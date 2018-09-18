@@ -22,7 +22,7 @@ function GETAll (app) {
 //                    }
 // =======================================================================================
 function POST (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/motivo_denuncia',
     {
       NOMB_MOTIVO_DENUNCIA: context.denouncereason.NOMB_MOTIVO_DENUNCIA
@@ -37,7 +37,7 @@ function POST (context) {
 
 // comentarios
 function setState (context, denouncereason) {
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/motivo_denuncia/' + denouncereason.IDEN_MOTIVO_DENUNCIA,
     {
       FLAG_VIGENTE: !denouncereason.FLAG_VIGENTE

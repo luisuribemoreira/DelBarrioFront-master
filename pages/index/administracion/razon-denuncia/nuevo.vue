@@ -35,6 +35,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
+      if (this.processing) return
+      this.processing = true
       this.$validator.validateAll().then(async (result) => {
         // Obtiene la lista de todas las razones de denuncia
         let reasons = await (await controller.GETAll(this)).denouncereasons
@@ -49,10 +51,9 @@ export default {
           })
         })
         if (result) {
-          controller.POST(this)
-        } else {
-          this.processing = false
+          await controller.POST(this)
         }
+        this.processing = false
       })
     }
   },

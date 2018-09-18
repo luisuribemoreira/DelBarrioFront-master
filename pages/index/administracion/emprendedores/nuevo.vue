@@ -96,9 +96,8 @@ export default {
             emailer.sendMail(this, mail, 'Usuario Ingresado',
               'Su usuario ha sido registrado con el correo: ' + mail + ' y contraseña: ' + pass)
           }
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     }
   },

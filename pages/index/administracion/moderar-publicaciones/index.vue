@@ -101,17 +101,19 @@ export default {
     }
   },
   methods: {
-    acceptPost (post) {
+    async acceptPost (post) {
       if (this.processing) return
       this.processing = true
 
-      controller.acceptPost(this, post)
+      await controller.acceptPost(this, post)
+      this.processing = false
     },
-    ban (post) {
+    async ban (post) {
       if (this.processing) return
       this.processing = true
 
-      controller.ban(this, post)
+      await controller.ban(this, post)
+      this.processing = false
     },
     buscarPublicaciones () {
       // Copiar todos los posts, si existen, a una variable auxiliar para no perder la lista original

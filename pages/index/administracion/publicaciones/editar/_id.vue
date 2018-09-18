@@ -179,13 +179,12 @@ export default {
             }
           }
           if (blobs.length > 0) {
-            controller.PUT(this, blobs)
+            await controller.PUT(this, blobs)
           } else {
-            controller.PUT(this)
+            await controller.PUT(this)
           }
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     },
     selected (i) {
