@@ -24,42 +24,9 @@
             <!-- main slider carousel items -->
             <div class="carousel-inner">
               <div class="active item carousel-item" data-slide-number="0">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-              </div>
-              <div class="item carousel-item" data-slide-number="1">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-              </div>
-              <div class="item carousel-item" data-slide-number="2">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-              </div>
-              <div class="item carousel-item" data-slide-number="3">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
+                <img v-lazy="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
               </div>
             </div>
-
-            <!-- main slider carousel nav controls -->
-            <ul class="carousel-indicators list-inline mt-3">
-              <li class="list-inline-item active">
-                <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#entrepreneur-info--carousel">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a id="carousel-selector-1" data-slide-to="1" data-target="#entrepreneur-info--carousel">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a id="carousel-selector-2" data-slide-to="2" data-target="#entrepreneur-info--carousel">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a id="carousel-selector-3" data-slide-to="3" data-target="#entrepreneur-info--carousel">
-                <img :src="entrepreneur.imagen.URL_IMAGEN ? imageUrl + entrepreneur.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid margin-img" alt="">
-                </a>
-              </li>
-            </ul>
           </div>
           <div class="social-media mt-5 text-center">
             <a href="#" class="pl-2 pr-2"><i class="fab fa-facebook-square"></i></a>
@@ -122,63 +89,21 @@
       background: #707070;
     }
     </style>
-    <div class="container">
+    <div class="container" v-if="posts[0].length > 0">
       <div class="row blog">
         <div class="col-md-12">
           <div id="blogCarousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-              <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
-              <li data-target="#blogCarousel" data-slide-to="1"></li>
+              <li data-target="#blogCarousel" :class="{ active: page === 1 }" v-for="page in pages + 1" :key="page - 1" :data-slide-to="page - 1" @click="activePage = page - 1"></li>
             </ol>
             <!-- Carousel items -->
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="row">
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                </div>
-                <!--.row-->
-              </div>
-              <!--.item-->
-              <div class="carousel-item">
-                <div class="row">
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
-                  </div>
-                  <div class="col-md-3">
-                    <a href="#">
-                      <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                    </a>
+                  <div class="col-md-3" v-for="post in posts[activePage]" :key="post.IDEN_PUBLICACION">
+                    <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION">
+                      <img v-lazy="post.imagenes.length > 0 ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" alt="Image" style="max-width:100%;">
+                    </nuxt-link>
                   </div>
                 </div>
                 <!--.row-->
@@ -193,11 +118,10 @@
     </div>
 </section>
 
-
   <!-- MAPA -->
   <section id="ubicacion" class="entrepreneur-map">
       <div class="container-fluid">
-          <div class="row">
+          <div class="row" style="margin-right: 0px;margin-left: 0px;">
                   <gmap-map
                     :center="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }"
                     :zoom="15"
@@ -213,18 +137,6 @@
       </div>
   </section>
   <!-- /MAPA -->
-
-  <!-- ########################################################################################## 
-
-    <section class="entrepreneur-map">
-    <div class="container-fluid">
-      <div class="row" style="margin-right: 0px;margin-left: 0px;">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.5792240152987!2d-70.62953658541339!3d-33.434212880778546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c58680ccc59f%3A0x35d790eaf21c17f2!2sAv.+Providencia+544%2C+Providencia%2C+Regi%C3%B3n+Metropolitana!5e0!3m2!1ses!2scl!4v1537015968767" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-      </div>
-    </div>
-  </section>
-
-   ########################################################################################## -->
   </div>
 </template>
 
@@ -247,7 +159,7 @@ export default {
           redirect('/')
         }
         // Datos de contácto
-        let contactos = {}
+        let contactos = { telefono: '', celular: '', correo: '', direccion: '' }
         try {
           contactos.direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
         } catch (err) {
@@ -263,12 +175,25 @@ export default {
         } catch (err) {
           // Nada...
         }
+
+        // Se ordenan los posts en arreglos de a 4 para el carrusel.
+        let posts = [[]]
+        let pages = 0
+        entrepreneur.publicaciones.forEach((publicacion, index) => {
+          posts[pages].push(publicacion)
+          if ((index + 1) % 4 === 0 && entrepreneur.publicaciones[index + 1]) {
+            pages++
+            posts[pages] = []
+          }
+        })
         return locationController.GETLocation(app, contactos.direccion)
           .then(({ geocode }) => {
             return {
               entrepreneur: entrepreneur,
               geocode: geocode,
-              contactos
+              contactos,
+              posts,
+              pages
             }
           })
       })
@@ -277,7 +202,10 @@ export default {
     return {
       geocode: undefined,
       imageUrl: process.env.imagesUrl,
-      entrepreneur: []
+      entrepreneur: [],
+      activePage: 0,
+      pages: 0,
+      posts: [[]]
     }
   },
   computed: mapGetters([
