@@ -81,22 +81,19 @@
           <p class="p mt-4 entrepreneur-info--text">{{entrepreneur.DESC_EMPRENDEDOR}}</p>
           
           <h5 class="entrepreneur-info--subtitle h5 mt-5">Datos de contacto</h5>
-          <ul class="list-unstyled mt-3">
-            <li class="mb-2">
-              
-
-              <!-- Aqui va el numero, no pude hacer el v-if -->
-
-              <i class="fas fa-phone-square fa-lg text-turquoise mr-2"></i> +56 9 3456 7890</li>
-              
-              <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para ver los datos del emprendedor</p>
-              <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
-              
-        
-
-            <li class="mb-2"><i class="fas fa-map-marked-alt fa-lg text-turquoise mr-2"></i> Av. Providencia 544, Providencia, Santiago.</li>
-            <li class="mb-2"><i class="fas fa-envelope fa-lg text-turquoise mr-2"></i>{{entrepreneur.usuario.EMAIL_USUARIO}}</li>
-          </ul>
+          <div v-if="isAuthenticated">
+            <ul class="list-unstyled mt-3">
+              <li class="mb-2"><i class="fas fa-mobile-alt fa-lg text-turquoise mr-2"></i>{{contactos.celular}}</li>
+              <li class="mb-2" v-if="contactos.telefono.length > 0"><i class="fas fa-phone-square fa-lg text-turquoise mr-2"></i>{{contactos.telefono}}</li>
+              <li class="mb-2"><i class="fas fa-envelope fa-lg text-turquoise mr-2"></i>{{ contactos.correo }}</li>
+              <li class="mb-2"><i class="fas fa-map-marked-alt fa-lg text-turquoise mr-2"></i>{{ contactos.direccion }}</li>
+            </ul>
+            <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a :href="'mailto:'+contactos.correo">{{contactos.correo}}</a></h5>
+          </div>
+          <div v-else>
+            <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para ver los datos del emprendedor</p>
+            <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
+          </div>
         </div>
         <!-- /col info -->
       </div>
@@ -198,55 +195,35 @@
 
 
   <!-- MAPA -->
-  <section class="entrepreneur-map">
+  <section id="ubicacion" class="entrepreneur-map">
+      <div class="container-fluid">
+          <div class="row">
+                  <gmap-map
+                    :center="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }"
+                    :zoom="15"
+                    style="width:100%; height:450px; border: 0;">
+                    <gmap-marker
+                    :position="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }">
+                    </gmap-marker>
+                    <gmap-info-window v-if="geocode" :position="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }">
+                      {{ geocode.formatted_address }}
+                    </gmap-info-window>
+                  </gmap-map>
+          </div>
+      </div>
+  </section>
+  <!-- /MAPA -->
+
+  <!-- ########################################################################################## 
+
+    <section class="entrepreneur-map">
     <div class="container-fluid">
       <div class="row" style="margin-right: 0px;margin-left: 0px;">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.5792240152987!2d-70.62953658541339!3d-33.434212880778546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c58680ccc59f%3A0x35d790eaf21c17f2!2sAv.+Providencia+544%2C+Providencia%2C+Regi%C3%B3n+Metropolitana!5e0!3m2!1ses!2scl!4v1537015968767" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
       </div>
     </div>
   </section>
-  <!-- /MAPA -->
 
-  <!-- ########################################################################################## 
-  
-                    <div v-if="isAuthenticated">
-                      <ul class="list-unstyled">
-                        <li>Celular: {{contactos.celular}}</li>
-                        <li v-if="contactos.telefono.length > 0">Teléfono: {{contactos.telefono}}</li>
-                      </ul>
-                      <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a :href="'mailto:'+contactos.correo">{{contactos.correo}}</a></h5>
-                    </div>
-                    <div v-else class="contorno">
-                      <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para ver los datos del emprendedor</p>
-                      <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
-                    </div>
-                    
-   ########################################################################################## -->
-
-    
-    
-  <!-- ########################################################################################## 
-    
-    <section id="ubicacion">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 no-padding">
-                    <h2 class="text-center">Ubicación</h2>
-                    <gmap-map
-                      :center="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }"
-                      :zoom="15"
-                      style="width:100%; height:300px">
-                      <gmap-marker
-                      :position="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }">
-                      </gmap-marker>
-                      <gmap-info-window v-if="geocode" :position="geocode ? geocode.geometry.location : { lat: -33.4488897, lng: -70.6692655 }">
-                        {{ geocode.formatted_address }}
-                      </gmap-info-window>
-                    </gmap-map>
-                </div>
-            </div>
-        </div>
-    </section>
    ########################################################################################## -->
   </div>
 </template>
@@ -269,14 +246,14 @@ export default {
         (store._vm.isAuthenticated && !(store._vm.isAuthenticated.rol === 103 || store._vm.isAuthenticated.rol === 104)))) {
           redirect('/')
         }
-        let direccion
+        // Datos de contácto
+        let contactos = {}
         try {
-          direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
+          contactos.direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
         } catch (err) {
           // Nada...
         }
-        // Datos de contácto
-        let contactos = {}
+
         try {
           // Telefono se inicializa distinto ya que este es opcional y puede no existir.
           contactos.telefono = entrepreneur.usuario.persona.contacto.Telefono
@@ -286,7 +263,7 @@ export default {
         } catch (err) {
           // Nada...
         }
-        return locationController.GETLocation(app, direccion)
+        return locationController.GETLocation(app, contactos.direccion)
           .then(({ geocode }) => {
             return {
               entrepreneur: entrepreneur,
