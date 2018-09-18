@@ -34,7 +34,7 @@ function GETAll (app) {
 //                    }
 // =======================================================================================
 function POST (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'usuario',
     {
       EMAIL_USUARIO: context.user.EMAIL_USUARIO,
@@ -59,6 +59,7 @@ function POST (context) {
     }).catch(errors => {
       console.log(errors)
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
+      return -1
     })
   }).catch(errors => {
     if (errors.response.data.data.EMAIL_USUARIO) {
@@ -66,6 +67,7 @@ function POST (context) {
     } else {
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
     }
+    return -1
   })
 }
 

@@ -78,7 +78,7 @@ export default {
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(async (result) => {
         this.dataErrorMsg = { error_edad: undefined }
 
         if (customValidations.isUnderAge(this.user.FECH_FECHA_NACIMIENTO)) {
@@ -93,9 +93,11 @@ export default {
           this.user.EMAIL_USUARIO = this.user.EMAIL_USUARIO.toLowerCase()
           let mail = this.user.EMAIL_USUARIO
           let pass = this.user.DESC_PASSWORD
-          emailer.sendMail(this, mail, 'Registro completado',
-            'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + pass + '.')
-          controller.POST(this)
+          let err = await controller.POST(this)
+          if (!err) {
+            emailer.sendMail(this, mail, 'Registro completado',
+              'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + pass + '.')
+          }
         } else {
           this.processing = false
         }
