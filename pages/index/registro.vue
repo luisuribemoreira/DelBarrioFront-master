@@ -58,6 +58,9 @@
               <label>
                 <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
               </label>
+            <div v-if='message'>
+              <span class="text-danger">{{message}}</span>
+            </div>
             </div>
             <button type="submit" class="btn btn-default">Registrar</button>
             </form>

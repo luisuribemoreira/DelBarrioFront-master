@@ -122,7 +122,7 @@ async function POST (context, user) {
   }
 }
 function POSTCliente (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'usuario',
     {
       EMAIL_USUARIO: context.user.EMAIL_USUARIO,
@@ -131,7 +131,6 @@ function POSTCliente (context) {
       FECH_CREACION: 1 // Se auto genera en la API
     }
   ).then(response => {
-    console.log(response.data)
     context.$axios.$post(
       'persona',
       {
