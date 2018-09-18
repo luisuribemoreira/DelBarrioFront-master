@@ -124,7 +124,7 @@
           </div>
         </div>
         </div>      
-        <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
+        <div id="rating" class="row margin-top" v-for="c in post.calificaciones" :key="c.IDEN_CALIFICACION" v-if="post.calificaciones.length > 0  && !post.calificaciones[0].usuario.FLAG_BAN">
           <div class="col-12">
             <h3>Última calificación</h3>
             <div class="estrellas">
@@ -137,8 +137,8 @@
                 </star-rating>
               </no-ssr>
             </div>
-            <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}}</small>
-            <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
+            <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}} </small>
+            <p class="margin-top-20" >{{post.calificaciones[0].DESC_CALIFICACION}}</p>
             <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
             <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
           </div>
@@ -174,7 +174,7 @@
           <!--FIN FORM DE COMENTAR-->
         </div>
         </div>
-        <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
+        <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO" v-if="!post.comentarios[0].usuario.FLAG_BAN">
           <div v-if="c.FLAG_BAN" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
