@@ -134,7 +134,7 @@ function PUT (context, blobs = undefined) {
   context.$axios.$put(
     'private/publicacion/' + context.post.IDEN_PUBLICACION,
     {
-      IDEN_TIPO_PUBLICACION: context.post.IDEN_TIPO_PUBLICACION,
+      CODI_TIPO_PUBLICACION: context.post.CODI_TIPO_PUBLICACION,
       IDEN_CATEGORIA: context.post.IDEN_CATEGORIA,
       NOMB_PUBLICACION: context.post.NOMB_PUBLICACION,
       DESC_PUBLICACION: context.post.DESC_PUBLICACION,
