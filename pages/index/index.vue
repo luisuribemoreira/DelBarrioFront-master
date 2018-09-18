@@ -3,7 +3,7 @@
 <!-- ############################################################################### -->
 <section class="home-slider section pt-0 pb-0">
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" style="margin-right: 0px;margin-left: 0px;">
             <div class="col pl-0 pr-0">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="0">
                     <ol class="carousel-indicators">
