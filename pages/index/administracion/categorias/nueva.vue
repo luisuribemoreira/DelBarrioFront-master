@@ -48,10 +48,8 @@ export default {
       this.$validator.validateAll().then(async (result) => {
         if (result) {
           await controller.POST(this)
-          this.processing = false
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     }
   },

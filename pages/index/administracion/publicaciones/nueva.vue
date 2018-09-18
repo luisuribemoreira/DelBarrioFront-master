@@ -190,10 +190,8 @@ export default {
             }
           }
           if (blobs.length > 0) {
-            console.log('POST with blobs!')
             await controller.POST(this, blobs)
           } else {
-            console.log('POST without blobs :(')
             await controller.POST(this)
           }
         }

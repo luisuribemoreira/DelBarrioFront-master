@@ -63,10 +63,8 @@ export default {
           this.subcategoriesAux.forEach(async (sub) => {
             await controller.PUT(sub)
           })
-          this.processing = false
-        } else {
-          this.processing = false
         }
+        this.processing = false
       })
     }
   },
