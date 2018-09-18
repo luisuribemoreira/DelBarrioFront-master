@@ -31,9 +31,9 @@
                           </li>
                         </ul>
                         <span class="input-group-append">
-                        <button class="btn btn-outline-secondary border border-left-0" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
+                          <button class="btn btn-outline-secondary border border-left-0" type="submit">
+                              <i class="fa fa-search"></i>
+                          </button>
                         </span>
                     </div>
                 </form>
@@ -41,8 +41,7 @@
                 <ul class="navbar-nav mr-auto nav-fill w-25">
                     <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
                         role="button" :aria-haspopup="true" :aria-expanded="false">{{ loggedUser.nombre }} <span class="caret"></span></a>
-                        <ul
-                        class="dropdown-menu">
+                        <ul class="dropdown-menu">
                             <li class="dropdown-item">
                                 <a class="nav-link" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
                             </li>
@@ -105,8 +104,7 @@
                 <ul class="navbar-nav mr-auto nav-fill w-25">
                     <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle usuario nav-link" data-toggle="dropdown"
                         role="button" :aria-haspopup="true" :aria-expanded="false">{{ loggedUser.nombre }} <span class="caret"></span></a>
-                        <ul
-                        class="dropdown-menu">
+                        <ul class="dropdown-menu">
                             <li class="dropdown-item">
                                 <a class="nav-link" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
                             </li>
@@ -272,7 +270,7 @@
         <div class="col text-center">
           <p class="footer--top-text p text-white">Av. Pedro de Valdivia 963 | Providencia, Santiago de Chile | Mesa Central: +562 2654 3200</p>
           <p class="footer--bottom-text p text-white">Horario General: Lunes a Jueves: 8:30 a 14 y 15 a 17 hrs. / Viernes: 8:30 a 14 y de 15 a 16 hrs. | municipalidad@providencia.cl</p>
-          <p class="footer--bottom--text p text-white">Terminos &amp; Condiciones</p>
+          <p class="footer--bottom--text p text-white"><a target="_blank" :href="terms">Términos &amp; Condiciones</a></p>
         </div>
       </div>
     </div>
@@ -308,7 +306,8 @@ export default {
       searchMenu: '',
       currentItem: 0,
       posts: [],
-      entrepreneurs: []
+      entrepreneurs: [],
+      terms: process.env.termsUrl
     }
   },
   computed: mapGetters([
