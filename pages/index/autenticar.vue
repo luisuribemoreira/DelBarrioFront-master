@@ -1,14 +1,12 @@
 <template>
 
   <section id="publicacion" class="container-fluid">
+    <section class="login section">
     <div class="container">
-       <hr>
-    </div>
-    <div class="container border p-3">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3 fondo-beige">
-          <h2 class="text-center">Inicia sesión</h2>
-          <form @submit.prevent="validateBeforeSubmit">
+        <div class="login--content col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+          <h2 class="h2 text-center">Iniciar Sesión</h2>
+          <form  class="mt-4" @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label>Correo electrónico</label>
               <input type="text" v-validate data-vv-rules="required|email" v-model.trim="auth.email" class="form-control" name="email"/>
@@ -22,11 +20,14 @@
             <div v-if="message">
               <small class="text-danger">{{ message }}</small>
             </div>
-            <button class="btn btn-default" type="submit">Ingresar</button>
+            <button class="btn btn-primary btn-primary__turquoise" type="submit">Ingresar</button>
           </form>
         </div>
       </div>
     </div>
+  </section>
+    
+    
   </section>
 </template>
 

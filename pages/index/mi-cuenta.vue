@@ -216,12 +216,12 @@
               </div>
               <div class="form-group margin-top">
                 <label for="name">Teléfono (Optativo)</label><span style="color: grey"> (Formato ej: 221342146)</span>
-                <input v-validate data-vv-rules="min:9|numeric|max:9" data-vv-as="telefono" name="telefono" type="text" v-model.trim="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="min:9|numeric|max:9" data-vv-as="telefono" name="telefono" type="number" v-model.trim="user.persona.contacto.Telefono[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('telefono')">{{ errors.first('telefono') }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="name">Celular</label><span style="color: grey"> (Formato ej: 982275364)</span>
-                <input v-validate data-vv-rules="required|numeric|min:9|max:9" data-vv-as="celular" name="celular" type="text" v-model.trim="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
+                <input v-validate data-vv-rules="required|numeric|min:9|max:9" data-vv-as="celular" name="celular" type="number" v-model.trim="user.persona.contacto.Celular[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">

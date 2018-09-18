@@ -8,11 +8,6 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
-.container-fluid {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
 .section {
 	padding: 70px 0;
 }
@@ -35,8 +30,8 @@ body {
 	color: #575757;
 }
 
-.color__white {
-	color: #fff;
+.text-turquoise{
+	color: #3cb6b6;
 }
 
 .btn-primary__turquoise {
@@ -47,6 +42,30 @@ body {
 .btn-primary__turquoise:hover {
 	background-color: #258d8d;
 	border-color: #258d8d;
+}
+
+.breadcrumb{
+	background-color: transparent;
+}
+
+.breadcrumb-item, .breadcrumb-item a{
+	font-weight: bold;
+	color: #434343;
+}
+
+.breadcrumb-item a:hover{
+	opacity: 0.7;
+}
+
+.breadcrumb-item.active{
+	color: #8d8d8d;
+}
+
+.breadcrumb-item+.breadcrumb-item::before{
+	content: "\f101";
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	color: #3cb6b6;
 }
 /*GENERALES*/
 
@@ -80,8 +99,9 @@ body {
 .header .fa-search:hover {
 	opacity: 0.5;
 }
-
 /*HEADER*/
+
+
 
 .home-slider {
 	position: relative;
@@ -106,7 +126,7 @@ body {
 
 .home-products,
 .publication-sales{
-	background: #3CB6B5;
+	background: url(../../img/img-soyprovidencia/home-products-bg.png);
 }
 
 .home-products .carousel-control-prev-icon,
@@ -230,7 +250,7 @@ body {
 
 
 .home-entrepreneur {
-	background: url(../../img/img/home-entrepreneur-bg.jpg);
+	background: url(../../img/img-soyprovidencia/home-entrepreneur-bg.jpg);
 	background-size: cover;
 	background-position: center;
 	position: relative;
@@ -259,7 +279,7 @@ body {
 
 
 .footer {
-	background: url(../../img/img/footer-bg.png);
+	background: url(../../img/img-soyprovidencia/footer-bg.png);
 	background-repeat: repeat;
 	padding: 40px 0;
 }
@@ -282,7 +302,6 @@ body {
 	width: 100%;
 }
 /*TOP*/
-
 
 
 .publication-products .card{
@@ -313,6 +332,173 @@ body {
 .publication-sales a{
 	text-decoration: none;
 }
+/* --------END PUBLICACIONES-------- */
+
+
+
+
+/* --------START PRODUCTO-------- */
+.product-top{
+	background: url(../../img/img-soyprovidencia/food.png);
+	padding: 15px 0;
+}
+
+.product-top .breadcrumb, .entrepreneur-top .breadcrumb{
+	margin-bottom: 0;
+}
+/*TOP*/
+
+
+.product-info,
+.entrepreneur-info{
+	padding-top: 50px;
+}
+
+.product-info .list-inline{
+  white-space:nowrap;
+  overflow-x:auto;
+}
+
+.product-info .carousel-indicators,
+.entrepreneur-info .carousel-indicators{
+  position: static;
+  left: initial;
+  width: initial;
+  margin-left: initial;
+	margin-right: 0;
+}
+
+.product-info .carousel-indicators > li,
+.entrepreneur-info .carousel-indicators > li{
+  width: initial;
+  height: initial;
+  text-indent: initial;
+}
+
+.product-info .carousel-indicators > li.active img,
+.entrepreneur-info .carousel-indicators > li.active img{
+	opacity: 0.7;
+}
+
+.list-inline-item{
+	max-width: 100px;
+	overflow: hidden;
+}
+
+.product-info .carousel-indicators img,
+.entrepreneur-info .carousel-indicators img{
+	width: 100%;
+}
+
+.product-info .fa-twitter-square,
+.product-info .fa-facebook-square,
+.entrepreneur-info .fa-twitter-square,
+.entrepreneur-info .fa-facebook-square{
+	font-size: 250%;
+	color: #dc3545;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	transition: 0.5s;
+}
+
+.product-info .fa-twitter-square:hover,
+.product-info .fa-facebook-square:hover,
+.entrepreneur-info .fa-twitter-square:hover,
+.entrepreneur-info .fa-facebook-square:hover{
+	color: #3cb6b6;
+}
+
+.product-info--text,
+.entrepreneur-info--text{
+	font-size: 100%;
+}
+
+.product-info--report a,
+.entrepreneur-info--report a{
+	color: #dc3545;
+}
+/*INFO*/
+
+
+.product-comments{
+	background: url(../../img/img-soyprovidencia/leaves-pattern.png);
+	background-repeat: repeat;
+}
+
+.product-comments .nav-tabs{
+	border-color: #3cb6b6;
+}
+
+.product-comments .nav-tabs .nav-link{
+	font-size: 120%;
+}
+
+.product-comments .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+	background-color: #3cb6b6;
+	border-color: #3cb6b6;
+	color: #fff;
+}
+
+.product-comments .nav-tabs .nav-link:hover{
+	border-color: #3cb6b6;
+}
+
+.product-comments .nav-tabs a{
+	color: #258d8d;
+}
+
+.ratings-comments{
+	padding: 30px;
+	border: 1px solid #ced4da;
+	border-radius: 10px;
+	background-color: #fff;
+}
+/*COMMENTS*/
+/* --------END PRODUCTO-------- */
+
+
+
+/* --------START EMPRENDEDOR-------- */
+.entrepreneur-top{
+	background: url(../../img/img-soyprovidencia/home-products-bg.png);
+	padding: 15px 0;
+}
+
+.entrepreneur-info--subtitle{
+	font-weight: 600;
+}
+/* --------END EMPRENDEDOR-------- */
+
+
+
+
+/* --------START INGRESAR-------- */
+.login{
+	background: url(../../img/img-soyprovidencia/feria.jpg);
+	background-size: cover;
+	background-position: center;
+}
+
+.login--content, .new-account--content{
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 70px 50px;
+	border-radius: 10px;
+}
+/* --------END INGRESAR-------- */
+
+
+
+
+/* --------START REGISTRO-------- */
+.new-account{
+	background: url(../../img/img-soyprovidencia/producto-1.jpg);
+	background-size: cover;
+	background-position: center;
+}
+/* --------END REGISTRO-------- */
+
+
 
 
 
@@ -346,7 +532,7 @@ body {
 	.home-slider .carousel-caption{
 		margin-bottom: 10px!important;
 	}
-	/*HOME SLIDER*/
+	/*HOME*/
 }
 
 @media screen and (max-width: 414px){
@@ -359,12 +545,51 @@ body {
 	.home-slider .carousel-caption{
 		margin-bottom: 90px!important;
 	}
-	/*HOME SLIDER*/
+	/*HOME*/
+	
+	.product-info, .entrepreneur-info{
+		text-align: center;
+	}
+	.product-info--title, .entrepreneur-info--title{
+		margin-top: 30px;
+	}
+	.product-info .btn, .product-comments .btn, .entrepreneur-info .btn{
+		width: 100%;
+	}
+	/*PRODUCT*/
+	
+	.login, .new-account{
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+	.login--content, .new-account--content{
+		padding: 40px 30px;
+	}
+	
+	.login--content .btn, .new-account--content .btn{
+		width: 100%;
+	}
+	/*LOGIN*/
 }
 
 @media screen and (max-width: 375px){
 	.home-slider--h2{
 		font-size: 180%;
 	}
-	/*HOME SLIDER*/
+	/*HOME*/
+	
+	.login--content{
+		padding: 30px 20px;
+	}
+	/*LOGIN*/
+	
+	.new-account{
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	
+	.new-account--content{
+		padding: 30px 15px;
+	}
+	/*NEW ACCOUNT*/
 }

@@ -13,17 +13,19 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="carousel-img d-block w-100" src="img/img/home-slider-1.jpg" alt="First slide">
+                            <img class="carousel-img d-block w-100" src="img/img-soyprovidencia/home-slider-1.jpg" alt="First slide">
                             <div class="carousel-caption text-left mb-5">
                                 <h2 class="home-slider--h2 h2 mb-4">Bienvenido a la Comunidad de emprendedores de Providencia</h2>
-                                <a class="btn btn-primary btn-primary__turquoise mb-2" href="#" role="button">Ir a Publicaciones</a>
+                                <nuxt-link :to="{ path: '/listado-productos'}" class="btn btn-primary btn-primary__turquoise mb-2"  role="button">
+                                Ir a publicaciones
+                                </nuxt-link>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100" src="img/img/home-slider-2.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100" src="img/img-soyprovidencia/home-slider-2.jpg" alt="Second slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100" src="img/img/home-slider-3.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100" src="img/img-soyprovidencia/home-slider-3.jpg" alt="Third slide">
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -103,7 +105,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR">
+                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR" v-if="!entrepreneur.usuario.FLAG_BAN">
                                     <div class="card">
                                         <nuxt-link :to="'/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR" class="card-img-link">
                                           <img v-if="!entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
@@ -131,22 +133,6 @@
     </div>
 </section>
 <!-- /HOME-ENTREPRENEUR -->
-
-
-
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <p class="footer--top-text p text-white">Av. Pedro de Valdivia 963 | Providencia, Santiago de Chile | Mesa Central: +562 2654 3200</p>
-                <p class="footer--bottom-text p text-white">Horario General: Lunes a Jueves: 8:30 a 14 y 15 a 17 hrs. / Viernes: 8:30 a 14 y de 15 a 16 hrs. | municipalidad@providencia.cl</p>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- /FOOTER -->
-<!-- ############################################################################### -->
     
   </section>
 </template>
@@ -183,7 +169,7 @@ export default {
     let postsAux = (await controllerPosts.GETAll(app)).posts
     postsAux.forEach(post => {
       // Se verifica que el post no este baneado, este vigente y haya sido validado por un administrador.
-      if (!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO) {
+      if (!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
         // Se le da formato a los precios, '$ 0,0' produce: 1500 -> $ 1.500
         post.NUMR_PRECIO = Numeral(post.NUMR_PRECIO).format('$ 0,0')
         posts.push(post)
