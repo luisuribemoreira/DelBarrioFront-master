@@ -176,7 +176,12 @@ export default {
           let deshabilitacionUsuario = data.deshabilitacionUsuario
           deshabilitacionUsuario.FLAG_VIGENTE = false // Se habilita nuevamente el usuario, dejando como no vigente su ultima deshabilitacion.
           await controllerAccountDisable.PUT(this, deshabilitacionUsuario)
-          await controller.setState(this, entrepreneur)
+          let mail = entrepreneur.usuario.EMAIL_USUARIO
+          let setState = await controller.setState(this, entrepreneur)
+          if (setState.disabled) {
+            emailer.sendMail(this, mail, 'Usuario reactivado',
+              'Estimado: Le informamos que su cuenta a sido activada nuevamente para entrar en el portal Del Barrio .')
+          }
           this.processing = false
         }
       }
