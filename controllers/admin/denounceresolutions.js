@@ -44,23 +44,23 @@ function POST (context) {
       // Do nothing
       break
   }
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/resolucion_denuncia',
     {
       IDEN_USUARIO: dummyEntity.IDEN_USUARIO,
       IDEN_DENUNCIA: dummyEntity.IDEN_DENUNCIA,
       DESC_RESOLUCION: dummyEntity.DESC_RESOLUCION
     }
-  ).then(response => {
+  ).then(async (response) => {
     if (context.isBan) {
       context.id = context.denouncedetail.IDEN_PUBLICACION ? context.denouncedetail.IDEN_PUBLICACION : context.denouncedetail.IDEN_CALIFICACION ? context.denouncedetail.IDEN_CALIFICACION : context.denouncedetail.IDEN_COMENTARIO
       context.model = context.denouncedetail.IDEN_PUBLICACION ? 'publicacion' : context.denouncedetail.IDEN_CALIFICACION ? 'calificacion' : 'comentario'
-      this.ban(context)
+      let err = this.ban(context)
+      if (err) return err
     } else {
       context.$notify.success('Se ha resuelto denuncia.')
     }
   }).catch(errors => {
-    console.log(errors)
     // Limpiar objeto dummy
     switch (context.type) {
       case 'pub':
@@ -77,12 +77,12 @@ function POST (context) {
         break
     }
     context.$notify.danger('Error. Intente más tarde.')
+    return errors
   })
 }
 
 function ban (context) {
-  console.log('private/' + context.model + '/' + context.id)
-  context.$axios.$put(
+  return context.$axios.$put(
     'private/' + context.model + '/' + context.id,
     {
       FLAG_BAN: true
@@ -91,6 +91,7 @@ function ban (context) {
     context.$notify.success('Se ha resuelto denuncia.')
   }).catch(errors => {
     context.$notify.danger('Error. Intente más tarde.')
+    return errors
   })
 }
 
