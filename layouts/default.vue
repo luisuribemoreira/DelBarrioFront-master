@@ -325,7 +325,7 @@ export default {
         if (this.items) {
           if (this.posts.length > 0) {
             this.posts.forEach(post => {
-              if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
+              if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
                 if (post.NOMB_PUBLICACION.match(new RegExp(this.search.nombre, 'gi')) !== null) {
                   this.items.push({
                     id: 0,
@@ -339,7 +339,7 @@ export default {
 
           if (this.entrepreneurs.length > 0) {
             this.entrepreneurs.forEach(entrepreneur => {
-              if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) {
+              if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION && !entrepreneur.usuario.FLAG_BAN) {
                 if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search.nombre, 'gi')) !== null) {
                   this.items.push({
                     id: 0,
