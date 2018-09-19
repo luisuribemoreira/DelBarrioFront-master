@@ -27,9 +27,10 @@ function GETAll (app) {
 // =======================================================================================
 function POST (context) {
   if (context.answer.DESC_RESPUESTA === undefined || context.answer.DESC_RESPUESTA.length < 1 || context.answer.DESC_RESPUESTA > 255) {
-    context.message.answer = 'Ingrese respuesta'
+    context.message.answer = 'Ingrese una respuesta'
     context.message.error = true
   } else {
+    context.message.error = false
     // Creacion de objeto dummy para simular respuesta instantánea del server
     let dummyEntity = {
       DESC_RESPUESTA: context.answer.DESC_RESPUESTA,
@@ -39,7 +40,7 @@ function POST (context) {
     context.answer = {}
     // Agrega objeto respuesta a la propiedad respuesta del comentario correspondiente
     context.post.comentarios.find((comment) => comment.IDEN_COMENTARIO === parseInt(context.selected)).respuesta = dummyEntity
-    context.$axios.$post(
+    return context.$axios.$post(
       'private/respuesta',
       {
         IDEN_COMENTARIO: parseInt(context.selected),

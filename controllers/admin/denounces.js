@@ -12,7 +12,7 @@ function GETAll (app) {
 }
 
 function ratingDenounce (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/denuncia',
     {
       IDEN_CALIFICACION: context.iden,
@@ -27,7 +27,7 @@ function ratingDenounce (context) {
 }
 
 function postDenounce (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/denuncia',
     {
       IDEN_PUBLICACION: context.post.IDEN_PUBLICACION,
@@ -42,7 +42,7 @@ function postDenounce (context) {
 }
 
 function commentDenounce (context) {
-  context.$axios.$post(
+  return context.$axios.$post(
     'private/denuncia',
     {
       IDEN_COMENTARIO: context.iden,
@@ -63,12 +63,12 @@ function POST (context) {
   } else {
     parseInt(context.denounce.IDEN_MOTIVO_DENUNCIA)
     if (context.type === 'pub') {
-      this.postDenounce(context)
+      return this.postDenounce(context)
     } else {
       if (context.type === 'com') {
-        this.commentDenounce(context)
+        return this.commentDenounce(context)
       } else {
-        this.ratingDenounce(context)
+        return this.ratingDenounce(context)
       }
     }
   }
