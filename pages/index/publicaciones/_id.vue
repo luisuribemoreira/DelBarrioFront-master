@@ -80,7 +80,7 @@
             </div>
           </social-sharing>
           <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-          <a href="#" @click="type = 'pub'" class="margin-top label label-danger" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><icon name="exclamation-circle"></icon><span style="vertical-align: super"> Denunciar</span></a>
+          <a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" class="margin-top label label-danger" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><icon name="exclamation-circle"></icon><span style="vertical-align: super"> Denunciar</span></a>
           </div>
           <p v-if="!post.FLAG_VALIDADO" class="margin-top">Esta publicación ha sido aceptada automáticamente y no ha pasado por moderación</p>
         </div>
@@ -119,7 +119,7 @@
                 <button type="submit" class="btn btn-default">Calificar</button>
               </form>
             </div>
-          </div>  
+          </div>
           <div id="rating" class="row mt-5" v-if="post.calificaciones.length > 0">
             <div class="col-12">
               <h3>Última calificación</h3>
@@ -135,7 +135,7 @@
               </div>
               <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}}</small>
               <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
-              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
+              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0].DESC_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
               <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
             </div>
           </div>
@@ -169,9 +169,9 @@
           <!--FIN FORM DE COMENTAR-->
           </div> <!-- col -->
         </div><!-- row -->
-
+        <!--  -->
         <div id="listComentarios" class="row mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
-          <div v-if="c.FLAG_BAN" class="col-12">
+          <div v-if="c.FLAG_BAN || c.usuario.FLAG_BAN" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
               <span> Este comentario ha sido eliminado por no cumplir con los <a target="_blank" :href="terms">términos y condiciones</a> del sitio</span>
@@ -213,7 +213,7 @@
             </div>
             <!-- FIN FORM RESPUESTA -->
             <p>
-              <a v-if="!c.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
+              <a v-if="!c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
             </p>
           </div>
         </div><!-- /container -->
@@ -242,7 +242,7 @@
               </no-ssr>
               <p><small>{{rating.FECH_CREACION | dateFormat}}</small></p>
               <p>{{rating.DESC_CALIFICACION}} </p>
-              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0]" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
+              <p><a href="#" @click="type = 'cal', iden = rating.IDEN_CALIFICACION, denItem = rating.DESC_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
               <hr>
             </div>
           </div>
@@ -262,7 +262,8 @@
             <h4 class="modal-title">Denunciar {{type == 'pub' ? 'publicación' : type == 'cal' ? 'calificación' : 'comentario'}}</h4>
           </div>
           <div class="modal-body">
-            <p></p>
+            <h5>Descripción {{type == 'pub' ? 'publicación' : type == 'cal' ? 'calificación' : 'comentario'}}</h5>
+            <p>{{ denItem }}</p>
             <form @submit.prevent="validateDenounce()">
               <h5>Selecciona tu motivo de denuncia</h5>
               <div class="form-group" :key="denouncereason.IDEN_MOTIVO_DENUNCIA" v-for="denouncereason in denouncereasons" v-if="denouncereason.FLAG_VIGENTE">
@@ -341,6 +342,14 @@ export default {
         if (!publicacion) redirect('/')
         let post = publicacion.post
         let contactos = {}
+        // Filtro de calificaciones con usuarios baneados.
+        let calificaciones = []
+        post.calificaciones.forEach(calificacion => {
+          if (!calificacion.FLAG_BAN && !calificacion.usuario.FLAG_BAN) calificaciones.push(calificacion)
+        })
+        post.calificaciones = calificaciones
+        if (post.calificaciones.length < 5) post.NUMR_CALIFICACION = 0
+        // Asignacion de contactos de forma segura
         try {
           // Telefono se inicializa distinto ya que este es opcional y puede no existir.
           contactos.telefono = post.emprendedor.usuario.persona.contacto.Telefono
