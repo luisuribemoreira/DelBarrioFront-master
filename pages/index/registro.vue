@@ -4,26 +4,26 @@
     <div class="container">
       <div class="row">
         <div class="new-account--content col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-          <h2 class="h2 text-center">Registro</h2>
+          <h2 class="h2 text-center">Registro de Cliente</h2>
           <form  class="mt-4" @submit.prevent="validateBeforeSubmit">
               <div class="form-group">
               <label for="email">Correo electrónico</label><span style="color: grey"> (Formato ej: cliente@cliente.cl)</span>
-              <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model.trim="user.EMAIL_USUARIO" class="form-control"/>
+              <input v-validate data-vv-rules="required|email" data-vv-as="correo electrónico" name="email" type="text" v-model.trim="user.EMAIL_USUARIO" class="form-control" :maxlength="55"/>
               <small class="text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</small>
             </div>
             <div class="form-group">
               <label for="name">Nombres</label><span style="color: grey"> (Formato ej: Marcelo Antonio)</span>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model.trim="persona.NOMBRES" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model.trim="persona.NOMBRES" class="form-control" :maxlength="35"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group">
               <label for="lastname">Apellido Paterno</label><span style="color: grey"> (Formato ej: Pérez)</span>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model.trim="persona.APELLIDO_PATERNO" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model.trim="persona.APELLIDO_PATERNO" class="form-control" :maxlength="35"/>
               <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
             </div>
             <div class="form-group">
               <label for="lastname2">Apellido Materno</label><span style="color: grey"> (Formato ej: Gallardo)</span>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model.trim="persona.APELLIDO_MATERNO" class="form-control"/>
+              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model.trim="persona.APELLIDO_MATERNO" class="form-control" :maxlength="35"/>
               <small class="text-danger" v-show="errors.has('lastname2')">{{ errors.first('lastname2') }}</small>
             </div>
             <div class="form-group">
