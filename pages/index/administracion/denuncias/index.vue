@@ -194,7 +194,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button ref="dismissModal" type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Detalle de denuncia</h4>
           </div>
           <div class="modal-body">
@@ -225,7 +225,7 @@
             <p>{{denouncedetail.DESC_DENUNCIA}}</p>
             <hr class="margin-top">
             <!-- RESOLUCIÓN DE LA DENUNCIA (SI EXISTE) -->
-            <div v-if="denouncedetail.resolucion_denuncia && Object.keys(denouncedetail.resolucion_denuncia).length !== 0">
+            <div v-if="denouncedetail.resolucion_denuncia && denouncedetail.resolucion_denuncia.usuario">
               <h4>Resolución de denuncia</h4>
               <label><b>Fecha de resolución</b></label>
               <p>{{denouncedetail.resolucion_denuncia.FECH_CREACION | dateFormat}}</p>
@@ -256,7 +256,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onClick="window.location.reload()">Volver</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
           </div>
         </div>
       </div>
@@ -290,7 +290,8 @@ export default {
       postsAux2: [],
       postsAux3: [],
       pages: 0,
-      pagination: 0
+      pagination: 0,
+      processing: false
     }
   },
   computed: mapGetters([
@@ -397,54 +398,64 @@ export default {
       }
     },
     validate () {
-      this.$validator.validateAll().then((result) => {
+      if (this.processing) return
+      this.processing = true
+      this.$validator.validateAll().then(async (result) => {
         if (result) {
-          switch (this.type) {
-            case 'pub':
-              let mailDenunciado = this.denouncedetail.publicacion.emprendedor.usuario.EMAIL_USUARIO
-              let mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
-              let nombrePublicacion = this.denouncedetail.publicacion.NOMB_PUBLICACION
-              if (this.isBan) {
-                emailer.sendMail(this, mailDenunciado, 'Publicación Denunciada',
-                  'Hemos recibido una denuncia de su publicación llamada: "' + nombrePublicacion + '" la cual fue baneada porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
-                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                  'Hemos recibido su denuncia hacia la publicación: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
-              } else {
-                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                  'Hemos recibido su denuncia hacia la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la publicación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
-              }
-              break
-            case 'com':
-              mailDenunciado = this.denouncedetail.comentario.publicacion.emprendedor.usuario.EMAIL_USUARIO
-              mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
-              nombrePublicacion = this.denouncedetail.comentario.publicacion.denounceresolution
-              if (this.isBan) {
-                emailer.sendMail(this, mailDenunciado, 'Comentario Denunciado',
-                  'Hemos recibido una denuncia de su comentario en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
-                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                  'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
-              } else {
-                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                  'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
-              }
-              break
-            case 'cal':
-              mailDenunciado = this.denouncedetail.calificacion.publicacion.emprendedor.usuario.EMAIL_USUARIO
-              mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
-              nombrePublicacion = this.denouncedetail.calificacion.publicacion.DESC_PUBLICACION
-              if (this.isBan) {
-                emailer.sendMail(this, mailDenunciado, 'Calificación Denunciada',
-                  'Hemos recibido una denuncia de su calificacion en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
-                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                  'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
-              } else {
-                emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                  'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la calificación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
-              }
-              break
+          let err = await resolutioncontroller.POST(this)
+          if (!err) {
+            switch (this.type) {
+              case 'pub':
+                let mailDenunciado = this.denouncedetail.publicacion.emprendedor.usuario.EMAIL_USUARIO
+                let mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
+                let nombrePublicacion = this.denouncedetail.publicacion.NOMB_PUBLICACION
+                if (this.isBan) {
+                  emailer.sendMail(this, mailDenunciado, 'Publicación Denunciada',
+                    'Hemos recibido una denuncia de su publicación llamada: "' + nombrePublicacion + '" la cual fue baneada porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                  emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                    'Hemos recibido su denuncia hacia la publicación: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                } else {
+                  emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                    'Hemos recibido su denuncia hacia la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la publicación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                }
+                break
+              case 'com':
+                mailDenunciado = this.denouncedetail.comentario.publicacion.emprendedor.usuario.EMAIL_USUARIO
+                mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
+                nombrePublicacion = this.denouncedetail.comentario.publicacion.denounceresolution
+                if (this.isBan) {
+                  emailer.sendMail(this, mailDenunciado, 'Comentario Denunciado',
+                    'Hemos recibido una denuncia de su comentario en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                  emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                    'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                } else {
+                  emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                    'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                }
+                break
+              case 'cal':
+                mailDenunciado = this.denouncedetail.calificacion.publicacion.emprendedor.usuario.EMAIL_USUARIO
+                mailDenunciante = this.denouncedetail.usuario.EMAIL_USUARIO
+                nombrePublicacion = this.denouncedetail.calificacion.publicacion.DESC_PUBLICACION
+                if (this.isBan) {
+                  emailer.sendMail(this, mailDenunciado, 'Calificación Denunciada',
+                    'Hemos recibido una denuncia de su calificacion en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                  emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                    'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                } else {
+                  emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
+                    'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la calificación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                }
+                break
+            }
+            setTimeout(() => {
+              location.reload()
+            }, 1000)
           }
-          resolutioncontroller.POST(this)
+          this.denounceresolution = {DESC_RESOLUCION: ''}
+          this.$refs.dismissModal.click()
         }
+        this.processing = false
       })
     }
   },
