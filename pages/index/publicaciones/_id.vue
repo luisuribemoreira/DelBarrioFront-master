@@ -91,9 +91,8 @@
   <div id="interacciones" v-if="isAuthenticated">
     <!-- CALIFICACIONES -->
     <section id="calificaciones" class="container-fluid">
-      <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
         <div class="container">
-          <div class="row">
+          <div class="row" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
             <div class="col-12">
               <hr>
               <h2 class="margin-top">Calificaciones</h2>
@@ -117,40 +116,37 @@
                   ></textarea>
                 </div>
                 <small class="text-danger" v-show="errors.has('value')">{{ errors.first('value') }}</small>
-
                 <button type="submit" class="btn btn-default">Calificar</button>
               </form>
             </div>
-          </div>
-        </div>
-        </div>      
-        <div id="rating" class="row margin-top" v-if="post.calificaciones.length > 0">
-          <div class="col-12">
-            <h3>Última calificación</h3>
-            <div class="estrellas">
-              <no-ssr>
-                <star-rating
-                  v-model="post.calificaciones[0].NUMR_VALOR"
-                  :increment="1"
-                  :star-size="35"
-                  :read-only="true">
-                </star-rating>
-              </no-ssr>
+          </div>  
+          <div id="rating" class="row mt-5" v-if="post.calificaciones.length > 0">
+            <div class="col-12">
+              <h3>Última calificación</h3>
+              <div class="estrellas">
+                <no-ssr>
+                  <star-rating
+                    v-model="post.calificaciones[0].NUMR_VALOR"
+                    :increment="1"
+                    :star-size="35"
+                    :read-only="true">
+                  </star-rating>
+                </no-ssr>
+              </div>
+              <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}}</small>
+              <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
+              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
+              <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
             </div>
-            <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}}</small>
-            <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
-            <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
-            <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
           </div>
-      </div><!-- /container -->
+        </div><!-- /container -->
       
     </section><!-- /Calificaciones -->
 
     <!-- COMENTARIOS -->
     <section id="comentarios" name="comentarios" class="container-fluid">
-        <div v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
         <div class="container">  
-        <div class="row">
+        <div class="row" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
           <div class="col-12">
           <hr>
           <h2 class="margin-top">Comentarios</h2>
@@ -170,11 +166,11 @@
             <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}</small>
             <p><button type="submit" class="btn btn-default">Comentar</button></p>
           </form>
-          
           <!--FIN FORM DE COMENTAR-->
-        </div>
-        </div>
-        <div id="listComentarios" class="row margin-top" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
+          </div> <!-- col -->
+        </div><!-- row -->
+
+        <div id="listComentarios" class="row mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
           <div v-if="c.FLAG_BAN" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
@@ -187,7 +183,7 @@
               <small class="margin-left"> {{c.FECH_CREACION | dateFormat}}</small>
               {{c.DESC_COMENTARIO}}
             </p>
-            <p v-if="c.respuesta.DESC_RESPUESTA" class="margin-top-20">
+            <p v-if="c.respuesta.DESC_RESPUESTA" class="mt-3 ml-3">
               <icon name="comments-o"> </icon>
               <small> {{c.respuesta.FECH_CREACION | dateFormat}}</small>
               {{c.respuesta.DESC_RESPUESTA}}
@@ -209,6 +205,7 @@
                     v-model.trim="answer.DESC_RESPUESTA">
                   </textarea>
                 </div>
+                <small class="text-danger" v-if="message.error">{{ message.answer }}</small> <br/>
                 <small class="text-danger" v-show="errors.has('resp')">{{ errors.first('resp') }}</small>
                 <p><button type="submit" class="btn btn-default">Comentar</button></p>
               </form>
@@ -216,11 +213,10 @@
             </div>
             <!-- FIN FORM RESPUESTA -->
             <p>
-              <a href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
+              <a v-if="!c.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
             </p>
           </div>
-        </div>
-      </div><!-- /container -->
+        </div><!-- /container -->
     </section><!-- /Comentarios -->
   </div>
 
@@ -246,7 +242,7 @@
               </no-ssr>
               <p><small>{{rating.FECH_CREACION | dateFormat}}</small></p>
               <p>{{rating.DESC_CALIFICACION}} </p>
-              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
+              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0]" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
               <hr>
             </div>
           </div>
@@ -266,6 +262,7 @@
             <h4 class="modal-title">Denunciar {{type == 'pub' ? 'publicación' : type == 'cal' ? 'calificación' : 'comentario'}}</h4>
           </div>
           <div class="modal-body">
+            <p></p>
             <form @submit.prevent="validateDenounce()">
               <h5>Selecciona tu motivo de denuncia</h5>
               <div class="form-group" :key="denouncereason.IDEN_MOTIVO_DENUNCIA" v-for="denouncereason in denouncereasons" v-if="denouncereason.FLAG_VIGENTE">
@@ -405,7 +402,10 @@ export default {
       imageUrl: process.env.imagesUrl,
       post: [],
       terms: process.env.termsUrl,
-      contactos: {}
+      contactos: {},
+      denItem: {},
+      processing: false,
+      message: { error: false, answer: '' }
     }
   },
   computed: mapGetters([
@@ -414,29 +414,46 @@ export default {
   ]),
   methods: {
     validateComment () {
-      this.$validator.validate('com').then((result) => {
-        if (result) commentscontroller.POST(this)
+      if (this.processing) return
+      this.processing = true
+      this.$validator.validate('com').then(async (result) => {
+        if (result) {
+          await commentscontroller.POST(this)
+        }
+        this.processing = false
       })
     },
     validateAnswer () {
-      this.$validator.validate('resp').then((result) => {
-        if (result) answerscontroller.POST(this)
+      if (this.processing) return
+      this.processing = true
+      this.$validator.validate('resp').then(async (result) => {
+        if (result) {
+          await answerscontroller.POST(this)
+        }
+        this.processing = false
       })
     },
-    validateRating () {
+    async validateRating () {
+      if (this.processing) return
+      this.processing = true
       if (this.rating.NUMR_VALOR != null) {
         if (this.rating.IDEN_CALIFICACION) {
-          ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
+          await ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
         } else {
-          ratingscontroller.POST(this)
+          await ratingscontroller.POST(this)
         }
-      } else {
-        console.log('')
       }
+      this.processing = false
     },
     validateDenounce () {
-      this.$validator.validate('description').then((result) => {
-        if (result) denouncecontroller.POST(this)
+      if (this.processing) return
+      this.processing = true
+      console.log(this.denItem)
+      this.$validator.validate('description').then(async (result) => {
+        if (result) {
+          await denouncecontroller.POST(this)
+        }
+        this.processing = false
       })
     }
   },
