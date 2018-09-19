@@ -341,6 +341,7 @@ export default {
       .then(publicacion => {
         if (!publicacion) redirect('/')
         let post = publicacion.post
+        if (post.emprendedor.usuario.FLAG_BAN) redirect('/')
         let contactos = {}
         // Filtro de calificaciones con usuarios baneados.
         let calificaciones = []
