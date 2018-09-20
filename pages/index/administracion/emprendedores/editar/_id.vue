@@ -9,7 +9,7 @@
             <h4>Datos del Emprendimiento</h4>
             <div class="form-group margin-top">
               <label for="realname">Nombre Empresa</label>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre empresa" name="realname" type="text" v-model.trim="entrepreneur.DESC_NOMBRE_EMPRESA" class="form-control"/>
+              <input v-validate data-vv-rules="required" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}" title="Sólo letras" data-vv-as="nombre empresa" name="realname" type="text" v-model.trim="entrepreneur.DESC_NOMBRE_EMPRESA" class="form-control"/>
               <small class="text-danger" v-show="errors.has('realname')">{{ errors.first('realname') }}</small>
             </div>
             <div class="form-group margin-top">

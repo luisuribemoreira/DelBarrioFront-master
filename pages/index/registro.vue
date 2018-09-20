@@ -13,17 +13,17 @@
             </div>
             <div class="form-group">
               <label for="name">Nombres</label><span style="color: grey"> (Formato ej: Marcelo Antonio)</span>
-              <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model.trim="persona.NOMBRES" class="form-control" :maxlength="35"/>
+              <input v-validate data-vv-rules="required" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" title="Sólo letras" data-vv-as="nombre" name="name" type="text" v-model.trim="persona.NOMBRES" class="form-control" :maxlength="35"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group">
               <label for="lastname">Apellido Paterno</label><span style="color: grey"> (Formato ej: Pérez)</span>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido paterno" name="lastname" type="text" v-model.trim="persona.APELLIDO_PATERNO" class="form-control" :maxlength="35"/>
+              <input v-validate data-vv-rules="required" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}" title="Sólo letras" data-vv-as="apellido paterno" name="lastname" type="text" v-model.trim="persona.APELLIDO_PATERNO" class="form-control" :maxlength="35"/>
               <small class="text-danger" v-show="errors.has('lastname')">{{ errors.first('lastname') }}</small>
             </div>
             <div class="form-group">
               <label for="lastname2">Apellido Materno</label><span style="color: grey"> (Formato ej: Gallardo)</span>
-              <input v-validate data-vv-rules="required" data-vv-as="apellido materno" name="lastname2" type="text" v-model.trim="persona.APELLIDO_MATERNO" class="form-control" :maxlength="35"/>
+              <input v-validate data-vv-rules="required" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}" title="Sólo letras" data-vv-as="apellido materno" name="lastname2" type="text" v-model.trim="persona.APELLIDO_MATERNO" class="form-control" :maxlength="35"/>
               <small class="text-danger" v-show="errors.has('lastname2')">{{ errors.first('lastname2') }}</small>
             </div>
             <div class="form-group">
