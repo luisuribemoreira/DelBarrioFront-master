@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="!post.FLAG_BAN">
   <section id="el-producto" class="container-fluid">
     <div class="container">
       <div class="row margin-top-sec">
@@ -320,6 +320,9 @@
       </div>
     </div>
   </section>
+</div>
+<div v-else style="text-align:center">
+ Esta publicación ha sido baneada.
 </div>
 
 </template>
