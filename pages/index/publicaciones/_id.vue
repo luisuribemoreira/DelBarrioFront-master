@@ -1,5 +1,240 @@
 <template>
+
 <div v-if="!post.FLAG_BAN">
+  <section class="product-top section">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item breadcrumb-item--home"><a href="/">Inicio</a></li>
+              <li class="breadcrumb-item"><a href="publicaciones">Publicaciones</a></li>
+              <li class="breadcrumb-item"><a href="publicaciones">{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{post.NOMB_PUBLICACION}}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- fin ruta -->
+
+  <section class="product-info section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <div id="product-info--carousel" class="carousel slide" v-for="imagen in post.imagenes" :key="imagen.IDEN_IMAGEN">
+            <!-- main slider carousel items -->
+            <div class="carousel-inner">
+              <div class="active item carousel-item" data-slide-number="0">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+              </div>
+              <div class="item carousel-item" data-slide-number="1">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+              </div>
+              <div class="item carousel-item" data-slide-number="2">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+              </div>
+              <div class="item carousel-item" data-slide-number="3">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+              </div>
+            </div>
+
+            <!-- main slider carousel nav controls -->
+            <ul class="carousel-indicators list-inline mt-3">
+              <li class="list-inline-item active">
+                <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#product-info--carousel">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a id="carousel-selector-1" data-slide-to="1" data-target="#product-info--carousel">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a id="carousel-selector-2" data-slide-to="2" data-target="#product-info--carousel">
+               <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a id="carousel-selector-3" data-slide-to="3" data-target="#product-info--carousel">
+                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
+                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="social-media mt-5 text-center">
+            <a href="#" class="pl-2 pr-2"><i class="fab fa-facebook-square"></i></a>
+            <a href="#" class="pl-2 pr-2"><i class="fab fa-twitter-square"></i></a>
+          </div>
+        </div>
+        <!-- /col images -->
+        
+        <div class="col-md-7">
+          <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
+          <h3 class="product-info--price h3">${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
+          <div class="stars mt-3">
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="far fa-star text-warning"></i>
+            <i class="far fa-star text-warning"></i>
+          </div>
+          <p class="mt-3"><i class="far fa-eye"></i> ({{post.NUMR_CONTADOR}})</p>
+          <p><a href="#">Comentarios ({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a></p>
+          <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
+          <p class="product-info--report mt-4"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar publicación</a></p>
+
+        </div>
+        <!-- /col info -->
+      </div>
+    </div>
+  </section>
+  <!-- /INFO -->
+  <section>
+    <div class="container-fluid">
+      <div class="container">
+        <hr>
+          <h2>Informacion del vendedor</h2>
+            <p>
+              <!-- aqui va el nombre de la empresa -->
+              Nombre: 
+              {{post.emprendedor.DESC_NOMBRE_FANTASIA}}
+            </p>
+            <p>
+              Descripcion:
+              {{post.emprendedor.DESC_EMPRENDEDOR}}
+            </p>
+            <a class="btn btn-primary btn-primary__turquoise mt-4" href="#" role="button">Contactar a Vendedor</a>
+          <hr>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-comments section">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="ratings-tab" data-toggle="tab" href="#ratings" role="tab" aria-controls="ratings" aria-selected="true">Calificaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comentarios</a>
+            </li>
+          </ul>
+          <!-- /Tabs Nav-->
+          
+          <div class="tab-content pt-5 pb-5">
+            <div class="tab-pane active" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
+              <div class="ratings-form">
+                <h2><i class="far fa-thumbs-up text-turquoise"></i> Calificaciones</h2>
+                <p class="mt-3">Ingresa tu calificación</p>
+
+                <div class="stars mt-3">
+                  <i class="far fa-star fa-2x text-warning"></i>
+                  <i class="far fa-star fa-2x text-warning"></i>
+                  <i class="far fa-star fa-2x text-warning"></i>
+                  <i class="far fa-star fa-2x text-warning"></i>
+                  <i class="far fa-star fa-2x text-warning"></i>
+                </div>
+
+                <form class="mt-3">
+                  <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-danger mt-2">Calificar</button>
+                </form>
+              </div>
+              
+              <div class="ratings-comments mt-5">
+                <h3>Juan Paredes</h3>
+                <div class="stars mt-2">
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="far fa-star fa-lg text-warning"></i>
+                  <i class="far fa-star fa-lg text-warning"></i>
+                </div>
+                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
+                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
+              </div>
+              
+              <div class="ratings-comments mt-5">
+                <h3>María Ruiz</h3>
+                <div class="stars mt-2">
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                  <i class="fas fa-star fa-lg text-warning"></i>
+                </div>
+                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
+                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
+              </div>
+            </div>
+            <!-- /Ratings -->
+            
+            <div class="tab-pane" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+              <div class="comments-form">
+                <h2><i class="far fa-comments text-turquoise"></i> Comentarios</h2>
+                <p class="mt-3">Ingresa tu comentario</p>
+
+                <form class="mt-2">
+                  <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-danger mt-2">Comentar</button>
+                </form>
+              </div>
+              
+              <div class="ratings-comments mt-5">
+                <h3>Jimena Ramírez</h3>
+                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
+                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
+              </div>
+              
+              <div class="ratings-comments mt-5">
+                <h3>Carlos Suazo</h3>
+                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
+                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
+              </div>
+            </div>
+            <!-- /Comments -->
+          </div>
+          <!-- /Tab Content -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /COMMENTS -->
+
+
+
+
+
+
+
+
+  <!--######################### separacion nuevo diseño/viejo #########################-->
+  <!-- no borre el diseño viejo, por si necesitaban ver algo. -->
+
+  
+
+
+
+
+
+
   <section id="el-producto" class="container-fluid">
     <div class="container">
       <div class="row margin-top-sec">
