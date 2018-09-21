@@ -86,8 +86,8 @@
                   <small class="text-danger" v-if="errorMsgs.end_date != undefined">{{ errorMsgs.end_date }}</small>
                 </div>
               </div>
-              <div v-if="messageOferta">
-                <span>{{messageOferta}}</span>
+              <div v-if="messageOferta" class="mb-2 mt-2">
+                <p class="text-danger">{{messageOferta}}</p>
               </div>
               <button type="submit" class="btn btn-default">Publicar</button>
             </form>
@@ -101,6 +101,7 @@
 import controller from '~/controllers/posts'
 import customvalidations from '~/controllers/customvalidations'
 import Datepicker from 'vuejs-datepicker'
+import moment from 'moment'
 
 export default {
   name: 'EditPost',
@@ -112,18 +113,32 @@ export default {
       errorMsgs: {},
       format: 'dd MMM, yyyy',
       imageUrl: process.env.imagesUrl,
-      processing: false
+      processing: false,
+      post: {},
+      editable: true
     }
   },
   asyncData ({ app, params, redirect }) {
     return controller.GET(app, params.id)
       .then(post => {
         if (!post) redirect('/')
-        return {
-          id: post.id,
-          post: post.post,
-          isSale: post.isSale,
-          sale: post.post.oferta
+        let fechaActual = moment().format('YYYY-MM-DD')
+        let fechaTermino = moment(post.post.oferta.FECH_TERMINO).format('YYYY-MM-DD')
+        // Solo permite edicion de la oferta si esta aun no ha sido validada
+        // Y la fecha de hoy es menor a la de termino (Para evitar edicion de ofertas no vigentes por fecha de termino y no de inicio.)
+        if (!post.post.oferta.FLAG_VALIDADO && moment(fechaActual).isBefore(fechaTermino)) {
+          return {
+            post: post.post,
+            isSale: post.isSale,
+            sale: post.post.oferta
+          }
+        } else {
+          return {
+            post: post.post,
+            isSale: post.isSale,
+            sale: post.post.oferta,
+            editable: false
+          }
         }
       })
   },
@@ -176,12 +191,13 @@ export default {
           }
 
           if (result) {
-            if (!this.isSale && this.post.oferta.IDEN_OFERTA !== undefined) {
-              await controller.removeSale(this, this.post.oferta.IDEN_OFERTA)
-              this.$router.push({ path: '/administracion/publicaciones' })
-            } else if (this.post.oferta.IDEN_OFERTA !== undefined) {
-              await controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
-              this.$router.push({ path: '/administracion/publicaciones' })
+            if (this.post.oferta.IDEN_OFERTA !== undefined) {
+              if (this.editable) {
+                await controller.updateSale(this, this.post.oferta.IDEN_OFERTA)
+                this.$router.push({ path: '/administracion/publicaciones' })
+              } else {
+                this.messageOferta = 'Esta oferta ya no es editable debido a que ya fue validada por un administrador. Debe esperar a que ésta termine o sea invalidada.'
+              }
             } else {
               await controller.addSale(this, this.post.IDEN_PUBLICACION)
               this.$router.push({ path: '/administracion/publicaciones' })
