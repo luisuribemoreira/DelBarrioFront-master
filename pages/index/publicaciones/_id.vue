@@ -1,6 +1,9 @@
 <template>
 
 <div v-if="!post.FLAG_BAN">
+<!-- COMENTADO POR AHORA
+      HASTA ENLAZAR DATOS
+
   <section class="product-top section">
     <div class="container">
       <div class="row">
@@ -17,14 +20,12 @@
       </div>
     </div>
   </section>
-<!-- fin ruta -->
 
   <section class="product-info section">
     <div class="container">
       <div class="row">
         <div class="col-md-5">
           <div id="product-info--carousel" class="carousel slide" v-for="imagen in post.imagenes" :key="imagen.IDEN_IMAGEN">
-            <!-- main slider carousel items -->
             <div class="carousel-inner">
               <div class="active item carousel-item" data-slide-number="0">
                 <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
@@ -44,7 +45,6 @@
               </div>
             </div>
 
-            <!-- main slider carousel nav controls -->
             <ul class="carousel-indicators list-inline mt-3">
               <li class="list-inline-item active">
                 <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#product-info--carousel">
@@ -77,7 +77,6 @@
             <a href="#" class="pl-2 pr-2"><i class="fab fa-twitter-square"></i></a>
           </div>
         </div>
-        <!-- /col images -->
         
         <div class="col-md-7">
           <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
@@ -95,18 +94,18 @@
           <p class="product-info--report mt-4"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar publicación</a></p>
 
         </div>
-        <!-- /col info -->
+        /col info 
       </div>
     </div>
   </section>
-  <!-- /INFO -->
+  /INFO
   <section>
     <div class="container-fluid">
       <div class="container">
         <hr>
           <h2>Informacion del vendedor</h2>
             <p>
-              <!-- aqui va el nombre de la empresa -->
+              aqui va el nombre de la empresa 
               Nombre: 
               {{post.emprendedor.DESC_NOMBRE_FANTASIA}}
             </p>
@@ -132,7 +131,7 @@
               <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comentarios</a>
             </li>
           </ul>
-          <!-- /Tabs Nav-->
+          /Tabs Nav
           
           <div class="tab-content pt-5 pb-5">
             <div class="tab-pane active" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
@@ -182,7 +181,7 @@
                 <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
               </div>
             </div>
-            <!-- /Ratings -->
+            /Ratings 
             
             <div class="tab-pane" id="comments" role="tabpanel" aria-labelledby="comments-tab">
               <div class="comments-form">
@@ -209,17 +208,16 @@
                 <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
               </div>
             </div>
-            <!-- /Comments -->
+            /Comments 
           </div>
-          <!-- /Tab Content -->
+          /Tab Content 
         </div>
       </div>
     </div>
   </section>
-  <!-- /COMMENTS -->
+   /COMMENTS
 
-
-
+  -->
 
 
 
@@ -579,7 +577,7 @@ export default {
       .then(publicacion => {
         if (!publicacion) redirect('/')
         let post = publicacion.post
-        if (post.emprendedor.usuario.FLAG_BAN) redirect('/')
+        // if (post.emprendedor.usuario.FLAG_BAN) redirect('/')
         let contactos = {}
         // Filtro de calificaciones con usuarios baneados.
         let calificaciones = []
