@@ -21,9 +21,9 @@
           <div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class=" nav-item active"><a href="#item1" class="nav-link"  aria-controls="item1" role="tab" data-toggle="tab">Publicaciones</a></li>
-              <li role="presentation" class=" nav-item"><a href="#item2" class="nav-link" aria-controls="item2" role="tab" data-toggle="tab">Comentarios</a></li>
-              <li role="presentation" class=" nav-item"><a href="#item3" class="nav-link" aria-controls="item3" role="tab" data-toggle="tab">Calificaciones</a></li>
+              <li role="presentation" class="nav-item"><a href="#item1" class="nav-link active show"  aria-controls="item1" aria-selected="true" role="tab" data-toggle="tab">Publicaciones</a></li>
+              <li role="presentation" class="nav-item"><a href="#item2" class="nav-link" aria-controls="item2" role="tab" data-toggle="tab">Comentarios</a></li>
+              <li role="presentation" class="nav-item"><a href="#item3" class="nav-link" aria-controls="item3" role="tab" data-toggle="tab">Calificaciones</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -41,7 +41,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="denounce in publicaciones" :key="denounce.IDEN_DENUNCIA">
+                    <tr v-for="denounce in paginatedPosts[paginationPosts]" :key="denounce.IDEN_DENUNCIA">
                       <td>
                         <nuxt-link :to="'/publicaciones/'+ denounce.publicacion.IDEN_PUBLICACION">{{denounce.publicacion.NOMB_PUBLICACION.substring(0,10)}}</nuxt-link>
                       </td>
@@ -62,18 +62,18 @@
             <ul class="pagination justify-content-center">
               <li class="page-item">
                 <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
-                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                <span aria-label="Previous" v-on:click="paginationPosts > 0 ? paginationPosts-- : ''">
                   <span class="page-link" :aria-hidden="true">&laquo;</span>
                 </span>
               </li>
               <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
-              <li class="page-item" v-bind:key="page" v-for="page in pages">
+              <li class="page-item" v-bind:key="page" v-for="page in paginatedPosts.length">
                 <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
-                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+                <span class="page-link" v-bind:class="{ 'font-weight-bold' : paginationPosts === page - 1 }" v-on:click="paginationPosts = page - 1">{{ page }}</span>
               </li>
               <li class="page-item">
                 <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
-                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                <span aria-label="Next" v-on:click="paginationPosts < paginatedPosts.length - 1 ? paginationPosts++ : ''">
                   <span class="page-link" :aria-hidden="true">&raquo;</span>
                 </span>
               </li>
@@ -94,7 +94,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="denounce in comentarios" :key="denounce.IDEN_DENUNCIA">
+                      <tr v-for="denounce in paginatedComments[paginationComments]" :key="denounce.IDEN_DENUNCIA">
                         <td>{{denounce.FECH_CREACION | dateFormat}}</td>
                         <td>{{denounce.usuario.EMAIL_USUARIO}}</td>
                         <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10) + "..."}}</td>
@@ -113,18 +113,18 @@
             <ul class="pagination justify-content-center">
               <li class="page-item">
                 <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
-                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                <span aria-label="Previous" v-on:click="paginationComments > 0 ? paginationComments-- : ''">
                   <span class="page-link" :aria-hidden="true">&laquo;</span>
                 </span>
               </li>
               <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
-              <li class="page-item" v-bind:key="page" v-for="page in pages">
+              <li class="page-item" v-bind:key="page" v-for="page in paginatedComments.length">
                 <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
-                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+                <span class="page-link" v-bind:class="{ 'font-weight-bold' : paginationComments === page - 1 }" v-on:click="paginationComments = page - 1">{{ page }}</span>
               </li>
               <li class="page-item">
                 <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
-                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                <span aria-label="Next" v-on:click="paginationComments < paginatedComments.length - 1 ? paginationComments++ : ''">
                   <span class="page-link" :aria-hidden="true">&raquo;</span>
                 </span>
               </li>
@@ -145,7 +145,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="denounce in calificaciones" :key="denounce.IDEN_DENUNCIA">
+                    <tr v-for="denounce in paginatedRatings[paginationRatings]" :key="denounce.IDEN_DENUNCIA">
                       <td>{{denounce.FECH_CREACION | dateFormat}}</td>
                       <td>{{denounce.usuario.EMAIL_USUARIO}}</td>
                       <td>{{denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.substring(0,10) + "..."}}</td>
@@ -164,18 +164,18 @@
             <ul class="pagination justify-content-center">
               <li class="page-item">
                 <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
-                <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
+                <span aria-label="Previous" v-on:click="paginationRatings > 0 ? paginationRatings-- : ''">
                   <span class="page-link" :aria-hidden="true">&laquo;</span>
                 </span>
               </li>
               <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
-              <li class="page-item" v-bind:key="page" v-for="page in pages">
+              <li class="page-item" v-bind:key="page" v-for="page in paginatedRatings.length">
                 <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
-                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+                <span class="page-link" v-bind:class="{ 'font-weight-bold' : paginationRatings === page - 1 }" v-on:click="paginationRatings = page - 1">{{ page }}</span>
               </li>
               <li class="page-item">
                 <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->
-                <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
+                <span aria-label="Next" v-on:click="paginationRatings < paginatedRatings.length - 1 ? paginationRatings++ : ''">
                   <span class="page-link" :aria-hidden="true">&raquo;</span>
                 </span>
               </li>
@@ -269,11 +269,24 @@ import controller from '~/controllers/admin/denounces'
 import resolutioncontroller from '~/controllers/admin/denounceresolutions'
 import moment from 'moment'
 import emailer from '~/controllers/admin/emailer'
+import customPaginator from '~/controllers/custompaginator'
 import { mapGetters } from 'vuex'
 
 export default {
-  asyncData ({ app }) {
-    return controller.GETAll(app)
+  async asyncData ({ app }) {
+    let denounces = await controller.GETAll(app)
+    let paginatedPosts = (await customPaginator.paginate(denounces.publicaciones)).paginatedData
+    let paginatedComments = (await customPaginator.paginate(denounces.comentarios)).paginatedData
+    let paginatedRatings = (await customPaginator.paginate(denounces.calificaciones)).paginatedData
+
+    return {
+      publicaciones: denounces.publicaciones,
+      comentarios: denounces.comentarios,
+      calificaciones: denounces.calificaciones,
+      paginatedPosts,
+      paginatedComments,
+      paginatedRatings
+    }
   },
   data () {
     return {
@@ -285,12 +298,16 @@ export default {
       publicaciones: [],
       comentarios: [],
       calificaciones: [],
+      paginatedPosts: [],
+      paginatedComments: [],
+      paginatedRatings: [],
       search: '',
       postsAux1: [],
       postsAux2: [],
       postsAux3: [],
-      pages: 0,
-      pagination: 0,
+      paginationPosts: 0,
+      paginationComments: 0,
+      paginationRatings: 0,
       processing: false
     }
   },
@@ -307,94 +324,115 @@ export default {
       this.buscarComentario()
       this.buscarCalificacion()
     },
-    buscarPublicacion () {
+    async buscarPublicacion () {
       // Copiar todas las denuncias de publicaciones, si existen, a una variable auxiliar para no perder la lista original
       if (this.postsAux1.length === 0) {
-        this.postsAux1 = this.publicaciones
+        this.postsAux1 = this.paginatedPosts
       }
 
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todas las denuncias de publicaciones en que el Motivo de denuncia o parte de ellos posea el texto escrito en el buscador
-        let postAux = this.postsAux1.map(denounce => {
+        let postAux = this.publicaciones.map(denounce => {
           if (denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denounce
         })
 
         // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
-        this.publicaciones = []
+        let postsFound = []
         postAux.forEach(denounce => {
-          if (denounce) this.publicaciones.push(denounce)
+          if (denounce) postsFound.push(denounce)
         })
 
         // Ordena el listado obtenido en orden lexicografico.
-        this.publicaciones.sort(function (a, b) {
-          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        postsFound.sort(function (a, b) {
+          return a.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.localeCompare(b.motivo_denuncia.NOMB_MOTIVO_DENUNCIA)
         })
+
+        let data = (await customPaginator.paginate(postsFound)).paginatedData
+        if (data) {
+          this.paginatedPosts = data
+          this.paginationPosts = 0
+        }
       }
 
       // Si no hay texto en el buscador se restaura la lista original
       if (this.search.length === 0) {
-        this.publicaciones = this.postsAux1
+        this.paginatedPosts = this.postsAux1
+        this.paginationPosts = 0
       }
     },
-    buscarComentario () {
+    async buscarComentario () {
       // Copiar todas las denuncias de comentarios, si existen, a una variable auxiliar para no perder la lista original
       if (this.postsAux2.length === 0) {
-        this.postsAux2 = this.comentarios
+        this.postsAux2 = this.paginatedComments
       }
 
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todas las denuncias de comentarios en que el Motivo de denuncia o parte de ellos posea el texto escrito en el buscador
-        let postAux = this.postsAux2.map(denounce => {
+        let postAux = this.comentarios.map(denounce => {
           if (denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denounce
         })
 
         // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
-        this.comentarios = []
+        let commentsFound = []
         postAux.forEach(denounce => {
-          if (denounce) this.comentarios.push(denounce)
+          if (denounce) commentsFound.push(denounce)
         })
 
         // Ordena el listado obtenido en orden lexicografico.
-        this.comentarios.sort(function (a, b) {
-          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        commentsFound.sort(function (a, b) {
+          return a.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.localeCompare(b.motivo_denuncia.NOMB_MOTIVO_DENUNCIA)
         })
+
+        let data = (await customPaginator.paginate(commentsFound)).paginatedData
+        if (data) {
+          this.paginatedComments = data
+          this.paginationComments = 0
+        }
       }
 
       // Si no hay texto en el buscador se restaura la lista original
       if (this.search.length === 0) {
-        this.comentarios = this.postsAux2
+        this.paginatedComments = this.postsAux2
+        this.paginationComments = 0
       }
     },
-    buscarCalificacion () {
+    async buscarCalificacion () {
       // Copiar todas las denuncias de calificacion, si existen, a una variable auxiliar para no perder la lista original
       if (this.postsAux3.length === 0) {
-        this.postsAux3 = this.calificaciones
+        this.postsAux3 = this.paginatedRatings
       }
 
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todas las denuncias de calificacion en que el Motivo de denuncia o parte de ellos posea el texto escrito en el buscador
-        let postAux = this.postsAux3.map(denounce => {
+        let postAux = this.calificaciones.map(denounce => {
           if (denounce.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.match(new RegExp(this.search, 'gi')) !== null) return denounce
         })
 
         // Limpia el listado actual y lo llena con otro que cumplan el criterio de busqueda
-        this.calificaciones = []
+        let ratingsFound = []
         postAux.forEach(denounce => {
-          if (denounce) this.calificaciones.push(denounce)
+          if (denounce) ratingsFound.push(denounce)
         })
 
         // Ordena el listado obtenido en orden lexicografico.
-        this.calificaciones.sort(function (a, b) {
-          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA)
+        ratingsFound.sort(function (a, b) {
+          return a.motivo_denuncia.NOMB_MOTIVO_DENUNCIA.localeCompare(b.motivo_denuncia.NOMB_MOTIVO_DENUNCIA)
         })
+
+        let data = (await customPaginator.paginate(ratingsFound)).paginatedData
+        if (data) {
+          this.paginatedComments = data
+          this.paginationComments = 0
+        }
       }
 
       // Si no hay texto en el buscador se restaura la lista original
       if (this.search.length === 0) {
-        this.calificaciones = this.postsAux3
+        this.paginatedRatings = this.postsAux3
+        this.paginationRatings = 0
       }
     },
     validate () {
@@ -461,7 +499,9 @@ export default {
   },
   filters: {
     dateFormat: function (date) {
-      return moment(String(date)).format('DD/MM/YYYY HH:mm')
+      if (date) {
+        return moment(String(date)).format('DD/MM/YYYY HH:mm')
+      }
     }
   },
   middleware: 'authenticated',
