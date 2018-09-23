@@ -596,6 +596,7 @@ export default {
         } catch (err) {
           // Nada...
         }
+
         return denouncereasonscontroller.GETAll(app)
           .then(({ denouncereasons }) => {
             let calificaciones = []
@@ -603,7 +604,10 @@ export default {
               if (!c.FLAG_BAN) calificaciones.push(c)
             })
             post.calificaciones = calificaciones
+
+            // Si el usuario viendo el post está autenticado...
             if (store._vm.isAuthenticated) {
+              // Y además es el dueño del POST, se retorna todo menos las calificaciones.
               if (post.emprendedor.usuario.IDEN_USUARIO === store._vm.loggedUser.id) {
                 return {
                   post: post,
@@ -611,11 +615,12 @@ export default {
                   contactos
                 }
               }
+              // Si no es el dueño, entonces se retorna su calificacion.
               return ratingscontroller.GET(app)
                 .then(({ calificaciones }) => {
                   let calificacionAux = {}
                   calificaciones.forEach(c => {
-                    if (c.IDEN_USUARIO === store._vm.loggedUser.id) {
+                    if (c.IDEN_USUARIO === store._vm.loggedUser.id && c.IDEN_PUBLICACION === post.IDEN_PUBLICACION) {
                       calificacionAux = c
                     }
                   })
@@ -627,6 +632,7 @@ export default {
                   }
                 })
             } else {
+              // Si no esta autenticado se retorna solo el post y los datos del emprendedor.
               return {
                 post: post,
                 contactos
