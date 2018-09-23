@@ -53,7 +53,7 @@
               <!-- Se crea la paginacion al pie de pagina. Se usa page - 1 ya que pagination debe apuntar a los indices del arreglo, por lo que parte de 0 -->
               <li class="page-item" v-bind:key="page" v-for="page in pages">
                 <!-- Si la pagina actual es igual a la clickeada, esta se ennegrece -->
-                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+                <span class="page-link" v-bind:class="{ 'font-weight-bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
               </li>
               <li class="page-item">
                 <!-- Solo permite avanzar si la pagina actual es inferior a la cantidad de paginas totales - 1 -->

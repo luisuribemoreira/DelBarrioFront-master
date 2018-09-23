@@ -83,7 +83,7 @@
                 </span>
               </li>
               <li class="page-item" v-bind:key="page" v-for="page in pages">
-                <span class="page-link" v-bind:class="{ 'font-weight: bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
+                <span class="page-link" v-bind:class="{ 'font-weight-bold' : pagination === page - 1 }" v-on:click="pagination = page - 1">{{ page }}</span>
               </li>
               <li class="page-item">
                 <span aria-label="Next" v-on:click="pagination < paginatedData.length - 1 ? pagination++ : ''">
