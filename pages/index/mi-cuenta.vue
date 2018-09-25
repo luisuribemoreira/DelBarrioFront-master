@@ -229,6 +229,9 @@
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model.trim="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
+              <div class="form-group margin-top">
+                <h2 class="text-center">Al guardar cambios, por favor reinicie sesión para ver los efectos</h2>
+              </div>
               <button type="submit" class="btn btn-default" >Guardar</button>
             </div>
           </form>
@@ -294,6 +297,9 @@
             <div v-if="dataErrorMsg.error_edad">
               <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
             </div>
+            <div class="form-group margin-top">
+                <h2 class="text-center">Al guardar cambios, por favor reinicie sesión para ver los efectos</h2>
+              </div>
               <button type="submit" class="btn btn-default" >Guardar</button>
               </form>
             </div>

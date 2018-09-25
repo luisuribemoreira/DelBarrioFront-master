@@ -1,9 +1,5 @@
 <template>
-
 <div v-if="!post.FLAG_BAN">
-<!-- COMENTADO POR AHORA
-      HASTA ENLAZAR DATOS
-
   <section class="product-top section">
     <div class="container">
       <div class="row">
@@ -11,8 +7,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item breadcrumb-item--home"><a href="/">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="publicaciones">Publicaciones</a></li>
-              <li class="breadcrumb-item"><a href="publicaciones">{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</a></li>
+              <li class="breadcrumb-item"><a href="/listado-productos">Publicaciones</a></li>
+              <li class="breadcrumb-item"><a href="/listado-emprendedores/">{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{post.NOMB_PUBLICACION}}</li>
             </ol>
           </nav>
@@ -21,222 +17,10 @@
     </div>
   </section>
 
-  <section class="product-info section">
+<section id="el-producto" class="product-info section">
     <div class="container">
       <div class="row">
         <div class="col-md-5">
-          <div id="product-info--carousel" class="carousel slide" v-for="imagen in post.imagenes" :key="imagen.IDEN_IMAGEN">
-            <div class="carousel-inner">
-              <div class="active item carousel-item" data-slide-number="0">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-              </div>
-              <div class="item carousel-item" data-slide-number="1">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-              </div>
-              <div class="item carousel-item" data-slide-number="2">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-              </div>
-              <div class="item carousel-item" data-slide-number="3">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-              </div>
-            </div>
-
-            <ul class="carousel-indicators list-inline mt-3">
-              <li class="list-inline-item active">
-                <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#product-info--carousel">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a id="carousel-selector-1" data-slide-to="1" data-target="#product-info--carousel">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a id="carousel-selector-2" data-slide-to="2" data-target="#product-info--carousel">
-               <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a id="carousel-selector-3" data-slide-to="3" data-target="#product-info--carousel">
-                <img v-if="imagen.URL_IMAGEN" v-lazy="imageUrl + imagen.URL_IMAGEN" class="img-fluid" alt="">
-                <img v-else v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="social-media mt-5 text-center">
-            <a href="#" class="pl-2 pr-2"><i class="fab fa-facebook-square"></i></a>
-            <a href="#" class="pl-2 pr-2"><i class="fab fa-twitter-square"></i></a>
-          </div>
-        </div>
-        
-        <div class="col-md-7">
-          <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
-          <h3 class="product-info--price h3">${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
-          <div class="stars mt-3">
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="far fa-star text-warning"></i>
-            <i class="far fa-star text-warning"></i>
-          </div>
-          <p class="mt-3"><i class="far fa-eye"></i> ({{post.NUMR_CONTADOR}})</p>
-          <p><a href="#">Comentarios ({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a></p>
-          <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
-          <p class="product-info--report mt-4"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar publicación</a></p>
-
-        </div>
-        /col info 
-      </div>
-    </div>
-  </section>
-  /INFO
-  <section>
-    <div class="container-fluid">
-      <div class="container">
-        <hr>
-          <h2>Informacion del vendedor</h2>
-            <p>
-              aqui va el nombre de la empresa 
-              Nombre: 
-              {{post.emprendedor.DESC_NOMBRE_FANTASIA}}
-            </p>
-            <p>
-              Descripcion:
-              {{post.emprendedor.DESC_EMPRENDEDOR}}
-            </p>
-            <a class="btn btn-primary btn-primary__turquoise mt-4" href="#" role="button">Contactar a Vendedor</a>
-          <hr>
-      </div>
-    </div>
-  </section>
-
-  <section class="product-comments section">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="ratings-tab" data-toggle="tab" href="#ratings" role="tab" aria-controls="ratings" aria-selected="true">Calificaciones</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comentarios</a>
-            </li>
-          </ul>
-          /Tabs Nav
-          
-          <div class="tab-content pt-5 pb-5">
-            <div class="tab-pane active" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
-              <div class="ratings-form">
-                <h2><i class="far fa-thumbs-up text-turquoise"></i> Calificaciones</h2>
-                <p class="mt-3">Ingresa tu calificación</p>
-
-                <div class="stars mt-3">
-                  <i class="far fa-star fa-2x text-warning"></i>
-                  <i class="far fa-star fa-2x text-warning"></i>
-                  <i class="far fa-star fa-2x text-warning"></i>
-                  <i class="far fa-star fa-2x text-warning"></i>
-                  <i class="far fa-star fa-2x text-warning"></i>
-                </div>
-
-                <form class="mt-3">
-                  <div class="form-group">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-danger mt-2">Calificar</button>
-                </form>
-              </div>
-              
-              <div class="ratings-comments mt-5">
-                <h3>Juan Paredes</h3>
-                <div class="stars mt-2">
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="far fa-star fa-lg text-warning"></i>
-                  <i class="far fa-star fa-lg text-warning"></i>
-                </div>
-                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
-                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
-              </div>
-              
-              <div class="ratings-comments mt-5">
-                <h3>María Ruiz</h3>
-                <div class="stars mt-2">
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                  <i class="fas fa-star fa-lg text-warning"></i>
-                </div>
-                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
-                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
-              </div>
-            </div>
-            /Ratings 
-            
-            <div class="tab-pane" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-              <div class="comments-form">
-                <h2><i class="far fa-comments text-turquoise"></i> Comentarios</h2>
-                <p class="mt-3">Ingresa tu comentario</p>
-
-                <form class="mt-2">
-                  <div class="form-group">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-danger mt-2">Comentar</button>
-                </form>
-              </div>
-              
-              <div class="ratings-comments mt-5">
-                <h3>Jimena Ramírez</h3>
-                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
-                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
-              </div>
-              
-              <div class="ratings-comments mt-5">
-                <h3>Carlos Suazo</h3>
-                <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique hic, delectus magni. Nobis neque nihil, reiciendis facilis debitis laudantium temporibus quae recusandae sit nisi ipsum perferendis numquam ratione ipsam omnis!</p>
-                <p class="product-info--report mt-3"><a href="#"><i class="fas fa-exclamation-circle"></i> Denunciar</a></p>
-              </div>
-            </div>
-            /Comments 
-          </div>
-          /Tab Content 
-        </div>
-      </div>
-    </div>
-  </section>
-   /COMMENTS
-
-  -->
-
-
-
-
-
-  <!--######################### separacion nuevo diseño/viejo #########################-->
-  <!-- no borre el diseño viejo, por si necesitaban ver algo. -->
-
-  
-
-
-
-
-
-
-  <section id="el-producto" class="container-fluid">
-    <div class="container">
-      <div class="row margin-top-sec">
-        <div class="col-xl-6">
           <no-ssr>
           <carousel 
                     :navigationEnabled="true"
@@ -258,10 +42,23 @@
             </slide>
           </carousel><!--- Carrousel Grande -->
           </no-ssr>
+            <social-sharing
+                      v-bind:title="post.NOMB_PUBLICACION + ' | Del Barrio - Providencia'"
+                      description="Portal de emprendimientos en Providencia."
+                      v-bind:quote="post.NOMB_PUBLICACION + ' - Portal de emprendimientos en Providencia.'"
+                      hashtags="delbarrio,providencia"
+                      inline-template>
+              <div class="social-media mt-5 text-center">
+                <network network="facebook"><a class="pl-2 pr-2" style="cursor:pointer;"><i class="fab fa-facebook-square" :scale="2" name="facebook-square" :aria-hidden="true"></i></a></network>
+                <network network="twitter"><a class="pl-2 pr-2" style="cursor:pointer;"><i  class="fab fa-twitter-square" :scale="2" name="twitter-square" :aria-hidden="true"></i></a></network>
+            </div>
+          </social-sharing>
+
         </div><!-- columna -->
-        <div class="col-md-6">
-          <h2>{{post.NOMB_PUBLICACION}}</h2>
-          <div class="estrellas">
+        <div class="col-md-7">
+          <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
+          <h3 class="product-info--price h3">${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
+          <div class="stars mt-3">
             <no-ssr>
               <star-rating 
                 v-model="post.NUMR_CALIFICACION"
@@ -274,64 +71,63 @@
             <p v-if="post.calificaciones.length < 5">Aún no hay suficientes calificaciones</p>
             <p v-else><a href="#" data-toggle="modal" data-target="#modal"> ({{ post.calificaciones.length }} {{ post.calificaciones.length === 1 ? 'calificación' : 'calificaciones' }})</a></p>
           </div>
-          <p class="margin-top-20"><icon name="eye"></icon> ({{post.NUMR_CONTADOR}})</p>
-          <a v-if="isAuthenticated" href="#" v-scroll-to="'#comentarios'">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a>
-          <a v-else data-toggle="modal" data-target="#modal">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a>
-          <h3>$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
-          <h4>Descripción</h4>                    
-          <p class="info-prod">{{post.DESC_PUBLICACION}}</p>
-          <hr>
-          <!-- DATOS DEL EMPRENDEDOR -->
-          <h4>Información del vendedor</h4>
-          <div v-if="isAuthenticated">
-            <p><label>{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</label></p>
-            <p>{{post.emprendedor.DESC_EMPRENDEDOR}}</p>
-            <!-- Listado de números de contacto -->
-            <p>Número(s) de Contácto</p>
-            <ul class="list-unstyled">
-              <li>Celular: {{ contactos.celular }}</li>
-              <li v-if="contactos.telefono.length > 0">Teléfono: {{ contactos.telefono }}</li>
-            </ul>
-            <p><small>{{post.emprendedor.rubro.NOMB_RUBRO}}</small></p>
-            <p><nuxt-link :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Ver más</nuxt-link></p>
-          </div>
-          <!-- Mensaje de no iniciado sesión-->
-          <div v-else>
-            <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para visualizar esta funcionalidad</p>
-            <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
-          </div>
-          <hr>
-          <social-sharing
-                      v-bind:title="post.NOMB_PUBLICACION + ' | Del Barrio - Providencia'"
-                      description="Portal de emprendimientos en Providencia."
-                      v-bind:quote="post.NOMB_PUBLICACION + ' - Portal de emprendimientos en Providencia.'"
-                      hashtags="delbarrio,providencia"
-                      inline-template>
-              <div class="redes-sociales">
-                <network network="facebook"><a style="cursor:pointer;"><icon :scale="2" name="facebook-square" :aria-hidden="true"></icon></a></network>
-                <network network="twitter"><a style="cursor:pointer;"><icon :scale="2" name="twitter-square" :aria-hidden="true"></icon></a></network>
-            </div>
-          </social-sharing>
+          <p class="mt-3"><i class="far fa-eye"></i> ({{post.NUMR_CONTADOR}})</p>
+          <p><a v-if="isAuthenticated" href="#" v-scroll-to="'#listComentarios'">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a>
+          <a v-else data-toggle="modal" data-target="#modal">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a><p>
+          <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
           <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-          <a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" class="margin-top label label-danger" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><icon name="exclamation-circle"></icon><span style="vertical-align: super"> Denunciar</span></a>
+          <p class="product-info--report mt-4"><a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar</a></p>
           </div>
+          <!--</section>-->
+          <hr>
           <p v-if="!post.FLAG_VALIDADO" class="margin-top">Esta publicación ha sido aceptada automáticamente y no ha pasado por moderación</p>
         </div>
       </div>
     </div><!-- /container -->
   </section><!-- /El Producto -->
 
-  <div id="interacciones" v-if="isAuthenticated">
-    <!-- CALIFICACIONES -->
-    <section id="calificaciones" class="container-fluid">
-        <div class="container">
-          <div class="row" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-            <div class="col-12">
-              <hr>
-              <h2 class="margin-top">Calificaciones</h2>
-              <p>Ingresa tu calificación</p>
-              <no-ssr>
-                <star-rating
+  <!-- DATOS DEL EMPRENDEDOR -->
+          <section>
+            <div class="container-fluid">
+              <div class="container">
+                <div v-if="isAuthenticated">
+                  <hr>
+                  <h2>Información del vendedor</h2>
+                      <p>Nombre: {{post.emprendedor.DESC_NOMBRE_FANTASIA}}</p>
+                      <p>Descripción: {{post.emprendedor.DESC_EMPRENDEDOR}}</p>
+            <p><nuxt-link :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Ver más</nuxt-link></p>
+          </div>
+          <div v-else>
+            <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para obtener más información</p>
+            <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
+          </div>
+              </div>
+            </div>
+          </section><!-- /Datos emprendedor -->
+
+<!--Comentarios / Calificaciones -->
+<div id="interacciones" v-if="isAuthenticated">
+ <section class="product-comments section"> 
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="ratings-tab" data-toggle="tab" href="#ratings" role="tab" aria-controls="ratings" aria-selected="true">Calificaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comentarios</a>
+            </li>
+          </ul>
+          <!-- TAB_CALIFICACIONES -->
+          <div class="tab-content pt-5 pb-5">
+            <div class="tab-pane active" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
+              <div class="ratings-form" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
+                <h2><i class="far fa-thumbs-up text-turquoise"></i> Calificaciones</h2>
+                <p class="mt-3">Ingresa tu calificación</p>
+                <div class="stars mt-2">
+                <no-ssr>
+                  <star-rating
                   v-model="rating.NUMR_VALOR"
                   :increment="1"
                   :star-size="35"
@@ -340,21 +136,22 @@
                   v-validate data-vv-rules="required">
                 </star-rating>
               </no-ssr>
-              <form @submit.prevent="validateRating">
-                <div class="form-group margin-top-20">
-                  <textarea class="form-control" 
-                    :rows="3"
-                    v-model.trim="rating.DESC_CALIFICACION"
-                    v-validate data-vv-rules="min:10|max:250"
-                  ></textarea>
                 </div>
-                <small class="text-danger" v-show="errors.has('value')">{{ errors.first('value') }}</small>
-                <button type="submit" class="btn btn-default">Calificar</button>
-              </form>
-            </div>
-          </div>
-          <div id="rating" class="row mt-5" v-if="post.calificaciones.length > 0">
-            <div class="col-12">
+                <form @submit.prevent="validateRating" class="mt-3">
+                  <div class="form-group margin-top-20">
+                    <textarea class="form-control" 
+                      id="exampleFormControlTextarea1" 
+                      :rows="5" 
+                      v-model.trim="rating.DESC_CALIFICACION"
+                      v-validate data-vv-rules="min:10|max:250"></textarea>
+                  </div>
+                  <small class="text-danger" v-show="errors.has('value')">{{ errors.first('value') }}</small>
+                  <button type="submit" class="btn btn-danger mt-2">Calificar</button>
+                </form>
+              </div>
+              
+              <div id="rating" v-if="post.calificaciones.length > 0" class="ratings-comments mt-5">
+              <div class="col-12">
               <h3>Última calificación</h3>
               <div class="estrellas">
                 <no-ssr>
@@ -367,59 +164,56 @@
                 </no-ssr>
               </div>
               <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}}</small>
-              <p class="margin-top-20">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
-              <p><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0].DESC_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a></p>
+              <p class="mt-4">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
+              <p class="product-info--report mt-3"><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0].DESC_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar</a></p>
               <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
             </div>
-          </div>
-        </div><!-- /container -->
-      
-    </section><!-- /Calificaciones -->
-
-    <!-- COMENTARIOS -->
-    <section id="comentarios" name="comentarios" class="container-fluid">
-        <div class="container">  
-        <div class="row" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-          <div class="col-12">
-          <hr>
-          <h2 class="margin-top">Comentarios</h2>
-          <p>Ingresa tu comentario</p>
-          <!--FORM DE COMENTAR-->
-          <form @submit.prevent="validateComment">
-            <div class="form-group margin-top-20">
-              <textarea 
-                class="form-control"
-                :rows="3"
-                v-validate data-vv-rules="required|min:10|max:250"
-                data-vv-as="comentario"
-                name="com"
-                v-model.trim="comment.DESC_COMENTARIO">
-              </textarea>
             </div>
-            <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}</small>
-            <p><button type="submit" class="btn btn-default">Comentar</button></p>
-          </form>
-          <!--FIN FORM DE COMENTAR-->
-          </div> <!-- col -->
-        </div><!-- row -->
-        <!--  -->
-        <div id="listComentarios" class="row mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
+            </div><!-- /TAB_CALIFICACIONES -->
+
+            <!--TAB_COMENTARIOS -->
+            <div class="tab-pane" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+              <div class="comments-form" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
+                <h2><i class="far fa-comments text-turquoise"></i> Comentarios</h2>
+                <p class="mt-3">Ingresa tu comentario</p>
+                 <!--FORM DE COMENTAR-->
+                <form class="mt-2" @submit.prevent="validateComment">
+                  <div class="form-group">
+                    <textarea class="form-control" 
+                              id="exampleFormControlTextarea1" 
+                              :rows="5"
+                              v-validate data-vv-rules="required|min:10|max:250"
+                              data-vv-as="comentario"
+                              name="com"
+                              v-model.trim="comment.DESC_COMENTARIO"></textarea>
+                  </div>
+                    <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}</small>
+                    <button type="submit" class="btn btn-danger mt-2">Comentar</button>
+                </form>
+                <!-- FIN FORM COMENTAR -->
+              </div>
+          <div id="listComentarios" class="ratings-comments mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
           <div v-if="c.FLAG_BAN || c.usuario.FLAG_BAN" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
               <span> Este comentario ha sido eliminado por no cumplir con los <a target="_blank" :href="terms">términos y condiciones</a> del sitio</span>
             </p>
           </div>
-          <div v-else class="col-12">
-            <p class="margin-top-20">
-              <icon name="comment"> </icon>
-              <small class="margin-left"> {{c.FECH_CREACION | dateFormat}}</small>
-              {{c.DESC_COMENTARIO}}
+          <div v-else class="ratings-comments mt-5">
+            <p class="mt-4">
+              <small class="margin-left">{{c.FECH_CREACION | dateFormat}}</small>
+              <br>
+              <a class="margin-left">{{loggedUser.nombre}}</a>
+              <br>
+              <a class="mt-4">{{c.DESC_COMENTARIO}}</a>
             </p>
-            <p v-if="c.respuesta.DESC_RESPUESTA" class="mt-3 ml-3">
-              <icon name="comments-o"> </icon>
-              <small> {{c.respuesta.FECH_CREACION | dateFormat}}</small>
-              {{c.respuesta.DESC_RESPUESTA}}
+            <hr>
+            <p v-if="c.respuesta.DESC_RESPUESTA" class="ratings-comments mt-5">
+              <small class="margin-left">{{c.respuesta.FECH_CREACION | dateFormat}}</small>
+              <br>
+               <a class="margin-left">{{loggedUser.nombre}}</a>
+              <br>
+              <a class="mt-4">{{c.respuesta.DESC_RESPUESTA}}</a>
             </p>
 
             <!-- FORM RESPUESTA -->
@@ -445,13 +239,17 @@
               </div>
             </div>
             <!-- FIN FORM RESPUESTA -->
-            <p>
-              <a v-if="!c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'">Denunciar</a>
+            <p class="product-info--report mt-3">
+              <a v-if="!c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar</a>
             </p>
           </div>
-        </div><!-- /container -->
-    </section><!-- /Comentarios -->
-  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
   <!-- Modals -->
   <section id="modals">
@@ -712,7 +510,7 @@ export default {
   },
   filters: {
     dateFormat: function (date) {
-      return moment(String(date)).format('DD/MM/YYYY HH:mm')
+      return moment(String(date)).format('DD/MM/YYYY')
     }
   },
   head () {

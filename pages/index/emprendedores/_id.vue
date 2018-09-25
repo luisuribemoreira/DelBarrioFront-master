@@ -28,10 +28,17 @@
               </div>
             </div>
           </div>
-          <div class="social-media mt-5 text-center">
-            <a href="#" class="pl-2 pr-2"><i class="fab fa-facebook-square"></i></a>
-            <a href="#" class="pl-2 pr-2"><i class="fab fa-twitter-square"></i></a>
-          </div>
+            <social-sharing
+                      v-bind:title="entrepreneur.DESC_NOMBRE_FANTASIA + ' | Del Barrio - Providencia'"
+                      description="Portal de emprendimientos en Providencia."
+                      v-bind:quote="entrepreneur.DESC_NOMBRE_FANTASIA + ' - Portal de emprendimientos en Providencia.'"
+                      hashtags="delbarrio,providencia"
+                      inline-template>
+              <div class="social-media mt-5 text-center">
+                <network network="facebook"><a class="pl-2 pr-2" style="cursor:pointer;"><i class="fab fa-facebook-square" :scale="2" name="facebook-square" :aria-hidden="true"></i></a></network>
+                <network network="twitter"><a class="pl-2 pr-2" style="cursor:pointer;"><i  class="fab fa-twitter-square" :scale="2" name="twitter-square" :aria-hidden="true"></i></a></network>
+            </div>
+          </social-sharing>
         </div>
         <!-- /col images -->
         
