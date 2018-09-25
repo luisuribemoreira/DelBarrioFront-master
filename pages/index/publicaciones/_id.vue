@@ -57,8 +57,7 @@
         </div><!-- columna -->
         <div class="col-md-7">
           <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
-          <h3 class="product-info--price h3">${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
-          <div class="stars mt-3">
+           <div class="stars mt-3">
             <no-ssr>
               <star-rating 
                 v-model="post.NUMR_CALIFICACION"
@@ -69,41 +68,22 @@
               </star-rating>
             </no-ssr>
             <p v-if="post.calificaciones.length < 5">Aún no hay suficientes calificaciones</p>
-            <p v-else><a href="#" data-toggle="modal" data-target="#modal"> ({{ post.calificaciones.length }} {{ post.calificaciones.length === 1 ? 'calificación' : 'calificaciones' }})</a></p>
+            <!--<p v-else><a href="#" data-toggle="modal" data-target="#modal"> ({{ post.calificaciones.length }} {{ post.calificaciones.length === 1 ? 'calificación' : 'calificaciones' }})</a></p>-->
           </div>
           <p class="mt-3"><i class="far fa-eye"></i> ({{post.NUMR_CONTADOR}})</p>
           <p><a v-if="isAuthenticated" href="#" v-scroll-to="'#listComentarios'">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a>
           <a v-else data-toggle="modal" data-target="#modal">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a><p>
+          <h3 class="product-info--price h3 mt-5">${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
           <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
+          <p class="btn btn-primary btn-primary__turquoise mt-4"><nuxt-link style="color: white" :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Contactar a Vendedor</nuxt-link></p>
           <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-          <p class="product-info--report mt-4"><a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar</a></p>
+          <p class="product-info--report mt-4"><a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar publicación</a></p>
           </div>
-          <!--</section>-->
-          <hr>
           <p v-if="!post.FLAG_VALIDADO" class="margin-top">Esta publicación ha sido aceptada automáticamente y no ha pasado por moderación</p>
         </div>
       </div>
     </div><!-- /container -->
   </section><!-- /El Producto -->
-
-  <!-- DATOS DEL EMPRENDEDOR -->
-          <section>
-            <div class="container-fluid">
-              <div class="container">
-                <div v-if="isAuthenticated">
-                  <hr>
-                  <h2>Información del vendedor</h2>
-                      <p>Nombre: {{post.emprendedor.DESC_NOMBRE_FANTASIA}}</p>
-                      <p>Descripción: {{post.emprendedor.DESC_EMPRENDEDOR}}</p>
-            <p><nuxt-link :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Ver más</nuxt-link></p>
-          </div>
-          <div v-else>
-            <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para obtener más información</p>
-            <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
-          </div>
-              </div>
-            </div>
-          </section><!-- /Datos emprendedor -->
 
 <!--Comentarios / Calificaciones -->
 <div id="interacciones" v-if="isAuthenticated">
@@ -125,7 +105,7 @@
               <div class="ratings-form" v-if="post.emprendedor.IDEN_USUARIO !== loggedUser.id">
                 <h2><i class="far fa-thumbs-up text-turquoise"></i> Calificaciones</h2>
                 <p class="mt-3">Ingresa tu calificación</p>
-                <div class="stars mt-2">
+                <div class="stars mt-3">
                 <no-ssr>
                   <star-rating
                   v-model="rating.NUMR_VALOR"
@@ -138,7 +118,7 @@
               </no-ssr>
                 </div>
                 <form @submit.prevent="validateRating" class="mt-3">
-                  <div class="form-group margin-top-20">
+                  <div class="form-group">
                     <textarea class="form-control" 
                       id="exampleFormControlTextarea1" 
                       :rows="5" 
@@ -153,7 +133,7 @@
               <div id="rating" v-if="post.calificaciones.length > 0" class="ratings-comments mt-5">
               <div class="col-12">
               <h3>Última calificación</h3>
-              <div class="estrellas">
+              <div class="stars mt-2">
                 <no-ssr>
                   <star-rating
                     v-model="post.calificaciones[0].NUMR_VALOR"
@@ -165,7 +145,7 @@
               </div>
               <small>{{post.calificaciones[0].FECH_CREACION | dateFormat}}</small>
               <p class="mt-4">{{post.calificaciones[0].DESC_CALIFICACION}}</p>
-              <p class="product-info--report mt-3"><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0].DESC_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar</a></p>
+              <p class="product-info--report mt-3"><a href="#" @click="type = 'cal', iden = post.calificaciones[0].IDEN_CALIFICACION, denItem = post.calificaciones[0].DESC_CALIFICACION" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar calificación</a></p>
               <p class="text-center"><a data-toggle="modal" data-target="#modal" href="#">Ver más</a></p>
             </div>
             </div>
@@ -203,17 +183,13 @@
             <p class="mt-4">
               <small class="margin-left">{{c.FECH_CREACION | dateFormat}}</small>
               <br>
-              <a class="margin-left">{{loggedUser.nombre}}</a>
-              <br>
               <a class="mt-4">{{c.DESC_COMENTARIO}}</a>
             </p>
             <hr>
             <p v-if="c.respuesta.DESC_RESPUESTA" class="ratings-comments mt-5">
               <small class="margin-left">{{c.respuesta.FECH_CREACION | dateFormat}}</small>
               <br>
-               <a class="margin-left">{{loggedUser.nombre}}</a>
-              <br>
-              <a class="mt-4">{{c.respuesta.DESC_RESPUESTA}}</a>
+              <a class="mt-4">Respuesta: {{c.respuesta.DESC_RESPUESTA}}</a>
             </p>
 
             <!-- FORM RESPUESTA -->
@@ -240,7 +216,7 @@
             </div>
             <!-- FIN FORM RESPUESTA -->
             <p class="product-info--report mt-3">
-              <a v-if="!c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar</a>
+              <a v-if="!c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar comentario</a>
             </p>
           </div>
             </div>

@@ -207,10 +207,10 @@
     </nav>
 
         <!-- NAV INVITADO -->
-        <nav class="navbar navbar-expand-md navbar-light" id="navegacion" v-if="!isAuthenticated">
+        <nav class="navbar navbar-expand-lg navbar-light" id="navegacion" v-if="!isAuthenticated">
             <div class="container">
                 <!-- Logo Providencia MENU -->
-                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+                <a class="navbar-brand mr-5" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
                 
                 <!-- Botton Menu Responsive -->
                 <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
@@ -221,7 +221,7 @@
                 <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
                   <form class="mx-2 my-auto d-inline"  @submit.prevent v-on:submit="search.tipo = undefined, buscar()">
                     <div class="input-group">
-                        <input ref="searchInput" type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar en el sitio..." autocomplete="off" v-model="search.nombre">
+                        <input ref="searchInput" type="text" @keyup="searchItems()" class="form-control border border-right-0" placeholder="Buscar..." autocomplete="off" v-model="search.nombre">
                         <ul class="dropdown-menu" :style="items.length > 0 ? 'display: block;' : ''">
                           <li class="dropdown-item" tabIndex="-1" :ref="item.id" :class='{"active": currentItem === item.id}' v-for="item in items" :key="item.id" @click="search = item, buscar()">
                             <i class="fa fa-search"></i> {{ item.nombre }}
@@ -238,7 +238,7 @@
 
                 <!-- Vinculo Paginas -->
                 <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="/listado-productos">Publicaciones</a>
                         </li>
@@ -249,7 +249,7 @@
                             <a class="nav-link" href="/">Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/registro">Registro</a>
+                            <a class="nav-link" href="/registro">Registrarme</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-round btn-danger" href="/autenticar" >Ingresar</a>
