@@ -48,6 +48,162 @@
         </form><!-- /Formulario -->
       </div><!-- /container -->
 </section><!-- /Busqueda -->
+      <!-- ########## Vista productos ########## -->
+      <section class="publication-products section">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="h2">Publicaciones</h2>
+        </div>
+      </div>
+      <!-- /row 1 Title-->
+      
+      <!-- /row 2 Select -->
+
+      <div class="row mt-5">
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <!-- aqui va la imagen del producto -->
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-1.jpg" alt="Producto 1"></a>
+            <a href="#">
+              <div class="card-body">
+                <!-- nombre -->
+                <h5 class="card-title">Joyas</h5>
+                <!-- descripcion -->
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <!-- precio -->
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- asi aplica para todas -->
+        <!-- /Publication 1 -->
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-2.jpg" alt="Producto 2"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 2 -->
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-3.jpg" alt="Producto 3"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 3 -->
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-4.jpg" alt="Producto 4"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 4 -->
+                <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-1.jpg" alt="Producto 1"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 1 -->
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-2.jpg" alt="Producto 2"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 2 -->
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-3.jpg" alt="Producto 3"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 3 -->
+        <div class="col-lg-3 col-sm-6 text-center">
+          <div class="card">
+            <a href="#" class="card-img-link"><img class="card-img-top" src="img/home-product-4.jpg" alt="Producto 4"></a>
+            <a href="#">
+              <div class="card-body">
+                <h5 class="card-title">Joyas</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet</p>
+                <p class="card-text card-price">$1.500</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /Publication 4 -->
+      </div>
+      <!-- /row 3 Products -->
+      
+      <div class="row mt-5">
+        <div class="col d-flex justify-content-center">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- /row 4 Page Nav-->
+    </div>
+  </section>
+  <!-- /PRODUCTS -->
+      <!-- ########## /Vista productos ########## -->
+    
+
+
 
     <section>
       <div class="container">
