@@ -9,6 +9,11 @@ export default {
   mounted () {
     controller.unsetToken(this)
     this.$router.push({ path: '/' })
+  },
+  head () {
+    return {
+      title: 'Cerrando Sesión'
+    }
   }
 }
 </script>
