@@ -1,49 +1,55 @@
 <template>
-<section class="container-fluid" id="admin-faq">
+<section>
+  <section class="entrepreneur-list-top section pt-0 pb-0">
+		<div class="container-fluid">
+			<div class="row"></div>
+		</div>
+	</section>
+	<!-- /TOP -->
+<section class="entrepreneur-list section">
     <div class="container">
       <div class="row">
-        <div class="col-12">
-          <h2 class="text-center">Emprendedores</h2>
+        <div class="col">
+          <h2 class="h2">Emprendedores</h2>
         </div>
       </div>
       <!--Buscador de emprendedores -->
-      <div class="row">
-        <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 margin-top py-1">
-            <div class="input-group text-truncate">
-                <input type="text" class="form-control border border-right-0" placeholder="Buscar emprendedor..." autocomplete="off" autofocus="autofocus" v-model.trim="search" @keyup="buscarEmprendedor()">
-                 <div class="input-group-btn">
-                  <icon name="search"></icon>
+      <div class="row mt-4">
+        <div class="col">
+          <div class="row">
+             <div class="col-lg-8 offset-lg-2">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Buscar emprendedor..." autocomplete="off" autofocus="autofocus" v-model.trim="search" @keyup="buscarEmprendedor()">
+                 <div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button" disabled="true"><i class="fas fa-search"></i></button>
+									</div>
                 </div>
+              </div>
             </div>
         </div>
       </div>
       <!--/Buscador de emprendedores-->
+
       <!--Tabla de emprendedores-->
-      <div class="row">
-        <div class="col-9 table-responsive">
-          <table class="table">
-            <thead>
-              <tr class="text-center">
-                <th>Imagen</th>
-                <th>Nombre</th>
-              </tr>
-            </thead>
-            <tbody class="text-center">
-              <tr :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in paginatedData[pagination]" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.usuario.FLAG_BAN" >
-                <td>
-                  <nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">
-                    <img v-if="!entrepreneur.imagen || !entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="img-fluid" height="125" width="125">
-                    <img v-else v-lazy="imageUrl + entrepreneur.imagen.URL_IMAGEN" class="img-fluid" height="125" width="125">
+      <div class="row mt-5">
+        <div class="col-lg-3 col-sm-6 text-center" :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in paginatedData[pagination]" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.usuario.FLAG_BAN"> 
+                  <div class="card">
+                  <nuxt-link class="card-img-link" :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">
+                    <img v-if="!entrepreneur.imagen || !entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top">
+                    <img v-else v-lazy="imageUrl + entrepreneur.imagen.URL_IMAGEN" class="card-img-top">
+                  <div class="card-body">
+                    <h5 class="card-title">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</h5>
+                    <p class="card-text"><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_EMPRENDEDOR}}</nuxt-link></p>
+                  </div>
                   </nuxt-link>
-                </td>
-                <td>
-                  <nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</nuxt-link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
+                </div>
+            </div>
+      </div>
+      <!-- /TABLA EMPRENDEDORES -->
+    <div class="row mt-5">
+      <div class="col d-flex justify-content-center">
+      <nav aria-label="Page navigation">
+            <ul class="pagination">
               <li class="page-item">
                 <!-- Solo permite retroceder si la pagina actual es mayor a 0 -->
                 <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
@@ -63,11 +69,11 @@
               </li>
             </ul>
           </nav>
-        </div>
       </div>
-      <!--/Tabla de emprendedores-->
+    </div>
     </div>
   </section>
+</section>
 </template>
 
 <script>
