@@ -190,7 +190,10 @@ body {
 .home-entrepreneur .card-img-link,
 .publication-products .product--img,
 .publication-products a,
-.publication-sales .card-body{
+.publication-sales .card-body,
+.entrepreneur-list a,
+.search-products a,
+.faq .card-header{
 	-webkit-transition: 0.7s;
 	-moz-transition: 0.7s;
 	-o-transition: 0.7s;
@@ -304,18 +307,24 @@ body {
 /*TOP*/
 
 
-.publication-products .card{
+.publication-products .card,
+.entrepreneur-list .card,
+.search-products .card{
 	border: 1px solid rgba(0,0,0,.125);
 }
 
 .publication-products a,
-.publication-sales a{
+.publication-sales a,
+.entrepreneur-list a,
+.search-products a{
 	text-decoration: none;
 	color: #212529;
 }
 
 .publication-products a:hover,
-.publication-sales .card-body:hover{
+.publication-sales .card-body:hover,
+.entrepreneur-list a:hover,
+.search-products a:hover{
 	opacity: 0.7;
 }
 
@@ -480,7 +489,9 @@ body {
 	background-position: center;
 }
 
-.login--content, .new-account--content{
+.login--content, 
+.new-account--content,
+.faq--content{
 	background-color: rgba(255, 255, 255, 0.9);
 	padding: 70px 50px;
 	border-radius: 10px;
@@ -500,6 +511,81 @@ body {
 
 
 
+
+/* --------START BUSQUEDA AVANZADA-------- */
+.btn-outline-secondary{
+	color: #3cb6b6;
+	border-color: #ced4da;
+}
+
+.btn-outline-secondary:hover, 
+.btn-outline-secondary:not(:disabled):not(.disabled):active{
+	background-color: #3cb6b6;
+	border-color: #3cb6b6;
+}
+/* --------END BUSQUEDA AVANZADA-------- */
+
+
+
+
+/* --------START EMPRENDEDORES LISTA-------- */
+.entrepreneur-list-top{
+	background: url(../../img/img-soyprovidencia/emprendedor-3.jpg);
+	background-size: cover;
+	background-position: 100% 80%;
+	min-height: 200px;
+}
+/* --------END EMPRENDEDORES LISTA-------- */
+
+
+
+
+/* --------START FAQ-------- */
+.faq{
+	background: url(../../img/img-soyprovidencia/faq-background.jpg);
+	background-size: cover;
+	background-position: center;
+}
+
+.faq .card-header{
+	background-color: #3cb6b6;
+}
+
+.faq .card-header:hover{
+	background-color: #258d8d;
+}
+
+.faq .btn-link{
+	color: #fff;
+	font-weight: 600;
+	text-decoration: none;
+}
+/* --------END FAQ-------- */
+
+
+
+
+/* --------START ABOUT-------- */
+.about-top{
+	background: url(../../img/img-soyprovidencia/feria.jpg);
+	background-size: cover;
+	background-position: center;
+	min-height: 300px;
+}
+
+.about-team{
+	background: url(../../img/img-soyprovidencia/wavy-dots.png);
+}
+
+.about-team--image{
+	border-radius: 200px;
+	max-width: 200px;
+}
+
+.about-team--title{
+	font-weight: 600;
+}
+/* --------END ABOUT-------- */
 
 
 
@@ -558,11 +644,11 @@ body {
 	}
 	/*PRODUCT*/
 	
-	.login, .new-account{
+	.login, .new-account, .faq{
 		padding-left: 30px;
 		padding-right: 30px;
 	}
-	.login--content, .new-account--content{
+	.login--content, .new-account--content, .faq--content{
 		padding: 40px 30px;
 	}
 	
@@ -578,7 +664,7 @@ body {
 	}
 	/*HOME*/
 	
-	.login--content{
+	.login--content, .faq--content{
 		padding: 30px 20px;
 	}
 	/*LOGIN*/
