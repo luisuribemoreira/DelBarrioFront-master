@@ -246,7 +246,7 @@
                             <a class="nav-link" href="/listado-emprendedores">Emprendedores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Nosotros</a>
+                            <a class="nav-link" href="/nosotros">Nosotros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/registro">Registrarme</a>
