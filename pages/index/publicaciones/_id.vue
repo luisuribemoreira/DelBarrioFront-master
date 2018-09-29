@@ -86,9 +86,9 @@
   </section><!-- /El Producto -->
 
 <!--Comentarios / Calificaciones -->
-<div id="interacciones" v-if="isAuthenticated">
- <section class="product-comments section"> 
+ <section class="product-comments section">
     <div class="container">
+      <div id="interacciones" v-if="isAuthenticated"> 
       <div class="row">
         <div class="col">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -224,8 +224,12 @@
         </div>
       </div>
     </div>
+    <div v-else>
+            <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para obtener más información</p>
+            <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
+          </div> 
+    </div>
   </section>
-</div>
 
   <!-- Modals -->
   <section id="modals">
