@@ -1,11 +1,15 @@
 <template>
   <no-ssr>
   <div>
-    <section id="busqueda" class="container-fluid">
+    <section id="busqueda">
       <div class="container">
-        <h4>Búsqueda avanzada</h4>
-        <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">
-          
+        <div class="row">
+          <div class="col">
+        <h2 class="h2 text-center">Búsqueda avanzada</h2>
+          </div>
+        </div>
+
+        <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">  
           <div class="row">
             <div class="col-md-6">
               <label for="tipo" class="margin-top-20">Tipo</label>
@@ -101,32 +105,39 @@
       </div><!-- /container -->
     </section><!-- /Busqueda -->
 
-    <section>
+    <section class="search-products section"><!-- RESULTADOS BUSQUEDA -->
       <div class="container">
-        <div class="row margin-top">
-          <div class="col-12 table-responsive" v-if="paginatedData[0].length > 0">
-            <table class="table table-hover table-sm">
-              <thead>
-                <tr>
-                  <th :key="header" v-for="header in searchKeys">{{ header }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr :key="item[1]" v-for="item in paginatedData[pagination]">
-                  <td v-if="type.entrepreneur">
-                    <nuxt-link :to="{ path: '/emprendedores/'+item[1]}">{{item[2]}}
+          <div v-if="paginatedData[0].length > 0">
+            <div class="row mt-5">
+                <div class="col-lg-3 col-sm-6 text-center" :key="item[1]" v-for="item in paginatedData[pagination]">
+                  <div class="card" v-if="type.entrepreneur">
+                    <nuxt-link class="card-img-link" :to="{ path: '/emprendedores/'+item[1]}">
+                    <img v-if="!item[0]" v-lazy="'/img/no-image.svg'" class="card-img-top">
+                    <img v-else v-lazy="imageUrl + item[0]" class="card-img-top">
                     </nuxt-link>
-                  </td>
-                  <td v-if="type.product || type.sale">
-                    <nuxt-link :to="{ path: '/publicaciones/'+item[1]}">{{item[2]}}</nuxt-link>
-                  </td>
-                  <td>{{item[3]}}</td>
-                  <td>{{item[4]}}</td>
-                  <td>{{item[5]}}</td>
-                  <td v-if="item[6]">{{item[6]}}</td>
-                </tr>
-              </tbody>
-            </table><!-- /tabla generica de datos -->
+                    <div class="card-body">
+                      <h5 class="card-title">{{item[2]}}</h5>
+                      <p class="card-text">{{item[4]}}</p>
+                      <p class="card-text">{{item[5]}}</p>
+                      <div v-if="item[6]">{{item[6]}}</div>
+                  </div>
+                  </div>
+                  <div class="card" v-if="type.product || type.sale">
+                    <nuxt-link :to="{ path: '/publicaciones/'+item[1]}">
+                    <img v-if="!item[0]" v-lazy="'/img/no-image.svg'" class="card-img-top">
+                    <img v-else v-lazy="imageUrl + item[0]" class="card-img-top">
+                    </nuxt-link>
+                    <div class="card-body">
+                      <h5 class="card-title">{{item[2]}}</h5>
+                      <p class="card-text">{{item[4]}}</p>
+                      <p class="card-text card-price">{{item[5]}}</p>
+                      <div class="card-text" v-if="item[6]">{{item[6]}}</div>
+                      {{item[7]}}
+                  </div>
+                  </div>
+                </div>
+            </div><!-- /tabla generica de datos -->
+            <!-- PAGINACION -->
             <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
               <li class="page-item">
@@ -146,48 +157,15 @@
           </nav> <!-- navegacion -->
           </div>
           <span v-if="searchMessage" class="text-info">{{ searchMessage }}</span>
-        </div>
       </div>
     </section> <!-- Resultado Busqueda -->
-
-    <section id="emprendedores" class="container-fluid">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="text-center">Emprendedores Destacados</h2>
-          </div>
-          <div class="col-12 py-5">
-            <carousel 
-                    :navigationEnabled="true"
-                    :loop="true"
-                    paginationActiveColor="#89dbee"
-                    paginationColor="#b2ebd1"
-                    :paginationSize="5"
-                    easing="linear"
-                    :speed="300"
-                    :perPageCustom="[[768, 1], [1024, 6]]"
-                    :autoplay ="true"
-                    :autoplayTimeout="5000"
-                    :autoplayHoverPause = "true"
-                    style="width: 100%;"
-                    >
-              <slide v-for="emprendedor in index.emprendedores" :key="emprendedor.IDEN_EMPRENDEDOR" v-if="emprendedor.usuario.FECH_CREACION && !emprendedor.usuario.FLAG_BAN">
-                <nuxt-link :to="'/emprendedores/'+emprendedor.IDEN_EMPRENDEDOR">
-                  <img :src="emprendedor.imagen.URL_IMAGEN ? imageUrl + emprendedor.imagen.URL_IMAGEN : '/img/no-image.svg'" class="img-fluid">
-                </nuxt-link>
-                <h3 class="text-center">{{emprendedor.DESC_NOMBRE_FANTASIA}}</h3>
-              </slide>
-            </carousel>
-          </div>
-        </div>
-      </div><!-- /container -->
-    </section><!-- /Emprendedores -->
     
-    <section id="productos" class="container-fluid">
+    <!-- OFERTAS -->
+    <section id="productos" class="publication-sales section">
       <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="text-center">Publicaciones</h2>
+        <div class="row mb-5">
+          <div class="col">
+            <h2 class="home-products--top-title text-center text-white h2">Ofertas</h2>
           </div>
         <div class="col-12 py-5">
            <carousel 
@@ -204,21 +182,20 @@
                     :autoplayHoverPause = "true"
                     style="width: 100%;"
                     >
-            <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN">
+            <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN && post.oferta.FLAG_VIGENTE && post.oferta.FLAG_VALIDADO">
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
               </nuxt-link>
               <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
               <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>
-              <h5 class="text-center">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+              <h5 class="text-center">$ {{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
             </slide>
            </carousel>
-        <!-- Productos -->
         </div>
-      </div><!-- /row -->
-    </div><!-- /container -->
-  </section><!-- /Producto -->
+      </div>
+    </div>
+  </section><!-- /OFERTAS -->
 
   </div>
 </no-ssr>
@@ -484,6 +461,7 @@ export default {
         data.forEach(item => {
           if (!item.usuario.FLAG_BAN) {
             object = {
+              0: item.imagen.URL_IMAGEN,
               1: item.IDEN_EMPRENDEDOR,
               2: item.DESC_NOMBRE_FANTASIA,
               3: item.DESC_NOMBRE_EMPRESA,
@@ -501,6 +479,7 @@ export default {
         data.forEach(item => {
           if (!item.FLAG_BAN && item.FLAG_VIGENTE && item.FLAG_VALIDADO) {
             object = {
+              0: item.imagenes[0].URL_IMAGEN,
               1: item.IDEN_PUBLICACION,
               2: item.NOMB_PUBLICACION,
               3: item.categoria.NOMB_CATEGORIA.length > 40 ? item.categoria.NOMB_CATEGORIA.substring(0, 40) + '...' : item.categoria.NOMB_CATEGORIA,
@@ -518,6 +497,7 @@ export default {
         data.forEach(item => {
           if (!item.FLAG_BAN && item.FLAG_VIGENTE && item.FLAG_VALIDADO) {
             object = {
+              0: item.publicacion.imagenes[0].URL_IMAGEN,
               1: item.publicacion.IDEN_PUBLICACION,
               2: item.publicacion.NOMB_PUBLICACION,
               3: item.publicacion.DESC_PUBLICACION.length > 40 ? item.publicacion.DESC_PUBLICACION.substring(0, 40) + '...' : item.publicacion.DESC_PUBLICACION,

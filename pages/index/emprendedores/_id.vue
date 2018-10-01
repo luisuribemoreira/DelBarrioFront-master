@@ -45,13 +45,6 @@
         <div class="col-md-7">
           <h2 class="entrepreneur-info--title h2">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</h2>
           <p class="entrepreneur-info--title"><i>{{entrepreneur.DESC_NOMBRE_EMPRESA}}</i></p>
-          <div class="stars mt-3">
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="far fa-star text-warning"></i>
-            <i class="far fa-star text-warning"></i>
-          </div>
           <p class="p mt-4 entrepreneur-info--text">{{entrepreneur.DESC_EMPRENDEDOR}}</p>
           
           <h5 class="entrepreneur-info--subtitle h5 mt-5">Datos de contacto</h5>
