@@ -41,12 +41,12 @@
           </social-sharing>
         </div>
         <!-- /col images -->
-        
+
         <div class="col-md-7">
           <h2 class="entrepreneur-info--title h2">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</h2>
           <p class="entrepreneur-info--title"><i>{{entrepreneur.DESC_NOMBRE_EMPRESA}}</i></p>
           <p class="p mt-4 entrepreneur-info--text">{{entrepreneur.DESC_EMPRENDEDOR}}</p>
-          
+
           <h5 class="entrepreneur-info--subtitle h5 mt-5">Datos de contacto</h5>
           <div v-if="isAuthenticated">
             <ul class="list-unstyled mt-3">
@@ -100,7 +100,7 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="row">
-                  <div class="col-md-3" v-for="post in posts[activePage]" :key="post.IDEN_PUBLICACION">
+                  <div class="col-md-3" v-for="post in posts[activePage]" :key="post.IDEN_PUBLICACION" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
                     <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION">
                       <img v-lazy="post.imagenes.length > 0 ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" alt="Image" style="max-width:100%;">
                     </nuxt-link>

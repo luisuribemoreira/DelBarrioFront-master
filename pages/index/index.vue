@@ -60,7 +60,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-lg-3 col-sm-6" v-for="post in posts" :key="post.IDEN_PUBLICACION">
+                                <div class="col-lg-3 col-sm-6" v-for="post in posts" :key="post.IDEN_PUBLICACION" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
                                     <div class="card">
                                         <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION" class="card-img-link">
                                           <img v-if="post.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
@@ -133,7 +133,7 @@
     </div>
 </section>
 <!-- /HOME-ENTREPRENEUR -->
-    
+
   </section>
 </template>
 
