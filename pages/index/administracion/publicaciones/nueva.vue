@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-10 offset-md-1">
-            <h2 class="text-center">Nueva Publicación</h2>            
+            <h2 class="text-center">Nueva Publicación</h2>
             <form class="margin-top" @submit.prevent="validateBeforeSubmit">
               <div class="row margin-top"> <!-- Corregir estilos -->
                 <div class="col-md-3">
@@ -55,9 +55,6 @@
               <div>
               <input type="checkbox" id="status" name="status" v-model.trim="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
               </div>
-              <div>
-                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
-              </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
                 <select v-model.trim="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
@@ -71,12 +68,12 @@
                 <label for="name">Título</label>
                 <input type="text" class="form-control" v-validate data-vv-rules="required|min:5|max:100" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-]{5,100}" title="Sólo letras y numeros, mínimo 5 máximo 100" data-vv-as="título" name="name" v-model="post.NOMB_PUBLICACION">
                 <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
-              </div>              
+              </div>
               <div class="form-group">
                 <label for="price">Precio</label>
                 <input type="number" class="form-control" v-model.trim="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric|max:7" data-vv-as="precio" name="price">
                 <small class="text-danger" v-show="errors.has('price')">{{ errors.first('price') }}</small>
-              </div>              
+              </div>
               <div class="form-group">
                 <label for="descripcion">Descripcion</label>
                   <textarea v-model.trim="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:10000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
@@ -117,6 +114,9 @@
                 <label>
                 <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
                 </label>
+                <label>
+                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
+                </label>
               </div>
               <button type="submit" class="btn btn-default">Publicar</button>
             </form>
@@ -127,7 +127,7 @@
   </div>
 </template>
 
-  
+
 
 <script>
 import { mapGetters } from 'vuex'
@@ -172,7 +172,7 @@ export default {
         //  Revisar si la casilla de imagenes esta marcada, si no lo está obliga a marcarla.
         if (!this.statusAutoria) {
           result = false
-          this.messageAutoria = 'Solo se permiten imagenes de su autoría.'
+          this.messageAutoria = 'Solo se permiten imágenes de su autoría, confirme el cuadro de arriba que efectivamente pertenecen a usted.'
         }
         //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
         if (!this.statusTerminos) {
@@ -222,4 +222,5 @@ export default {
     border-width: 1px;
     border-color: #fcfcfc !important;
   }
+</style>
 </style>
