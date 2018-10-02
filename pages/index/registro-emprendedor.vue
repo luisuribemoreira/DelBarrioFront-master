@@ -23,9 +23,6 @@
                   </no-ssr>
                 </div>
               </div>
-              <div v-if="dataErrorMsg.error_foto">
-                <small class="text-danger">{{ dataErrorMsg.error_foto }}</small>
-              </div>
               <div class="form-group margin-top">
                 <label for="name">Nombres</label>
                 <input v-validate data-vv-rules="required" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}" title="Sólo letras" data-vv-as="nombre" name="nombre" type="text" v-model.trim="user.persona.NOMBRES" class="form-control"/>
@@ -44,7 +41,7 @@
               <div class="form-group margin-top">
                 <label for="date">Fecha de Nacimiento</label>
                 <no-ssr>
-                  <datepicker 
+                  <datepicker
                     language="es"
                     :format='format'
                     v-model="user.persona.FECH_FECHA_NACIMIENTO"
@@ -135,6 +132,9 @@
               </div>
               <div>
                 <small class="text-danger" v-if="dataErrorMsg.general">{{ dataErrorMsg.general }}</small>
+              </div>
+              <div v-if="dataErrorMsg.error_foto">
+                <small class="text-danger">{{ dataErrorMsg.error_foto }}</small>
               </div>
               <button type="submit" class="btn btn-default">Guardar</button>
             </div>

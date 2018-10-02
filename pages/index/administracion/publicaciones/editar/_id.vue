@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-10 offset-md-1">
-            <h2 class="text-center">Editar Publicación</h2>            
+            <h2 class="text-center">Editar Publicación</h2>
             <form class="margin-top" @submit.prevent="validateBeforeSubmit">
               <div class="row margin-top"> <!-- Corregir estilos -->
                 <div class="col-md-3">
@@ -75,9 +75,6 @@
               </div>
               <div>
               <input type="checkbox" id="status" name="status" v-model.trim="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
-              <label>
-                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
-              </label>
               </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
@@ -92,12 +89,12 @@
                 <label for="name">Título</label>
                 <input type="text" class="form-control" v-validate data-vv-rules="required|min:5|max:100" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-]{5,100}" title="Sólo letras y numeros, mínimo 5 máximo 100" data-vv-as="título" name="name" v-model="post.NOMB_PUBLICACION">
                 <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
-              </div>              
+              </div>
               <div class="form-group">
                 <label for="price">Precio</label>
                 <input type="number" class="form-control" v-model="post.NUMR_PRECIO" v-validate data-vv-rules="required|numeric" data-vv-as="precio" name="price">
                 <small class="text-danger" v-show="errors.has('price')">{{ errors.first('price') }}</small>
-              </div>              
+              </div>
               <div class="form-group">
                 <label for="descripcion">Descripcion</label>
                   <textarea v-model="post.DESC_PUBLICACION" v-validate data-vv-rules="required|max:10000" data-vv-as="descripción" name="description" class="form-control" rows="3"></textarea>
@@ -137,6 +134,11 @@
               </div>
               <div v-if='message'>
                 <span>{{message}}</span>
+              </div>
+              <div>
+              <label>
+                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
+              </label>
               </div>
               <button type="submit" class="btn btn-default">Publicar</button>
             </form>
