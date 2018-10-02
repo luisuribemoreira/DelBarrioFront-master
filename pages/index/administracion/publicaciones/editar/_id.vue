@@ -67,6 +67,18 @@
                   </no-ssr>
                 </div>
               </div>
+              <div>
+              <strong>
+              <p>Primera a la izquierda es la imagen principal y debiese ser la más descriptiva del producto o servicio.</p>
+              <p>Tamaño de imagen recomendado igual o mayor a 500x500</p>
+              </strong>
+              </div>
+              <div>
+              <input type="checkbox" id="status" name="status" v-model.trim="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
+              <label>
+                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
+              </label>
+              </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
                 <select v-model.trim="post.CODI_TIPO_PUBLICACION" v-validate data-vv-rules="required" data-vv-as="tipo de publicación" name="type" class="form-control">
@@ -110,13 +122,17 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="tags">Tags (separar por coma)</label>
-                <input-tag id="tags" :tags="post.ETIQUETAS" class="form-control"></input-tag>
-              </div>
               <div class="checkbox">
                 <label>
                   <input type="checkbox" v-model="post.FLAG_CONTENIDO_ADULTO">Producto para mayores de 18
+                </label>
+              </div>
+              <div>
+              <input type="checkbox" id="status" name="status" v-model.trim="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
+              </div>
+              <div>
+                <label>
+                <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
                 </label>
               </div>
               <div v-if='message'>
@@ -144,6 +160,10 @@ export default {
       deletedImages: [],
       changedImages: [],
       imageUrl: process.env.imagesUrl,
+      statusAutoria: false,
+      statusTerminos: false,
+      messageTerminos: false,
+      messageAutoria: false,
       processing: false
     }
   },
@@ -168,6 +188,16 @@ export default {
       this.processing = true
       if (this.post.CODI_TIPO_PUBLICACION === 'undefined') this.post.CODI_TIPO_PUBLICACION = undefined
       this.$validator.validateAll().then(async (result) => {
+        //  Revisar si la casilla de imagenes esta marcada, si no lo está obliga a marcarla.
+        if (!this.statusAutoria) {
+          result = false
+          this.messageAutoria = 'Solo se permiten imágenes de su autoría, confirme en el cuadro de arriba que efectivamente pertenecen a usted.'
+        }
+        //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
+        if (!this.statusTerminos) {
+          result = false
+          this.messageTerminos = 'Debe aceptar los términos y condiciones.'
+        }
         if (result) {
           let blobs = []
           // Recorrer directamente los componentes, en vez de los modelos
