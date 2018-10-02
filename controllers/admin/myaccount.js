@@ -46,67 +46,30 @@ async function POST (context, user) {
     }
 
     // Registro de los contactos de la persona
-    // Se verifica si se ingresó un teléfono, y de ser así, se registra
-    if (user.persona.contacto.Telefono.length > 0 && user.persona.contacto.Telefono[0].DESC_CONTACTO && user.persona.contacto.Telefono[0].DESC_CONTACTO.length > 0) {
-      if (user.persona.contacto.Telefono[0].IDEN_CONTACTO) {
-        await context.$axios.$put('/private/contacto/' + user.persona.contacto.Telefono[0].IDEN_CONTACTO,
-          {
-            DESC_CONTACTO: user.persona.contacto.Telefono[0].DESC_CONTACTO
-          })
-      } else {
-        await context.$axios.$post('/private/contacto',
-          {
-            TIPO_CONTACTO: 'Telefono',
-            DESC_CONTACTO: user.persona.contacto.Telefono[0].DESC_CONTACTO,
-            IDEN_PERSONA: persona.IDEN_PERSONA
-          })
+    _.forEach(user.persona.contacto, async (contacto, key) => {
+      if ((key === 'Web' || key === 'Twitter' || key === 'Facebook' || key === 'Instagram') && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
+        let length = contacto[0].DESC_CONTACTO.match(new RegExp('^([a-zA-Z]+://)?(w{3}.)?', 'i'))[0].length
+        let replacement = 'www.' + contacto[0].DESC_CONTACTO.substring(length)
+        contacto[0].DESC_CONTACTO = replacement
       }
-    }
-    // Registro del correo
-    if (user.persona.contacto.Correo[0].IDEN_CONTACTO) {
-      await context.$axios.$put('/private/contacto/' + user.persona.contacto.Correo[0].IDEN_CONTACTO,
-        {
-          DESC_CONTACTO: user.persona.contacto.Correo[0].DESC_CONTACTO
-        })
-    } else {
-      await context.$axios.$post('/private/contacto',
-        {
-          TIPO_CONTACTO: 'Correo',
-          DESC_CONTACTO: user.persona.contacto.Correo[0].DESC_CONTACTO,
-          IDEN_PERSONA: persona.IDEN_PERSONA
-        })
-    }
 
-    // Registro del celular
-    if (user.persona.contacto.Celular[0].IDEN_CONTACTO) {
-      await context.$axios.$put('/private/contacto/' + user.persona.contacto.Celular[0].IDEN_CONTACTO,
-        {
-          DESC_CONTACTO: user.persona.contacto.Celular[0].DESC_CONTACTO
-        })
-    } else {
-      await context.$axios.$post('/private/contacto',
-        {
-          TIPO_CONTACTO: 'Celular',
-          DESC_CONTACTO: user.persona.contacto.Celular[0].DESC_CONTACTO,
-          IDEN_PERSONA: persona.IDEN_PERSONA
-        })
-    }
-
-    // Registro de la direccion
-    if (user.persona.contacto.Direccion[0].IDEN_CONTACTO) {
-      await context.$axios.$put('/private/contacto/' + user.persona.contacto.Direccion[0].IDEN_CONTACTO,
-        {
-          DESC_CONTACTO: user.persona.contacto.Direccion[0].DESC_CONTACTO
-        })
-    } else {
-      await context.$axios.$post('/private/contacto',
-        {
-          TIPO_CONTACTO: 'Direccion',
-          DESC_CONTACTO: user.persona.contacto.Direccion[0].DESC_CONTACTO,
-          IDEN_PERSONA: persona.IDEN_PERSONA
-        })
-    }
-
+      if (contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
+        await context.$axios.$put('/private/contacto/' + contacto[0].IDEN_CONTACTO,
+          {
+            DESC_CONTACTO: contacto[0].DESC_CONTACTO
+          })
+      } else if (!contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
+        await context.$axios.$post('/private/contacto/',
+          {
+            IDEN_PERSONA: persona.IDEN_PERSONA,
+            TIPO_CONTACTO: key,
+            DESC_CONTACTO: contacto[0].DESC_CONTACTO
+          })
+      } else if ((key === 'Telefono' || key === 'Twitter' || key === 'Facebook' || key === 'Instagram' || key === 'Web') &&
+                  contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length === 0) {
+        await context.$axios.$delete('/private/contacto/' + contacto[0].IDEN_CONTACTO)
+      }
+    })
     // Registro del cambio de contraseña del usuario
     await context.$axios.$put('/private/usuario/' + user.IDEN_USUARIO,
       {
@@ -114,7 +77,6 @@ async function POST (context, user) {
         FECH_CREACION: new Date()
       })
 
-    context.$router.push({ path: '/' })
     context.$notify.success('Se han modificado tus datos exitosamente.')
     return true
   } catch (error) {
@@ -242,19 +204,26 @@ async function PUTEmprendedor (context) {
     // _ -> Libreria externa llamada lodash.
     // Proporciona metodo forEach para recorrer objetos.
     _.forEach(context.user.persona.contacto, async (contacto, key) => {
-      if (contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length > 0) {
+      if ((key === 'Web' || key === 'Twitter' || key === 'Facebook' || key === 'Instagram') && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
+        let length = contacto[0].DESC_CONTACTO.match(new RegExp('^([a-zA-Z]+://)?(w{3}.)?', 'i'))[0].length
+        let replacement = 'www.' + contacto[0].DESC_CONTACTO.substring(length)
+        contacto[0].DESC_CONTACTO = replacement
+      }
+
+      if (contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
         await context.$axios.$put('/private/contacto/' + contacto[0].IDEN_CONTACTO,
           {
             DESC_CONTACTO: contacto[0].DESC_CONTACTO
           })
-      } else if (!contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length > 0) {
+      } else if (!contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
         await context.$axios.$post('/private/contacto/',
           {
             IDEN_PERSONA: context.user.persona.IDEN_PERSONA,
             TIPO_CONTACTO: key,
             DESC_CONTACTO: contacto[0].DESC_CONTACTO
           })
-      } else if (key === 'Telefono' && contacto[0].IDEN_CONTACTO && contacto[0].DESC_CONTACTO.length === 0) {
+      } else if ((key === 'Telefono' || key === 'Twitter' || key === 'Facebook' || key === 'Instagram' || key === 'Web') &&
+                  contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length === 0) {
         await context.$axios.$delete('/private/contacto/' + contacto[0].IDEN_CONTACTO)
       }
     })
