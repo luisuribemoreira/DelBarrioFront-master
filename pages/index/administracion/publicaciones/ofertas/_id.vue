@@ -51,9 +51,14 @@
               </div>
               <hr/>
               <h3>Oferta</h3>
-              <div class="checkbox">
+              <div class="checkbox" v-if="post.FLAG_VALIDADO">
                 <label>
                   <input type="checkbox" v-model.trim="isSale"> Oferta habilitada
+                </label>
+              </div>
+              <div v-else>
+                <label>
+                  <p class="text-info">No es posible crear una oferta aún ya que la publicación todavía no ha sido validada por un administrador.</p>
                 </label>
               </div>
               <div v-if="isSale">
@@ -89,7 +94,7 @@
               <div v-if="messageOferta" class="mb-2 mt-2">
                 <p class="text-danger">{{messageOferta}}</p>
               </div>
-              <button type="submit" class="btn btn-default">Publicar</button>
+              <button v-if="post.FLAG_VALIDADO" type="submit" class="btn btn-default">Publicar</button>
             </form>
           </div>
         </div>
