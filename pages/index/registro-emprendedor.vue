@@ -101,6 +101,30 @@
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model.trim="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
+              <div style="text-align: center">
+                <h2><span style="vertical-align: super">Redes Sociales (Optativas)</span></h2>
+                <hr>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Twitter</label>
+                <input v-validate data-vv-rules="url|min:11" data-vv-as="Twitter" name="Twitter" type="text" v-model.trim="user.persona.contacto.Twitter[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Twitter')">{{ errors.first('Twitter') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Instagram</label>
+                <input v-validate data-vv-rules="url|min:13" data-vv-as="Instagram" name="Instagram" type="text" v-model.trim="user.persona.contacto.Instagram[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Instagram')">{{ errors.first('Instagram') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Facebook</label>
+                <input v-validate data-vv-rules="url|min:12" data-vv-as="Facebook" name="Facebook" type="text" v-model.trim="user.persona.contacto.Facebook[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Facebook')">{{ errors.first('Facebook') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Página Web</label>
+                <input v-validate data-vv-rules="url|min:3" data-vv-as="Web" name="Web" type="text" v-model.trim="user.persona.contacto.Web[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Web')">{{ errors.first('Web') }}</small>
+              </div>
               <div>
               <input type="checkbox" id="status" name="status" v-model.trim="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
               </div>
@@ -108,6 +132,9 @@
                 <label>
                 <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
                 </label>
+              </div>
+              <div>
+                <small class="text-danger" v-if="dataErrorMsg.general">{{ dataErrorMsg.general }}</small>
               </div>
               <button type="submit" class="btn btn-default">Guardar</button>
             </div>
@@ -132,8 +159,20 @@ export default {
       return controller.GET(app, store._vm.loggedUser.id)
         .then(({ user }) => {
           if (user.FECH_CREACION) redirect('/')
+          if (!user.persona.contacto) user.persona.contacto = {}
+          user.persona.contacto = {
+            Direccion: user.persona.contacto.Direccion && user.persona.contacto.Direccion.length > 0 ? user.persona.contacto.Direccion : [{}],
+            Correo: user.persona.contacto.Correo && user.persona.contacto.Correo.length > 0 ? user.persona.contacto.Correo : [{}],
+            Telefono: user.persona.contacto.Telefono && user.persona.contacto.Telefono.length > 0 ? user.persona.contacto.Telefono : [{}],
+            Celular: user.persona.contacto.Celular && user.persona.contacto.Celular.length > 0 ? user.persona.contacto.Celular : [{}],
+            Twitter: user.persona.contacto.Twitter && user.persona.contacto.Twitter.length > 0 ? user.persona.contacto.Twitter : [{}],
+            Instagram: user.persona.contacto.Instagram && user.persona.contacto.Instagram.length > 0 ? user.persona.contacto.Instagram : [{}],
+            Facebook: user.persona.contacto.Facebook && user.persona.contacto.Facebook.length > 0 ? user.persona.contacto.Facebook : [{}],
+            Web: user.persona.contacto.Web && user.persona.contacto.Web.length > 0 ? user.persona.contacto.Web : [{}]
+          }
           if (!user.persona.IDEN_PERSONA) {
-            user.persona.contacto = { Direccion: [{}], Correo: [{}], Telefono: [{}], Celular: [{}] }
+            user.emprendedor.DESC_NOMBRE_FANTASIA = ''
+            user.emprendedor.DESC_EMPRENDEDOR = ''
           }
 
           return {
@@ -145,7 +184,7 @@ export default {
   data () {
     return {
       format: 'dd MMM, yyyy',
-      dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
+      dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined, general: undefined },
       user: {},
       submitted: { valid: false, errors: false },
       imageUrl: process.env.imagesUrl,
@@ -162,21 +201,28 @@ export default {
     validateBeforeSubmit () {
       if (this.processing) return
       this.processing = true
+
       this.$validator.validateAll().then(async (result) => {
         // Se limpian los mensajes
-        this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
+        this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined, general: undefined }
         // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
         if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
           this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
+        } else if (!customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
+          this.dataErrorMsg.error_edad = undefined
         }
         //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
         if (!this.statusTerminos) {
           result = false
           this.messageTerminos = 'Debe aceptar los términos y condiciones.'
+        } else if (this.statusTerminos) {
+          this.messageTerminos = undefined
         }
         // Se valida que las contraseñas coincidan
         if (this.user.pass !== this.user.pass2) {
           this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
+        } else if (this.user.pass === this.user.pass2) {
+          this.dataErrorMsg.error_pw = undefined
         }
 
         let blobs = []
@@ -191,28 +237,32 @@ export default {
 
         if (blobs.length === 0) {
           this.dataErrorMsg.error_foto = 'Debe seleccionar una foto'
+        } else if (blobs.length > 0) {
+          this.dataErrorMsg.error_foto = undefined
         }
-
         if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw || this.dataErrorMsg.error_foto) {
           result = undefined
         }
 
         if (result) {
+          this.dataErrorMsg.general = undefined
           this.user.blobs = blobs
           let mail = this.user.EMAIL_USUARIO
           let password = this.user.pass
-          emailer.sendMail(this, mail, 'Cambio de contraseña',
-            'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
           controller.POST(this, this.user).then(() => {
             this.submitted.valid = true
             this.submitted.errors = false
             this.processing = false
+            emailer.sendMail(this, mail, 'Cambio de contraseña',
+              'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
             this.$router.replace('/sign-out')
           }).catch(() => {
             this.processing = false
             this.submitted.valid = false
             this.submitted.errors = true
           })
+        } else {
+          this.dataErrorMsg.general = 'Por favor corrija los campos con errores e intentelo denuevo.'
         }
         this.processing = false
       })

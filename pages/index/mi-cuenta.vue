@@ -229,6 +229,30 @@
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model.trim="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
+              <div>
+                <h2 class="text-center"><span>Redes Sociales (Optativas)</span></h2>
+                <hr>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Twitter</label><span style="color: grey"> (Formato ej: twitter.com/muni_provi)</span>
+                <input v-validate data-vv-rules="url|min:11" data-vv-as="Twitter" name="Twitter" type="text" v-model.trim="user.persona.contacto.Twitter[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Twitter')">{{ errors.first('Twitter') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Instagram</label><span style="color: grey"> (Formato ej: instagram.com/providencia_activa)</span>
+                <input v-validate data-vv-rules="url|min:13" data-vv-as="Instagram" name="Instagram" type="text" v-model.trim="user.persona.contacto.Instagram[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Instagram')">{{ errors.first('Instagram') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Facebook</label><span style="color: grey"> (Formato ej: facebook.com/MunicipalidadDeProvidencia)</span>
+                <input v-validate data-vv-rules="url|min:12" data-vv-as="Facebook" name="Facebook" type="text" v-model.trim="user.persona.contacto.Facebook[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Facebook')">{{ errors.first('Facebook') }}</small>
+              </div>
+              <div class="form-group margin-top">
+                <label for="name">Página Web</label><span style="color: grey"> (Formato ej: providencia.cl)</span>
+                <input v-validate data-vv-rules="url|min:3" data-vv-as="Web" name="Web" type="text" v-model.trim="user.persona.contacto.Web[0].DESC_CONTACTO" class="form-control"/>
+                <small class="text-danger" v-show="errors.has('Web')">{{ errors.first('Web') }}</small>
+              </div>
               <div class="form-group margin-top">
                 <h2 class="text-center">Al guardar cambios, por favor reinicie sesión para ver los efectos</h2>
               </div>
@@ -348,10 +372,17 @@ export default {
               })
               // Se inicializa el Telefono como objeto vacio en caso de que el usuario no tenga un telefono definido.
               // Se inicializan todos los campos para evitar errores.
-              if (!user.persona.contacto.Telefono) user.persona.contacto.Telefono = [{ DESC_CONTACTO: '' }]
-              if (!user.persona.contacto.Direccion) user.persona.contacto.Direccion = [{}]
-              if (!user.persona.contacto.Celular) user.persona.contacto.Celular = [{}]
-              if (!user.persona.contacto.Correo) user.persona.contacto.Correo = [{}]
+              if (!user.persona.contacto) user.persona.contacto = {}
+              user.persona.contacto = {
+                Direccion: user.persona.contacto.Direccion && user.persona.contacto.Direccion.length > 0 ? user.persona.contacto.Direccion : [{}],
+                Correo: user.persona.contacto.Correo && user.persona.contacto.Correo.length > 0 ? user.persona.contacto.Correo : [{}],
+                Telefono: user.persona.contacto.Telefono && user.persona.contacto.Telefono.length > 0 ? user.persona.contacto.Telefono : [{}],
+                Celular: user.persona.contacto.Celular && user.persona.contacto.Celular.length > 0 ? user.persona.contacto.Celular : [{}],
+                Twitter: user.persona.contacto.Twitter && user.persona.contacto.Twitter.length > 0 ? user.persona.contacto.Twitter : [{}],
+                Instagram: user.persona.contacto.Instagram && user.persona.contacto.Instagram.length > 0 ? user.persona.contacto.Instagram : [{}],
+                Facebook: user.persona.contacto.Facebook && user.persona.contacto.Facebook.length > 0 ? user.persona.contacto.Facebook : [{}],
+                Web: user.persona.contacto.Web && user.persona.contacto.Web.length > 0 ? user.persona.contacto.Web : [{}]
+              }
               return {
                 user: user,
                 posts: posts,

@@ -56,7 +56,14 @@
               <li class="mb-2"><i class="fas fa-envelope fa-lg text-turquoise mr-2"></i>{{ contactos.correo }}</li>
               <li class="mb-2"><i class="fas fa-map-marked-alt fa-lg text-turquoise mr-2"></i>{{ contactos.direccion }}</li>
             </ul>
-            <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a :href="'mailto:'+contactos.correo">{{contactos.correo}}</a></h5>
+            <h5 class="entrepreneur-info--subtitle h5" v-if="rss.twitter || rss.instagram || rss.facebook || rss.web">Redes Sociales</h5>
+            <ul class="list-unstyled mt-3">
+              <li class="mb-2" v-if="rss.twitter"><i class="fab fa-twitter fa-lg text-turquoise mr-2"></i><a target="_blank" :href="'//' + rss.twitter">Twitter</a></li>
+              <li class="mb-2" v-if="rss.instagram"><i class="fab fa-instagram fa-lg text-turquoise mr-2"></i><a target="_blank" :href="'//' + rss.instagram">Instagram</a></li>
+              <li class="mb-2" v-if="rss.facebook"><i class="fab fa-facebook fa-lg text-turquoise mr-2"></i><a target="_blank" :href="'//' + rss.facebook">Facebook</a></li>
+              <li class="mb-2" v-if="rss.web"><i class="fas fa-external-link-alt fa-lg text-turquoise mr-2"></i><a target="_blank" :href="'//' + rss.web">Página Web</a></li>
+            </ul>
+            <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a href="#">{{contactos.correo}}</a></h5>
           </div>
           <div v-else>
             <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para ver los datos del emprendedor</p>
@@ -162,6 +169,7 @@ export default {
         }
         // Datos de contácto
         let contactos = { telefono: '', celular: '', correo: '', direccion: '' }
+        let rss = { twitter: false, facebook: false, instagram: false, web: false }
         try {
           contactos.direccion = entrepreneur.usuario.persona.contacto.Direccion[0].DESC_CONTACTO
         } catch (err) {
@@ -174,6 +182,12 @@ export default {
             ? entrepreneur.usuario.persona.contacto.Telefono[0].DESC_CONTACTO.substring(0, 2) + ' ' + entrepreneur.usuario.persona.contacto.Telefono[0].DESC_CONTACTO.substring(2) : ''
           contactos.celular = entrepreneur.usuario.persona.contacto.Celular[0].DESC_CONTACTO.substring(0, 1) + ' ' + entrepreneur.usuario.persona.contacto.Celular[0].DESC_CONTACTO.substring(1)
           contactos.correo = entrepreneur.usuario.persona.contacto.Correo[0].DESC_CONTACTO
+
+          // Redes Sociales
+          rss.twitter = entrepreneur.usuario.persona.contacto.Twitter ? entrepreneur.usuario.persona.contacto.Twitter[0].DESC_CONTACTO : false
+          rss.facebook = entrepreneur.usuario.persona.contacto.Facebook ? entrepreneur.usuario.persona.contacto.Facebook[0].DESC_CONTACTO : false
+          rss.instagram = entrepreneur.usuario.persona.contacto.Instagram ? entrepreneur.usuario.persona.contacto.Instagram[0].DESC_CONTACTO : false
+          rss.web = entrepreneur.usuario.persona.contacto.Web ? entrepreneur.usuario.persona.contacto.Web[0].DESC_CONTACTO : false
         } catch (err) {
           // Nada...
         }
@@ -194,6 +208,7 @@ export default {
               entrepreneur: entrepreneur,
               geocode: geocode,
               contactos,
+              rss,
               posts,
               pages
             }
@@ -207,7 +222,9 @@ export default {
       entrepreneur: [],
       activePage: 0,
       pages: 0,
-      posts: [[]]
+      posts: [[]],
+      contactos: {},
+      rss: {}
     }
   },
   computed: mapGetters([
