@@ -53,7 +53,16 @@
                 </div>
               </div>
               <div>
+              <strong>
+              <p>Primera a la izquierda es la imagen principal y debiese ser la más descriptiva del producto o servicio.</p>
+              <p>Tamaño de imagen recomendado igual o mayor a 500x500</p>
+              </strong>
+              </div>
+              <div>
               <input type="checkbox" id="status" name="status" v-model.trim="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
+              <label>
+                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
+              </label>
               </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
@@ -98,10 +107,6 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="tags">Tags (separar por coma)</label>
-                <input-tag id="tags" :tags="post.ETIQUETAS" class="form-control"></input-tag>
-              </div>
               <div class="checkbox">
                 <label>
                   <input type="checkbox" v-model.trim="post.FLAG_CONTENIDO_ADULTO"> Producto para mayores de 18
@@ -113,9 +118,6 @@
               <div>
                 <label>
                 <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
-                </label>
-                <label>
-                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
                 </label>
               </div>
               <button type="submit" class="btn btn-default">Publicar</button>
@@ -172,7 +174,7 @@ export default {
         //  Revisar si la casilla de imagenes esta marcada, si no lo está obliga a marcarla.
         if (!this.statusAutoria) {
           result = false
-          this.messageAutoria = 'Solo se permiten imágenes de su autoría, confirme el cuadro de arriba que efectivamente pertenecen a usted.'
+          this.messageAutoria = 'Solo se permiten imágenes de su autoría, confirme en el cuadro de arriba que efectivamente pertenecen a usted.'
         }
         //  Revisar si la casilla de Terminos y condiciones esta marcada, si no lo está obliga a marcarla.
         if (!this.statusTerminos) {
