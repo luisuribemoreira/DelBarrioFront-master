@@ -6,15 +6,22 @@ export default function ({ store, redirect, route }) {
   // Si el usuario no está autenticado, redirecciona a /autenticar.
   if (!store.getters.isAuthenticated) {
     return redirect('/autenticar')
-  }
-  if (store.getters.loggedUser.rol !== 102) {
-    routesEntrepreneur(route.path, redirect)
-  }
-  if (store.getters.loggedUser.rol !== 103 && store.getters.loggedUser.rol !== 104) {
-    routesAdmin(route.path, redirect)
-  }
-  if (store.getters.loggedUser.rol !== 104) {
-    routesSuperAdmin(route.path, redirect)
+  } else {
+    store.$axios.get('/private/usuario/' + store.getters.loggedUser.id)
+      .then(user => {
+        if (!user.data.data.FECH_CREACION && !route.path.match(/\/sign-out/ig)) {
+          return redirect('/registro-emprendedor')
+        }
+        if (store.getters.loggedUser.rol !== 102) {
+          routesEntrepreneur(route.path, redirect)
+        }
+        if (store.getters.loggedUser.rol !== 103 && store.getters.loggedUser.rol !== 104) {
+          routesAdmin(route.path, redirect)
+        }
+        if (store.getters.loggedUser.rol !== 104) {
+          routesSuperAdmin(route.path, redirect)
+        }
+      })
   }
 }
 
