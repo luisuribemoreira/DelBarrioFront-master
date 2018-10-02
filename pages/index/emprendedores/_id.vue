@@ -33,6 +33,7 @@
                       description="Portal de emprendimientos en Providencia."
                       v-bind:quote="entrepreneur.DESC_NOMBRE_FANTASIA + ' - Portal de emprendimientos en Providencia.'"
                       hashtags="delbarrio,providencia"
+                      url:to="{ path: '/emprendeores/'+entrepreneur.IDEN_EMPRENDEDOR }"
                       inline-template>
               <div class="social-media mt-5 text-center">
                 <network network="facebook"><a class="pl-2 pr-2" style="cursor:pointer;"><i class="fab fa-facebook-square" :scale="2" name="facebook-square" :aria-hidden="true"></i></a></network>

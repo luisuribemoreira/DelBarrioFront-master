@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col-md-5">
           <no-ssr>
-          <carousel 
+          <carousel
                     :navigationEnabled="true"
                     :loop="false"
                     paginationActiveColor="#89dbee"
@@ -47,6 +47,7 @@
                       description="Portal de emprendimientos en Providencia."
                       v-bind:quote="post.NOMB_PUBLICACION + ' - Portal de emprendimientos en Providencia.'"
                       hashtags="delbarrio,providencia"
+                      url:to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }"
                       inline-template>
               <div class="social-media mt-5 text-center">
                 <network network="facebook"><a class="pl-2 pr-2" style="cursor:pointer;"><i class="fab fa-facebook-square" :scale="2" name="facebook-square" :aria-hidden="true"></i></a></network>
@@ -59,7 +60,7 @@
           <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
            <div class="stars mt-3">
             <no-ssr>
-              <star-rating 
+              <star-rating
                 v-model="post.NUMR_CALIFICACION"
                 :increment="0.1"
                 :star-size="35"
@@ -88,7 +89,7 @@
 <!--Comentarios / Calificaciones -->
  <section class="product-comments section">
     <div class="container">
-      <div id="interacciones" v-if="isAuthenticated"> 
+      <div id="interacciones" v-if="isAuthenticated">
       <div class="row">
         <div class="col">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -119,9 +120,9 @@
                 </div>
                 <form @submit.prevent="validateRating" class="mt-3">
                   <div class="form-group">
-                    <textarea class="form-control" 
-                      id="exampleFormControlTextarea1" 
-                      :rows="5" 
+                    <textarea class="form-control"
+                      id="exampleFormControlTextarea1"
+                      :rows="5"
                       v-model.trim="rating.DESC_CALIFICACION"
                       v-validate data-vv-rules="min:10|max:250"></textarea>
                   </div>
@@ -129,7 +130,7 @@
                   <button type="submit" class="btn btn-danger mt-2">Calificar</button>
                 </form>
               </div>
-              
+
               <div id="rating" v-if="post.calificaciones.length > 0" class="ratings-comments mt-5">
               <div class="col-12">
               <h3>Última calificación</h3>
@@ -159,8 +160,8 @@
                  <!--FORM DE COMENTAR-->
                 <form class="mt-2" @submit.prevent="validateComment">
                   <div class="form-group">
-                    <textarea class="form-control" 
-                              id="exampleFormControlTextarea1" 
+                    <textarea class="form-control"
+                              id="exampleFormControlTextarea1"
                               :rows="5"
                               v-validate data-vv-rules="required|min:10|max:250"
                               data-vv-as="comentario"
@@ -199,7 +200,7 @@
               </p>
               <form @submit.prevent="validateAnswer" v-if="selected === c.IDEN_COMENTARIO">
                 <div class="form-group margin-top-20">
-                  <textarea 
+                  <textarea
                     class="form-control"
                     :rows="3"
                     v-validate data-vv-rules="min:2|max:250"
@@ -227,7 +228,7 @@
     <div v-else>
             <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para obtener más información</p>
             <p>¿No tienes cuenta aún? <nuxt-link to="/registro">¡Regístrate!</nuxt-link></p>
-          </div> 
+          </div>
     </div>
   </section>
 
@@ -244,7 +245,7 @@
           <div class="modal-body">
             <div :key="rating.IDEN_CALIFICACION" v-for="rating in post.calificaciones" v-if="post.calificaciones.length > 0">
               <no-ssr>
-                <star-rating 
+                <star-rating
                   v-model="rating.NUMR_VALOR"
                   :increment="0.1"
                   :star-size="20"
@@ -289,7 +290,7 @@
               </div>
               <div class="form-group margin-top">
                 <label for="denounceComment">Más detalles</label>
-                <textarea 
+                <textarea
                   class="form-control"
                   :rows="5"
                   v-validate data-vv-rules="required|min:10|max:250"
