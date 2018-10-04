@@ -277,15 +277,19 @@ async function comentariosPorProducto (app) {
  * @returns True si se envía correctamente, de lo contrario, False.
  */
 function sendPDF (app, data, headers, type) {
-  app.$axios.post('/private/generate',
+  return app.$axios.post('/private/generate',
     {
       titles: headers,
       items: data,
       type: type,
       user: app.user.EMAIL_USUARIO
     })
-    .then().catch(err => {
-      console.log(err)
+    .then(() => {
+      app.$notify.success('Reporte enviado correctamente.')
+      return true
+    }).catch(err => {
+      app.$notify.danger('Ha ocurrido un error enviando su reporte.')
+      if (err) return false
     })
 }
 

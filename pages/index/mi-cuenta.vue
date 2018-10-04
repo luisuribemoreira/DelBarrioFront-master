@@ -527,7 +527,7 @@ export default {
       }
 
       if (this.reportData.length === 0) {
-        this.message = 'No se encontro ninguna publicación.'
+        this.message = 'No se encontró ninguna publicación.'
       } else {
         this.message = false
       }
@@ -544,7 +544,7 @@ export default {
       }
 
       if (this.reportData.length === 0) {
-        this.message = 'No se encontro ninguna publicación.'
+        this.message = 'No se encontró ninguna publicación.'
       } else {
         this.message = false
       }
@@ -566,8 +566,12 @@ export default {
         this.message = false
       }
     },
-    enviarPorCorreo () {
-      controllerReporteria.sendPDF(this, this.reportData, this.headers, this.type)
+    async enviarPorCorreo () {
+      if (this.processing) return
+      this.processing = true
+
+      await controllerReporteria.sendPDF(this, this.reportData, this.headers, this.type)
+      this.processing = false
     }
   },
   computed: mapGetters([
