@@ -10,7 +10,7 @@ function sendMail (context, to, subject, text) {
       text
     })
     .then(response => {
-      // nada
+      context.$notify.success('Correo enviado correctamente.')
     }).catch(errors => {
       context.$notify.danger('Ha ocurrido un error inesperado enviando su correo.')
     })
