@@ -48,9 +48,8 @@ async function POST (context, user) {
     // Registro de los contactos de la persona
     _.forEach(user.persona.contacto, async (contacto, key) => {
       if ((key === 'Web' || key === 'Twitter' || key === 'Facebook' || key === 'Instagram') && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
-        let length = contacto[0].DESC_CONTACTO.match(new RegExp('^([a-zA-Z]+://)?(w{3}.)?', 'i'))[0].length
-        let replacement = 'www.' + contacto[0].DESC_CONTACTO.substring(length)
-        contacto[0].DESC_CONTACTO = replacement
+        let match = contacto[0].DESC_CONTACTO.match(new RegExp('^([a-zA-Z]+://)'))
+        if (match) contacto[0].DESC_CONTACTO = contacto[0].DESC_CONTACTO.substring(match[0].length)
       }
 
       if (contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
@@ -205,9 +204,8 @@ async function PUTEmprendedor (context) {
     // Proporciona metodo forEach para recorrer objetos.
     _.forEach(context.user.persona.contacto, async (contacto, key) => {
       if ((key === 'Web' || key === 'Twitter' || key === 'Facebook' || key === 'Instagram') && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
-        let length = contacto[0].DESC_CONTACTO.match(new RegExp('^([a-zA-Z]+://)?(w{3}.)?', 'i'))[0].length
-        let replacement = 'www.' + contacto[0].DESC_CONTACTO.substring(length)
-        contacto[0].DESC_CONTACTO = replacement
+        let match = contacto[0].DESC_CONTACTO.match(new RegExp('^([a-zA-Z]+://)'))
+        if (match) contacto[0].DESC_CONTACTO = contacto[0].DESC_CONTACTO.substring(match[0].length)
       }
 
       if (contacto[0].IDEN_CONTACTO && typeof contacto[0].DESC_CONTACTO !== 'undefined' && contacto[0].DESC_CONTACTO.length > 0) {
