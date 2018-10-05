@@ -37,11 +37,11 @@
                   <nuxt-link class="card-img-link" :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">
                     <img v-if="!entrepreneur.imagen || !entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top">
                     <img v-else v-lazy="imageUrl + entrepreneur.imagen.URL_IMAGEN" class="card-img-top">
+                  </nuxt-link>
                   <div class="card-body">
                     <h5 class="card-title">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</h5>
-                    <p class="card-text"><nuxt-link :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">{{entrepreneur.DESC_EMPRENDEDOR}}</nuxt-link></p>
+                    <p class="card-text">{{ entrepreneur.DESC_EMPRENDEDOR.length > 80 ? entrepreneur.DESC_EMPRENDEDOR.substring(0, 80) + '...' : entrepreneur.DESC_EMPRENDEDOR }}</p>
                   </div>
-                  </nuxt-link>
                 </div>
             </div>
       </div>

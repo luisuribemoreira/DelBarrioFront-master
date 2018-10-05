@@ -31,9 +31,7 @@
               <td>
                 <icon :name="post.FLAG_VIGENTE ? 'check' : 'times'" :title="post.FLAG_VIGENTE ? 'Habilitado' : 'Deshabilitado'"></icon>
               </td>
-              <nuxt-link :to="{ path: '/publicaciones/' + post.IDEN_PUBLICACION }">
-              <td>{{post.NOMB_PUBLICACION}}</td>
-              </nuxt-link>
+              <td><nuxt-link :to="{ path: '/publicaciones/' + post.IDEN_PUBLICACION }">{{post.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>{{post.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
               <td>
