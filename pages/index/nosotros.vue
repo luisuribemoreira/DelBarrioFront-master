@@ -10,7 +10,20 @@
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<h2 class="h2">Sobre nosotros</h2>
-					<p class="mt-4">Pellentesque a dolor justo. Nam auctor urna eget quam lobortis luctus. Morbi elementum massa et magna egestas blandit. In non eros et risus dignissim tincidunt sollicitudin at purus. Quisque eget viverra nulla. Etiam vitae interdum lacus, a tempor augue. Fusce sapien ante, fringilla vitae congue id, mattis eget quam. Sed vel nunc efficitur, sodales orci a, scelerisque est. Maecenas ac feugiat neque. Vestibulum a ligula eget mauris ornare ultrices.</p>
+					<h3 class="h3">¿Quiénes somos?</h3>
+					<p class="mt-4">
+					Hub Providencia es una red de espacios colaborativos para el trabajo, 
+					perteneciente a la actual Dirección de Desarrollo Local de la Municipalidad de Providencia.
+					Dentro de esta dirección se encuentra el Departamento de Emprendimiento, 
+					que busca potenciar y fomentar a los emprendedores a través de acciones de formación, 
+					capacitación, asesorías técnicas y activaciones comerciales para fortalecer los pequeños y medianos comerciantes de la comuna.</p>
+					<h3 class="h3">¿Para qué?</h3>
+					<p class="mt-4">
+					Vitrina Providencia</p>
+					<p class="mt-4">
+					Esta plataforma de promoción de productos y servicios para emprendedoras de la comuna de Providencia, busca fomentar la 
+					vinculación comercial entre vecinos, emprendedores y empresas de la comuna.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -23,49 +36,25 @@
 				</div>
 			</div>
 			
-			<div class="row text-center mt-3">
-				<div class="col-md-4 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 1">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
-				</div>
-				<div class="col-md-4 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 2">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
-				</div>
-				<div class="col-md-4 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 3">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
+			<div class="text-center mt-3">
+				<div class="gallery">
+					<img src="img/img-soyprovidencia/group-photo.png" class="about-team--image img-fluid" alt="Grupo">
+					<h5 class="about-team--title h5 mt-3">Team HUB Providencia</h5>
+					<p class="about-team--text">Descripción</p>
 				</div>
 			</div>
-			<!-- /3 imagenes -->
-			
-			<div class="row text-center">
-				<div class="col-lg-3 col-md-6 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 1">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
-				</div>
-				<div class="col-lg-3 col-md-6 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 2">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
-				</div>
-				<div class="col-lg-3 col-md-6 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 3">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
-				</div>
-				<div class="col-lg-3 col-md-6 mt-4">
-					<img src="img/img-soyprovidencia/team-person.jpg" class="about-team--image img-fluid" alt="Persona 3">
-					<h5 class="about-team--title h5 mt-3">Nombre Apellido</h5>
-					<p class="about-team--text">Cargo, descripción</p>
-				</div>
-			</div>
-			<!-- /4 imagenes -->
+			<!--imagen-->
+		
 		</div>
 	</section><!-- /TEAM -->
 </section>
 </template>
+<script>
+export default {
+  head () {
+    return {
+      title: 'Nosotros'
+    }
+  }
+}
+</script>
