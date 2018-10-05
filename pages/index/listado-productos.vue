@@ -298,7 +298,7 @@ export default {
         postsFound.sort(function (a, b) {
           return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
-        let paginatedData = (await custompaginator.paginate(postsFound, 1)).paginatedData
+        let paginatedData = (await custompaginator.paginate(postsFound)).paginatedData
         this.paginatedData = paginatedData
         this.pages = paginatedData.length
         this.pagination = 0
