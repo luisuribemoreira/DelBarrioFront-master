@@ -72,7 +72,7 @@
                   <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="card-img-top">
                   <div class="card-body">
                   <h5 class="card-title">{{post.NOMB_PUBLICACION}}</h5>
-                  <p class="card-text">{{post.DESC_PUBLICACION}}</p>
+                  <p class="card-text">{{post.DESC_PUBLICACION.length > 80 ? post.DESC_PUBLICACION.substring(0, 80) + '...' : post.DESC_PUBLICACION }}</p>
                   <p class="card-text card-price">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</p>
                   </div>
               </nuxt-link>
