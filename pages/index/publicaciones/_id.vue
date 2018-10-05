@@ -74,7 +74,17 @@
           <p class="mt-3"><i class="far fa-eye"></i> ({{post.NUMR_CONTADOR}})</p>
           <p><a v-if="isAuthenticated" href="#" v-scroll-to="'#listComentarios'">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a>
           <a v-else data-toggle="modal" data-target="#modal">({{ post.comentarios.length }} {{ post.comentarios.length === 1 ? 'comentario' : 'comentarios' }})</a><p>
-          <h3 class="product-info--price h3 mt-5">${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
+          <h3 class="product-info--price h3 mt-5" v-if="post.oferta">Oferta!</h3>
+          <h3 class="product-info--price h3" v-if="post.oferta">
+            <small>
+              <strike>${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</strike>
+              Rebaja de un {{ rebaja }}%
+            </small>
+          </h3>
+          <h3 class="product-info--price h3" v-else>
+            ${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}
+          </h3>
+          <h3 class="product-info--price h3" v-if="post.oferta">${{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
           <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
           <p class="btn btn-primary btn-primary__turquoise mt-4"><nuxt-link style="color: white" :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Contactar a Vendedor</nuxt-link></p>
           <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
@@ -356,8 +366,24 @@ export default {
       .then(publicacion => {
         if (!publicacion) redirect('/')
         let post = publicacion.post
-        // if (post.emprendedor.usuario.FLAG_BAN) redirect('/')
+        if (post.emprendedor.usuario.FLAG_BAN) redirect('/')
         let contactos = {}
+        let rebaja = 0
+        if (post.oferta.length > 0) {
+          let oferta
+          post.oferta.forEach(o => {
+            if (!o.FLAG_BAN && o.FLAG_VIGENTE && o.FLAG_VALIDADO) oferta = o
+          })
+          if (oferta) {
+            post.oferta = oferta
+            rebaja = Math.round(100 - (Number(oferta.NUMR_PRECIO) / Number(post.NUMR_PRECIO)) * 100)
+            if (rebaja === 100) {
+              rebaja = 0
+            }
+          } else {
+            post.oferta = undefined
+          }
+        }
         // Filtro de calificaciones con usuarios baneados.
         let calificaciones = []
         post.calificaciones.forEach(calificacion => {
@@ -391,7 +417,8 @@ export default {
                 return {
                   post: post,
                   denouncereasons: denouncereasons,
-                  contactos
+                  contactos,
+                  rebaja
                 }
               }
               // Si no es el dueño, entonces se retorna su calificacion.
@@ -407,14 +434,16 @@ export default {
                     post: post,
                     denouncereasons: denouncereasons,
                     rating: calificacionAux,
-                    contactos
+                    contactos,
+                    rebaja
                   }
                 })
             } else {
               // Si no esta autenticado se retorna solo el post y los datos del emprendedor.
               return {
                 post: post,
-                contactos
+                contactos,
+                rebaja
               }
             }
           })
@@ -436,7 +465,8 @@ export default {
       contactos: {},
       denItem: {},
       processing: false,
-      message: { error: false, answer: '' }
+      message: { error: false, answer: '' },
+      rebaja: 0
     }
   },
   computed: mapGetters([
