@@ -81,7 +81,10 @@
               Rebaja de un {{ rebaja }}%
             </small>
           </h3>
-          <h3 class="product-info--price h3">
+          <h3 class="product-info--price h3" v-if="post.oferta">
+            ${{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}
+          </h3>
+          <h3 class="product-info--price h3" v-else>
             ${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}
           </h3>
           <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
@@ -376,9 +379,6 @@ export default {
           if (oferta) {
             post.oferta = oferta
             rebaja = Math.round(100 - (Number(oferta.NUMR_PRECIO) / Number(post.NUMR_PRECIO)) * 100)
-            if (rebaja === 100) {
-              rebaja = 0
-            }
           } else {
             post.oferta = undefined
           }
