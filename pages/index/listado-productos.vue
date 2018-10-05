@@ -122,7 +122,7 @@
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
                     style="width: 100%;">
-            <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN && post.oferta.FLAG_VIGENTE && post.oferta.FLAG_VALIDADO">
+            <slide v-for="post in publicaciones" :key="post.IDEN_PUBLICACION">
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
@@ -156,9 +156,26 @@ export default {
           .then(({ categories }) => {
             return workfieldsController.GETAll(app)
               .then(({ workfields }) => {
+                let publicaciones = []
+                index.publicaciones.forEach(post => {
+                  if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
+                    if (post.oferta.length > 0) {
+                      let offer
+                      post.oferta.forEach(o => {
+                        if (!o.FLAG_BAN && o.FLAG_VIGENTE && o.FLAG_VALIDADO) {
+                          offer = o
+                        }
+                      })
+                      if (offer) {
+                        post.oferta = offer
+                        publicaciones.push(post)
+                      }
+                    }
+                  }
+                })
                 return {
                   categories: categories,
-                  index: index,
+                  publicaciones,
                   workfields: workfields
                 }
               })
@@ -182,7 +199,7 @@ export default {
       searchKeys: [], // Encabezados para la tabla segun los datos de busqueda
       searchMessage: false,
       categories: [],
-      index: [],
+      ofertas: [],
       workfields: [],
       paginatedData: [[]],
       pages: 0,
@@ -195,7 +212,13 @@ export default {
       * Publicaciones/Productos
       */
       if (this.type.product) {
-        let posts = (await postsController.GETAll(this)).posts
+        let postsAux = (await postsController.GETAll(this)).posts
+        let posts = []
+        postsAux.forEach(post => {
+          if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
+            posts.push(post)
+          }
+        })
         this.pages = posts.length
         let options = { text: false, filter: false, price: false }
         let postsFound = posts
@@ -275,7 +298,7 @@ export default {
         postsFound.sort(function (a, b) {
           return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
-        let paginatedData = (await custompaginator.paginate(postsFound)).paginatedData
+        let paginatedData = (await custompaginator.paginate(postsFound, 1)).paginatedData
         this.paginatedData = paginatedData
         this.pages = paginatedData.length
         this.pagination = 0

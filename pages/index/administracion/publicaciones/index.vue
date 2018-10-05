@@ -27,7 +27,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN">
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]">
               <td>
                 <icon :name="post.FLAG_VIGENTE ? 'check' : 'times'" :title="post.FLAG_VIGENTE ? 'Habilitado' : 'Deshabilitado'"></icon>
               </td>
@@ -80,7 +80,7 @@
 import { mapGetters } from 'vuex'
 import controller from '~/controllers/admin/myaccount'
 import controllerPosts from '~/controllers/posts'
-// import moment from 'moment'
+import moment from 'moment'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
@@ -89,27 +89,27 @@ export default {
       .then(({ user }) => {
         return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)
           .then(({ posts }) => {
-            return custompaginator.paginate(posts)
+            let postsAux = []
+            posts.forEach(p => {
+              if (!p.FLAG_BAN) {
+                postsAux.push(p)
+              }
+            })
+            postsAux.sort(function (a, b) {
+              if (moment(a.FECH_CREACION).isAfter(b.FECH_CREACION)) return -1
+              if (moment(a.FECH_CREACION).isBefore(b.FECH_CREACION)) return 1
+              return 0
+            })
+            return custompaginator.paginate(postsAux)
               .then(({ paginatedData }) => {
                 let pages = paginatedData.length
                 return {
-                  posts,
+                  post: postsAux,
                   paginatedData,
                   pages
                 }
               })
           })
-        /* .then(({ posts }) => {
-            // Ordena los posts segun la fecha, el mas reciente primero y el mas antiguo al final
-            posts.sort(function (a, b) {
-              if (moment(a.FECH_CREACION).isAfter(b.FECH_CREACION)) return -1
-              if (moment(a.FECH_CREACION).isBefore(b.FECH_CREACION)) return 1
-              return 0
-            })
-            return {
-              posts: posts
-            }
-          }) */
       })
   },
   data () {

@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_VALIDADO && !post.FLAG_BAN">
+            <tr :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]">
               <td><nuxt-link :to="{ path: '/publicaciones/' + post.IDEN_PUBLICACION }">{{post.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>{{post.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
@@ -78,7 +78,11 @@ export default {
   asyncData ({ app }) {
     return postcontroller.GETAll(app)
       .then(({ posts }) => {
-        return custompaginator.paginate(posts)
+        let postsAux = []
+        posts.forEach(p => {
+          if (!p.FLAG_VALIDADO && !p.FLAG_BAN) postsAux.push(p)
+        })
+        return custompaginator.paginate(postsAux)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
             return {

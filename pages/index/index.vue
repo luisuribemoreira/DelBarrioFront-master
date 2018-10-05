@@ -60,7 +60,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-lg-3 col-sm-6" v-for="post in posts" :key="post.IDEN_PUBLICACION" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
+                                <div class="col-lg-3 col-sm-6" v-for="post in posts" :key="post.IDEN_PUBLICACION">
                                     <div class="card">
                                         <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION" class="card-img-link">
                                           <img v-if="post.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
@@ -105,7 +105,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR" v-if="!entrepreneur.usuario.FLAG_BAN">
+                                <div class="col-md-4" v-for="entrepreneur in entrepreneurs" :key="entrepreneur.IDEN_EMPRENDEDOR">
                                     <div class="card">
                                         <nuxt-link :to="'/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR" class="card-img-link">
                                           <img v-if="!entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
@@ -153,7 +153,7 @@ export default {
     let entrepreneursAux = (await controllerEntrepreneurs.GETAll(app)).entrepreneurs
     entrepreneursAux.forEach(entrepreneur => {
       // Se verifica que el emprendedor haya finalizado su creacion(Ya se logueo al menos 1 ves y completo todos sus datos)
-      if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION) entrepreneurs.push(entrepreneur)
+      if (entrepreneur.usuario && entrepreneur.usuario.FECH_CREACION && !entrepreneur.usuario.FLAG_BAN) entrepreneurs.push(entrepreneur)
     })
     // Se ordenan por fecha, el mas nuevo primero.
     entrepreneurs.sort(function (a, b) {

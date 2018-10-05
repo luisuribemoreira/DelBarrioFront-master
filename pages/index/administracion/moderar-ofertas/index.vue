@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr v-for="oferta in paginatedData[pagination]" :key="oferta.IDEN_OFERTA" v-if="!oferta.FLAG_VALIDADO && !oferta.FLAG_BAN">
+            <tr v-for="oferta in paginatedData[pagination]" :key="oferta.IDEN_OFERTA">
               <td><nuxt-link :to="{ path: '/publicaciones/' + oferta.publicacion.IDEN_PUBLICACION }">{{oferta.publicacion.NOMB_PUBLICACION}}</nuxt-link></td>
               <td>{{oferta.publicacion.CODI_TIPO_PUBLICACION == 'P' ? 'Producto' : 'Servicio' }}</td>
               <td>{{oferta.publicacion.categoria.NOMB_CATEGORIA}}</td>
@@ -84,16 +84,19 @@ export default {
   asyncData ({ app }) {
     return offerController.GETAll(app)
       .then(ofertas => {
-        ofertas.offers.forEach((oferta, key) => {
-          ofertas.offers[key].FECH_INICIO = moment(oferta.FECH_INICIO).format('DD-MM-YYYY')
-          ofertas.offers[key].FECH_TERMINO = moment(oferta.FECH_TERMINO).format('DD-MM-YYYY')
+        let offers = []
+        ofertas.offers.forEach((oferta, index) => {
+          if (!oferta.FLAG_VALIDADO && !oferta.FLAG_BAN) {
+            oferta.FECH_INICIO = moment(oferta.FECH_INICIO).format('DD-MM-YYYY')
+            oferta.FECH_TERMINO = moment(oferta.FECH_TERMINO).format('DD-MM-YYYY')
+            offers.push(oferta)
+          }
         })
-        return custompaginator.paginate(ofertas.offers)
+        return custompaginator.paginate(offers)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
             return {
-              oferta: ofertas,
-              imagen: ofertas ? ofertas.images : {},
+              oferta: offers,
               paginatedData,
               pages
             }

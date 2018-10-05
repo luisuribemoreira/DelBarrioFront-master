@@ -353,20 +353,24 @@ export default {
             .then(({ posts }) => {
               let preguntas = 0
               let PREG_SIN_RESPONDER
+              let postsAux = []
               posts.forEach(post => {
-                PREG_SIN_RESPONDER = 0
-                if (post.comentarios.length > 0) {
-                  post.comentarios.forEach(comentario => {
-                    if (!comentario.respuesta.IDEN_RESPUESTA) {
-                      preguntas++
-                      PREG_SIN_RESPONDER++
-                    }
-                  })
+                if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO) {
+                  postsAux.push(post)
+                  PREG_SIN_RESPONDER = 0
+                  if (post.comentarios.length > 0) {
+                    post.comentarios.forEach(comentario => {
+                      if (!comentario.respuesta.IDEN_RESPUESTA) {
+                        preguntas++
+                        PREG_SIN_RESPONDER++
+                      }
+                    })
+                  }
+                  post.PREG_SIN_RESPONDER = PREG_SIN_RESPONDER
                 }
-                post.PREG_SIN_RESPONDER = PREG_SIN_RESPONDER
               })
               // Ordena los posts por fecha de creacion. El más reciente aparece primero en la lista (izquierda a derecha en la vista)
-              posts.sort(function (a, b) {
+              postsAux.sort(function (a, b) {
                 if (a.FECH_CREACION > b.FECH_CREACION) return -1
                 if (a.FECH_CREACION < b.FECH_CREACION) return 1
               })
@@ -385,7 +389,7 @@ export default {
               }
               return {
                 user: user,
-                posts: posts,
+                posts: postsAux,
                 preguntas: preguntas
               }
             })
@@ -551,7 +555,6 @@ export default {
     },
     async ComentariosPorPublicacion () {
       let data = await controllerReporteria.comentariosPorProducto(this)
-
       if (data !== -1) {
         this.reportData = data.reportData
         this.headers = data.headers

@@ -182,7 +182,7 @@
                     :autoplayHoverPause = "true"
                     style="width: 100%;"
                     >
-            <slide v-for="post in index.publicaciones" :key="post.IDEN_PUBLICACION"  v-if="post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN && post.oferta.FLAG_VIGENTE && post.oferta.FLAG_VALIDADO">
+            <slide v-for="post in publicaciones" :key="post.IDEN_PUBLICACION">
               <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
@@ -222,9 +222,26 @@ export default {
           .then(({ categories }) => {
             return workfieldsController.GETAll(app)
               .then(({ workfields }) => {
+                let publicaciones = []
+                index.publicaciones.forEach(post => {
+                  if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
+                    if (post.oferta.length > 0) {
+                      let offer
+                      post.oferta.forEach(o => {
+                        if (!o.FLAG_BAN && o.FLAG_VIGENTE && o.FLAG_VALIDADO) {
+                          offer = o
+                        }
+                      })
+                      if (offer) {
+                        post.oferta = offer
+                        publicaciones.push(post)
+                      }
+                    }
+                  }
+                })
                 return {
                   categories: categories,
-                  index: index,
+                  publicaciones,
                   workfields: workfields
                 }
               })
@@ -465,8 +482,8 @@ export default {
               1: item.IDEN_EMPRENDEDOR,
               2: item.DESC_NOMBRE_FANTASIA,
               3: item.DESC_NOMBRE_EMPRESA,
-              4: item.DESC_EMPRENDEDOR,
-              5: item.rubro.NOMB_RUBRO.length > 40 ? item.rubro.NOMB_RUBRO.substring(0, 40) + '...' : item.rubro.NOMB_RUBRO
+              4: item.DESC_EMPRENDEDOR.length > 80 ? item.DESC_EMPRENDEDOR.substring(0, 80) + '...' : item.DESC_EMPRENDEDOR,
+              5: item.rubro.NOMB_RUBRO.length > 80 ? item.rubro.NOMB_RUBRO.substring(0, 80) + '...' : item.rubro.NOMB_RUBRO
             }
             dataAux.push(object)
           }
@@ -482,8 +499,8 @@ export default {
               0: item.imagenes[0].URL_IMAGEN,
               1: item.IDEN_PUBLICACION,
               2: item.NOMB_PUBLICACION,
-              3: item.categoria.NOMB_CATEGORIA.length > 40 ? item.categoria.NOMB_CATEGORIA.substring(0, 40) + '...' : item.categoria.NOMB_CATEGORIA,
-              4: item.DESC_PUBLICACION.length > 40 ? item.DESC_PUBLICACION.substring(0, 40) + '...' : item.DESC_PUBLICACION,
+              3: item.categoria.NOMB_CATEGORIA.length > 80 ? item.categoria.NOMB_CATEGORIA.substring(0, 80) + '...' : item.categoria.NOMB_CATEGORIA,
+              4: item.DESC_PUBLICACION.length > 80 ? item.DESC_PUBLICACION.substring(0, 80) + '...' : item.DESC_PUBLICACION,
               5: Numeral(item.NUMR_PRECIO).format('$ 0,0')
             }
             dataAux.push(object)
@@ -500,7 +517,7 @@ export default {
               0: item.publicacion.imagenes[0].URL_IMAGEN,
               1: item.publicacion.IDEN_PUBLICACION,
               2: item.publicacion.NOMB_PUBLICACION,
-              3: item.publicacion.DESC_PUBLICACION.length > 40 ? item.publicacion.DESC_PUBLICACION.substring(0, 40) + '...' : item.publicacion.DESC_PUBLICACION,
+              3: item.publicacion.DESC_PUBLICACION.length > 80 ? item.publicacion.DESC_PUBLICACION.substring(0, 80) + '...' : item.publicacion.DESC_PUBLICACION,
               4: Numeral(item.NUMR_PRECIO).format('$ 0,0'),
               5: moment(item.FECH_TERMINO).format('DD-MM-YYYY'),
               6: item.publicacion.categoria.NOMB_CATEGORIA

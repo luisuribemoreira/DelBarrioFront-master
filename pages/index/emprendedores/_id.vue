@@ -108,7 +108,7 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="row">
-                  <div class="col-md-3" v-for="post in posts[activePage]" :key="post.IDEN_PUBLICACION" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO">
+                  <div class="col-md-3" v-for="post in posts[activePage]" :key="post.IDEN_PUBLICACION">
                     <nuxt-link :to="'/publicaciones/' + post.IDEN_PUBLICACION">
                       <img v-lazy="post.imagenes.length > 0 ? imageUrl + post.imagenes[0].URL_IMAGEN : '/img/no-image.svg'" alt="Image" style="max-width:100%;">
                     </nuxt-link>
@@ -196,10 +196,12 @@ export default {
         let posts = [[]]
         let pages = 0
         entrepreneur.publicaciones.forEach((publicacion, index) => {
-          posts[pages].push(publicacion)
-          if ((index + 1) % 4 === 0 && entrepreneur.publicaciones[index + 1]) {
-            pages++
-            posts[pages] = []
+          if (!publicacion.FLAG_BAN && publicacion.FLAG_VIGENTE && publicacion.FLAG_VALIDADO) {
+            posts[pages].push(publicacion)
+            if ((index + 1) % 4 === 0 && entrepreneur.publicaciones[index + 1]) {
+              pages++
+              posts[pages] = []
+            }
           }
         })
         return locationController.GETLocation(app, contactos.direccion)
