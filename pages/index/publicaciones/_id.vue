@@ -81,10 +81,9 @@
               Rebaja de un {{ rebaja }}%
             </small>
           </h3>
-          <h3 class="product-info--price h3" v-else>
+          <h3 class="product-info--price h3">
             ${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}
           </h3>
-          <h3 class="product-info--price h3" v-if="post.oferta">${{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h3>
           <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
           <p class="btn btn-primary btn-primary__turquoise mt-4"><nuxt-link style="color: white" :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Contactar a Vendedor</nuxt-link></p>
           <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
@@ -383,6 +382,8 @@ export default {
           } else {
             post.oferta = undefined
           }
+        } else {
+          post.oferta = undefined
         }
         // Filtro de calificaciones con usuarios baneados.
         let calificaciones = []
@@ -409,7 +410,6 @@ export default {
               if (!c.FLAG_BAN) calificaciones.push(c)
             })
             post.calificaciones = calificaciones
-
             // Si el usuario viendo el post está autenticado...
             if (store._vm.isAuthenticated) {
               // Y además es el dueño del POST, se retorna todo menos las calificaciones.
