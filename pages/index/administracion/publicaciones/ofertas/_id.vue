@@ -51,14 +51,14 @@
               </div>
               <hr/>
               <h3>Oferta</h3>
-              <div class="checkbox" v-if="post.FLAG_VALIDADO">
+              <div class="checkbox" v-if="post.FLAG_VALIDADO && post.FLAG_VIGENTE">
                 <label>
                   <input type="checkbox" v-model.trim="isSale"> Oferta habilitada
                 </label>
               </div>
               <div v-else>
                 <label>
-                  <p class="text-info">No es posible crear una oferta aún ya que la publicación todavía no ha sido validada por un administrador.</p>
+                  <p class="text-info">No es posible crear una oferta ya que la publicación no está habilitada o todavía no ha sido validada por un administrador.</p>
                 </label>
               </div>
               <div v-if="isSale">
