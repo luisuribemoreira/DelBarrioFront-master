@@ -36,8 +36,11 @@
                       url:to="{ path: '/emprendeores/'+entrepreneur.IDEN_EMPRENDEDOR }"
                       inline-template>
               <div class="social-media mt-5 text-center">
+                <div class="container d-flex justify-content-center">
+                <p>Compartir en</p>
                 <network network="facebook"><a class="pl-2 pr-2" style="cursor:pointer;"><i class="fab fa-facebook-square" :scale="2" name="facebook-square" :aria-hidden="true"></i></a></network>
                 <network network="twitter"><a class="pl-2 pr-2" style="cursor:pointer;"><i  class="fab fa-twitter-square" :scale="2" name="twitter-square" :aria-hidden="true"></i></a></network>
+                </div>
             </div>
           </social-sharing>
         </div>
