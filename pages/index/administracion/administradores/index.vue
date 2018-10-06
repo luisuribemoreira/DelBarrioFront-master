@@ -38,7 +38,7 @@
                 <td>{{client.usuario.EMAIL_USUARIO}}</td>
                 <td>{{client.NOMBRES + ' ' + client.APELLIDO_PATERNO+ ' ' +client.APELLIDO_MATERNO}}</td>
                 <td>
-                  <nuxt-link :to="{ path: '/administracion/administradores/editar/'+client.IDEN_USUARIO }">
+                  <nuxt-link :to="{ path: '/administracion/administradores/editar/'+client.IDEN_PERSONA }">
                     <button class="btn btn-tabla" title="Editar">Editar</button>
                   </nuxt-link>
                   <a @click="setState(client)" class="btn">
