@@ -23,7 +23,7 @@
         <div class="col-md-5">
           <no-ssr>
           <carousel
-                    :navigationEnabled="true"
+                    :navigationEnabled="false"
                     :loop="false"
                     paginationActiveColor="#89dbee"
                     paginationColor="#b2ebd1"
@@ -50,8 +50,12 @@
                       url:to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }"
                       inline-template>
               <div class="social-media mt-5 text-center">
+                <div class="container d-flex justify-content-center">
+
+                <p>Compartir en</p>
                 <network network="facebook"><a class="pl-2 pr-2" style="cursor:pointer;"><i class="fab fa-facebook-square" :scale="2" name="facebook-square" :aria-hidden="true"></i></a></network>
                 <network network="twitter"><a class="pl-2 pr-2" style="cursor:pointer;"><i  class="fab fa-twitter-square" :scale="2" name="twitter-square" :aria-hidden="true"></i></a></network>
+                </div>
             </div>
           </social-sharing>
 
