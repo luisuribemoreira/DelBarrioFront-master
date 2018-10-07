@@ -163,7 +163,7 @@ export default {
         // Si el emprendedor al que se intenta ingresar no existe, se redirecciona al landing
         if (!emprendedor) redirect('/')
         let entrepreneur = emprendedor.entrepreneur
-        if (entrepreneur.usuario.FLAG_BAN) redirect('/')
+        if (entrepreneur.usuario.FLAG_BAN || !entrepreneur.FLAG_VALIDADO) redirect('/')
         // Si el emprendedor al que se intenta ingresar aun no ha completado su registro
         // se redirecciona al landing a todo aquel que no sea admin o super admin.
         if (!entrepreneur.usuario.FECH_CREACION && (!store._vm.isAuthenticated ||

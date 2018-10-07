@@ -372,7 +372,7 @@ export default {
       .then(publicacion => {
         if (!publicacion) redirect('/')
         let post = publicacion.post
-        if (post.emprendedor.usuario.FLAG_BAN) redirect('/')
+        if (post.emprendedor.usuario.FLAG_BAN || !post.FLAG_VIGENTE || !post.FLAG_VALIDADO) redirect('/')
         let contactos = {}
         let rebaja = 0
         if (post.oferta.length > 0) {
