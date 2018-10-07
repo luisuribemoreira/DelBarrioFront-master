@@ -65,7 +65,7 @@
       <div class="container">
           <div v-if="paginatedData[0].length > 0">
         <div class="row mt-5">
-          <div class="col-lg-3 col-sm-6 text-center" :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]" v-if="!post.FLAG_BAN && post.FLAG_VIGENTE && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN">
+          <div class="col-lg-3 col-sm-6 text-center" :key="post.IDEN_PUBLICACION" v-for="post in paginatedData[pagination]">
                 <div class="card">
                 <nuxt-link class="card-img-link" :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
                   <img v-if="post.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="card-img-top">
@@ -142,7 +142,6 @@
 
 <!-- SCRIPT -->
 <script>
-import controller from '~/controllers/index'
 import custompaginator from '~/controllers/custompaginator'
 import categoriescontroller from '~/controllers/admin/categories'
 import workfieldsController from '~/controllers/admin/workfields'
@@ -150,32 +149,36 @@ import postsController from '~/controllers/posts'
 
 export default {
   asyncData ({ app }) {
-    return controller.GETAll(app)
-      .then(({ index }) => {
+    return postsController.GETAll(app)
+      .then(({ posts }) => {
         return categoriescontroller.GETAllList(app)
           .then(({ categories }) => {
             return workfieldsController.GETAll(app)
-              .then(({ workfields }) => {
+              .then(async ({ workfields }) => {
                 let publicaciones = []
-                index.publicaciones.forEach(post => {
-                  if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
-                    if (post.oferta.length > 0) {
-                      let offer
-                      post.oferta.forEach(o => {
-                        if (!o.FLAG_BAN && o.FLAG_VIGENTE && o.FLAG_VALIDADO) {
-                          offer = o
-                        }
-                      })
-                      if (offer) {
-                        post.oferta = offer
-                        publicaciones.push(post)
-                      }
+                posts = posts.filter(el => !el.FLAG_BAN && el.FLAG_VALIDADO && el.FLAG_VIGENTE && !el.emprendedor.usuario.FLAG_BAN)
+                posts.sort(function (a, b) {
+                  if (new Date(a.FECH_CREACION) > new Date(b.FECH_CREACION)) return -1
+                  if (new Date(a.FECH_CREACION) < new Date(b.FECH_CREACION)) return 1
+                  return 0
+                })
+                posts.forEach(post => {
+                  if (post.oferta.length > 0) {
+                    let offer = post.oferta.filter(el => !el.FLAG_BAN && el.FLAG_VIGENTE && el.FLAG_VALIDADO)[0]
+                    if (offer) {
+                      post.oferta = offer
+                      publicaciones.push(post)
                     }
                   }
                 })
+                let paginatedData = (await custompaginator.paginate(posts, 12)).paginatedData
+                let pages = paginatedData.length
                 return {
                   categories: categories,
                   publicaciones,
+                  paginatedData,
+                  pages,
+                  posts,
                   workfields: workfields
                 }
               })
@@ -203,7 +206,9 @@ export default {
       workfields: [],
       paginatedData: [[]],
       pages: 0,
-      pagination: 0
+      pagination: 0,
+      postsAux: [],
+      posts: []
     }
   },
   methods: {
@@ -211,98 +216,94 @@ export default {
       /*
       * Publicaciones/Productos
       */
-      if (this.type.product) {
-        let postsAux = (await postsController.GETAll(this)).posts
-        let posts = []
-        postsAux.forEach(post => {
-          if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
-            posts.push(post)
-          }
+      if (this.postsAux.length === 0) {
+        this.postsAux = this.paginatedData
+      }
+      let options = { text: false, filter: false, price: false }
+      let postsFound = this.posts
+
+      if (this.search.query.find.length > 0) { // Si posee texto en el buscador...
+        options.text = true
+        postsFound = []
+        let regex = new RegExp(this.search.query.find, 'gi')
+        let postSearch = this.posts.map(post => {
+          if (post.NOMB_PUBLICACION.match(regex) !== null) return post
         })
-        this.pages = posts.length
-        let options = { text: false, filter: false, price: false }
-        let postsFound = posts
-        if (this.search.query.find.length > 0) { // Si posee texto en el buscador...
-          options.text = true
+
+        postSearch.forEach(post => {
+          if (post) postsFound.push(post)
+        })
+      }
+
+      if (this.search.query.filter) { // Si posee una categoria de busqueda...
+        options.filter = true
+        if (options.text) { // Y también texto en el buscador
+          let regex = new RegExp(this.search.query.filter, 'gi')
+          let postSearch = postsFound.map(post => {
+            if (post.categoria.NOMB_CATEGORIA.match(regex) !== null) return post
+          })
           postsFound = []
-          let postSearch = posts.map(post => {
-            if (post.NOMB_PUBLICACION.match(new RegExp(this.search.query.find, 'gi')) !== null) return post
+          postSearch.forEach(post => {
+            if (post) postsFound.push(post)
+          })
+        } else { // Sin texto en el buscador...
+          postsFound = []
+          let regex = new RegExp(this.search.query.filter, 'gi')
+          let postSearch = this.posts.map(post => {
+            if (post.categoria.NOMB_CATEGORIA.match(regex) !== null) return post
           })
 
           postSearch.forEach(post => {
             if (post) postsFound.push(post)
           })
         }
+      }
 
-        if (this.search.query.filter) { // Si posee una categoria de busqueda...
-          options.filter = true
-          if (options.text) { // Y también texto en el buscador
-            let postSearch = postsFound.map(post => {
-              if (post.categoria.NOMB_CATEGORIA.match(new RegExp(this.search.query.filter, 'gi')) !== null) return post
-            })
-            postsFound = []
-            postSearch.forEach(post => {
-              if (post) postsFound.push(post)
-            })
-          } else { // Sin texto en el buscador...
-            postsFound = []
-            let postSearch = posts.map(post => {
-              if (post.categoria.NOMB_CATEGORIA.match(new RegExp(this.search.query.filter, 'gi')) !== null) return post
-            })
-
-            postSearch.forEach(post => {
-              if (post) postsFound.push(post)
-            })
-          }
+      if (this.search.minPrice.length > 0 || this.search.maxPrice.length > 0) { // Si hay rangos ingresados...
+        options.price = true
+        if (options.text || options.filter) { // Si el buscador tiene texto y/o también hay una categoría de filtro
+          let postSearch = postsFound.map(post => {
+            if (this.search.minPrice.length > 0 && this.search.maxPrice.length === 0) { // Si solo hay un rango inferior
+              if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice)) return post
+            }
+            if (this.search.minPrice.length === 0 && this.search.maxPrice.length > 0) { // Si solo hay un rango superior
+              if (Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+            }
+            if (this.search.minPrice.length > 0 && this.search.maxPrice.length > 0) { // Si estan ambos rangos
+              if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice) &&
+              Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+            }
+          })
+          postsFound = []
+          postSearch.forEach(post => {
+            if (post) postsFound.push(post)
+          })
+        } else {
+          postsFound = []
+          let postSearch = this.posts.map(post => {
+            if (this.search.minPrice.length > 0 && this.search.maxPrice.length === 0) { // Si solo hay un rango inferior
+              if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice)) return post
+            }
+            if (this.search.minPrice.length === 0 && this.search.maxPrice.length > 0) { // Si solo hay un rango superior
+              if (Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+            }
+            if (this.search.minPrice.length > 0 && this.search.maxPrice.length > 0) { // Si estan ambos rangos
+              if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice) &&
+              Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
+            }
+          })
+          postSearch.forEach(post => {
+            if (post) postsFound.push(post)
+          })
         }
+      }
 
-        if (this.search.minPrice.length > 0 || this.search.maxPrice.length > 0) { // Si hay rangos ingresados...
-          options.price = true
-          if (options.text || options.filter) { // Si el buscador tiene texto y/o también hay una categoría de filtro
-            let postSearch = postsFound.map(post => {
-              if (this.search.minPrice.length > 0 && this.search.maxPrice.length === 0) { // Si solo hay un rango inferior
-                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice)) return post
-              }
-              if (this.search.minPrice.length === 0 && this.search.maxPrice.length > 0) { // Si solo hay un rango superior
-                if (Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
-              }
-              if (this.search.minPrice.length > 0 && this.search.maxPrice.length > 0) { // Si estan ambos rangos
-                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice) &&
-                Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
-              }
-            })
-            postsFound = []
-            postSearch.forEach(post => {
-              if (post) postsFound.push(post)
-            })
-          } else {
-            postsFound = []
-            let postSearch = posts.map(post => {
-              if (this.search.minPrice.length > 0 && this.search.maxPrice.length === 0) { // Si solo hay un rango inferior
-                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice)) return post
-              }
-              if (this.search.minPrice.length === 0 && this.search.maxPrice.length > 0) { // Si solo hay un rango superior
-                if (Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
-              }
-              if (this.search.minPrice.length > 0 && this.search.maxPrice.length > 0) { // Si estan ambos rangos
-                if (Number(post.NUMR_PRECIO) >= Number(this.search.minPrice) &&
-                Number(post.NUMR_PRECIO) <= Number(this.search.maxPrice)) return post
-              }
-            })
-            postSearch.forEach(post => {
-              if (post) postsFound.push(post)
-            })
-          }
-        }
-
+      if (options.filter || options.text || options.price) {
         postsFound.sort(function (a, b) {
           return a.NOMB_PUBLICACION.localeCompare(b.NOMB_PUBLICACION, 'es', { numeric: true })
         })
-        let paginatedData = (await custompaginator.paginate(postsFound)).paginatedData
-        this.paginatedData = paginatedData
-        this.pages = paginatedData.length
-        this.pagination = 0
       }
+      this.paginatedData = (await custompaginator.paginate(postsFound, 12)).paginatedData
 
       if (this.paginatedData[0].length === 0) {
         this.searchMessage = 'No se encontró ningún resultado.'
@@ -310,12 +311,11 @@ export default {
         this.pagination = 0
         this.pages = 0
       } else {
+        this.pages = this.paginatedData.length
+        this.pagination = 0
         this.searchMessage = false
       }
     }
-  },
-  mounted () {
-    this.busquedaAvanzada()
   },
   head () {
     return {
