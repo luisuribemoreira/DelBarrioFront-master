@@ -157,8 +157,8 @@ export default {
     })
     // Se ordenan por fecha, el mas nuevo primero.
     entrepreneurs.sort(function (a, b) {
-      if (a.usuario.FECH_CREACION > b.usuario.FECH_CREACION) return -1
-      if (a.usuario.FECH_CREACION < b.usuario.FECH_CREACION) return 1
+      if (new Date(a.usuario.FECH_CREACION) > new Date(b.usuario.FECH_CREACION)) return -1
+      if (new Date(a.usuario.FECH_CREACION) < new Date(b.usuario.FECH_CREACION)) return 1
       return 0
     })
     // Solo se dejan los primeros 3 emprendedores
@@ -178,8 +178,8 @@ export default {
 
     // Se ordenan por fecha, la mas reciente primero.
     posts.sort(function (a, b) {
-      if (a.FECH_CREACION > b.FECH_CREACION) return -1
-      if (a.FECH_CREACION < b.FECH_CREACION) return 1
+      if (new Date(a.FECH_CREACION) > new Date(b.FECH_CREACION)) return -1
+      if (new Date(a.FECH_CREACION) < new Date(b.FECH_CREACION)) return 1
       return 0
     })
     // Solo se dejan las primeros 4 publicaciones
