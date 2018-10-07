@@ -86,7 +86,7 @@ export default {
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
             return {
-              posts,
+              posts: postsAux,
               paginatedData,
               pages
             }
