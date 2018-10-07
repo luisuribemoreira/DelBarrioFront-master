@@ -8,7 +8,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item breadcrumb-item--home"><a href="/">Inicio</a></li>
               <li class="breadcrumb-item"><a href="/listado-productos">Publicaciones</a></li>
-              <li class="breadcrumb-item"><a href="/listado-emprendedores/">{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</a></li>
+              <li class="breadcrumb-item"><a :href="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{post.NOMB_PUBLICACION}}</li>
             </ol>
           </nav>
