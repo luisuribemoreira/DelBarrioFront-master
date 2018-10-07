@@ -7,7 +7,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item breadcrumb-item--home"><a href="/">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="/administracion/emprendedores">Emprendedores</a></li>
+              <li class="breadcrumb-item"><a href="/listado-emprendedores">Emprendedores</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</li>
             </ol>
           </nav>
@@ -105,7 +105,7 @@
         <div class="col-md-12">
           <div id="blogCarousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-              <li data-target="#blogCarousel" :class="{ active: page === 1 }" v-for="page in pages + 1" :key="page - 1" :data-slide-to="page - 1" @click="activePage = page - 1"></li>
+              <li data-target="#blogCarousel" :class="{ active: activePage === 0 ? page === 1 : page === (activePage + 1) }" v-for="page in pages + 1" :key="page - 1" :data-slide-to="page - 1" @click="activePage = page - 1"></li>
             </ol>
             <!-- Carousel items -->
             <div class="carousel-inner">
@@ -163,7 +163,7 @@ export default {
         // Si el emprendedor al que se intenta ingresar no existe, se redirecciona al landing
         if (!emprendedor) redirect('/')
         let entrepreneur = emprendedor.entrepreneur
-        if (entrepreneur.usuario.FLAG_BAN || !entrepreneur.FLAG_VALIDADO) redirect('/')
+        if (entrepreneur.usuario.FLAG_BAN) redirect('/')
         // Si el emprendedor al que se intenta ingresar aun no ha completado su registro
         // se redirecciona al landing a todo aquel que no sea admin o super admin.
         if (!entrepreneur.usuario.FECH_CREACION && (!store._vm.isAuthenticated ||
@@ -198,13 +198,17 @@ export default {
         // Se ordenan los posts en arreglos de a 4 para el carrusel.
         let posts = [[]]
         let pages = 0
+        entrepreneur.publicaciones = entrepreneur.publicaciones.filter(el => !el.FLAG_BAN && el.FLAG_VIGENTE && el.FLAG_VALIDADO)
+        entrepreneur.publicaciones.sort((a, b) => {
+          if (new Date(a.FECH_CREACION) > new Date(b.FECH_CREACION)) return -1
+          if (new Date(a.FECH_CREACION) < new Date(b.FECH_CREACION)) return 1
+          return 0
+        })
         entrepreneur.publicaciones.forEach((publicacion, index) => {
-          if (!publicacion.FLAG_BAN && publicacion.FLAG_VIGENTE && publicacion.FLAG_VALIDADO) {
-            posts[pages].push(publicacion)
-            if ((index + 1) % 4 === 0 && entrepreneur.publicaciones[index + 1]) {
-              pages++
-              posts[pages] = []
-            }
+          posts[pages].push(publicacion)
+          if ((index + 1) % 4 === 0 && entrepreneur.publicaciones[index + 1]) {
+            pages++
+            posts[pages] = []
           }
         })
         return locationController.GETLocation(app, contactos.direccion)
