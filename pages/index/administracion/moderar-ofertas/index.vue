@@ -96,7 +96,7 @@ export default {
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
             return {
-              oferta: offers,
+              offers,
               paginatedData,
               pages
             }
@@ -118,15 +118,24 @@ export default {
     async acceptOffer (oferta) {
       if (this.processing) return
       this.processing = true
-
-      await controller.acceptOffer(this, oferta)
+      if (await controller.acceptOffer(this, oferta)) {
+        this.offers = this.offers.filter(el => el.IDEN_OFERTA !== oferta.IDEN_OFERTA)
+        this.paginatedData = (await custompaginator.paginate(this.offers)).paginatedData
+        this.pages = this.paginatedData.length
+        this.pagination = 0
+      }
       this.processing = false
     },
     async banOffer (oferta) {
       if (this.processing) return
       this.processing = true
 
-      await controller.banOffer(this, oferta)
+      if (await controller.banOffer(this, oferta)) {
+        this.offers = this.offers.filter(el => el.IDEN_OFERTA !== oferta.IDEN_OFERTA)
+        this.paginatedData = (await custompaginator.paginate(this.offers)).paginatedData
+        this.pages = this.paginatedData.length
+        this.pagination = 0
+      }
       this.processing = false
     },
     buscarOfertas () {
