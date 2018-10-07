@@ -109,14 +109,24 @@ export default {
       if (this.processing) return
       this.processing = true
 
-      await controller.acceptPost(this, post)
+      if (await controller.acceptPost(this, post)) {
+        this.posts = this.posts.filter(el => el.IDEN_PUBLICACION !== post.IDEN_PUBLICACION)
+        this.paginatedData = (await custompaginator.paginate(this.posts)).paginatedData
+        this.pages = this.paginatedData.length
+        this.pagination = 0
+      }
       this.processing = false
     },
     async ban (post) {
       if (this.processing) return
       this.processing = true
 
-      await controller.ban(this, post)
+      if (await controller.ban(this, post)) {
+        this.posts = this.posts.filter(el => el.IDEN_PUBLICACION !== post.IDEN_PUBLICACION)
+        this.paginatedData = (await custompaginator.paginate(this.posts)).paginatedData
+        this.pages = this.paginatedData.length
+        this.pagination = 0
+      }
       this.processing = false
     },
     buscarPublicaciones () {
