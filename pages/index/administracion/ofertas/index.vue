@@ -8,7 +8,7 @@
         </div>
           <div class="row">
             <transition-group name="list" tag="div">
-              <div class="col-lg-6 col-md-6" v-if="oferta.FLAG_VALIDADO && oferta.FLAG_VIGENTE && !oferta.FLAG_BAN && oferta.publicacion.FLAG_VIGENTE" v-for="oferta in ofertas" :key="oferta.IDEN_OFERTA">
+              <div class="col-lg-6 col-md-6" v-for="oferta in ofertas" :key="oferta.IDEN_OFERTA">
                 <nuxt-link :to="{ path: '/publicaciones/'+oferta.IDEN_PUBLICACION }">
                   <img v-if="!oferta.publicacion.imagenes || oferta.publicacion.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt=""> 
                   <img v-else v-lazy="imageUrl + oferta.publicacion.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
@@ -34,11 +34,17 @@ export default {
       .then(ofertas => {
         let offers = []
         ofertas.offers.forEach((oferta, index) => {
-          if (oferta.FLAG_VALIDADO && oferta.FLAG_VIGENTE && !oferta.FLAG_BAN && oferta.publicacion.FLAG_VIGENTE) {
+          if (oferta.FLAG_VALIDADO && oferta.FLAG_VIGENTE && !oferta.FLAG_BAN && oferta.publicacion.FLAG_VIGENTE &&
+                !oferta.publicacion.emprendedor.usuario.FLAG_BAN && oferta.publicacion.emprendedor.usuario.FECH_CREACION) {
             oferta.FECH_INICIO = moment(oferta.FECH_INICIO).format('DD-MM-YYYY')
             oferta.FECH_TERMINO = moment(oferta.FECH_TERMINO).format('DD-MM-YYYY')
             offers.push(oferta)
           }
+        })
+        offers.sort((a, b) => {
+          if (new Date(a.FECH_CREACION) > new Date(b.FECH_CREACION)) return -1
+          if (new Date(a.FECH_CREACION) < new Date(b.FECH_CREACION)) return 1
+          return 0
         })
         return {
           ofertas: offers
