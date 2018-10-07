@@ -32,7 +32,7 @@
 
       <!--Tabla de emprendedores-->
       <div class="row mt-5">
-        <div class="col-lg-3 col-sm-6 text-center" :key="entrepreneur.IDEN_CATEGORIA" v-for="entrepreneur in paginatedData[pagination]" v-if="entrepreneur.usuario.FECH_CREACION && !entrepreneur.usuario.FLAG_BAN"> 
+        <div class="col-lg-3 col-sm-6 text-center" :key="entrepreneur.IDEN_EMPRENDEDOR" v-for="entrepreneur in paginatedData[pagination]"> 
                   <div class="card">
                   <nuxt-link class="card-img-link" :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">
                     <img v-if="!entrepreneur.imagen || !entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top">
@@ -84,6 +84,7 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
       .then(({ entrepreneurs }) => {
+        entrepreneurs = entrepreneurs.filter(el => el.usuario.FECH_CREACION && !el.usuario.FLAG_BAN)
         return custompaginator.paginate(entrepreneurs)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
@@ -119,8 +120,9 @@ export default {
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los emprendedores en que el nombre de fantasia del emprendedor o parte de el posea el texto escrito en el buscador
+        let regex = new RegExp(this.search, 'gi')
         let entreSearch = this.entrepreneurs.map(entrepreneur => {
-          if (entrepreneur.DESC_NOMBRE_FANTASIA.match(new RegExp(this.search, 'gi')) !== null) return entrepreneur
+          if (entrepreneur.DESC_NOMBRE_FANTASIA.match(regex) !== null) return entrepreneur
         })
 
         // Limpia los emprendedores actuales y lo llena con los emprendedores que cumplan el criterio de busqueda
