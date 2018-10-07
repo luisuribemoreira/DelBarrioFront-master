@@ -104,7 +104,7 @@ export default {
               .then(({ paginatedData }) => {
                 let pages = paginatedData.length
                 return {
-                  post: postsAux,
+                  posts: postsAux,
                   paginatedData,
                   pages
                 }
@@ -135,8 +135,9 @@ export default {
       // Si hay algo escrito en el buscador...
       if (this.search.length > 0) {
         // Se buscan todos los post en que el titulo o parte de el posea el texto escrito en el buscador
+        let regex = new RegExp(this.search, 'gi')
         let postSearch = this.posts.map(post => {
-          if (post.NOMB_PUBLICACION.match(new RegExp(this.search, 'gi')) !== null) return post
+          if (post.NOMB_PUBLICACION.match(regex) !== null) return post
         })
 
         // Limpia los posts actuales y lo llena con los posts que cumplan el criterio de busqueda
