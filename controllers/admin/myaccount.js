@@ -106,7 +106,6 @@ function POSTCliente (context) {
       context.$notify.success('Se ha completado el registro exitosamente')
       context.$router.push({ path: '/autenticar' })
     }).catch(errors => {
-      console.log(errors)
       context.$notify.danger('Ha ocurrido un error inesperado. Inténtelo más tarde.')
       return -1
     })
@@ -121,8 +120,6 @@ function POSTCliente (context) {
 }
 
 function GET (app, id) {
-// console.log(sessionStorage)
-// let token = sessionStorage.getItem('id_token')
   let user
   return app.$axios.$get('/private/usuario/' + id)
     .then(res => {
@@ -141,7 +138,7 @@ function GET (app, id) {
         }
       }
     }).catch(errors => {
-      console.log(errors)
+      // nada
     })
 }
 
@@ -164,15 +161,28 @@ function PUT (context, user) {
             context.$notify.success('Se han modificado tus datos exitosamente.')
           }).catch(err => {
             if (err) context.$notify.warning('Ha ocurrido un error inesperado.')
-            return err
+            return false
           })
       }
-      context.processing = false
-      context.$router.push({ path: '/' })
-      context.$notify.success('Se han modificado tus datos exitosamente.')
+      return context.$axios.$put('/private/usuario/' + user.IDEN_USUARIO,
+        {
+          EMAIL_USUARIO: user.EMAIL_USUARIO
+        })
+        .then(response => {
+          context.processing = false
+          context.$router.push({ path: '/' })
+          context.$notify.success('Se han modificado tus datos exitosamente.')
+        }).catch(error => {
+          if (error.response && error.response.data.data) {
+            return error.response.data.data
+          } else {
+            context.$notify.warning('Ha ocurrido un error inesperado.')
+            return false
+          }
+        })
     }).catch(error => {
       if (error) context.$notify.warning('Ha ocurrido un error inesperado.')
-      return error
+      return false
     })
 }
 

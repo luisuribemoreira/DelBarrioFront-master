@@ -291,7 +291,12 @@
         </div>
         <div class="col-lg-6">
           <form @submit.prevent="validateBeforeSubmit">
-                        <div class="form-group margin-top">
+            <div class="form-group margin-top">
+              <label for="name">Correo Electrónico</label><span style="color: grey"> (Formato ej: cliente@correo.com)</span>
+              <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model.trim="user.EMAIL_USUARIO" class="form-control"/>
+              <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
+            </div>
+            <div class="form-group margin-top">
               <label for="name">Nombres</label><span style="color: grey"> (Formato ej: Manuel Antonio)</span>
               <input v-validate data-vv-rules="required" data-vv-as="nombre" name="name" type="text" v-model.trim="user.persona.NOMBRES" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
@@ -319,7 +324,10 @@
               </no-ssr>
             </div>
             <div v-if="dataErrorMsg.error_edad">
-              <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
+              <small class="text-danger">{{ dataErrorMsg.error_edad }}</small> <br />
+            </div>
+            <div v-if="dataErrorMsg.error_correo">
+              <small class="text-danger">{{ dataErrorMsg.error_correo }}</small> <br />
             </div>
             <div class="form-group margin-top">
                 <h2 class="text-center">Al guardar cambios, por favor reinicie sesión para ver los efectos</h2>
@@ -417,7 +425,7 @@ export default {
       selectedClient: false,
       format: 'dd MMM, yyyy',
       posts: [],
-      dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined },
+      dataErrorMsg: { error_edad: undefined, error_pw: undefined, error_foto: undefined, error_correo: undefined },
       imageUrl: process.env.imagesUrl,
       entrepreneur: {},
       preguntas: 0,
@@ -446,7 +454,7 @@ export default {
       if (this.selected) {
         this.$validator.validateAll().then(async (result) => {
           // Se limpian los mensajes
-          this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
+          this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined, error_correo: undefined }
           // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
           if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
             this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
@@ -504,7 +512,7 @@ export default {
       } else if (this.selectedClient) {
         this.$validator.validateAll().then(async (result) => {
           // Se limpian los mensajes
-          this.dataErrorMsg = { error_edad: undefined }
+          this.dataErrorMsg = { error_edad: undefined, error_correo: undefined }
           // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
           if (customValidations.isUnderAge(this.user.persona.FECH_FECHA_NACIMIENTO)) {
             this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
@@ -513,7 +521,10 @@ export default {
             result = undefined
           }
           if (result) {
-            await controller.PUT(this, this.user)
+            let err = await controller.PUT(this, this.user)
+            if (typeof err === 'string') {
+              this.dataErrorMsg.error_correo = err
+            }
           }
         })
       }
