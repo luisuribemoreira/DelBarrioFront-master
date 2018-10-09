@@ -488,8 +488,8 @@ export default {
         if (result) {
           await commentscontroller.POST(this)
         }
+        this.processing = false
       })
-      this.processing = false
     },
     validateAnswer () {
       if (this.processing) return
@@ -519,8 +519,8 @@ export default {
             }
           })
         }
+        this.processing = false
       })
-      this.processing = false
     },
     validateDenounce () {
       if (this.processing) return
