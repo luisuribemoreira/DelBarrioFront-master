@@ -11,7 +11,10 @@ module.exports = {
   ** Router config
   */
   router: {
-    middleware: ['check-auth', 'globalUnauthorized']
+    middleware: ['check-auth', 'globalUnauthorized'],
+    scrollBehavior: function (to, from, savedPosition) {
+      return { x: 0, y: 0 }
+    }
   },
   /*
   ** Headers of the page
