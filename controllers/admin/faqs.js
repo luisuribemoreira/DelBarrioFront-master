@@ -6,7 +6,6 @@ function GET (app, id) {
   return app.$axios.$get('faq/' + id)
     .then(res => {
       return {
-        id: id,
         f: res.data
       }
     }).catch(errors => {
@@ -66,10 +65,10 @@ function POST (context) {
 // =======================================================================================
 function PUT (context) {
   return context.$axios.$put(
-    'private/faq/' + context.id,
+    'private/faq/' + context.faq.IDEN_FAQ,
     {
-      NOMB_FAQ: context.f.NOMB_FAQ,
-      DESC_FAQ: context.f.DESC_FAQ
+      NOMB_FAQ: context.faq.NOMB_FAQ,
+      DESC_FAQ: context.faq.DESC_FAQ
     }
   ).then(response => {
     context.$router.push({ path: '/administracion/preguntas-frecuentes' })
