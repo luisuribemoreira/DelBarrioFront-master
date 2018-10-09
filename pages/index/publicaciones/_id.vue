@@ -128,8 +128,8 @@
                   v-model="rating.NUMR_VALOR"
                   :increment="1"
                   :star-size="35"
-                  data-vv-name="value"
-                  name="value"
+                  data-vv-name="calificacion"
+                  name="calificacion"
                   v-validate data-vv-rules="required">
                 </star-rating>
               </no-ssr>
@@ -137,12 +137,13 @@
                 <form @submit.prevent="validateRating" class="mt-3">
                   <div class="form-group">
                     <textarea class="form-control"
-                      id="exampleFormControlTextarea1"
+                      name="comentario"
                       :rows="5"
                       v-model.trim="rating.DESC_CALIFICACION"
                       v-validate data-vv-rules="min:10|max:250"></textarea>
                   </div>
-                  <small class="text-danger" v-show="errors.has('value')">{{ errors.first('value') }}</small>
+                  <small class="text-danger" v-show="errors.has('calificacion')">{{ errors.first('calificacion') }}<br /></small>
+                  <small class="text-danger" v-show="errors.has('comentario')">{{ errors.first('comentario') }}<br /></small>
                   <button type="submit" class="btn btn-danger mt-2">Calificar</button>
                 </form>
               </div>
@@ -184,19 +185,19 @@
                               name="com"
                               v-model.trim="comment.DESC_COMENTARIO"></textarea>
                   </div>
-                    <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}</small>
+                    <small class="text-danger" v-show="errors.has('com')">{{ errors.first('com') }}<br /></small>
                     <button type="submit" class="btn btn-danger mt-2">Comentar</button>
                 </form>
                 <!-- FIN FORM COMENTAR -->
               </div>
-          <div id="listComentarios" class="ratings-comments mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
-          <div v-if="c.FLAG_BAN || c.usuario.FLAG_BAN" class="col-12">
+          <div id="listComentarios" class="ratings-comments mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO" v-if="show">
+          <div v-if="c.IDEN_COMENTARIO && (c.FLAG_BAN || c.usuario.FLAG_BAN)" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
               <span> Este comentario ha sido eliminado por no cumplir con los <a target="_blank" :href="terms">términos y condiciones</a> del sitio</span>
             </p>
           </div>
-          <div v-else class="ratings-comments mt-5">
+          <div v-else class="ratings-comments">
             <p class="mt-4">
               <small class="margin-left">{{c.FECH_CREACION | dateFormat}}</small>
               <br>
@@ -210,7 +211,7 @@
             </p>
 
             <!-- FORM RESPUESTA -->
-            <div v-if="c.respuesta.DESC_RESPUESTA === undefined && post.emprendedor.IDEN_USUARIO === loggedUser.id">
+            <div v-if="c.respuesta.IDEN_RESPUESTA && post.emprendedor.IDEN_USUARIO === loggedUser.id">
               <p>
                 <a href="#" @click.prevent @click="selected = c.IDEN_COMENTARIO" class="margin-top">Responder</a>
               </p>
@@ -225,15 +226,15 @@
                     v-model.trim="answer.DESC_RESPUESTA">
                   </textarea>
                 </div>
-                <small class="text-danger" v-if="message.error">{{ message.answer }}</small> <br/>
-                <small class="text-danger" v-show="errors.has('resp')">{{ errors.first('resp') }}</small>
+                <small class="text-danger" v-if="message.error">{{ message.answer }}<br/></small> 
+                <small class="text-danger" v-if="errors.has('resp')">{{ errors.first('resp') }}<br /></small>
                 <p><button type="submit" class="btn btn-default">Comentar</button></p>
               </form>
               </div>
             </div>
             <!-- FIN FORM RESPUESTA -->
-            <p class="product-info--report mt-3">
-              <a v-if="!c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id" href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar comentario</a>
+            <p class="product-info--report mt-3" v-if="c.IDEN_COMENTARIO && !c.FLAG_BAN && !c.usuario.FLAG_BAN && c.IDEN_USUARIO !== loggedUser.id">
+              <a href="#" @click="type = 'com', iden = c.IDEN_COMENTARIO, denItem = c.DESC_COMENTARIO" class="margin-top" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar comentario</a>
             </p>
           </div>
             </div>
@@ -315,8 +316,8 @@
                 </textarea>
                 <span :class="denounce.DESC_DENUNCIA.length > 250 || denounce.DESC_DENUNCIA.length < 10 ? 'text-danger' : ''">{{denounce.DESC_DENUNCIA.length}} de 250 caracteres</span>
               </div>
-              <small class="text-danger" v-show="errors.has('description')">{{ errors.first('description') }}</small>
-              <small class="text-danger" v-show="error.length">{{ error }}</small>
+              <small class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</small>
+              <small class="text-danger" v-if="error.length">{{ error }}</small>
               <div>
                 <button type="submit" class="btn btn-default">Enviar</button>
               </div>
@@ -470,7 +471,8 @@ export default {
       denItem: {},
       processing: false,
       message: { error: false, answer: '' },
-      rebaja: 0
+      rebaja: 0,
+      show: true
     }
   },
   computed: mapGetters([
@@ -481,12 +483,13 @@ export default {
     validateComment () {
       if (this.processing) return
       this.processing = true
+
       this.$validator.validate('com').then(async (result) => {
         if (result) {
           await commentscontroller.POST(this)
         }
-        this.processing = false
       })
+      this.processing = false
     },
     validateAnswer () {
       if (this.processing) return
@@ -498,16 +501,25 @@ export default {
         this.processing = false
       })
     },
-    async validateRating () {
+    validateRating () {
       if (this.processing) return
       this.processing = true
-      if (this.rating.NUMR_VALOR != null) {
-        if (this.rating.IDEN_CALIFICACION) {
-          await ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
-        } else {
-          await ratingscontroller.POST(this)
+
+      this.$validator.validate('calificacion').then((result) => {
+        if (result) {
+          this.$validator.validate('comentario').then(async (result) => {
+            if (result) {
+              if (this.rating.NUMR_VALOR != null) {
+                if (this.rating.IDEN_CALIFICACION) {
+                  await ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
+                } else {
+                  await ratingscontroller.POST(this)
+                }
+              }
+            }
+          })
         }
-      }
+      })
       this.processing = false
     },
     validateDenounce () {

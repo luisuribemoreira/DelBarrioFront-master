@@ -36,7 +36,6 @@ function POST (context) {
     context.comment = {
       DESC_COMENTARIO: dummyEntity.DESC_COMENTARIO
     }
-    context.$scrollTo('#comentarios')
     // Tirar una de esas notificaciones bien Spotify
     context.$notify.danger('Lo sentimos, ha ocurrido un error. Inténtalo más tarde')
   })
