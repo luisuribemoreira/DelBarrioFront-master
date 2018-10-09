@@ -6,7 +6,6 @@ function GET (app, id) {
   return app.$axios.$get('rubro/' + id)
     .then(res => {
       return {
-        id: id,
         workfield: res.data
       }
     }).catch(errors => {
@@ -56,7 +55,7 @@ function POST (context) {
 // =======================================================================================
 function PUT (context) {
   return context.$axios.$put(
-    'private/rubro/' + context.id,
+    'private/rubro/' + context.workfield.IDEN_RUBRO,
     {
       NOMB_RUBRO: context.workfield.NOMB_RUBRO
     }

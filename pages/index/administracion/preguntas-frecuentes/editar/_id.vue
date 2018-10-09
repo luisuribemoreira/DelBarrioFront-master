@@ -7,7 +7,7 @@
             <form @submit.prevent="validateBeforeSubmit">
               <div class="form-group margin-top">
                 <label for="question">Pregunta</label>
-                <input v-validate data-vv-rules="required|min:5|max:255" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-¿?]{5,255}" title="Sólo letras y numeros, mínimo 5 máximo 255" data-vv-as="pregunta" name="question" type="text" v-model.trim="f.NOMB_FAQ" class="form-control">
+                <input v-validate data-vv-rules="required|min:5|max:255" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-¿?]{5,255}" title="Sólo letras y numeros, mínimo 5 máximo 255" data-vv-as="pregunta" name="question" type="text" v-model.trim="faq.NOMB_FAQ" class="form-control">
                 <small class="text-danger" v-show="errors.has('question')">{{ errors.first('question') }}</small>
               </div>        
               <div class="form-group margin-top">
@@ -17,7 +17,7 @@
                           v-validate data-vv-rules="required|min:5|max:1000"
                           data-vv-as="respuesta"
                           name="answer"
-                          v-model.trim="f.DESC_FAQ">
+                          v-model.trim="faq.DESC_FAQ">
                 </textarea>
                 <small class="text-danger" v-show="errors.has('answer')">{{ errors.first('answer') }}</small>
               </div>
@@ -40,13 +40,12 @@ export default {
     return {
       message: false,
       processing: false,
-      f: {}
+      faq: {}
     }
   },
   async asyncData ({ app, params, redirect }) {
     let faq = await controller.GET(app, params.id)
     if (!faq) redirect('/')
-
     return {
       faq: faq.f
     }
