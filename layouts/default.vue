@@ -272,8 +272,8 @@
                <img style="width: 120px; height: 120px;" src="/img/logos/hub.png" alt="">
                 <div class="col text-center">
                     <p class="footer--bottom-text p text-white">Sitio desarrollado por Centro de Vinculación de Proyectos Académicos, Duoc UC - Sede Antonio Varas</p>
-                    <p class="footer--top-text p text-white">Av. Pedro de Valdivia 963 | Providencia, Santiago de Chile | Mesa Central: +562 2654 3200</p>
-                    <p class="footer--bottom-text p text-white">Horario General: Lunes a Jueves: 8:30 a 14 y 15 a 17 hrs. / Viernes: 8:30 a 14 y de 15 a 16 hrs. | municipalidad@providencia.cl</p>
+                    <p class="footer--top-text p text-white">Marchant Pereira 859 | Providencia, Santiago de Chile | Mesa Central: +562 2654 3463</p>
+                    <p class="footer--bottom-text p text-white">Horario General: 8:30 a 14:00 horas. | Encargado: Mauricio Brito | mbrito@providencia.cl</p>
                     <p class="footer--bottom--text p text-white"><a target="_blank" :href="terms">Términos &amp; Condiciones</a></p>
                 </div>
                <img style="height: 120px;" src="/img/logos/duoc.png" alt="">
