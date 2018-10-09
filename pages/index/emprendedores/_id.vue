@@ -33,7 +33,7 @@
                       description="Portal de emprendimientos en Providencia."
                       v-bind:quote="entrepreneur.DESC_NOMBRE_FANTASIA + ' - Portal de emprendimientos en Providencia.'"
                       hashtags="delbarrio,providencia"
-                      url:to="{ path: '/emprendedores/'+entrepreneur.IDEN_EMPRENDEDOR }"
+                      :url="ruta + 'emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR"
                       inline-template>
               <div class="social-media mt-5 text-center">
                 <div class="container d-flex justify-content-center">
@@ -233,7 +233,8 @@ export default {
       pages: 0,
       posts: [[]],
       contactos: {},
-      rss: {}
+      rss: {},
+      ruta: process.env.sharesUrl
     }
   },
   computed: mapGetters([

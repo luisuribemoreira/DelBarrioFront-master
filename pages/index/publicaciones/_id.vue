@@ -47,7 +47,7 @@
                       description="Portal de emprendimientos en Providencia."
                       v-bind:quote="post.NOMB_PUBLICACION + ' - Portal de emprendimientos en Providencia.'"
                       hashtags="delbarrio,providencia"
-                      url:to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }"
+                      :url="ruta + 'publicaciones/' + post.IDEN_PUBLICACION"
                       inline-template>
               <div class="social-media mt-5 text-center">
                 <div class="container d-flex justify-content-center">
@@ -472,7 +472,7 @@ export default {
       processing: false,
       message: { error: false, answer: '' },
       rebaja: 0,
-      show: true
+      ruta: process.env.sharesUrl
     }
   },
   computed: mapGetters([
