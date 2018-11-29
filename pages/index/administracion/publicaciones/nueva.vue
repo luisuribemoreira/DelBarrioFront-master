@@ -60,9 +60,6 @@
               </div>
               <div>
               <input type="checkbox" id="status" name="status" v-model.trim="statusAutoria"> Las imagenes adjuntadas son de mi autoría.
-              <label>
-                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
-              </label>
               </div>
               <div class="form-group margin-top">
                 <label for="tipo">Tipo</label>
@@ -117,7 +114,8 @@
               </div>
               <div>
                 <label>
-                <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small>
+                <small class="text-danger" v-if="messageTerminos">{{ messageTerminos }}</small> <br>
+                <small class="text-danger" v-if="messageAutoria">{{ messageAutoria }}</small>
                 </label>
               </div>
               <button type="submit" class="btn btn-default">Publicar</button>
