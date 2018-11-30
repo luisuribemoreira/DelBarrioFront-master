@@ -47,7 +47,7 @@
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
-                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</a>
+                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out-alt" :aria-hidden="true"></i> Cerrar Sesión</a>
                             </li>
                 </ul>
                 </li>
@@ -110,7 +110,7 @@
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
-                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</a>
+                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out-alt" :aria-hidden="true"></i> Cerrar Sesión</a>
                             </li>
                         </ul>
                     </li>
@@ -193,7 +193,7 @@
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
-                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out" :aria-hidden="true"></i> Cerrar Sesión</a>
+                                <a class="nav-link" href="/sign-out"><i class="fa fa-sign-out-alt" :aria-hidden="true"></i> Cerrar Sesión</a>
                             </li>
                         </ul>
 
