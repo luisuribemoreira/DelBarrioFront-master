@@ -190,7 +190,7 @@
                 </form>
                 <!-- FIN FORM COMENTAR -->
               </div>
-          <div id="listComentarios" class="ratings-comments mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO" v-if="show">
+          <div id="listComentarios" class="ratings-comments mt-5" v-for="c in post.comentarios" :key="c.IDEN_COMENTARIO">
           <div v-if="c.IDEN_COMENTARIO && (c.FLAG_BAN || c.usuario.FLAG_BAN)" class="col-12">
             <p class="margin-top-20">
               <icon name="info-circle"> </icon>
@@ -211,7 +211,7 @@
             </p>
 
             <!-- FORM RESPUESTA -->
-            <div v-if="c.respuesta.IDEN_RESPUESTA && post.emprendedor.IDEN_USUARIO === loggedUser.id">
+            <div v-if="!c.respuesta.IDEN_RESPUESTA && post.emprendedor.IDEN_USUARIO === loggedUser.id">
               <p>
                 <a href="#" @click.prevent @click="selected = c.IDEN_COMENTARIO" class="margin-top">Responder</a>
               </p>
@@ -226,7 +226,7 @@
                     v-model.trim="answer.DESC_RESPUESTA">
                   </textarea>
                 </div>
-                <small class="text-danger" v-if="message.error">{{ message.answer }}<br/></small> 
+                <small class="text-danger" v-if="message.error">{{ message.answer }}<br/></small>
                 <small class="text-danger" v-if="errors.has('resp')">{{ errors.first('resp') }}<br /></small>
                 <p><button type="submit" class="btn btn-default">Comentar</button></p>
               </form>
