@@ -1,16 +1,17 @@
 <template>
   <section id="registro-empresa" class="container-fluid">
+  <div class="d-flex mr-auto">
     <div class="container">
       <div v-if="isAuthenticated && loggedUser.rol === 102">
         <div class="margin-top">
           <form @submit.prevent="validateBeforeSubmit">
-            <div class="col-md-6 fondo-beige">
+            <div class="col-md-6 mx-auto pt-3">
               <div style="text-align: center">
                 <h2><span style="vertical-align: super" >Datos de emprendedor</span></h2>
                 <hr>
               </div>
-              <div class="row">
-                <div class="margin-left col-sm-6">
+              <div class="row justify-content-center">
+                <div class="margin-left col-sm-5 border">
                   <no-ssr>
                   <croppa :width="200"
                           :height="200"
@@ -19,7 +20,7 @@
                           :placeholder-font-size="18"
                           :prevent-white-space="true"
                           v-bind:initial-image="user.emprendedor.imagen.IDEN_IMAGEN ? imageUrl + user.emprendedor.imagen.URL_IMAGEN : ''"
-                          ></croppa>
+                  ></croppa>
                   </no-ssr>
                 </div>
               </div>
@@ -49,9 +50,6 @@
                     name="date"
                   ></datepicker>
                 </no-ssr>
-              </div>
-              <div v-if="dataErrorMsg.error_edad">
-                <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
               </div>
               <div class="form-group margin-top">
                 <label for="contrasena">Contraseña</label>
@@ -103,22 +101,22 @@
                 <hr>
               </div>
               <div class="form-group margin-top">
-                <label for="name">Twitter</label>
+                <label for="name">Twitter</label><span style="color: grey"> (Formato ej: twitter.com/muni_provi)</span>
                 <input v-validate data-vv-rules="url|min:11" data-vv-as="Twitter" name="Twitter" type="text" v-model.trim="user.persona.contacto.Twitter[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('Twitter')">{{ errors.first('Twitter') }}</small>
               </div>
               <div class="form-group margin-top">
-                <label for="name">Instagram</label>
+                <label for="name">Instagram</label><span style="color: grey"> (Formato ej: instagram.com/providencia_activa)</span>
                 <input v-validate data-vv-rules="url|min:13" data-vv-as="Instagram" name="Instagram" type="text" v-model.trim="user.persona.contacto.Instagram[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('Instagram')">{{ errors.first('Instagram') }}</small>
               </div>
               <div class="form-group margin-top">
-                <label for="name">Facebook</label>
+                <label for="name">Facebook</label><span style="color: grey"> (Formato ej: facebook.com/MunicipalidadDeProvidencia)</span>
                 <input v-validate data-vv-rules="url|min:12" data-vv-as="Facebook" name="Facebook" type="text" v-model.trim="user.persona.contacto.Facebook[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('Facebook')">{{ errors.first('Facebook') }}</small>
               </div>
               <div class="form-group margin-top">
-                <label for="name">Página Web</label>
+                <label for="name">Página Web</label><span style="color: grey"> (Formato ej: www.providencia.cl)</span>
                 <input v-validate data-vv-rules="url|min:3" data-vv-as="Web" name="Web" type="text" v-model.trim="user.persona.contacto.Web[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('Web')">{{ errors.first('Web') }}</small>
               </div>
@@ -136,10 +134,16 @@
               <div v-if="dataErrorMsg.error_foto">
                 <small class="text-danger">{{ dataErrorMsg.error_foto }}</small>
               </div>
-              <button type="submit" class="btn btn-default">Guardar</button>
+              <div v-if="dataErrorMsg.error_edad">
+                <small class="text-danger">{{ dataErrorMsg.error_edad }}</small>
+              </div>
+              <div class="row justify-content-center pb-3">
+                <button type="submit" class="btn btn-default">Guardar</button>
+              </div>
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div> <!-- /container -->
   </section>
