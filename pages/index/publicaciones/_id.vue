@@ -142,7 +142,7 @@
                       v-model.trim="rating.DESC_CALIFICACION"
                       v-validate data-vv-rules="min:10|max:250"></textarea>
                   </div>
-                  <small class="text-danger" v-show="errors.has('calificacion')">{{ errors.first('calificacion') }}<br /></small>
+                  <small class="text-danger" v-show="messageRating">{{ messageRating }}</small><br/>
                   <small class="text-danger" v-show="errors.has('comentario')">{{ errors.first('comentario') }}<br /></small>
                   <button type="submit" class="btn btn-danger mt-2">Calificar</button>
                 </form>
@@ -472,7 +472,8 @@ export default {
       processing: false,
       message: { error: false, answer: '' },
       rebaja: 0,
-      ruta: process.env.sharesUrl
+      ruta: process.env.sharesUrl,
+      messageRating: false
     }
   },
   computed: mapGetters([
@@ -504,23 +505,21 @@ export default {
     validateRating () {
       if (this.processing) return
       this.processing = true
-
-      this.$validator.validate('calificacion').then((result) => {
+      this.messageRating = false
+      this.$validator.validate('comentario').then(async (result) => {
         if (result) {
-          this.$validator.validate('comentario').then(async (result) => {
-            if (result) {
-              if (this.rating.NUMR_VALOR != null) {
-                if (this.rating.IDEN_CALIFICACION) {
-                  await ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
-                } else {
-                  await ratingscontroller.POST(this)
-                }
-              }
+          if (this.rating.NUMR_VALOR != null) {
+            if (this.rating.IDEN_CALIFICACION) {
+              await ratingscontroller.PUT(this, this.rating.IDEN_CALIFICACION)
+            } else {
+              await ratingscontroller.POST(this)
             }
-          })
+          } else {
+            this.messageRating = 'Debe ingresar una puntuacion para calificar esta publicacion'
+          }
         }
-        this.processing = false
       })
+      this.processing = false
     },
     validateDenounce () {
       if (this.processing) return
