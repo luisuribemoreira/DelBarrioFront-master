@@ -119,11 +119,11 @@
                   </div>
                 </div>
               </div>
-              <div class="checkbox">
+              <!--<div class="checkbox">
                 <label>
                   <input type="checkbox" v-model="post.FLAG_CONTENIDO_ADULTO">Producto para mayores de 18
                 </label>
-              </div>
+              </div> -->
               <div>
               <input type="checkbox" id="status" name="status" v-model.trim="statusTerminos"> He leído y acepto los <a target="_blank" :href="terms">Términos y condiciones</a>
               </div>
