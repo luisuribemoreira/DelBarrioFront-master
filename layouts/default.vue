@@ -77,7 +77,7 @@
                         <a class="nav-link" href="/listado-productos">Publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/administracion/publicaciones">Mis publicaciones</a>
+                        <a class="nav-link" id ="nowrap" href="/administracion/publicaciones">Mis publicaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/administracion/ofertas">Ofertas</a>

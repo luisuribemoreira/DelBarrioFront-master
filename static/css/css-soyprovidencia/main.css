@@ -400,7 +400,7 @@ body {
 
 .list-inline-item{
 	max-width: 100px;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .product-info .carousel-indicators img,
@@ -449,8 +449,13 @@ body {
 }
 
 .product-comments .nav-tabs .nav-link{
-	font-size: 120%;
+  font-size: 120%;
 }
+
+#nowrap{
+  white-space: nowrap;
+}
+/*Permite no mostrar los saltos de linea automaticos al tener un espacio en la cadena de texto*/
 
 .product-comments .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
 	background-color: #3cb6b6;
@@ -498,7 +503,7 @@ body {
 	background-position: center;
 }
 
-.login--content, 
+.login--content,
 .new-account--content,
 .faq--content{
 	background-color: rgba(255, 255, 255, 0.9);
@@ -527,7 +532,7 @@ body {
 	border-color: #ced4da;
 }
 
-.btn-outline-secondary:hover, 
+.btn-outline-secondary:hover,
 .btn-outline-secondary:not(:disabled):not(.disabled):active{
 	background-color: #3cb6b6;
 	border-color: #3cb6b6;
@@ -620,7 +625,7 @@ body {
 		margin-left: 0!important;
 	}
 	/*HEADER*/
-	
+
 	.home-slider--h2{
 		font-size: 220%;
 	}
@@ -641,7 +646,7 @@ body {
 		margin-bottom: 90px!important;
 	}
 	/*HOME*/
-	
+
 	.product-info, .entrepreneur-info{
 		text-align: center;
 	}
@@ -652,7 +657,7 @@ body {
 		width: 100%;
 	}
 	/*PRODUCT*/
-	
+
 	.login, .new-account, .faq{
 		padding-left: 30px;
 		padding-right: 30px;
@@ -660,7 +665,7 @@ body {
 	.login--content, .new-account--content, .faq--content{
 		padding: 40px 30px;
 	}
-	
+
 	.login--content .btn, .new-account--content .btn{
 		width: 100%;
 	}
@@ -672,19 +677,20 @@ body {
 		font-size: 180%;
 	}
 	/*HOME*/
-	
+
 	.login--content, .faq--content{
 		padding: 30px 20px;
 	}
 	/*LOGIN*/
-	
+
 	.new-account{
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-	
+
 	.new-account--content{
 		padding: 30px 15px;
 	}
 	/*NEW ACCOUNT*/
 }
+
