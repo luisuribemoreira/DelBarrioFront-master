@@ -39,6 +39,15 @@ body {
 	border-color: #3cb6b6;
 }
 
+.btn-round__turquoise:hover {
+	background-color: #258d8d;
+	border-color: #258d8d;
+}
+.btn-round__turquoise {
+	background-color: #3cb6b6;
+	border-color: #3cb6b6;
+}
+
 .btn-primary__turquoise:hover {
 	background-color: #258d8d;
 	border-color: #258d8d;

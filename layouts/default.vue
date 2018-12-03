@@ -251,7 +251,7 @@
                             <a class="nav-link" href="/registro">Registrarme</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-round btn-danger" href="/autenticar" >Ingresar</a>
+                            <a class="btn btn-round btn-round__turquoise text-white" href="/autenticar" >Ingresar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
