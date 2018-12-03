@@ -10,7 +10,7 @@
                 </button>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
-                <ul class="navbar-nav nav-fill w-25">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="/listado-emprendedores">Emprendedores</a>
                     </li>
@@ -31,10 +31,10 @@
                           </li>
                         </ul>
                         <span class="input-group-append">
-                          <button class="btn btn-outline-secondary border border-left-0" type="submit">
-                              <i class="fa fa-search"></i>
-                          </button>
-                        </span>
+                        <button class="btn btn-outline-secondary border border-left-0" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
                     </div>
                 </form>
 
