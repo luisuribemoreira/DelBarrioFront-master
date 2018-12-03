@@ -21,7 +21,7 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Buscar emprendedor..." autocomplete="off" autofocus="autofocus" v-model.trim="search" @keyup="buscarEmprendedor()">
                  <div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button" disabled="true"><i class="fas fa-search"></i></button>
+										<button class="btn btn-outline-secondary border-left-0" type="button" disabled="true"><i class="fas fa-search"></i></button>
 									</div>
                 </div>
               </div>
@@ -32,7 +32,7 @@
 
       <!--Tabla de emprendedores-->
       <div class="row mt-5">
-        <div class="col-lg-3 col-sm-6 text-center" :key="entrepreneur.IDEN_EMPRENDEDOR" v-for="entrepreneur in paginatedData[pagination]"> 
+        <div class="col-lg-3 col-sm-6 text-center" :key="entrepreneur.IDEN_EMPRENDEDOR" v-for="entrepreneur in paginatedData[pagination]">
                   <div class="card">
                   <nuxt-link class="card-img-link" :to="{ path: '/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR }">
                     <img v-if="!entrepreneur.imagen || !entrepreneur.imagen.URL_IMAGEN" v-lazy="'/img/no-image.svg'" class="card-img-top">

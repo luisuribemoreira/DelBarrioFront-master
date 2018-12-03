@@ -11,11 +11,13 @@
           <nuxt-link :to="{ path: '/administracion/preguntas-frecuentes/nueva' }" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-lg-4 offset-md-3 col-md-6 offset-sm-3 py-1">
-          <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar Pregunta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPregunta()">
-            <div class="input-group-btn">
-             <icon name="search"></icon>
-            </div>
+          <div class="input-group">
+            <input class="form-control border border-right-0" name="search" v-model.trim="search" placeholder="Buscar Pregunta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarPregunta()">
+            <span class="input-group-append">
+            <button class="btn btn-outline-secondary border-left-0" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+            </span>
           </div>
         </div>
       </div>
@@ -63,8 +65,8 @@
                 </span>
               </li>
             </ul>
-          </nav>             
-        <!-- /paginacion -->              
+          </nav>
+        <!-- /paginacion -->
         </div>
       </div>
     </div><!-- /container -->

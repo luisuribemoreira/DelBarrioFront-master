@@ -8,11 +8,13 @@
       </div>
       <div class="row">
         <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 py-1">
-          <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar por Nombres o Apellidos del Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
-            <div class="input-group-btn">
-              <icon name="search"></icon>
-            </div>
+          <div class="input-group">
+            <input class="form-control border border-right-0" name="search" v-model.trim="search" placeholder="Buscar por Nombres o Apellidos del Cliente..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarCliente()">
+            <span class="input-group-append">
+            <button class="btn btn-outline-secondary border-left-0" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+            </span>
           </div>
         </div>
       </div>
@@ -21,7 +23,7 @@
           <table class="table">
             <thead>
               <tr class="text-center">
-                <th>Estado</th>  
+                <th>Estado</th>
                 <th>E-mail</th>
                 <th>Nombre</th>
                 <th>Fecha de nacimiento</th>
@@ -84,7 +86,7 @@
                     <small class="text-danger" v-show="errors.has('deactivation')">{{ errors.first('deactivation') }}</small>
                     <div class="form-group margin-top">
                       <label for="denounceComment">Más detalles</label>
-                      <textarea 
+                      <textarea
                         class="form-control"
                         :rows="5"
                         v-validate data-vv-rules="required|min:5|max:255"
@@ -105,7 +107,7 @@
                 </div>
               </div>
             </div>
-          </div> <!-- /disable modal -->     
+          </div> <!-- /disable modal -->
         </div>
       </div>
     </div><!-- /container -->

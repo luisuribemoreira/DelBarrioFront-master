@@ -8,11 +8,13 @@
       </div>
       <div class="row">
         <div class="col-lg-4 offset-md-4 col-md-6 offset-sm-3 py-1">
-          <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar Título de Oferta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarOfertas()">
-            <div class="input-group-btn">
-             <icon name="search" :aria-hidden="true"></icon>
-            </div>
+          <div class="input-group">
+            <input class="form-control border border-right-0" name="search" v-model.trim="search" placeholder="Buscar Título de Oferta..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarOfertas()">
+            <span class="input-group-append">
+            <button class="btn btn-outline-secondary border-left-0" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+            </span>
           </div>
         </div>
       </div>

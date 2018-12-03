@@ -11,11 +11,13 @@
           <nuxt-link :to="{ path: '/administracion/razon-desactivacion/nuevo' }" class="btn btn-tabla"><i class="fa fa-plus"></i> Agregar</nuxt-link>
         </div>
         <div class="col-lg-4 offset-md-3 col-md-6 offset-sm-3 py-1">
-          <div class="input-group text-truncate">
-            <input class="form-control" name="search" v-model.trim="search" placeholder="Buscar Nombre de Razón de Desactivación..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazonDes">
-            <div class="input-group-btn">
-             <icon name="search"></icon>
-            </div>
+          <div class="input-group">
+            <input class="form-control border border-right-0" name="search" v-model.trim="search" placeholder="Buscar Nombre de Razón de Desactivación..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarRazonDes">
+            <span class="input-group-append">
+            <button class="btn btn-outline-secondary border-left-0" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+            </span>
           </div>
         </div>
       </div>

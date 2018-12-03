@@ -11,11 +11,13 @@
           <nuxt-link to="/administracion/administradores/nuevo" class="btn btn-tabla"><icon name="plus"></icon> Agregar</nuxt-link>
         </div>
         <div class="col-lg-4 offset-md-3 col-md-6 offset-sm-3 py-1">
-          <div class="input-group text-truncate">
+          <div class="input-group">
             <input class="form-control" name="search" v-model="search" placeholder="Buscar nombre de administrador..." autocomplete="off" autofocus="autofocus" type="text" @keyup="buscarAdmin()">
-            <div class="input-group-btn">
-              <icon name="search"></icon>
-            </div>
+            <span class="input-group-append">
+            <button class="btn btn-outline-secondary border-left-0" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+            </span>
           </div>
         </div>
       </div>
@@ -24,7 +26,7 @@
           <table class="table table-hover table-sm">
             <thead class="text-center">
               <tr>
-                <th>Estado</th>  
+                <th>Estado</th>
                 <th>E-mail</th>
                 <th>Nombre</th>
                 <th>Acción</th>
@@ -69,9 +71,9 @@
                 </span>
               </li>
             </ul>
-          </nav>         
-        
-        <!-- /paginacion -->              
+          </nav>
+
+        <!-- /paginacion -->
         </div>
       </div>
     </div><!-- /container -->
