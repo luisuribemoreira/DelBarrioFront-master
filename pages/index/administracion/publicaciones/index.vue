@@ -43,7 +43,7 @@
               <td>{{post.categoria.NOMB_CATEGORIA}}</td>
               <td>
                 <nuxt-link :to="{ path: '/administracion/publicaciones/editar/'+post.IDEN_PUBLICACION }">
-                  <button class="btn btn-tabla">Editar</button>
+                  <button class="btn btn-tabla mr-2">Editar</button>
                 </nuxt-link>
                 <nuxt-link :to="{ path: '/administracion/publicaciones/ofertas/'+post.IDEN_PUBLICACION }">
                   <button class="btn btn-tabla">Oferta</button>
