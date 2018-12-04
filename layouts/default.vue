@@ -273,7 +273,7 @@
                     <p class="footer--bottom-text p text-white">Sitio desarrollado por Centro de Vinculación de Proyectos Académicos,<br> Duoc UC - Sede Antonio Varas</p>
                     <p class="footer--top-text p text-white">Manuel Montt 101 | Providencia, Santiago de Chile | Mesa Central: +562 2654 3463</p>
                     <p class="footer--bottom-text p text-white">Horario General: 8:30 a 14:00 horas. | Encargado: Mauricio Brito | mbrito@providencia.cl</p>
-                    <p class="footer--bottom--text p text-white"><a target="_blank" :href="terms">Términos &amp; Condiciones</a></p>
+                    <p class="footer--bottom--text p text-white"><a target="_blank" :href="terms" id="aTerms">Términos &amp; Condiciones</a></p>
                 </div>
           <div class="col-sm-4 col-md-4 col-lg-3  mr-auto">
             <img style="height: 120px;" class="mx-auto d-block" src="/img/logos/duoc.png" alt="">
