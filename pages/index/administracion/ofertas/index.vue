@@ -6,11 +6,11 @@
             <h2 class="text-center">Ofertas</h2>
           </div>
         </div>
-          <div class="row">
+          <div class="row"  v-if="ofertas.length > 0">
             <transition-group name="list" tag="div">
               <div class="col-lg-6 col-md-6" v-for="oferta in ofertas" :key="oferta.IDEN_OFERTA">
                 <nuxt-link :to="{ path: '/publicaciones/'+oferta.IDEN_PUBLICACION }">
-                  <img v-if="!oferta.publicacion.imagenes || oferta.publicacion.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt=""> 
+                  <img v-if="!oferta.publicacion.imagenes || oferta.publicacion.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                   <img v-else v-lazy="imageUrl + oferta.publicacion.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
                 </nuxt-link>
                 <h4 class="text-center">{{ oferta.publicacion.NOMB_PUBLICACION }}</h4>
@@ -19,6 +19,9 @@
                 <h5 class="text-center">$ {{ oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
               </div>
             </transition-group>
+          </div>
+          <div class="mr-auto my-auto" v-else>
+            <h3 class="text-center"> No existen ofertas en este preciso momento</h3>
           </div>
       </div>
   </section>
