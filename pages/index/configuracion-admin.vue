@@ -8,10 +8,11 @@
       </div>
  <!-- CONFIGURACION DE CUENTA -->
      <div class="margin-top">
-        <div class="col-md-6">
+        <div class="col-lg-6 mx-auto">
+          <div class="row justify-content-center">
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
-              <label for="pass">Contraseña</label>
+              <label for="pass">Contraseña</label><span style="color: grey"> (*No utilice palabras o números de conocimiento público)</span>
               <input v-validate data-vv-rules="min:6" data-vv-as="contraseña" name="pass" type="password" v-model.trim="user.pass" class="form-control"/>
               <small class="text-danger" v-show="errors.has('pass')">{{ errors.first('pass') }}</small>
             </div>
@@ -20,8 +21,11 @@
               <input type="password" data-vv-as="contraseña" name="pass2" v-model.trim="user.pass2" class="form-control"/>
               <small class="text-danger" v-if="dataErrorMsg.error_pw">{{ dataErrorMsg.error_pw }}</small>
             </div>
-            <button type="submit" class="btn btn-default">Cambiar</button>
-          </form>
+            <div class="row justify-content-center pb-3">
+              <button type="submit" class="btn btn-default" >Guardar</button>
+            </div>          
+            </form>
+          </div>
         </div>
       </div>
       
