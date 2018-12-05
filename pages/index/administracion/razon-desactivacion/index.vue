@@ -34,8 +34,7 @@
         <tbody class="text-center">
           <tr :key="deactivationreason.IDEN_MOTIVO_DESHABILITACION" v-for="deactivationreason in  paginatedData[pagination]">
             <td>
-              <i class="fa fa-check fa-2x" title="Habilitado" v-show='deactivationreason.FLAG_VIGENTE'></i>
-              <i class="fa fa-times fa-2x" title="Deshabilitado" v-show='!deactivationreason.FLAG_VIGENTE'></i>
+              <icon :name="deactivationreason.FLAG_VIGENTE ? 'check' : 'times'" :title="deactivationreason.FLAG_VIGENTE ? 'Deshabilitado' : 'Habilitado'"></icon>
             </td>
             <td>{{deactivationreason.NOMB_MOTIVO_DESHABILITACION}}</td>
             <td>
