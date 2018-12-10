@@ -22,7 +22,7 @@
             <h3 class="text-center"> No existen ofertas en este preciso momento</h3>
           </div>
           <!-- PAGINACION -->
-            <nav aria-label="Page navigation">
+            <nav aria-label="Page navigation" v-if="paginatedData[pagination].length > 0">
             <ul class="pagination justify-content-center">
               <li class="page-item">
                 <span aria-label="Previous" v-on:click="pagination > 0 ? pagination-- : ''">
