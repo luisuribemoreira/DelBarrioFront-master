@@ -7,7 +7,7 @@
           <form @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
               <label for="name">Nombre</label>
-              <input v-validate data-vv-rules="required|min:5|max:50" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-]{5,50}" title="Sólo letras y números, mínimo 5 máximo 50" data-vv-as="nombre" name="name" type="text" v-model.trim="category.NOMB_CATEGORIA" class="form-control"/>
+              <input v-validate data-vv-rules="required|min:4|max:50" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-]{5,50}" title="Sólo letras y números, mínimo 5 máximo 50" data-vv-as="nombre" name="name" type="text" v-model.trim="category.NOMB_CATEGORIA" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
             <div class="form-group margin-top">
