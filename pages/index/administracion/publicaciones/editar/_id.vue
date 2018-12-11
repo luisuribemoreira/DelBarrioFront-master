@@ -172,6 +172,9 @@ export default {
   asyncData ({ app, params, redirect }) {
     return categoriescontroller.GETAll(app)
       .then(categories => {
+        categories.categories.sort(function (a, b) {
+          return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+        })
         return controller.GET(app, params.id)
           .then(post => {
             if (!post) redirect('/')
@@ -220,7 +223,9 @@ export default {
       })
     },
     selected (i) {
-      this.subcategorias = i
+      this.subcategorias = i.sort(function (a, b) {
+        return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+      })
     },
     imageRemoveCheck (index) {
       // Si se encuentran imágenes con cambios pendientes, eliminar, sino

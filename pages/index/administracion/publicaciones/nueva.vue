@@ -157,6 +157,14 @@ export default {
   },
   asyncData ({app}) {
     return categoriescontroller.GETAll(app)
+      .then(({categories}) => {
+        categories.sort(function (a, b) {
+          return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+        })
+        return {
+          categories
+        }
+      })
   },
   methods: {
     validateBeforeSubmit () {
@@ -199,7 +207,9 @@ export default {
       })
     },
     selected (i) {
-      this.subcategorias = i
+      this.subcategorias = i.sort(function (a, b) {
+        return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+      })
     }
   },
   computed: mapGetters([
