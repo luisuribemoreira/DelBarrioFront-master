@@ -220,8 +220,14 @@ export default {
       .then(({ index }) => {
         return categoriescontroller.GETAllList(app)
           .then(({ categories }) => {
+            categories.sort(function (a, b) {
+              return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+            })
             return workfieldsController.GETAll(app)
               .then(({ workfields }) => {
+                workfields.sort(function (a, b) {
+                  return a.NOMB_RUBRO.localeCompare(b.NOMB_RUBRO, 'es', { numeric: true })
+                })
                 let publicaciones = []
                 index.publicaciones.forEach(post => {
                   if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
