@@ -101,6 +101,9 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
       .then(({ categories }) => {
+        categories.sort(function (a, b) {
+          return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+        })
         return custompaginator.paginate(categories)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length

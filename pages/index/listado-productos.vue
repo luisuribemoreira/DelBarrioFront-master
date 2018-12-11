@@ -153,6 +153,9 @@ export default {
       .then(({ posts }) => {
         return categoriescontroller.GETAllList(app)
           .then(({ categories }) => {
+            categories.sort(function (a, b) {
+              return a.NOMB_CATEGORIA.localeCompare(b.NOMB_CATEGORIA, 'es', { numeric: true })
+            })
             return workfieldsController.GETAll(app)
               .then(async ({ workfields }) => {
                 let publicaciones = []
