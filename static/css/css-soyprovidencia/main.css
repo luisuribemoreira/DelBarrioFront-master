@@ -252,18 +252,23 @@ body {
 }
 
 .home-products .card-link a,
-.home-entrepreneur .card-link a{
+.home-entrepreneur .card-link a,
+.publication-products .card-link a{
 	color: #dc3545;
 	font-weight: 600;
 }
 
 .home-products .card-link::after,
-.home-entrepreneur .card-link::after{
+.home-entrepreneur .card-link::after,
+.publication-products .card-link::after{
 	content: "\f101";
 	font-family: 'Font Awesome 5 Free';
 	font-weight: 900;
 	margin-left: 10px;
 	color: #dc3545;
+}
+.publication-products .card-link :hover {
+	text-decoration: underline;
 }
 /*HOME PRODUCTS*/
 
