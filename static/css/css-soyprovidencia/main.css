@@ -421,20 +421,24 @@ body {
 .entrepreneur-info .fa-twitter-square,
 .entrepreneur-info .fa-facebook-square{
 	font-size: 250%;
-	color: #dc3545;
 	-webkit-transition: 0.5s;
 	-moz-transition: 0.5s;
 	-o-transition: 0.5s;
 	transition: 0.5s;
 }
-
-.product-info .fa-twitter-square:hover,
+.fa-facebook-square{
+	color: #3b5998
+}
+.fa-twitter-square{
+	color: #00acee
+}
+/*.product-info .fa-twitter-square:hover,
 .product-info .fa-facebook-square:hover,
 .entrepreneur-info .fa-twitter-square:hover,
 .entrepreneur-info .fa-facebook-square:hover{
 	color: #3cb6b6;
 }
-
+*/
 .product-info--text,
 .entrepreneur-info--text{
 	font-size: 100%;

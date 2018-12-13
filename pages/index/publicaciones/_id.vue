@@ -92,9 +92,9 @@
             ${{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}
           </h3>
           <p class="p mt-4 product-info--text">{{post.DESC_PUBLICACION}}</p>
-          <p class="btn btn-primary btn-primary__turquoise mt-4"><nuxt-link style="color: white" :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Contactar a Vendedor</nuxt-link></p>
+          <p class="btn btn-primary btn-primary__turquoise mt-4"><nuxt-link style="color: white" :to="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">Contactar al vendedor</nuxt-link></p>
           <div v-if="isAuthenticated && post.emprendedor.IDEN_USUARIO !== loggedUser.id">
-          <p class="product-info--report mt-4"><a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i>Denunciar publicación</a></p>
+          <p class="product-info--report mt-4"><a href="#" @click="type = 'pub', denItem = post.DESC_PUBLICACION" data-toggle="modal" :data-target= "isAuthenticated ? '#denounceModal' : '#modal'"><i class="fas fa-exclamation-circle"></i> Denunciar publicación</a></p>
           </div>
           <p v-if="!post.FLAG_VALIDADO" class="margin-top">Esta publicación ha sido aceptada automáticamente y no ha pasado por moderación</p>
         </div>
