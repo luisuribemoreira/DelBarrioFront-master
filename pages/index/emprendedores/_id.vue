@@ -66,7 +66,7 @@
               <li class="mb-2" v-if="rss.facebook"><i class="fab fa-facebook fa-lg text-turquoise mr-2"></i><a target="_blank" :href="'//' + rss.facebook">Facebook</a></li>
               <li class="mb-2" v-if="rss.web"><i class="fas fa-external-link-alt fa-lg text-turquoise mr-2"></i><a target="_blank" :href="'//' + rss.web">Página Web</a></li>
             </ul>
-            <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a href="#">{{contactos.correo}}</a></h5>
+            <h5>¿Tienes alguna duda? Envíanos un correo electrónico a <a class="text-primary">{{contactos.correo}}</a></h5>
           </div>
           <div v-else>
             <p>Debes <nuxt-link to="/autenticar">iniciar sesión</nuxt-link> para ver los datos del emprendedor</p>
