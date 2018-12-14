@@ -85,7 +85,7 @@ export default {
     return controller.GETAll(app)
       .then(({ entrepreneurs }) => {
         entrepreneurs = entrepreneurs.filter(el => el.usuario.FECH_CREACION && !el.usuario.FLAG_BAN)
-        return custompaginator.paginate(entrepreneurs)
+        return custompaginator.paginate(entrepreneurs, 12)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
             return {
