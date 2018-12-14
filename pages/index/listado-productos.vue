@@ -18,11 +18,11 @@
         <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">
 
           <!-- Menu Producto -->
-          <div class="row" v-if="type.product"> 
+          <div class="row" v-if="type.product">
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="buscas">¿Qué Buscas?</label>
-                <input type="text" class="form-control" placeholder="Buscar Nombre de Producto o Servicio..." v-model.trim="search.query.find">
+                <label for="buscas">¿Buscas un producto o servicio?</label>
+                <input type="text" class="form-control" placeholder="Buscar nombre de producto o servicio..." v-model.trim="search.query.find">
               </div>
             </div>
             <div class="col-md-6">
@@ -35,8 +35,8 @@
                 </div>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model.trim="search.maxPrice" min="1" max="900000"> 
-                  </div>                      
+                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model.trim="search.maxPrice" min="1" max="900000">
+                  </div>
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@
             <h2 class="home-products--top-title text-center text-white h2">Ofertas</h2>
           </div>
         <div class="col-12 py-5">
-           <carousel 
+           <carousel
                     :navigationEnabled="true"
                     :loop="true"
                     paginationActiveColor="#89dbee"
@@ -127,7 +127,7 @@
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
               </nuxt-link>
-              <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
+              <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4>
               <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>
               <h5 class="text-center">$ {{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
             </slide>
