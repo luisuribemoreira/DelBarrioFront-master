@@ -23,8 +23,8 @@
         <div class="col-md-5">
           <no-ssr>
           <carousel
-                    :navigationEnabled="false"
-                    :loop="false"
+                    :navigationEnabled="true"
+                    :loop="true"
                     paginationActiveColor="#89dbee"
                     paginationColor="#b2ebd1"
                     :paginationSize="20"
