@@ -9,6 +9,11 @@
               <li class="breadcrumb-item breadcrumb-item--home"><a href="/">Inicio</a></li>
               <li class="breadcrumb-item"><a href="/listado-emprendedores">Emprendedores</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</li>
+              <li class="ml-auto">
+                <form @submit.prevent="btnVolver()">
+                <button class="btn btn-round btn-round__turquoise text-white" type="submit"><i class="fas fa-hand-point-left"></i> Volver</button>
+                </form>
+              </li>
             </ol>
           </nav>
         </div>
@@ -241,6 +246,11 @@ export default {
     'isAuthenticated',
     'loggedUser'
   ]),
+  methods: {
+    btnVolver () {
+      window.history.back()
+    }
+  },
   head () {
     return {
       title: 'Perfil',

@@ -10,6 +10,11 @@
               <li class="breadcrumb-item"><a href="/listado-productos">Publicaciones</a></li>
               <li class="breadcrumb-item"><a :href="'/emprendedores/' + post.emprendedor.IDEN_EMPRENDEDOR">{{post.emprendedor.DESC_NOMBRE_FANTASIA}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{post.NOMB_PUBLICACION}}</li>
+              <li class="ml-auto">
+                <form @submit.prevent="btnVolver()">
+                <button class="btn btn-round btn-round__turquoise text-white" type="submit"><i class="fas fa-hand-point-left"></i> Volver</button>
+                </form>
+              </li>
             </ol>
           </nav>
         </div>
@@ -532,6 +537,9 @@ export default {
         }
         this.processing = false
       })
+    },
+    btnVolver () {
+      window.history.back()
     }
   },
   filters: {
