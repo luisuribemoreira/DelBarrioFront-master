@@ -1,25 +1,36 @@
 <template>
   <section class="publication-products section">
+    <section class="publication-top section pt-0 pb-0">
+		  <div class="container-fluid">
+			  <div class="row">
+				  <img src="img/img-soyprovidencia/home-slider-2.jpg" class="img-fluid" alt="Top">
+			  </div>
+	  	</div>
+  	</section>
       <div class="container">
-         <h2 class="text-center">Ofertas</h2>
+         <h2 class="pt-4">Ofertas</h2>
           <div class="row mt-5"  v-if="paginatedData[pagination].length > 0">
               <div class="col-lg-3 col-sm-6 text-center" v-for="oferta in paginatedData[pagination]" :key="oferta.IDEN_OFERTA">
                 <div class="card">
                 <nuxt-link class="card-img-link" :to="{ path: '/publicaciones/'+oferta.IDEN_PUBLICACION }">
                   <img v-if="!oferta.publicacion.imagenes || oferta.publicacion.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
                   <img v-else v-lazy="imageUrl + oferta.publicacion.imagenes[0].URL_IMAGEN" class="card-img-top" alt="">
+                </nuxt-link>
                 <div class="card-body">
                 <h4 class="card-title">{{ oferta.publicacion.NOMB_PUBLICACION }}</h4>
                 <p class="text-center">{{ oferta.publicacion.DESC_PUBLICACION.substring(0,20) }}...</p>
-                <p class="text-center">Desde {{ oferta.FECH_INICIO }} <br> Hasta {{ oferta.FECH_TERMINO }}</p>
+                <p class="text-center">Desde: {{ oferta.FECH_INICIO }} <br> Hasta: {{ oferta.FECH_TERMINO }}</p>
                 <h5 class="card-text card-price">$ {{ oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+                <p class="card-link">
+                 <nuxt-link :to="{ path: '/publicaciones/'+oferta.publicacion.IDEN_PUBLICACION }">Ver oferta</nuxt-link>
+                </p>
                 </div>
-                </nuxt-link>
               </div>
             </div>
           </div>
           <div class="mr-auto my-auto" v-else>
-            <h3 class="text-center"> No existen ofertas en este preciso momento</h3>
+            <h3 class="text-center"> No existen ofertas en este momento, <br>pero te invitamos a revisar el listado de Productos <br>
+            <a class="text-primary" href="/listado-productos">aquí</a></h3>
           </div>
           <!-- PAGINACION -->
             <nav aria-label="Page navigation" v-if="paginatedData[pagination].length > 0">
