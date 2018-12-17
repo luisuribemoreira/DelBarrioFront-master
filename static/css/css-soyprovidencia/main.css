@@ -192,9 +192,12 @@ body {
 	border-radius: .55rem;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	text-align: center;
+  text-align: center;
 }
-
+.publication-sales .card {
+  max-height: 90%;
+  min-height: 90%;
+}
 .card-img-top,
 .home-products .card-img-top,
 .home-entrepreneur .card-img-top {

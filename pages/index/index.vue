@@ -68,7 +68,7 @@
                                         </nuxt-link>
                                         <div class="card-body">
                                             <h5 class="card-title">{{ post.NOMB_PUBLICACION }}</h5>
-                                            <p class="card-text">{{ post.DESC_PUBLICACION.length > 50 ?  post.DESC_PUBLICACION.substring(0, 50) + '...' : post.DESC_PUBLICACION }}</p>
+                                            <p class="card-text">{{ post.DESC_PUBLICACION.length > 20 ?  post.DESC_PUBLICACION.substring(0, 20) + '...' : post.DESC_PUBLICACION }}</p>
                                             <hr>
                                             <p class="card-text card-price">{{ post.NUMR_PRECIO }}</p>
                                             <p class="card-text card-link">
@@ -113,7 +113,7 @@
                                         </nuxt-link>
                                         <div class="card-body">
                                             <h5 class="card-title">{{ entrepreneur.DESC_NOMBRE_FANTASIA }}</h5>
-                                            <p class="card-text">{{ entrepreneur.DESC_EMPRENDEDOR.length > 80 ? entrepreneur.DESC_EMPRENDEDOR.substring(0, 80) + '...' : entrepreneur.DESC_EMPRENDEDOR }}</p>
+                                            <p class="card-text">{{ entrepreneur.DESC_EMPRENDEDOR.length > 20 ? entrepreneur.DESC_EMPRENDEDOR.substring(0, 20) + '...' : entrepreneur.DESC_EMPRENDEDOR }}</p>
                                             <hr>
                                             <p class="card-text card-link">
                                               <nuxt-link :to="'/emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR">Ver emprendedor</nuxt-link>

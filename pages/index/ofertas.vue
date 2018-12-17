@@ -19,9 +19,9 @@
                 </nuxt-link>
                 <div class="card-body">
                 <h4 class="card-title">{{ oferta.publicacion.NOMB_PUBLICACION }}</h4>
-                <p class="text-center">{{ oferta.publicacion.DESC_PUBLICACION.substring(0,20) }}...</p>
+                <p class="text-center">{{ oferta.publicacion.DESC_PUBLICACION.substring(0,15) }}...</p>
                 <p class="text-center">Desde: {{ oferta.FECH_INICIO }} <br> Hasta: {{ oferta.FECH_TERMINO }}</p>
-                <h5 class="card-text card-price">$ {{ oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+                <h5 class="card-price">$ {{ oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
                 <p class="card-link">
                  <nuxt-link :to="{ path: '/publicaciones/'+oferta.publicacion.IDEN_PUBLICACION }">Ver oferta</nuxt-link>
                 </p>

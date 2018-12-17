@@ -74,7 +74,7 @@
                   <div class="card-body">
                   <h5 class="card-title">{{post.NOMB_PUBLICACION}}</h5>
                   <p class="card-text">Fecha publicación: {{post.FECH_CREACION.substring(8,10) +'/' + post.FECH_CREACION.substring(5,7)+ '/' + post.FECH_CREACION.substring(0,4)}}</p>
-                  <p class="card-text">{{post.DESC_PUBLICACION.length > 80 ? post.DESC_PUBLICACION.substring(0, 80) + '...' : post.DESC_PUBLICACION }}</p>
+                  <p class="card-text">{{post.DESC_PUBLICACION.length > 20 ? post.DESC_PUBLICACION.substring(0, 20) + '...' : post.DESC_PUBLICACION }}</p>
                   <p class="card-text card-price">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</p>
                   <p class="card-text card-link">
                   <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">Ver publicación</nuxt-link>
@@ -108,7 +108,7 @@
     <!-- OFERTAS -->
 <section id="productos" class="publication-sales section" v-if="publicaciones.length > 0">
       <div class="container">
-        <div class="row mb-5">
+        <div class="row mt-5">
           <div class="col">
             <h2 class="home-products--top-title text-center text-white h2">Ofertas</h2>
           </div>
@@ -126,14 +126,18 @@
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
                     style="width: 100%;">
-            <slide v-for="post in publicaciones" :key="post.IDEN_PUBLICACION">
-              <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
-                <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
+            <slide v-for="post in publicaciones" class="px-2" :key="post.IDEN_PUBLICACION">
+              <div class="card ">
+              <nuxt-link class="card-img-link" :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">
+                <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
+                <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="card-img-top" alt="">
               </nuxt-link>
-              <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4>
-              <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>
-              <h5 class="text-center">$ {{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+              <div class="card-body">
+              <h4 class="card-title">{{ post.NOMB_PUBLICACION }}</h4>
+              <p class="card-text">{{ post.DESC_PUBLICACION.substring(0,15) }}...</p>
+              <h5 class="card-price">$ {{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+              </div>
+              </div>
             </slide>
            </carousel>
         </div>
