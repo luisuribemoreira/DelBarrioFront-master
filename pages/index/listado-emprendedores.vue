@@ -41,9 +41,9 @@
                   <div class="card-body">
                     <h5 class="card-title">{{entrepreneur.DESC_NOMBRE_FANTASIA}}</h5>
                     <p class="card-text">{{ entrepreneur.DESC_EMPRENDEDOR.length > 80 ? entrepreneur.DESC_EMPRENDEDOR.substring(0, 80) + '...' : entrepreneur.DESC_EMPRENDEDOR }}</p>
-                    <p class="card-text card-link">
+                  <p class="card-text card-link">
                   <nuxt-link :to="{ path: '/emprendedores/'+entrepreneur.IDEN_EMPRENDEDOR }">Ver emprendedor</nuxt-link>
-                   </p>
+                  </p>
                   </div>
                 </div>
             </div>

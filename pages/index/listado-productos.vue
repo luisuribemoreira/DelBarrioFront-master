@@ -75,7 +75,8 @@
                   <h5 class="card-title">{{post.NOMB_PUBLICACION}}</h5>
                   <p class="card-text">Fecha publicación: {{post.FECH_CREACION.substring(8,10) +'/' + post.FECH_CREACION.substring(5,7)+ '/' + post.FECH_CREACION.substring(0,4)}}</p>
                   <p class="card-text">{{post.DESC_PUBLICACION.length > 80 ? post.DESC_PUBLICACION.substring(0, 80) + '...' : post.DESC_PUBLICACION }}</p>
-                  <p class="card-text card-price">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</p>                  <p class="card-text card-link">
+                  <p class="card-text card-price">$ {{ post.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</p>
+                  <p class="card-text card-link">
                   <nuxt-link :to="{ path: '/publicaciones/'+post.IDEN_PUBLICACION }">Ver publicación</nuxt-link>
                   </p>
                   </div>
