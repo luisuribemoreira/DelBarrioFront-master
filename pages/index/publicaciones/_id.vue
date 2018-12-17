@@ -67,6 +67,7 @@
         </div><!-- columna -->
         <div class="col-md-7">
           <h2 class="product-info--title h2">{{post.NOMB_PUBLICACION}}</h2>
+          <p class=" product-info--text h3">{{post.categoria.NOMB_CATEGORIA}}</p>
            <div class="stars mt-3">
             <no-ssr>
               <star-rating
