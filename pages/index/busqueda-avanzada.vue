@@ -231,28 +231,30 @@ export default {
                 workfields.sort(function (a, b) {
                   return a.NOMB_RUBRO.localeCompare(b.NOMB_RUBRO, 'es', { numeric: true })
                 })
-                let publicaciones = []
-                index.publicaciones.forEach(post => {
-                  if (post.FLAG_VIGENTE && !post.FLAG_BAN && post.FLAG_VALIDADO && !post.emprendedor.usuario.FLAG_BAN) {
-                    if (post.oferta.length > 0) {
-                      let offer
-                      post.oferta.forEach(o => {
-                        if (!o.FLAG_BAN && o.FLAG_VIGENTE && o.FLAG_VALIDADO) {
-                          offer = o
+                return postsController.GETAll(app)
+                  .then(({ posts }) => {
+                    let publicaciones = []
+                    posts = posts.filter(el => !el.FLAG_BAN && el.FLAG_VALIDADO && el.FLAG_VIGENTE && !el.emprendedor.usuario.FLAG_BAN)
+                    posts.sort(function (a, b) {
+                      if (new Date(a.FECH_CREACION) > new Date(b.FECH_CREACION)) return -1
+                      if (new Date(a.FECH_CREACION) < new Date(b.FECH_CREACION)) return 1
+                      return 0
+                    })
+                    posts.forEach(post => {
+                      if (post.oferta.length > 0) {
+                        let offer = post.oferta.filter(el => !el.FLAG_BAN && el.FLAG_VIGENTE && el.FLAG_VALIDADO)[0]
+                        if (offer) {
+                          post.oferta = offer
+                          publicaciones.push(post)
                         }
-                      })
-                      if (offer) {
-                        post.oferta = offer
-                        publicaciones.push(post)
                       }
+                    })
+                    return {
+                      categories: categories,
+                      publicaciones,
+                      workfields: workfields
                     }
-                  }
-                })
-                return {
-                  categories: categories,
-                  publicaciones,
-                  workfields: workfields
-                }
+                  })
               })
           })
       })
