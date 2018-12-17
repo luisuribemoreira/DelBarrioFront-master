@@ -1,5 +1,5 @@
 <template>
-  <section class="publication-products section">
+<section>
     <section class="publication-top section pt-0 pb-0">
 		  <div class="container-fluid">
 			  <div class="row">
@@ -7,8 +7,9 @@
 			  </div>
 	  	</div>
   	</section>
+     <section class="publication-products section">
       <div class="container">
-         <h2 class="pt-4">Ofertas</h2>
+         <h2 class="h2">Ofertas</h2>
           <div class="row mt-5"  v-if="paginatedData[pagination].length > 0">
               <div class="col-lg-3 col-sm-6 text-center" v-for="oferta in paginatedData[pagination]" :key="oferta.IDEN_OFERTA">
                 <div class="card">
@@ -51,6 +52,7 @@
             </ul>
           </nav> <!-- /PAGINACION -->
       </div>
+      </section>
   </section>
 </template>
 

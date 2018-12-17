@@ -1,14 +1,14 @@
 <template>
   <no-ssr>
   <div>
-    <section id="busqueda" class="publication-products section">
-      	<section class="publication-top section pt-0 pb-0">
+    <section class="publication-top section pt-0 pb-0">
 		<div class="container-fluid">
 			<div class="row">
 				<img src="img/img-soyprovidencia/home-entrepreneur-bg.jpg" class="img-fluid" alt="Top">
 			</div>
 		</div>
 	</section>
+      <section id="busqueda" class="publication-products section">
       <div class="container">
       <div class="row">
 				<div class="col">
@@ -61,7 +61,7 @@
 </section><!-- /Busqueda -->
 
     <!-- RESULTADOS BUSQUEDA -->
-    <section class="publication-products section">
+    <section class="publication-products section" v-if="paginatedData[0].length > 0">
       <div class="container">
           <div v-if="paginatedData[0].length > 0">
         <div class="row mt-5">

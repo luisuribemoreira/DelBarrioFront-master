@@ -9,7 +9,7 @@
           </div>
         </div>
 
-        <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">  
+        <form class="margin-top" @submit.prevent v-on:submit="busquedaAvanzada()">
           <div class="row">
             <div class="col-md-6">
               <label for="tipo" class="margin-top-20">Tipo</label>
@@ -31,7 +31,7 @@
           </div>
 
           <!-- Menu Producto -->
-          <div class="row" v-if="type.product"> 
+          <div class="row" v-if="type.product">
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas? (Opcional)</label>
@@ -48,8 +48,8 @@
                 </div>
                 <div class="col-md-6">
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model.trim="search.maxPrice" min="1" max="900000"> 
-                  </div>                      
+                    <input type="number" class="form-control" placeholder="Hasta" name="max" v-model.trim="search.maxPrice" min="1" max="900000">
+                  </div>
                 </div>
               </div>
             </div>
@@ -65,7 +65,7 @@
           </div> <!-- Fin Menu Producto -->
 
           <!-- Menu Emprendedor -->
-          <div class="row" v-if="type.entrepreneur"> 
+          <div class="row" v-if="type.entrepreneur">
             <div class="col-md-9">
               <div class="form-group">
                 <label for="buscas">¿Qué Buscas? (Opcional)</label>
@@ -84,7 +84,7 @@
           </div> <!-- Fin Menu Emprendedor -->
 
           <!-- Menu Oferta -->
-          <div class="row" v-if="type.sale">  
+          <div class="row" v-if="type.sale">
             <div class="col-sm-9">
               <div class="form-group">
                 <label for="categoria" class="margin-top-20">Categoría (Opcional)</label>
@@ -105,7 +105,7 @@
       </div><!-- /container -->
     </section><!-- /Busqueda -->
 
-    <section class="search-products section"><!-- RESULTADOS BUSQUEDA -->
+    <section class="search-products section" v-if="paginatedData[0].length > 0"><!-- RESULTADOS BUSQUEDA -->
       <div class="container">
           <div v-if="paginatedData[0].length > 0">
             <div class="row mt-5">
@@ -159,16 +159,16 @@
           <span v-if="searchMessage" class="text-info">{{ searchMessage }}</span>
       </div>
     </section> <!-- Resultado Busqueda -->
-    
+
     <!-- OFERTAS -->
-    <section id="productos" class="publication-sales section">
+    <section id="productos" class="publication-sales section" v-if="publicaciones.length > 0">
       <div class="container">
         <div class="row mb-5">
           <div class="col">
             <h2 class="home-products--top-title text-center text-white h2">Ofertas</h2>
           </div>
         <div class="col-12 py-5">
-           <carousel 
+           <carousel
                     :navigationEnabled="true"
                     :loop="true"
                     paginationActiveColor="#89dbee"
@@ -187,7 +187,7 @@
                 <img v-if="post.imagenes.length == 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                 <img v-else v-lazy="imageUrl + post.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
               </nuxt-link>
-              <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4> 
+              <h4 class="text-center">{{ post.NOMB_PUBLICACION }}</h4>
               <p class="text-center">{{ post.DESC_PUBLICACION.substring(0,20) }}...</p>
               <h5 class="text-center">$ {{ post.oferta.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
             </slide>
