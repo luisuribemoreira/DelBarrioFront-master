@@ -276,7 +276,7 @@
                     <p class="footer--bottom-text p text-white">Sitio desarrollado por Centro de Vinculación de Proyectos Académicos,<br> Duoc UC - Sede Antonio Varas</p>
                 </div>
           <div class="col-sm-4 col-md-4 col-lg-3  mr-auto">
-            <img style="height: 120px;" class="mx-auto d-block" src="/img/logos/duoc.png" alt="">
+            <img class="mx-auto d-block img-fluid" src="/img/logos/logoDuoc.png" alt="">
           </div>
 
       </div>
