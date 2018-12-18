@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-10 offset-md-1">
-            <h2 class="text-center">Editar Oferta</h2>            
+            <h2 class="text-center">Editar Oferta</h2>
             <form class="margin-top" @submit.prevent="validateBeforeSubmit">
               <h3>Publicación</h3>
               <div class="row margin-top" v-if="post.imagenes.length > 0">
@@ -20,13 +20,13 @@
                 <div class="col-md-6">
                   <label for="name">Título</label>
                   <span class="data" id="name">{{ post.NOMB_PUBLICACION }}</span>
-                </div> 
+                </div>
               </div>
-              <div class="row margin-top">             
+              <div class="row margin-top">
                 <div class="col-md-6">
                   <label for="price">Precio</label>
                   <span class="data" id="precio">{{ post.NUMR_PRECIO }}</span>
-                </div>              
+                </div>
                 <div class="col-md-6">
                   <label for="descripcion">Descripcion</label>
                   <span class="data" id="descripcion">{{ post.DESC_PUBLICACION }}</span>
@@ -71,7 +71,7 @@
                 <div class="form-group">
                   <label for="fecha-inicio">Fecha Inicio</label>
                   <no-ssr>
-                    <datepicker 
+                    <datepicker
                       language="es"
                       :format='format'
                       v-model="sale.FECH_INICIO"
@@ -82,7 +82,7 @@
                 </div>
                 <div class="form-group">
                   <label for="fecha-termino">Fecha Término</label>
-                  <datepicker 
+                  <datepicker
                     language="es"
                     :format='format'
                     v-model="sale.FECH_TERMINO"
@@ -111,6 +111,7 @@ import moment from 'moment'
 export default {
   name: 'EditPost',
   data () {
+    this.$store.state.title = 'MisPublicaciones'
     return {
       messageOferta: false,
       isSale: false,

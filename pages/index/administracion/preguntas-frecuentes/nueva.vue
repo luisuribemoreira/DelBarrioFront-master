@@ -9,10 +9,10 @@
                 <label for="question">Pregunta</label>
                 <input v-validate data-vv-rules="required|min:5|max:255" pattern="[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-¿?]{5,255}" title="Sólo letras y números, mínimo 5 máximo 255" data-vv-as="pregunta" name="question" type="text" v-model.trim="f.NOMB_FAQ" class="form-control">
                 <small class="text-danger" v-show="errors.has('question')">{{ errors.first('question') }}</small>
-              </div>        
+              </div>
               <div class="form-group margin-top">
                 <label for="respuesta">Respuesta</label>
-                <textarea class="form-control" 
+                <textarea class="form-control"
                           rows="5"
                           v-validate data-vv-rules="required|min:5|max:1000"
                           data-vv-as="respuesta"
@@ -37,6 +37,7 @@ import controller from '~/controllers/admin/faqs'
 
 export default {
   data () {
+    this.$store.state.title = 'ModerarPreguntasFrecuentes'
     return {
       f: {},
       message: false,

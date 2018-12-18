@@ -99,6 +99,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'Rubros'
     return {
       workfields: [],
       pagination: 0, // Numero de la pagina

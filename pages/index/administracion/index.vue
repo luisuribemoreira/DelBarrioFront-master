@@ -59,7 +59,7 @@
               </span>
             </li>
           </ul>
-        </nav> <!-- navegacion --> 
+        </nav> <!-- navegacion -->
       </div>
     </div> <!-- Datos de reporte -->
   </div>
@@ -111,6 +111,7 @@ export default {
     }
   },
   data () {
+    this.$store.state.title = 'Reportes'
     return {
       open: false,
       selected: false,

@@ -29,7 +29,7 @@
             <div class="form-group">
               <label for="date">Fecha de Nacimiento</label>
               <no-ssr>
-                <datepicker 
+                <datepicker
                   language="es"
                   :format='format'
                   v-model="persona.FECH_FECHA_NACIMIENTO"
@@ -88,6 +88,7 @@ const dict = {
 export default {
   middleware: 'anonymous',
   data () {
+    this.$store.state.title = 'Registro'
     return {
       selected: false,
       format: 'dd MMM, yyyy',

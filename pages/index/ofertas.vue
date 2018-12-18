@@ -91,6 +91,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'Ofertas'
     return {
       imageUrl: process.env.imagesUrl,
       ofertas: [],

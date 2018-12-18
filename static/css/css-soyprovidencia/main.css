@@ -467,6 +467,10 @@ body {
 	background: url(../../img/img-soyprovidencia/leaves-pattern.png);
 	background-repeat: repeat;
 }
+/*Active Menu NavBar*/
+.navbar-nav >  .nav-item .nav-link.active{
+  color: #3cb6b6;
+}
 
 .product-comments .nav-tabs{
 	border-color: #3cb6b6;

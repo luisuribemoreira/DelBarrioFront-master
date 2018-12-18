@@ -96,6 +96,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ModerarPublicaciones'
     return {
       posts: [],
       pagination: 0,

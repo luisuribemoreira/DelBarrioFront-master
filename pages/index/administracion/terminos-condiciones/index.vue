@@ -26,6 +26,7 @@
 import controller from '~/controllers/admin/termsconditions'
 export default {
   data () {
+    this.$store.state.title = 'TerminosCondiciones'
     return {
       isInitial: true,
       isSaving: false,

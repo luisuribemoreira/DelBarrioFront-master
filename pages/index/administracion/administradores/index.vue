@@ -103,6 +103,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ModerarAdministrador'
     return {
       clients: [],
       search: '',

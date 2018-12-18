@@ -155,6 +155,7 @@ import categoriescontroller from '~/controllers/admin/categories'
 export default {
   name: 'EditPost',
   data () {
+    this.$store.state.title = 'MisPublicaciones'
     return {
       message: false,
       images: {},

@@ -52,6 +52,7 @@ import emailer from '~/controllers/admin/emailer'
 
 export default {
   data () {
+    this.$store.state.title = 'ModerarEmprendedor'
     return {
       message: false,
       processing: false

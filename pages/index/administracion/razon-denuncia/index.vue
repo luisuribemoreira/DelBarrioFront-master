@@ -97,6 +97,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'RazonDenuncia'
     return {
       denouncereasons: [],
       pagination: 0, // Numero de la pagina

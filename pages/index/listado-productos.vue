@@ -197,6 +197,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ListadoProductos'
     return {
       search: {
         query: {

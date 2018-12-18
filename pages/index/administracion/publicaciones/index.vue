@@ -120,6 +120,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'MisPublicaciones'
     return {
       posts: [],
       pagination: 0, // Numero de la pagina

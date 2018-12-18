@@ -116,6 +116,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'Categorias'
     return {
       open: false,
       selected: 'caret-down',

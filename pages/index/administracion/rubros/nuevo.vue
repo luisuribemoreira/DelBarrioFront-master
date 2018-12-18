@@ -26,6 +26,7 @@ import controller from '~/controllers/admin/workfields'
 
 export default {
   data () {
+    this.$store.state.title = 'Rubros'
     return {
       workfield: {},
       message: false,

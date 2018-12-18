@@ -26,6 +26,7 @@ import controller from '~/controllers/admin/deactivationreasons'
 
 export default {
   data () {
+    this.$store.state.title = 'RazonDesactivacion'
     return {
       deactivationreason: {},
       message: false,

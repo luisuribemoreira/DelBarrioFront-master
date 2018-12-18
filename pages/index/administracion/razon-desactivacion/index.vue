@@ -93,6 +93,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'RazonDesactivacion'
     return {
       deactivationreasons: [],
       pagination: 0, // Numero de la pagina

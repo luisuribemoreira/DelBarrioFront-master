@@ -106,6 +106,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ModerarOfertas'
     return {
       offers: [],
       search: '',

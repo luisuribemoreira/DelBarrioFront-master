@@ -84,7 +84,7 @@
                   </span>
                 </li>
               </ul>
-            </nav> <!-- navegacion --> 
+            </nav> <!-- navegacion -->
           </div>
         </div> <!-- Datos de reporte -->
         <small class="text-danger" v-if="message">{{ message }}</small>
@@ -96,7 +96,7 @@
         </div>
         <div class="row">
           <no-ssr>
-            <carousel 
+            <carousel
                     :navigationEnabled="true"
                     :loop="true"
                     paginationActiveColor="#89dbee"
@@ -114,7 +114,7 @@
                   <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
                   <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
                 </nuxt-link>
-                <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4> 
+                <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4>
                 <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
                 <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
                 <p class="text-center"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
@@ -169,7 +169,7 @@
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
               <no-ssr>
-                <datepicker 
+                <datepicker
                   language="es"
                   :format='format'
                   v-model="user.persona.FECH_FECHA_NACIMIENTO"
@@ -326,7 +326,7 @@
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
               <no-ssr>
-                <datepicker 
+                <datepicker
                   language="es"
                   :format='format'
                   v-model="user.persona.FECH_FECHA_NACIMIENTO"
@@ -434,6 +434,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'MiCuenta'
     return {
       selected: false,
       selectedPass: false,

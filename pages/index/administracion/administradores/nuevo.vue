@@ -24,7 +24,7 @@
               <div class="form-group margin-top">
                 <label for="date">Fecha de Nacimiento</label>
                 <no-ssr>
-                  <datepicker 
+                  <datepicker
                     language="es"
                     :format='format'
                     v-model="user.FECH_FECHA_NACIMIENTO"
@@ -63,6 +63,7 @@ export default {
     return controller.GET(app, this)
   },
   data () {
+    this.$store.state.title = 'ModerarAdministrador'
     return {
       format: 'dd MMM, yyyy',
       user: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres

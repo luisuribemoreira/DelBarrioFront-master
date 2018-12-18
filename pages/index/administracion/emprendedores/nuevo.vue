@@ -62,6 +62,7 @@ const dict = {
 
 export default {
   data () {
+    this.$store.state.title = 'ModerarEmprendedor'
     return {
       entrepreneur: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres
       message: false,

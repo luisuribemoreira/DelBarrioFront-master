@@ -10,7 +10,7 @@
               <input v-validate data-vv-rules="required|min:5|max:50" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ,.'-]{5,50}" title="Sólo letras, mínimo 5 máximo 50" data-vv-as="nombre" name="name" type="text" v-model.trim="workfield.NOMB_RUBRO" class="form-control"/>
               <small class="text-danger" v-show="errors.has('name')">{{ errors.first('name') }}</small>
             </div>
-            
+
             <div v-if='message'>
               <span>{{message}}</span>
             </div>
@@ -27,6 +27,7 @@ import controller from '~/controllers/admin/workfields'
 
 export default {
   data () {
+    this.$store.state.title = 'Rubros'
     return {
       message: false,
       processing: false,

@@ -93,6 +93,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ModerarPreguntasFrecuentes'
     return {
       faqs: [],
       pagination: 0,

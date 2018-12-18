@@ -23,7 +23,7 @@
             <div class="form-group margin-top">
               <label for="date">Fecha de Nacimiento</label>
               <no-ssr>
-                <datepicker 
+                <datepicker
                   language="es"
                   :format='format'
                   v-model="user.FECH_FECHA_NACIMIENTO"
@@ -64,6 +64,7 @@ export default {
     }
   },
   data () {
+    this.$store.state.title = 'ModerarAdministrador'
     return {
       format: 'dd MMM, yyyy',
       user: {},

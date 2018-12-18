@@ -32,6 +32,7 @@ import controller from '~/controllers/admin/categories'
 
 export default {
   data () {
+    this.$store.state.title = 'Categorias'
     return {
       category: {},
       message: false,

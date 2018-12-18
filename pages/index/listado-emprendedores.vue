@@ -100,6 +100,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ListadoEmprendedores'
     return {
       entrepreneurs: [],
       pagination: 0,

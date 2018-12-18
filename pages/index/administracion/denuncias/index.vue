@@ -291,6 +291,7 @@ export default {
     }
   },
   data () {
+    this.$store.state.title = 'Denuncias'
     return {
       denouncedetail: { usuario: { emprendedor: {}, persona: {} }, publicacion: {}, motivo_denuncia: {}, calificacion: {}, resolucion_denuncia: {} },
       open: false,

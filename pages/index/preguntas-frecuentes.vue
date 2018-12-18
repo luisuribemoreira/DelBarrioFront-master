@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-    </div><!-- /container -->  
+    </div><!-- /container -->
   </section>
 </template>
 
@@ -30,6 +30,9 @@ import controller from '~/controllers/admin/faqs'
 export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
+  },
+  data () {
+    this.$store.state.title = 'PreguntasFrecuentes'
   },
   head () {
     return {

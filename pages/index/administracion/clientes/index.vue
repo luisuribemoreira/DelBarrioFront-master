@@ -146,6 +146,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ModerarCliente'
     return {
       clients: [],
       search: '',

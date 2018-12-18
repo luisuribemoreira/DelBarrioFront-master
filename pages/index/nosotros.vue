@@ -12,16 +12,16 @@
 					<h2 class="h2">Sobre nosotros</h2>
 					<h3 class="h3">¿Quiénes somos?</h3>
 					<p class="mt-4">
-					Hub Providencia es una red de espacios colaborativos para el trabajo, 
+					Hub Providencia es una red de espacios colaborativos para el trabajo,
 					perteneciente a la actual Dirección de Desarrollo Local de la Municipalidad de Providencia.
-					Dentro de esta dirección se encuentra el Departamento de Emprendimiento, 
-					que busca potenciar y fomentar a los emprendedores a través de acciones de formación, 
+					Dentro de esta dirección se encuentra el Departamento de Emprendimiento,
+					que busca potenciar y fomentar a los emprendedores a través de acciones de formación,
 					capacitación, asesorías técnicas y activaciones comerciales para fortalecer los pequeños y medianos comerciantes de la comuna.</p>
 					<h3 class="h3">¿Para qué?</h3>
 					<p class="mt-4">
 					Vitrina Providencia</p>
 					<p class="mt-4">
-					Esta plataforma de promoción de productos y servicios para emprendedoras de la comuna de Providencia, busca fomentar la 
+					Esta plataforma de promoción de productos y servicios para emprendedoras de la comuna de Providencia, busca fomentar la
 					vinculación comercial entre vecinos, emprendedores y empresas de la comuna.
 					</p>
 				</div>
@@ -35,7 +35,7 @@
 					<h2 class="h2 text-center">Equipo Hub Providencia</h2>
 				</div>
 			</div>
-			
+
 			<div class="text-center mt-3">
 				<div class="gallery">
 					<img src="img/img-soyprovidencia/group-photo.png" class="about-team--image img-fluid" alt="Grupo">
@@ -44,13 +44,16 @@
 				</div>
 			</div>
 			<!--imagen-->
-		
+
 		</div>
 	</section><!-- /TEAM -->
 </section>
 </template>
 <script>
 export default {
+  data () {
+    this.$store.state.title = 'Nosotros'
+  },
   head () {
     return {
       title: 'Nosotros'

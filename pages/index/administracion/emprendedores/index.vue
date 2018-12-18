@@ -150,6 +150,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ModerarEmprendedor'
     return {
       entrepreneurs: [],
       search: '',

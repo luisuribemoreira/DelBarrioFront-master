@@ -48,6 +48,7 @@ export default {
       })
   },
   data () {
+    this.$store.state.title = 'ConfiguracionAdmin'
     return {
       dataErrorMsg: {},
       processing: false
