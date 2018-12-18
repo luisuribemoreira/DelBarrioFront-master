@@ -293,6 +293,7 @@ import entrepreneurController from '~/controllers/admin/entrepreneurs'
 
 export default {
   data () {
+    console.log(this.$store.state.title)
     // Redirecciona a los emprendedores a su pagina de llenado de datos, en caso de no tenerlos aun.
     this.$router.afterEach((transition) => {
       if (this.isAuthenticated && this.loggedUser.rol === 102 && transition.path !== '/sign-out') {
