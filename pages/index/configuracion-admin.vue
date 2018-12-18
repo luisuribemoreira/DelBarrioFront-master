@@ -23,12 +23,12 @@
             </div>
             <div class="row justify-content-center pb-3">
               <button type="submit" class="btn btn-default" >Guardar</button>
-            </div>          
+            </div>
             </form>
           </div>
         </div>
       </div>
-      
+
     </div> <!-- /container -->
   </section>
 
@@ -87,6 +87,7 @@ export default {
     'isAuthenticated',
     'loggedUser'
   ]),
+  middleware: 'authenticated',
   head () {
     return {
       title: 'Configuración'
