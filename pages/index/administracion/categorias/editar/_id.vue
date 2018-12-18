@@ -12,7 +12,7 @@
             </div>
             <div class="form-group margin-top" v-if="category.subcategorias.length > 0">
               <label>Categoria Padre</label>
-              <select v-model.trim="category.IDEN_CATEGORIA_PADRE">
+              <select v-model.trim="category.IDEN_CATEGORIA_PADRE" class="form-control" name="parent">
                 <option v-bind:key="c.IDEN_CATEGORIA" v-for="c in categories" v-bind:value="c.IDEN_CATEGORIA">{{c.NOMB_CATEGORIA}}</option>
               </select>
             </div>
