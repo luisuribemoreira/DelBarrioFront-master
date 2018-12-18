@@ -245,10 +245,10 @@
                             <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Nosotros'}" href="/nosotros">Nosotros</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'Nosotros'}" href="/nosotros">Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Registro'}" href="/registro">Registrarme</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'Registro'}" href="/registro">Registrarme</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-round btn-round__turquoise text-white" v-bind:class="{active: this.$store.state.title === 'Nosotros'}" href="/autenticar" >Ingresar</a>
@@ -293,7 +293,6 @@ import entrepreneurController from '~/controllers/admin/entrepreneurs'
 
 export default {
   data () {
-    console.log(this.$store.state.title)
     // Redirecciona a los emprendedores a su pagina de llenado de datos, en caso de no tenerlos aun.
     this.$router.afterEach((transition) => {
       if (this.isAuthenticated && this.loggedUser.rol === 102 && transition.path !== '/sign-out') {
@@ -319,7 +318,8 @@ export default {
   },
   computed: mapGetters([
     'isAuthenticated',
-    'loggedUser'
+    'loggedUser',
+    'getTitle'
   ]),
   methods: {
     async searchItems () {

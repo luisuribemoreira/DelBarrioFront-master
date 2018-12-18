@@ -86,7 +86,7 @@ const dict = {
   }
 }
 export default {
-  asyncData({ store }) {
+  asyncData ({ store }) {
     store.commit('SET_TITLE', 'Registro')
   },
   middleware: 'anonymous',
