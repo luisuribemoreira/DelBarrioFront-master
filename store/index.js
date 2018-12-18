@@ -1,6 +1,7 @@
 export const state = () => ({
   user: null,
-  token: null
+  token: null,
+  title: ''
 })
 
 export const mutations = {
@@ -9,6 +10,9 @@ export const mutations = {
   },
   SET_TOKEN (state, token) {
     state.token = token || null
+  },
+  SET_TITLE (state, title) {
+    state.title = title || ''
   }
 }
 
@@ -21,5 +25,8 @@ export const getters = {
   },
   token (state) {
     return state.token
+  },
+  getTitle (state) {
+    return state.title
   }
 }

@@ -51,8 +51,8 @@
 </template>
 <script>
 export default {
-  data () {
-    this.$store.state.title = 'Nosotros'
+  asyncData ({ store }) {
+    store.commit('SET_TITLE', 'Nosotros')
   },
   head () {
     return {

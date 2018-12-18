@@ -86,9 +86,11 @@ const dict = {
   }
 }
 export default {
+  asyncData({ store }) {
+    store.commit('SET_TITLE', 'Registro')
+  },
   middleware: 'anonymous',
   data () {
-    this.$store.state.title = 'Registro'
     return {
       selected: false,
       format: 'dd MMM, yyyy',
