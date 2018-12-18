@@ -28,11 +28,9 @@
 import controller from '~/controllers/admin/faqs'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'PreguntasFrecuentes')
     return controller.GETAll(app)
-  },
-  data () {
-    this.$store.state.title = 'PreguntasFrecuentes'
   },
   head () {
     return {

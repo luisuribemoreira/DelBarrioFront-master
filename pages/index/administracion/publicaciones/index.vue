@@ -92,6 +92,7 @@ import custompaginator from '~/controllers/custompaginator'
 
 export default {
   asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'MisPublicaciones')
     return controller.GET(app, store._vm.loggedUser.id)
       .then(({ user }) => {
         return controllerPosts.GETPostEmprendedor(app, user.emprendedor.IDEN_EMPRENDEDOR)

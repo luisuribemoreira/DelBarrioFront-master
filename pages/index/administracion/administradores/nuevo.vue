@@ -59,11 +59,11 @@ import customValidations from '~/controllers/customvalidations'
 import emailer from '~/controllers/admin/emailer'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarAdministrador')
     return controller.GET(app, this)
   },
   data () {
-    this.$store.state.title = 'ModerarAdministrador'
     return {
       format: 'dd MMM, yyyy',
       user: { DESC_PASSWORD: Math.random().toString(36).slice(-8) }, // Clave autogenerada de 8 caracteres

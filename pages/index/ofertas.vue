@@ -62,7 +62,8 @@ import moment from 'moment'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'Ofertas')
     return controller.GETAll(app)
       .then(ofertas => {
         let offers = []
@@ -91,7 +92,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'Ofertas'
     return {
       imageUrl: process.env.imagesUrl,
       ofertas: [],

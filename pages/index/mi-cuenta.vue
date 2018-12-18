@@ -369,6 +369,7 @@ import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'MiCuenta')
     return controller.GET(app, store._vm.loggedUser.id)
       .then(({ user }) => {
         if (store._vm.loggedUser.rol === 102) {
@@ -434,7 +435,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'MiCuenta'
     return {
       selected: false,
       selectedPass: false,

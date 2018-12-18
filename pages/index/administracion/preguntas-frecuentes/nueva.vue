@@ -36,8 +36,10 @@
 import controller from '~/controllers/admin/faqs'
 
 export default {
+  asyncData ({ store }) {
+    store.commit('SET_TITLE', 'ModerarPreguntasFrecuentes')
+  },
   data () {
-    this.$store.state.title = 'ModerarPreguntasFrecuentes'
     return {
       f: {},
       message: false,

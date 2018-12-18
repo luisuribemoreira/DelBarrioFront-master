@@ -136,7 +136,6 @@ import categoriescontroller from '~/controllers/admin/categories'
 
 export default {
   data () {
-    this.$store.state.title = 'MisPublicaciones'
     return {
       format: 'dd MMM, yyyy',
       post: { FLAG_CONTENIDO_ADULTO: false, ETIQUETAS: [] },
@@ -156,7 +155,8 @@ export default {
       processing: false
     }
   },
-  asyncData ({app}) {
+  asyncData ({app, store}) {
+    store.commit('SET_TITLE', 'MisPublicaciones')
     return categoriescontroller.GETAll(app)
       .then(({categories}) => {
         categories.sort(function (a, b) {

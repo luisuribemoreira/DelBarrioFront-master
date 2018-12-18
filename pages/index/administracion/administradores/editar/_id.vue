@@ -56,7 +56,8 @@ import customValidations from '~/controllers/customvalidations'
 import emailer from '~/controllers/admin/emailer'
 
 export default {
-  async asyncData ({ app, params, redirect }) {
+  async asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'ModerarAdministrador')
     let user = await controller.GET(app, params.id)
     if (!user || user.user.usuario.IDEN_ROL !== 3) redirect('/')
     return {
@@ -64,7 +65,6 @@ export default {
     }
   },
   data () {
-    this.$store.state.title = 'ModerarAdministrador'
     return {
       format: 'dd MMM, yyyy',
       user: {},

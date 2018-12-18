@@ -81,7 +81,8 @@ import controller from '~/controllers/admin/workfields'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'Rubros')
     return controller.GETAll(app)
       .then(({ workfields }) => {
         workfields.sort(function (a, b) {
@@ -99,7 +100,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'Rubros'
     return {
       workfields: [],
       pagination: 0, // Numero de la pagina

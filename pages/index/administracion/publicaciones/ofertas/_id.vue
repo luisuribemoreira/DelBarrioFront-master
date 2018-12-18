@@ -111,7 +111,6 @@ import moment from 'moment'
 export default {
   name: 'EditPost',
   data () {
-    this.$store.state.title = 'MisPublicaciones'
     return {
       messageOferta: false,
       isSale: false,
@@ -124,7 +123,8 @@ export default {
       editable: true
     }
   },
-  asyncData ({ app, params, redirect }) {
+  asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'MisPublicaciones')
     return controller.GET(app, params.id)
       .then(post => {
         if (!post) redirect('/')

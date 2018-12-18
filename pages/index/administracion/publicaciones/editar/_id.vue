@@ -155,7 +155,6 @@ import categoriescontroller from '~/controllers/admin/categories'
 export default {
   name: 'EditPost',
   data () {
-    this.$store.state.title = 'MisPublicaciones'
     return {
       message: false,
       images: {},
@@ -170,7 +169,8 @@ export default {
       processing: false
     }
   },
-  asyncData ({ app, params, redirect }) {
+  asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'MisPublicaciones')
     return categoriescontroller.GETAll(app)
       .then(categories => {
         categories.categories.sort(function (a, b) {

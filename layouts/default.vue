@@ -12,13 +12,13 @@
             <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoProductos'}" href="/listado-productos">Publicaciones</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'ListadoProductos'}" href="/listado-productos">Publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Ofertas'}" href="/ofertas">Ofertas</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'Ofertas'}" href="/ofertas">Ofertas</a>
                     </li>
                 </ul>
 
@@ -43,7 +43,7 @@
                         role="button" :aria-haspopup="true" :aria-expanded="false">{{ loggedUser.nombre }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'MiCuenta'}" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'MiCuenta'}" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
@@ -52,7 +52,7 @@
                 </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i></a>
+                    <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i></a>
                 </li>
                 </ul>
             </div>
@@ -71,16 +71,16 @@
             <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoProductos'}" href="/listado-productos">Publicaciones</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'ListadoProductos'}" href="/listado-productos">Publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'MisPublicaciones'}" id ="nowrap" href="/administracion/publicaciones">Mis publicaciones</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'MisPublicaciones'}" id ="nowrap" href="/administracion/publicaciones">Mis publicaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Ofertas'}" href="/ofertas">Ofertas</a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'Ofertas'}" href="/ofertas">Ofertas</a>
                     </li>
                 </ul>
 
@@ -105,7 +105,7 @@
                         role="button" :aria-haspopup="true" :aria-expanded="false">{{ loggedUser.nombre }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'MiCuenta'}" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'MiCuenta'}" href="/mi-cuenta"><i class="fa fa-wrench" :aria-hidden="true"></i> Mi cuenta</a>
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
@@ -114,7 +114,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
                     </li>
                 </ul>
 
@@ -138,48 +138,48 @@
                 <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ModerarPublicaciones'}" href="/administracion/moderar-publicaciones">Publicaciones</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ModerarPublicaciones'}" href="/administracion/moderar-publicaciones">Publicaciones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ModerarOfertas'}" href="/administracion/moderar-ofertas">Ofertas</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ModerarOfertas'}" href="/administracion/moderar-ofertas">Ofertas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Denuncias'}" href="/administracion/denuncias">Denuncias</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'Denuncias'}" href="/administracion/denuncias">Denuncias</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ModerarEmprendedor'}" href="/administracion/emprendedores">Emprendedores</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ModerarEmprendedor'}" href="/administracion/emprendedores">Emprendedores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ModerarCliente'}" href="/administracion/clientes">Clientes</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ModerarCliente'}" href="/administracion/clientes">Clientes</a>
                         </li>
 
                         <li v-if="loggedUser.rol === 104" class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ModerarAdministrador'}" href="/administracion/administradores">Administradores</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ModerarAdministrador'}" href="/administracion/administradores">Administradores</a>
                         </li>
                         <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
                         :aria-haspopup="true" :aria-expanded="false">Administración <span class="caret"></span></a>
                         <ul
                         class="dropdown-menu">
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Reportes'}" href="/administracion">Reportes</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'Reportes'}" href="/administracion">Reportes</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Categorias'}" href="/administracion/categorias">Categorías</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'Categorias'}" href="/administracion/categorias">Categorías</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'Rubros'}" href="/administracion/rubros">Rubros</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'Rubros'}" href="/administracion/rubros">Rubros</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'RazonDenuncia'}" href="/administracion/razon-denuncia">Razón de denuncia</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'RazonDenuncia'}" href="/administracion/razon-denuncia">Razón de denuncia</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'RazonDesactivacion'}" href="/administracion/razon-desactivacion">Razón de desactivación</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'RazonDesactivacion'}" href="/administracion/razon-desactivacion">Razón de desactivación</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'TerminosCondiciones'}" href="/administracion/terminos-condiciones">Términos y condiciones</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'TerminosCondiciones'}" href="/administracion/terminos-condiciones">Términos y condiciones</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ModerarPreguntasFrecuentes'}" href="/administracion/preguntas-frecuentes">Preguntas Frecuentes</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'ModerarPreguntasFrecuentes'}" href="/administracion/preguntas-frecuentes">Preguntas Frecuentes</a>
                             </li>
                         </ul>
                         </li>
@@ -188,7 +188,7 @@
 
                         <ul class="dropdown-menu">
                             <li class="dropdown-item">
-                                <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ConfiguracionAdmin'}" href="/configuracion-admin"><i class="fa fa-wrench" :aria-hidden="true"></i> Configuración</a>
+                                <a class="nav-link" v-bind:class="{active: getTitle === 'ConfiguracionAdmin'}" href="/configuracion-admin"><i class="fa fa-wrench" :aria-hidden="true"></i> Configuración</a>
                             </li>
                             <li role="separator" class="divider dropdown-item"></li>
                             <li class="dropdown-item">
@@ -198,7 +198,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
                     </li>
                     </ul>
                 </div>
@@ -239,10 +239,10 @@
                 <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoProductos'}" href="/listado-productos">Publicaciones</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ListadoProductos'}" href="/listado-productos">Publicaciones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" v-bind:class="{active: this.$store.state.title === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
+                            <a class="nav-link" v-bind:class="{active: getTitle === 'ListadoEmprendedores'}" href="/listado-emprendedores">Emprendedores</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" v-bind:class="{active: getTitle === 'Nosotros'}" href="/nosotros">Nosotros</a>
@@ -251,10 +251,10 @@
                             <a class="nav-link" v-bind:class="{active: getTitle === 'Registro'}" href="/registro">Registrarme</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-round btn-round__turquoise text-white" v-bind:class="{active: this.$store.state.title === 'Nosotros'}" href="/autenticar" >Ingresar</a>
+                            <a class="btn btn-round btn-round__turquoise text-white" v-bind:class="{active: getTitle === 'Nosotros'}" href="/autenticar" >Ingresar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/preguntas-frecuentes" v-bind:class="{active: this.$store.state.title === 'PreguntasFrecuentes'}" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
+                            <a class="nav-link" href="/preguntas-frecuentes" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
                         </li>
                     </ul>
                 </div><!-- /.collapse-navbar -->

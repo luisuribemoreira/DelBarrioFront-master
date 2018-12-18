@@ -58,7 +58,8 @@ export default {
       processing: false
     }
   },
-  asyncData ({ app, params, redirect }) {
+  asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'ModerarEmprendedor')
     return workfieldcontroller.GETAll(app)
       .then(workfields => {
         return controller.GET(app, params.id)

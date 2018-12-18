@@ -40,6 +40,7 @@ import emailer from '~/controllers/admin/emailer'
 
 export default {
   asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ConfiguracionAdmin')
     return controller.GET(app, store._vm.loggedUser.id)
       .then(({ user }) => {
         return {

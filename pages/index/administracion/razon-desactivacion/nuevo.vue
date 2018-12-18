@@ -26,12 +26,14 @@ import controller from '~/controllers/admin/deactivationreasons'
 
 export default {
   data () {
-    this.$store.state.title = 'RazonDesactivacion'
     return {
       deactivationreason: {},
       message: false,
       processing: false
     }
+  },
+  asyncData ({store}) {
+    store.commit('SET_TITLE', 'RazonDesactivacion')
   },
   methods: {
     validateBeforeSubmit () {

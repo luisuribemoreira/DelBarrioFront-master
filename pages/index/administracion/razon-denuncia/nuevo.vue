@@ -27,12 +27,14 @@ import _ from 'lodash'
 
 export default {
   data () {
-    this.$store.state.title = 'RazonDenuncia'
     return {
       denouncereason: {},
       message: false,
       processing: false
     }
+  },
+  asyncData ({store}) {
+    store.commit('SET_TITLE', 'RazonDenuncia')
   },
   methods: {
     validateBeforeSubmit () {

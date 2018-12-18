@@ -37,14 +37,14 @@ import controller from '~/controllers/admin/faqs'
 
 export default {
   data () {
-    this.$store.state.title = 'ModerarPreguntasFrecuentes'
     return {
       message: false,
       processing: false,
       faq: {}
     }
   },
-  async asyncData ({ app, params, redirect }) {
+  async asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'ModerarPreguntasFrecuentes')
     let faq = await controller.GET(app, params.id)
     if (!faq) redirect('/')
     return {

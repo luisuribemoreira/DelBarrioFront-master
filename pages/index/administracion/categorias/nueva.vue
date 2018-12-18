@@ -32,14 +32,14 @@ import controller from '~/controllers/admin/categories'
 
 export default {
   data () {
-    this.$store.state.title = 'Categorias'
     return {
       category: {},
       message: false,
       processing: false
     }
   },
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'Categorias')
     return controller.GETAll(app)
   },
   methods: {

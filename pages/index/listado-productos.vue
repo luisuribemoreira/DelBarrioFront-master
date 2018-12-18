@@ -156,7 +156,8 @@ import workfieldsController from '~/controllers/admin/workfields'
 import postsController from '~/controllers/posts'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ListadoProductos')
     return postsController.GETAll(app)
       .then(({ posts }) => {
         return categoriescontroller.GETAllList(app)
@@ -197,7 +198,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ListadoProductos'
     return {
       search: {
         query: {

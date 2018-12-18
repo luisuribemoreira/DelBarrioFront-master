@@ -78,7 +78,8 @@ import controller from '~/controllers/admin/deactivationreasons'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'RazonDesactivacion')
     return controller.GETAll(app)
       .then(({ deactivationreasons }) => {
         return custompaginator.paginate(deactivationreasons)
@@ -93,7 +94,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'RazonDesactivacion'
     return {
       deactivationreasons: [],
       pagination: 0, // Numero de la pagina

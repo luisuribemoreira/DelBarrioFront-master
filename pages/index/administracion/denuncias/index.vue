@@ -275,7 +275,8 @@ import customPaginator from '~/controllers/custompaginator'
 import { mapGetters } from 'vuex'
 
 export default {
-  async asyncData ({ app }) {
+  async asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'Denuncias')
     let denounces = await controller.GETAll(app)
     let paginatedPosts = (await customPaginator.paginate(denounces.publicaciones)).paginatedData
     let paginatedComments = (await customPaginator.paginate(denounces.comentarios)).paginatedData
@@ -291,7 +292,6 @@ export default {
     }
   },
   data () {
-    this.$store.state.title = 'Denuncias'
     return {
       denouncedetail: { usuario: { emprendedor: {}, persona: {} }, publicacion: {}, motivo_denuncia: {}, calificacion: {}, resolucion_denuncia: {} },
       open: false,

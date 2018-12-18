@@ -85,7 +85,8 @@ import controller from '~/controllers/admin/admins'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarAdministrador')
     return controller.GETAll(app)
       .then(({ clients }) => {
         clients.sort(function (a, b) {
@@ -103,7 +104,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ModerarAdministrador'
     return {
       clients: [],
       search: '',

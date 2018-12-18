@@ -27,14 +27,14 @@ import controller from '~/controllers/admin/workfields'
 
 export default {
   data () {
-    this.$store.state.title = 'Rubros'
     return {
       message: false,
       processing: false,
       workfield: {}
     }
   },
-  async asyncData ({ app, params, redirect }) {
+  async asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'Rubros')
     let workfield = await controller.GET(app, params.id)
     if (!workfield) redirect('/')
 

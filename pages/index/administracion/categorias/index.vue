@@ -98,7 +98,8 @@ import controller from '~/controllers/admin/categories'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'Categorias')
     return controller.GETAll(app)
       .then(({ categories }) => {
         categories.sort(function (a, b) {
@@ -116,7 +117,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'Categorias'
     return {
       open: false,
       selected: 'caret-down',

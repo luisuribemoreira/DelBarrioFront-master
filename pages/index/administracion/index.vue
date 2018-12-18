@@ -111,7 +111,6 @@ export default {
     }
   },
   data () {
-    this.$store.state.title = 'Reportes'
     return {
       open: false,
       selected: false,
@@ -125,6 +124,9 @@ export default {
       paginatedData: [[]],
       user: {}
     }
+  },
+  asyncData ({store}) {
+    store.commit('SET_TITLE', 'Reportes')
   },
   computed: mapGetters([
     'isAuthenticated',

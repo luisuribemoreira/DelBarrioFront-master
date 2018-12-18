@@ -72,7 +72,8 @@ export default {
   mounted () {
     this.$validator.localize('es', dict)
   },
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarEmprendedor')
     return workfieldcontroller.GETAll(app)
       .then(({ workfields }) => {
         return {

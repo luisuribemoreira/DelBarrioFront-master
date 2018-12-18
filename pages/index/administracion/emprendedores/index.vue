@@ -128,7 +128,8 @@ import emailer from '~/controllers/admin/emailer'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarEmprendedor')
     return controller.GETAll(app)
       .then(({ entrepreneurs }) => {
         entrepreneurs.sort(function (a, b) {
@@ -150,7 +151,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ModerarEmprendedor'
     return {
       entrepreneurs: [],
       search: '',

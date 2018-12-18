@@ -32,14 +32,14 @@ import controller from '~/controllers/admin/categories'
 
 export default {
   data () {
-    this.$store.state.title = 'Categorias'
     return {
       message: false,
       subcategoriesAux: [],
       processing: false
     }
   },
-  asyncData ({ app, params, redirect }) {
+  asyncData ({ app, params, redirect, store }) {
+    store.commit('SET_TITLE', 'Categorias')
     return controller.GET(app, params.id)
       .then(category => {
         if (!category) redirect('/')

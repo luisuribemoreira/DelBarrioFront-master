@@ -26,12 +26,14 @@
 import controller from '~/controllers/admin/termsconditions'
 export default {
   data () {
-    this.$store.state.title = 'TerminosCondiciones'
     return {
       isInitial: true,
       isSaving: false,
       file: {}
     }
+  },
+  asyncData ({store}) {
+    store.commit('SET_TITLE', 'TerminosCondiciones')
   },
   components: {
   },

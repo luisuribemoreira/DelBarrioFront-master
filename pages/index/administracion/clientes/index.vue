@@ -124,7 +124,8 @@ import moment from 'moment'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarCliente')
     return controller.GETAll(app)
       .then(({ clients }) => {
         clients.sort(function (a, b) {
@@ -146,7 +147,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ModerarCliente'
     return {
       clients: [],
       search: '',

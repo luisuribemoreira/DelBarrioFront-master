@@ -78,7 +78,8 @@ import controller from '~/controllers/admin/faqs'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarPreguntasFrecuentes')
     return controller.GETAll(app)
       .then(({ faqs }) => {
         return custompaginator.paginate(faqs)
@@ -93,7 +94,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ModerarPreguntasFrecuentes'
     return {
       faqs: [],
       pagination: 0,

@@ -77,7 +77,8 @@ import moment from 'moment'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ModerarPublicaciones')
     return postcontroller.GETAll(app)
       .then(({ posts }) => {
         let postsAux = []
@@ -96,7 +97,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ModerarPublicaciones'
     return {
       posts: [],
       pagination: 0,

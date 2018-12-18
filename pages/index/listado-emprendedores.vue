@@ -84,7 +84,8 @@ import controller from '~/controllers/admin/entrepreneurs'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'ListadoEmprendedores')
     return controller.GETAll(app)
       .then(({ entrepreneurs }) => {
         entrepreneurs = entrepreneurs.filter(el => el.usuario.FECH_CREACION && !el.usuario.FLAG_BAN)
@@ -100,7 +101,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'ListadoEmprendedores'
     return {
       entrepreneurs: [],
       pagination: 0,

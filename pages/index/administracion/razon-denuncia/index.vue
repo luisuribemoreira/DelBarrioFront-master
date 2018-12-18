@@ -79,7 +79,8 @@ import controller from '~/controllers/admin/denouncereasons'
 import custompaginator from '~/controllers/custompaginator'
 
 export default {
-  asyncData ({ app }) {
+  asyncData ({ app, store }) {
+    store.commit('SET_TITLE', 'RazonDenuncia')
     return controller.GETAll(app)
       .then(({ denouncereasons }) => {
         denouncereasons.sort(function (a, b) {
@@ -97,7 +98,6 @@ export default {
       })
   },
   data () {
-    this.$store.state.title = 'RazonDenuncia'
     return {
       denouncereasons: [],
       pagination: 0, // Numero de la pagina
