@@ -127,6 +127,9 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
       .then(({ clients }) => {
+        clients.sort(function (a, b) {
+          return a.NOMBRES.localeCompare(b.NOMBRES, 'es', { numeric: true })
+        })
         return controllerDeactivations.GETAll(app)
           .then(({ deactivationreasons }) => {
             return custompaginator.paginate(clients)

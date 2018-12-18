@@ -82,6 +82,9 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
       .then(({ denouncereasons }) => {
+        denouncereasons.sort(function (a, b) {
+          return a.NOMB_MOTIVO_DENUNCIA.localeCompare(b.NOMB_MOTIVO_DENUNCIA, 'es', { numeric: true })
+        })
         return custompaginator.paginate(denouncereasons)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length

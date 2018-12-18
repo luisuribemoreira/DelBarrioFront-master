@@ -84,6 +84,9 @@ export default {
   asyncData ({ app }) {
     return controller.GETAll(app)
       .then(({ workfields }) => {
+        workfields.sort(function (a, b) {
+          return a.NOMB_RUBRO.localeCompare(b.NOMB_RUBRO, 'es', { numeric: true })
+        })
         return custompaginator.paginate(workfields)
           .then(({ paginatedData }) => {
             let pages = paginatedData.length
