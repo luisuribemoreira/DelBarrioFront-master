@@ -52,7 +52,7 @@
                 </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" :aria-hidden="true"></i></a>
+                    <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fas fa-question-circle" :aria-hidden="true"></i></a>
                 </li>
                 </ul>
             </div>
@@ -114,7 +114,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fas fa-question-circle" style="font-size:20px;"></i></a>
                     </li>
                 </ul>
 
@@ -198,7 +198,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
+                        <a class="nav-link" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" href="/preguntas-frecuentes" title="Preguntas frecuentes"><i class="fas fa-question-circle" style="font-size:20px;"></i></a>
                     </li>
                     </ul>
                 </div>
@@ -254,7 +254,7 @@
                             <a class="btn btn-round btn-round__turquoise text-white" v-bind:class="{active: getTitle === 'Nosotros'}" href="/autenticar" >Ingresar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/preguntas-frecuentes" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" title="Preguntas frecuentes"><i class="fa fa-question-circle" style="font-size:20px;"></i></a>
+                           <no-ssr><a class="nav-link" href="/preguntas-frecuentes" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" title="Preguntas frecuentes"><i class="fas fa-question-circle" style="font-size:20px;"></i></a></no-ssr> 
                         </li>
                     </ul>
                 </div><!-- /.collapse-navbar -->
