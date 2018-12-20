@@ -88,6 +88,7 @@
           </div>
         </div> <!-- Datos de reporte -->
         <small class="text-danger" v-if="message">{{ message }}</small>
+        <section class="mis-destacados">
         <div class="row margin-top">
           <div class="col-12">
             <h3>Tus destacados</h3>
@@ -109,20 +110,25 @@
                     :autoplayTimeout="5000"
                     :autoplayHoverPause = "true"
                     style="width: 100%;">
-              <slide v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
-                <nuxt-link :to="'/publicaciones/'+p.IDEN_PUBLICACION">
-                  <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="img-fluid" alt="">
-                  <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="img-fluid" alt="">
+              <slide class="px-2" v-for="p in posts" :key="p.IDEN_PUBLICACION"  v-if="p.FLAG_VIGENTE && !p.FLAG_BAN">
+                <div class="card border">
+                <nuxt-link class="card-img-link" :to="'/publicaciones/'+p.IDEN_PUBLICACION">
+                  <img v-if="p.imagenes.length === 0" v-lazy="'/img/no-image.svg'" class="card-img-top" alt="">
+                  <img v-else v-lazy="imageUrl + p.imagenes[0].URL_IMAGEN" class="card-img-top" alt="">
                 </nuxt-link>
-                <h4 class="text-center">{{ p.NOMB_PUBLICACION }}</h4>
-                <p class="text-center">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
-                <h5 class="text-center">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
-                <p class="text-center"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
+                <div class="card-body">
+                <h4 class="card-title">{{ p.NOMB_PUBLICACION }}</h4>
+                <p class="card-text">{{ p.DESC_PUBLICACION.substring(0,20) }}...</p>
+                <h5 class="card-price">$ {{ p.NUMR_PRECIO.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") }}</h5>
+                <p class="card-text"><icon name="eye"></icon> ({{p.NUMR_CONTADOR}})  |  <icon name="comments-o"></icon>({{ p.PREG_SIN_RESPONDER }})</p>
+              </div>
+              </div>
               </slide>
             </carousel>
           </no-ssr>
         </div>
         <hr class="margin-top">
+        </section>
       </div>
       <div class="pb-3">
       <!-- Boton de Configuracion de cuenta Emprendedor -->
