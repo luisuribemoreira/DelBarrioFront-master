@@ -194,11 +194,9 @@ body {
 	margin-top: 10px;
 	text-align: center;
 }
+
+.mis-destacados .card,
 .publication-sales .card {
-  max-height: 90%;
-  min-height: 90%;
-}
-.mis-destacados .card {
 	height: 90%;
   }
 .card-img-top,
