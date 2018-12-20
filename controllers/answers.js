@@ -34,7 +34,8 @@ function POST (context) {
     // Creacion de objeto dummy para simular respuesta instantánea del server
     let dummyEntity = {
       DESC_RESPUESTA: context.answer.DESC_RESPUESTA,
-      FECH_CREACION: new Date().toJSON()
+      FECH_CREACION: new Date().toJSON(),
+      IDEN_RESPUESTA: true
     }
     // Vacia campo respuesta
     context.answer = {}
