@@ -2,8 +2,9 @@
     <div>
         <!-- NAV CLIENTE REGISTRADO, 101: Cliente -->
         <nav id="navegacion" class="navbar navbar-light navbar-expand-md" v-if="isAuthenticated && loggedUser.rol === 101">
+          <div class="container">
             <!-- Logo Providencia MENU -->
-                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png"/></a>
             <!-- Botton Menu Responsive -->
                 <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -56,13 +57,14 @@
                 </li>
                 </ul>
             </div>
+          </div>
         </nav>
 
         <!-- NAV EMPRENDEDOR, 102: Emprendedor -->
         <nav id="navegacion" class="navbar navbar-expand-md navbar-light" v-if="isAuthenticated && loggedUser.rol === 102">
             <div class="container">
             <!-- Logo Providencia MENU -->
-                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png"/></a>
             <!-- Botton Menu Responsive -->
                 <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -127,7 +129,7 @@
             <div class="container">
 
              <!-- Logo Providencia MENU -->
-                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+                <a class="navbar-brand" href="/"><img src="/img/logo-soyprovi2.png"/></a>
 
             <!-- Botton Menu Responsive -->
                 <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
@@ -209,7 +211,7 @@
         <nav class="navbar navbar-expand-lg navbar-light" id="navegacion" v-if="!isAuthenticated">
             <div class="container">
                 <!-- Logo Providencia MENU -->
-                <a class="navbar-brand mr-5" href="/"><img src="/img/logo-soyprovi2.png" style="width:137px;height:51px"/></a>
+                <a class="navbar-brand mr-5" href="/"><img src="/img/logo-soyprovi2.png"/></a>
 
                 <!-- Botton Menu Responsive -->
                 <button class="navbar-toggler navbar-toggler-left" id="hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" :aria-expanded="false" aria-label="Toggle navigation">
@@ -254,7 +256,7 @@
                             <a class="btn btn-round btn-round__turquoise text-white" v-bind:class="{active: getTitle === 'Nosotros'}" href="/autenticar" >Ingresar</a>
                         </li>
                         <li class="nav-item">
-                           <no-ssr><a class="nav-link" href="/preguntas-frecuentes" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" title="Preguntas frecuentes"><i class="fas fa-question-circle" style="font-size:20px;"></i></a></no-ssr> 
+                           <no-ssr><a class="nav-link" href="/preguntas-frecuentes" v-bind:class="{active: getTitle === 'PreguntasFrecuentes'}" title="Preguntas frecuentes"><i class="fas fa-question-circle" style="font-size:20px;"></i></a></no-ssr>
                         </li>
                     </ul>
                 </div><!-- /.collapse-navbar -->
