@@ -51,46 +51,46 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="carousel-img d-block w-100 img-fluid " src="img/img-soyprovidencia/nosotros/nosotros-slide.jpg" alt="First slide">
+                            <img class="carousel-img d-block w-100 img-fluid " src="img/img-soyprovidencia/nosotros/nosotros-slide.jpg" alt="Primer slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-1.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-1.jpg" alt="Segundo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-2.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-2.jpg" alt="Tercer slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-3.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-3.jpg" alt="Cuarto slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-4.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-4.jpg" alt="Quinto slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-5.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-5.jpg" alt="Sexto slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-6.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-6.jpg" alt="Séptimo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-7.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-7.jpg" alt="Octavo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-8.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-8.jpg" alt="Noveno slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-9.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-9.jpg" alt="Decimo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-10.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-10.jpg" alt="Décimo primero slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-11.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-11.jpg" alt="Décimo segundo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-12.jpg" alt="Third slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-12.jpg" alt="Décimo tercero slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-13.jpg" alt="Second slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-13.jpg" alt="Décimo cuarto slide">
                         </div>                                                
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
