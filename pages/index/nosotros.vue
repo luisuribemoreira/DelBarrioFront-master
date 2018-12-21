@@ -32,7 +32,7 @@
     <div class="container pb-3">
         <div class="row">
             <div class="col pl-0 pr-0">
-                <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" data-interval="0">
+                <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
