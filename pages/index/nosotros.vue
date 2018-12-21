@@ -28,25 +28,86 @@
 			</div>
 		</div>
 	</section><!-- /INFO -->
-    <section class="about-team section"><!-- TEAM -->
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<h2 class="h2 text-center">Equipo Hub Providencia</h2>
-				</div>
-			</div>
 
-			<div class="text-center mt-3">
-				<div class="gallery">
-					<img src="img/img-soyprovidencia/group-photo.png" class="about-team--image img-fluid" alt="Grupo">
-					<h5 class="about-team--title h5 mt-3">Team HUB Providencia</h5>
-					<p class="about-team--text">Descripción</p>
-				</div>
-			</div>
+    <div class="container pb-3">
+        <div class="row">
+            <div class="col pl-0 pr-0">
+                <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" data-interval="0">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="10"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="11"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="12"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="13"></li>                                                
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="carousel-img d-block w-100 img-fluid " src="img/img-soyprovidencia/nosotros/nosotros-slide.jpg" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-1.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-2.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-3.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-4.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-5.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-6.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-7.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-8.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-9.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-10.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-11.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-12.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-13.jpg" alt="Second slide">
+                        </div>                                                
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <!-- /slider -->
+            </div>
+        </div>
+    </div>
 			<!--imagen-->
 
-		</div>
-	</section><!-- /TEAM -->
 </section>
 </template>
 <script>
