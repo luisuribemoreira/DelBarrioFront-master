@@ -47,7 +47,17 @@
                         <li data-target="#carouselExampleIndicators" data-slide-to="10"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="11"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="12"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="13"></li>                                                
+                        <li data-target="#carouselExampleIndicators" data-slide-to="13"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="14"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="15"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="16"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="17"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="18"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="19"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="20"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="21"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="22"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="23"></li>                                                  
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -81,17 +91,47 @@
                             <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-9.jpg" alt="Decimo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-10.jpg" alt="Décimo primero slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-10.jpg" alt="Undécimo slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-11.jpg" alt="Décimo segundo slide">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-11.jpg" alt="Duodécimo slide">
                         </div>
                         <div class="carousel-item">
                             <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-12.jpg" alt="Décimo tercero slide">
                         </div>
                         <div class="carousel-item">
                             <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-13.jpg" alt="Décimo cuarto slide">
-                        </div>                                                
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-14.jpg" alt="Décimo quinto slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-15.jpg" alt="Décimo sexto slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-16.jpg" alt="Décimo séptimo slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-17.jpg" alt="Décimo octavo slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-18.jpg" alt="Décimo noveno slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-19.jpg" alt="Vígesimo slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-20.jpg" alt="Vígesimo primero slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-21.jpg" alt="Vígesimo segundo slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-22.jpg" alt="Vígesimo tercero slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-23.jpg" alt="Vígesimo cuarto slide">
+                        </div>                                                 
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
