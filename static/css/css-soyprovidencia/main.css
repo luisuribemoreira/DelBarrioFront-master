@@ -11,9 +11,13 @@ body {
 	color: #fff;
 	text-decoration: underline;
 }
+#forgotPass {
+  color: #3cb6b6;
+}
 
-#aTerms:hover{
-	color: #3cb6b6;
+#aTerms:hover, #forgotPass:hover{
+  color: #3cb6b6;
+  text-decoration: underline;
 }
 
 .section {
