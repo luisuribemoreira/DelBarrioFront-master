@@ -2,7 +2,8 @@
     <section class="login section">
     <div class="container">
       <div class="row">
-        <div class="login--content col-lg-6 offset-lg-3 col-md-8 offset-md-2" v-if="user">
+        <div class="login--content col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+          <div v-if="user">
           <h2 class="h2 text-center">Recuperar contraseña</h2>
           <form  class="mt-4" @submit.prevent="validateBeforeSubmit">
             <div class="form-group margin-top">
@@ -26,8 +27,13 @@
             <button class="btn btn-primary btn-primary__turquoise " type="submit">Enviar </button>
           </form>
         </div>
+        <div v-else>
+          <h2 class="h2 text-center" style="color: grey">La petición de cambio de contraseña ha expirado,
+            por favor, envíe la solicitud nuevamente</h2>
+        </div>
+        </div>
+        </div>
       </div>
-    </div>
   </section>
 </template>
 <script>
@@ -46,7 +52,7 @@ export default {
     },
     data () {
       return {
-        user: {},
+        user: null,
         error: false,
         message: '',
         processing: false,
