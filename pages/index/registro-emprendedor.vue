@@ -257,8 +257,8 @@ export default {
             this.submitted.valid = true
             this.submitted.errors = false
             this.processing = false
-            emailer.sendMail(this, mail, 'Cambio de contraseña',
-              'Su nueva contraseña para entrar a DelBarrio es: ' + password + '.')
+            emailer.sendMail(this, mail, 'Registro completado',
+              '¡Bienvenido a Vitrina Providencia!, su registro como emprendedor ha sido completado con éxito,' + '\n' + 'su nueva contraseña para entrar al sitio es: ' + password + ' .')
             this.$router.replace('/sign-out')
           }).catch(() => {
             this.processing = false
@@ -266,7 +266,7 @@ export default {
             this.submitted.errors = true
           })
         } else {
-          this.dataErrorMsg.general = 'Por favor corrija los campos con errores e intentelo denuevo.'
+          this.dataErrorMsg.general = 'Por favor corrija los campos con errores e inténtelo de nuevo.'
         }
         this.processing = false
       })

@@ -119,12 +119,12 @@ export default {
         this.dataErrorMsg = { error_edad: undefined, error_pw: undefined, error_foto: undefined }
         // Se valida si la fecha ingresada coincide para poseer 18 años de edad o mas
         if (customValidations.isUnderAge(this.persona.FECH_FECHA_NACIMIENTO)) {
-          this.dataErrorMsg.error_edad = 'Debe ser mayor de edad'
+          this.dataErrorMsg.error_edad = 'Debe ser mayor de edad.'
         }
 
         // Se valida que las contraseñas coincidan
         if (this.user.pass && (!this.user.pass2 || this.user.pass !== this.user.pass2)) {
-          this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir'
+          this.dataErrorMsg.error_pw = 'Las contraseñas deben coincidir.'
         }
         if (this.dataErrorMsg.error_edad || this.dataErrorMsg.error_pw) {
           result = undefined
@@ -145,7 +145,7 @@ export default {
           let err = await controller.POSTCliente(this)
           if (!err) {
             emailer.sendMail(this, mail, 'Registro completado',
-              'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + password + '.')
+              '¡Bienvenido a Vitrina Providencia!, su registro como cliente ha sido completado con éxito,' + '\n' + 'su nueva contraseña para entrar al sitio es: ' + password + ' .')
           }
         }
         this.processing = false

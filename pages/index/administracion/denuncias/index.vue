@@ -452,12 +452,12 @@ export default {
                 let nombrePublicacion = this.denouncedetail.publicacion.NOMB_PUBLICACION
                 if (this.isBan) {
                   emailer.sendMail(this, mailDenunciado, 'Publicación Denunciada',
-                    'Hemos recibido una denuncia de su publicación llamada: "' + nombrePublicacion + '" la cual fue baneada porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                    'Hemos recibido una denuncia de su publicación llamada: "' + nombrePublicacion + '" de Vitrina Providencia, la cual fue baneada porque infringe nuestro Términos y condiciones de uso de nuestro sitio.')
                   emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                    'Hemos recibido su denuncia hacia la publicación: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                    'Hemos recibido su denuncia hacia la publicación: "' + nombrePublicacion + '" de Vitrina Providencia con éxito y le informamos que a sido revisada y eliminada del sitio. ' + '\n' + '¡Muchas Gracias!')
                 } else {
                   emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                    'Hemos recibido su denuncia hacia la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la publicación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                    'Hemos recibido su denuncia hacia la publicacion: "' + nombrePublicacion + '" de Vitrina Providencia con éxito, pero lamentamos infórmale que la publicación no infringe nuestro Términos y condiciones de uso de nuestro sitio.')
                 }
                 break
               case 'com':
@@ -466,12 +466,12 @@ export default {
                 nombrePublicacion = this.denouncedetail.comentario.publicacion.denounceresolution
                 if (this.isBan) {
                   emailer.sendMail(this, mailDenunciado, 'Comentario Denunciado',
-                    'Hemos recibido una denuncia de su comentario en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                    'Hemos recibido una denuncia de su comentario en una publicacion llamada: "' + nombrePublicacion + '"de Vitrina Providencia, el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestro sitio.')
                   emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                    'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                    'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" de Vitrina Providencia con éxito y le informamos que a sido revisada y eliminada del sitio. ' + '\n' + '¡Muchas Gracias!')
                 } else {
                   emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                    'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                    'Hemos recibido su denuncia hacia un comentario en la publicacion: "' + nombrePublicacion + '" de Vitrina Providencia con éxito y le informamos que a sido revisada y eliminada del sitio. ' + '\n' + '¡Muchas Gracias!')
                 }
                 break
               case 'cal':
@@ -480,12 +480,12 @@ export default {
                 nombrePublicacion = this.denouncedetail.calificacion.publicacion.DESC_PUBLICACION
                 if (this.isBan) {
                   emailer.sendMail(this, mailDenunciado, 'Calificación Denunciada',
-                    'Hemos recibido una denuncia de su calificacion en una publicacion llamada: "' + nombrePublicacion + '" el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                    'Hemos recibido una denuncia de su calificacion en una publicacion llamada: "' + nombrePublicacion + '" de Vitrina Providencia, el cual fue baneado porque infringe nuestro Términos y condiciones de uso de nuestro sitio')
                   emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                    'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito y le informamos que a sido revisada y eliminada del sitio. Muchas Gracias!')
+                    'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" de Vitrina Providencia con éxito y le informamos que a sido revisada y eliminada del sitio. ' + '\n' + '¡Muchas Gracias!')
                 } else {
                   emailer.sendMail(this, mailDenunciante, 'Resolucion Denuncia',
-                    'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" con éxito, pero lamentamos infórmale que la calificación no infringe nuestro Términos y condiciones de uso de nuestra aplicación web')
+                    'Hemos recibido su denuncia hacia una calificación en la publicacion: "' + nombrePublicacion + '" de Vitrina Providencia con éxito, pero lamentamos infórmale que la calificación no infringe nuestro Términos y condiciones de uso de nuestro sitio')
                 }
                 break
             }

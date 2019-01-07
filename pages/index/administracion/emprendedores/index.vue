@@ -186,7 +186,7 @@ export default {
           let setState = await controller.setState(this, entrepreneur)
           if (setState.disabled) {
             emailer.sendMail(this, mail, 'Usuario reactivado',
-              'Estimado: Le informamos que su cuenta a sido activada nuevamente para entrar en el portal Del Barrio .')
+              'Estimad@: Le informamos que su cuenta ha sido activada nuevamente para entrar en el sitio de Vitrina Providencia.')
           }
           this.processing = false
         }
@@ -245,8 +245,9 @@ export default {
             let razon = this.deshabilitacion.DESC_COMENTARIO
             let dat = await controller.setState(this, this.deshabilitacion.client)
             if (dat.disabled) {
-              emailer.sendMail(this, mail, 'Usuario Baneado',
-                'Estimado: Le informamos que su cuenta fue baneada por el siguiente motivo: ' + razon + '. Le rogamos ponerse en contacto con el administrador.')
+              emailer.sendMail(this, mail, 'Usuario baneado',
+                'Estimad@: Le informamos que su cuenta fue baneada en el sitio Vitrina Providencia por el siguiente motivo: ' + razon + '\n' +
+                '. Le rogamos ponerse en contacto con el administrador para obtener más información.')
                 .then(() => {
                   this.deshabilitacion = { DESC_COMENTARIO: '' }
                   // Esconde el modal.

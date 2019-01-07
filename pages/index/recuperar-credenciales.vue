@@ -47,8 +47,8 @@ export default {
           await controller.forgotPassword(this)
           if (!this.error) {
             emailer.sendMail(this, mail, 'Cambio de contraseña',
-              'Hemos recibido una solicitud de cambio de contraseña para su cuenta en Vitrina Pro, por favor haga clic en el siguiente link: ' + '\n\n' +
-              'http://' + location.host + '/recuperar-pass/' + this.tokenAux + '\n\n' +
+              'Hemos recibido una solicitud de cambio de contraseña para su cuenta en Vitrina Pro, esta solicitud expirara en una hora, por favor haga clic en el siguiente link: ' + '\n' +
+              'http://' + location.host + '/recuperar-pass/' + this.tokenAux + '\n' +
               'Si usted no envío esta solicitud, por favor ignore este correo')
             this.$router.push({ path: '/' })
           }

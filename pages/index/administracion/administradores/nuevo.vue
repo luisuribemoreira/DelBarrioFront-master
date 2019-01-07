@@ -97,7 +97,7 @@ export default {
           let err = await controller.POST(this)
           if (!err) {
             emailer.sendMail(this, mail, 'Registro completado',
-              'Bienvenido a Del Barrio!, su contraseña para entrar al portal es: ' + pass + '.')
+              '¡Bienvenido a Vitrina Providencia!, su registro como cliente ha sido completado con éxito,' + '\n' + 'su nueva contraseña para entrar al sitio es: ' + pass + ' .')
           }
         }
         this.processing = false
