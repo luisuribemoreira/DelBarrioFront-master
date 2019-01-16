@@ -37,7 +37,7 @@
                       v-bind:title="entrepreneur.DESC_NOMBRE_FANTASIA + ' | Del Barrio - Providencia'"
                       description="Portal de emprendimientos en Providencia."
                       v-bind:quote="entrepreneur.DESC_NOMBRE_FANTASIA + ' - Portal de emprendimientos en Providencia.'"
-                      hashtags="delbarrio,providencia"
+                      hashtags="Vitrinapro,VitrinaProvidencia,providencia"
                       :url="ruta + 'emprendedores/' + entrepreneur.IDEN_EMPRENDEDOR"
                       inline-template>
               <div class="social-media mt-5 text-center">

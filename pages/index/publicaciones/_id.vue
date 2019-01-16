@@ -51,7 +51,7 @@
                       v-bind:title="post.NOMB_PUBLICACION + ' | Del Barrio - Providencia'"
                       description="Portal de emprendimientos en Providencia."
                       v-bind:quote="post.NOMB_PUBLICACION + ' - Portal de emprendimientos en Providencia.'"
-                      hashtags="delbarrio,providencia"
+                      hashtags="Vitrinapro,VitrinaProvidencia,providencia"
                       :url="ruta + 'publicaciones/' + post.IDEN_PUBLICACION"
                       inline-template>
               <div class="social-media mt-5 text-center">
