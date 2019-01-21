@@ -78,7 +78,7 @@ export default {
           let err = await controller.PUT(this, this.user)
           if (!err) {
             emailer.sendMail(this, mail, 'Cambio de contraseña',
-              'Su nueva contraseña para entrar a Vitrina Providencia es: ' + password + '.')
+               'Se ha realizado un cambio exitoso de su contraseña en el portal de Vitrina Pro,' + '\n' + 'Su nueva contraseña para entrar es: ' + password + ' .')
           }
         }
         this.processing = false
