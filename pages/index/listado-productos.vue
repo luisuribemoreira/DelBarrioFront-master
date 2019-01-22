@@ -3,9 +3,11 @@
   <div>
     <section class="publication-top section pt-0 pb-0">
 		<div class="container-fluid">
-			<div class="row">
-				<img src="img/img-soyprovidencia/home-entrepreneur-bg.jpg" class="img-fluid" alt="Top">
-			</div>
+			<div class="row justify-content-end">
+        <div class="col-4">
+          <img src="img/logos/vitrinapro.png" class="img-fluid" alt="">
+        </div>
+      </div>
 		</div>
 	</section>
       <section id="busqueda" class="publication-products section">

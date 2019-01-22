@@ -1,10 +1,12 @@
 <template>
 <section>
-    <section class="publication-top section pt-0 pb-0">
+    <section class="offers-top section pt-0 pb-0">
 		  <div class="container-fluid">
-			  <div class="row">
-				  <img src="img/img-soyprovidencia/home-slider-2.jpg" class="img-fluid" alt="Top">
-			  </div>
+			<div class="row justify-content-end">
+        <div class="col-4">
+          <img src="img/logos/vitrinapro.png" class="img-fluid" alt="">
+        </div>
+      </div>
 	  	</div>
   	</section>
      <section class="publication-products section">

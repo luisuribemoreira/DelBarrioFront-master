@@ -2,7 +2,11 @@
 <section>
     <section class="about-top section pt-0 pb-0"><!-- TOP -->
 		<div class="container-fluid">
-			<div class="row"></div>
+				<div class="row justify-content-end">
+        <div class="col-4 align-self-center">
+          <img src="img/logos/vitrinapro.png" class="img-fluid" alt="">
+        </div>
+      </div>
 		</div>
 	</section><!-- /TOP -->
     <section class="about-info section"><!-- INFO -->
@@ -57,7 +61,7 @@
                         <li data-target="#carouselExampleIndicators" data-slide-to="20"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="21"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="22"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="23"></li>                                                  
+                        <li data-target="#carouselExampleIndicators" data-slide-to="23"></li>
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -131,7 +135,7 @@
                         </div>
                         <div class="carousel-item">
                             <img class="carousel-img d-block w-100 img-fluid" src="img/img-soyprovidencia/nosotros/nosotros-slide-23.jpg" alt="Vígesimo cuarto slide">
-                        </div>                                                 
+                        </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

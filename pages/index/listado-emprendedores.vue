@@ -2,7 +2,11 @@
 <section>
   <section class="entrepreneur-list-top section pt-0 pb-0">
 		<div class="container-fluid">
-			<div class="row"></div>
+			<div class="row justify-content-end">
+        <div class="col-4">
+          <img src="img/logos/vitrinapro.png" class="img-fluid" alt="">
+        </div>
+      </div>
 		</div>
 	</section>
 	<!-- /TOP -->

@@ -333,11 +333,18 @@ body {
 /* --------START PUBLICACIONES-------- */
 .publication-top{
 	overflow: hidden;
-	max-height: 200px;
+  max-height: 200px;
+  background: url(../../img/img-soyprovidencia/home-entrepreneur-bg.jpg);
+
 }
-.publication-top img{
-	width: 100%;
+
+.offers-top{
+	overflow: hidden;
+  max-height: 200px;
+  background: url(../../img/img-soyprovidencia/home-slider-2.jpg);
+
 }
+
 /*TOP*/
 
 
