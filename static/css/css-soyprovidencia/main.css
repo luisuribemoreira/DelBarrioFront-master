@@ -332,8 +332,8 @@ body {
 
 /* --------START PUBLICACIONES-------- */
 .publication-top{
-	overflow: hidden;
-  max-height: 200px;
+	background-size: cover;
+	min-height: 200px;
   background: url(../../img/img-soyprovidencia/home-entrepreneur-bg.jpg);
 
 }
