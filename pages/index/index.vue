@@ -15,6 +15,13 @@
                         <div class="carousel-item active">
                             <img class="carousel-img d-block w-100" src="img/img-soyprovidencia/home-slider-1.jpg" alt="First slide">
                             <div class="carousel-caption text-left mb-5">
+                              <div class="row">
+                                <div class="col-4 col-lg-12">
+                                  <div class="fixed-top">
+                                  <img src="img/logos/vitrinapro.png" align="right" class="img-fluid">
+                                  </div>
+                                </div>
+                              </div>
                                 <h2 class="home-slider--h2 h2 mb-4">Bienvenido a la Comunidad de emprendedores de Providencia</h2>
                                 <nuxt-link :to="{ path: '/listado-productos'}" class="btn btn-primary btn-primary__turquoise mb-2"  role="button">
                                 Ir a publicaciones
@@ -23,9 +30,27 @@
                         </div>
                         <div class="carousel-item">
                             <img class="carousel-img d-block w-100" src="img/img-soyprovidencia/home-slider-2.jpg" alt="Second slide">
+                            <div class="carousel-caption text-left mb-5">
+                              <div class="row">
+                                <div class="col-4 col-lg-12 ">
+                                  <div class="fixed-top">
+                                  <img src="img/logos/vitrinapro.png" align="right" class="img-fluid">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                         <div class="carousel-item">
                             <img class="carousel-img d-block w-100" src="img/img-soyprovidencia/home-slider-3.jpg" alt="Third slide">
+                            <div class="carousel-caption text-left mb-5">
+                              <div class="row">
+                                <div class="col-4">
+                                  <div class="fixed-top">
+                                  <img src="img/logos/vitrinapro.png" align="right" class="img-fluid">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

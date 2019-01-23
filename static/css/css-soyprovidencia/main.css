@@ -651,6 +651,9 @@ body {
 	}
 	.navbar-brand{
 		margin-right: 18px!important;
+  }
+  .home-slider .carousel-img{
+		width: 400%!important;
 	}
 	/*HEADER*/
 }
@@ -666,11 +669,11 @@ body {
 	}
 	/*HEADER*/
 
-	.home-slider--h2{
-		font-size: 220%;
+	.home-slider .carousel-img{
+		width: 400%!important;
 	}
 	.home-slider .carousel-caption{
-		margin-bottom: 10px!important;
+		margin-bottom: 90px!important;
 	}
 	/*HOME*/
 }
