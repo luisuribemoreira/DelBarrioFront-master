@@ -4,12 +4,12 @@
       <div class="row">
         <div class="faq--content col-lg-8 offset-lg-2 col-md-10 offset-md-1">
           <h2 class="h2 text-center">Preguntas Frecuentes</h2>
-          <div class="accordion mt-4" :key="f.IDEN_FAQ"v-for="f in faqs">
+          <div class="accordion mt-4" :key="f.IDEN_FAQ" v-for="f in faqs">
             <div class="card">
               <div class="card-header">
                 <h5 class="mb-0">
-                  <button class="btn btn-link" type="button" data-toggle="collapse" :href="'#collapse'+f.IDEN_FAQ" aria-controls="collapse"
-                  :data-target="'#collapse'+f.IDEN_FAQ" :aria-controls="'collapse'+f.IDEN_FAQ">
+                  <button id ="buttonFaq" class="btn btn-link" type="button" data-toggle="collapse" :href="'#collapse'+f.IDEN_FAQ" aria-controls="collapse"
+                  :data-target="'#collapse'+f.IDEN_FAQ">
                     {{f.NOMB_FAQ}}
                   </button>
                 </h5>

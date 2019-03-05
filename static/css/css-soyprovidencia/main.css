@@ -614,6 +614,11 @@ body {
 	font-weight: 600;
 	text-decoration: none;
 }
+/* --------Permite que el texto se ajuste al ancho de la pantalla-------- */
+
+#buttonFaq{
+  white-space: normal;
+}
 /* --------END FAQ-------- */
 
 
@@ -657,11 +662,39 @@ body {
 	}
 	/*HEADER*/
 }
+@media screen and (max-width: 910px){
+	.header .form-inline .form-control{
+		width: 90%;
+  }
+  .navbar{
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+    width: auto;
+    font-size: 80%;
+  }
 
+  .navbar-brand {
+    margin-right: 5px!important;
+
+  }
 @media screen and (max-width: 768px){
 	.header .form-inline .form-control{
 		width: 90%;
-	}
+  }
+  .navbar{
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+    width: auto;
+    font-size: 70%;
+  }
+  .navbar-brand {
+    margin-right: 5px!important;
+
+  }
+  .navbar-brand .input-group {
+    height: 20%;
+    width: 20%;
+  }
 	.navbar--btn__ingresar{
 		display: inline-block;
 		margin-right: 0!important;
@@ -678,6 +711,11 @@ body {
 	/*HOME*/
 }
 
+@media screen and (max-width: 464px){
+  .home-slider--h2{
+		font-size: 140%;
+  }
+
 @media screen and (max-width: 414px){
 	.header .form-inline .form-control{
 		width: 80%;
@@ -687,6 +725,10 @@ body {
 	}
 	.home-slider .carousel-caption{
 		margin-bottom: 90px!important;
+  }
+
+  .home-slider--h2{
+		font-size: 160%;
 	}
 	/*HOME*/
 
@@ -735,5 +777,19 @@ body {
 		padding: 30px 15px;
 	}
 	/*NEW ACCOUNT*/
+}
+
+@media screen and (max-width: 320px){
+	.home-slider--h2{
+		font-size: 140%;
+	}
+	/*HOME*/
+}
+
+@media screen and (max-width: 288px){
+	.home-slider--h2{
+		font-size: 120%;
+	}
+	/*HOME*/
 }
 
