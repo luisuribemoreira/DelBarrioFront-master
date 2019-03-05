@@ -235,7 +235,7 @@
                 <small class="text-danger" v-show="errors.has('celular')">{{ errors.first('celular') }}</small>
               </div>
               <div class="form-group margin-top">
-                <label for="name">Correo de Contácto</label><span style="color: grey"> (Formato ej: contacto@emprendimiento.cl)</span>
+                <label for="name">Correo de Contacto</label><span style="color: grey"> (Formato ej: contacto@emprendimiento.cl)</span>
                 <input v-validate data-vv-rules="required|email" data-vv-as="correo" name="correo" type="text" v-model.trim="user.persona.contacto.Correo[0].DESC_CONTACTO" class="form-control"/>
                 <small class="text-danger" v-show="errors.has('correo')">{{ errors.first('correo') }}</small>
               </div>
